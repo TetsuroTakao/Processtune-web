@@ -1,0 +1,1252 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Azure Active Directory &#8211; Processtune Blog</title>
+	<atom:link href="https://blog.processtune.com/category/microsoft-azure/azure-active-directory/feed/" rel="self" type="application/rss+xml" />
+	<link>https://blog.processtune.com/</link>
+	<description>Articles offered from Microsoft MVP</description>
+	<lastBuildDate>Tue, 28 Mar 2023 05:03:09 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.8.2</generator>
+
+<image>
+	<url>/wp-content/uploads/2023/03/cropped-Presentation-32x32.png</url>
+	<title>Azure Active Directory &#8211; Processtune Blog</title>
+	<link>https://blog.processtune.com/</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>How to set attributes of Azure Active Directory application for an app using JavaScript to authenticate users</title>
+		<link>https://blog.processtune.com/2020/09/01/how-to-set-attributes-of-azure-active-directory-application-for-an-app-using-javascript-to-authenticate-users/</link>
+					<comments>https://blog.processtune.com/2020/09/01/how-to-set-attributes-of-azure-active-directory-application-for-an-app-using-javascript-to-authenticate-users/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Tue, 01 Sep 2020 08:48:48 +0000</pubDate>
+				<category><![CDATA[.NET Core]]></category>
+		<category><![CDATA[Azure Active Directory]]></category>
+		<category><![CDATA[Microservice]]></category>
+		<category><![CDATA[Microsoft Azure]]></category>
+		<category><![CDATA[Microsoft Graph]]></category>
+		<category><![CDATA[ReactJS.NET]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Visual Studio]]></category>
+		<category><![CDATA[未分類]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=5101</guid>
+
+					<description><![CDATA[The &#8216;implicit grant type&#8217; is one of the several grant types of &#8216;The OAuth 2.0 Authorization Framework&#8216; which Azure Active Directory endpoint supports. An application requests an access token to Azure Active Directory endpoint using any grant type of the four types. The article &#8216;Create Azure Active Directory application&#8217; described the differences between the types. [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin:0px 0px 0px 0px;color:#000044;font-size:0.9rem;font-family:" segoe="" ui";"="">The &#8216;implicit grant type&#8217; is one of the several grant types of &#8216;<a href="https://tools.ietf.org/html/rfc6749" target="_new" style="font-weight:bold;" rel="noopener">The OAuth 2.0 Authorization Framework</a>&#8216; which Azure Active Directory endpoint supports.<br />
+An application requests an access token to Azure Active Directory endpoint using any grant type of the four types. The article &#8216;Create Azure Active Directory application&#8217; described the differences between the types.<br />
+The ‘implicit grant type’ omits a broker credentials such as an authorization code, because it is designed for accessing from JavaScript such as single page application(Henceforth called SPA).<br />
+This article describes how to set attributes of the Azure Active Directory application for using &#8216;implicit grant type&#8217; to acquire token from JavaScript of a client application. Then describes how to create an application using Microsoft Authentication Library (Hereinafter referred to as &#8216;MSAL&#8217;).</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Set Azure Active Directory application to allow implicit grant flow</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The article &#8216;<a href="https://blog.processtune.com/?p=5085" target="_new" style="font-weight:bold;" rel="noopener">Create Azure Active Directory application</a>&#8216; described how to create Azure Active Directory application. And the article &#8216;<a href="https://blog.processtune.com/?p=5435" target="_new" style="font-weight:bold;" rel="noopener">Preparing to create the app using programmable authentication flow</a>&#8216; describes how to set attributes of the Azure Active Directory application for several permissions. Please refer to these articles if you need them.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">To be available implicit grant flow of Azure Active Directory application, open the Microsoft Azure portal, then select [Azure Active Directory] – [App registrations] – (select target application) – [Authentication] – &#8216;Implicit grant&#8217; section, and check [Access tokens] and [ID tokens] to on. Press [Save] button at last.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;">
+<img decoding="async" src="/wp-content/uploads/2020/09/AADAppAuthenticationImplicitSettings.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">ID Token is provided by the Open ID Connect identity layer above the OAuth 2.0 protocol of authentication flow of Azure Active Directory endpoint. It is able to use to verify destination of authenticating identity if you want.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Azure Active Directory endpoint responds it as the JWT format, so you can use the following code to check.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Text;
+using System.Text.Json;
+using System.Linq;
+
+public string ReadJwt(string jwt, string payloadKey = "")
+{
+    var result = string.Empty;
+    if (jwt.Split('.').Count() != 3) return result;
+    var tokenType = Base64UrlEncoder.Decode(jwt.Split('.').FirstOrDefault());
+    var typeElement = new JsonElement();
+    if(JsonDocument.Parse(tokenType).RootElement.TryGetProperty("typ",out typeElement))
+    {
+        if (typeElement.GetString() == "JWT")
+        {
+            var token = new JwtSecurityTokenHandler().ReadJwtToken(jwt);
+            if (string.IsNullOrEmpty(payloadKey))
+            {
+                if (token.Payload.Iss.Contains("sts.windows.net"))
+                {
+                    result = "microsoft";
+                }
+            }
+            else
+            {
+                result = token.Payload[payloadKey].ToString();
+            }
+        }
+    }
+    return result;
+}
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">This code checks an issuer. If the value of the iss attribute is the security token service of Microsoft, it has provided by the destination that I request. It guarantees that the token is not forged, and it has attributes you expect as ID Token format Microsoft provides.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Access Token provided as JWT format that is same as ID Token. Access token( right figure below) and ID token( left figure below) is able to check a state of forgery by another process alternative of verifying JWT.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">If you set the state parameter at request timing of acquiring tokens, then check equivalent of it at timing of receive it.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;">
+<img decoding="async" src="/wp-content/uploads/2020/08/tokensJWT.png" alt="" style="width:900px;"></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Create SPA</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Please read quick start of SPA at Azure portal and try it. It is super easy to run because the downloaded SPA is already sat the settings for the Azure Active Directory app of the Azure portal.</p>
+<p style="margin:10px 0px 0px 5px;text-indent:1em;text-align:right;font-weight:bold;">&gt;&gt;<a href="https://docs.microsoft.com/ja-jp/azure/active-directory/develop/msal-js-initializing-client-applications?WT.mc_id=DT-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">Go to official document</a></p>
+<p style="display:inline-block;margin-bottom:10px;"><img decoding="async" src="/wp-content/uploads/2020/09/azurePortalQuickStart.png" alt="" style="width:300px;"><img decoding="async" src="/wp-content/uploads/2020/09/azurePortalQuickStartImplicit.png" alt="" style="width:300px;"><img decoding="async" src="/wp-content/uploads/2020/09/azurePortalQuickStartDownload.png" alt="" style="width:300px;"></p>
+<p style="display:inline-block;margin-bottom:10px;"><img decoding="async" src="/wp-content/uploads/2020/09/azurePortalQuickStartNpmInstallStart.png" alt="" style="width:300px;"><img decoding="async" src="/wp-content/uploads/2020/09/azurePortalQuickStartLogin.png" alt="" style="width:300px;"><img decoding="async" src="/wp-content/uploads/2020/09/azurePortalQuickStartAppRun.png" alt="" style="width:300px;"></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2020/09/01/how-to-set-attributes-of-azure-active-directory-application-for-an-app-using-javascript-to-authenticate-users/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Create .NET Core Library</title>
+		<link>https://blog.processtune.com/2020/05/27/create-net-core-library/</link>
+					<comments>https://blog.processtune.com/2020/05/27/create-net-core-library/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Wed, 27 May 2020 08:56:36 +0000</pubDate>
+				<category><![CDATA[Azure Active Directory]]></category>
+		<category><![CDATA[Microsoft Azure]]></category>
+		<category><![CDATA[Microsoft Graph]]></category>
+		<category><![CDATA[Office App]]></category>
+		<category><![CDATA[Office Web App]]></category>
+		<category><![CDATA[ReactJS.NET]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Visual Studio]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=5591</guid>
+
+					<description><![CDATA[The article &#8216;appsettings.json in C# .NET Core MVC web app&#8216; uses the code sample which accesses to Microsoft Graph API. The feature that accesses to Microsoft Graph API is very often used in many codes, thus this article also uses it as a sample of dividing shared code from the application. Please download from my [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin:0px 0px 0px 0px;color:#000044;font-size:0.9rem;font-family:" segoe="" ui";"="">The article &#8216;<a href="https://blog.processtune.com/?p=5569" target="_new" style="font-weight:bold;" rel="noopener">appsettings.json in C# .NET Core MVC web app</a>&#8216; uses the code sample which accesses to Microsoft Graph API. The feature that accesses to Microsoft Graph API is very often used in many codes, thus this article also uses it as a sample of dividing shared code from the application. Please download from <a href="https://github.com/TetsuroTakao/ConfigureEnvironmentValue" target="_new" style="font-weight:bold;" rel="noopener">my repository of GitHub</a>, before start reading this article.</p>
+<p style="margin:10px 0px 0px 5px;text-indent:1em;text-align:right;font-weight:bold;">&gt;&gt;<a href="https://github.com/TetsuroTakao/ConfigureEnvironmentValue" target="_new" style="font-weight:bold;" rel="noopener">The original code before modifying in this article</a></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Add the class library to the solution</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">To move the classes of the AccessGraph.cs to the new library, add a new library to the solution at first.</p>
+<p style="display:inline-block;margin-bottom:10px;">
+<img decoding="async" src="/wp-content/uploads/2020/05/AddLibraly.png" alt="" style="width:300px;box-shadow: 5px 5px 5px rgba(0,0,0,0.4);border:thin solid #ccc;"> <img decoding="async" src="/wp-content/uploads/2020/05/AddNew.png" alt="" style="width:300px;box-shadow: 5px 5px 5px rgba(0,0,0,0.4);border:thin solid #ccc;"></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Move shared code to the library</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">At next, add the solution folder &#8216;Models&#8217; to put models of the AccessGraph.cs into it. Divides the methods of the AccessGraph.class from the models of the AccessGraph.cs, moves these methods to the new class &#8216;MSGraph&#8217; that is added to the &#8216;Facades&#8217; project.</p>
+<p style="display:inline-block;margin-bottom:10px;">
+<img decoding="async" src="/wp-content/uploads/2020/05/ModelsAndFeature.png" alt="" style="width:600px;box-shadow: 5px 5px 5px rgba(0,0,0,0.4);border:thin solid #ccc;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The models of the &#8216;Models&#8217; folder of the &#8216;Facades&#8217; project are also divided the &#8216;AuthModels.cs&#8217; file and &#8216;DriveModels.cs&#8217; file, because to divide information involved Microsoft Azure Active Directory and information involved OneDrive of Microsoft Graph API.</p>
+<p style="display:inline-block;margin-bottom:10px;">
+<img decoding="async" src="/wp-content/uploads/2020/05/AuthModels.png" alt="" style="width:300px;box-shadow: 5px 5px 5px rgba(0,0,0,0.4);border:thin solid #ccc;"> <img decoding="async" src="/wp-content/uploads/2020/05/DriveModels.png" alt="" style="width:300px;box-shadow: 5px 5px 5px rgba(0,0,0,0.4);border:thin solid #ccc;"></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Error fixing</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The methods of the &#8216;MSGraph&#8217; class has errors when these moved from the &#8216;SampleApp&#8217; project to the &#8216;Facades&#8217; project. Thus right-click on the error code and select the &#8216;Quick actions and refactorings &#8230;&#8217; from the context menu to fix these errors.</p>
+<p style="display:inline-block;margin-bottom:10px;">
+<img decoding="async" src="/wp-content/uploads/2020/05/MSGraphFacade.png" alt="" style="width:600px;box-shadow: 5px 5px 5px rgba(0,0,0,0.4);border:thin solid #ccc;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">On the other hand, on delete the &#8216;AccessGraph.cs&#8217; file from the &#8216;SampleApp&#8217; project, also there are several errors that occur(if not occur, try to press F5 to launch the app once).</p>
+<p style="display:inline-block;margin-bottom:10px;">
+<img decoding="async" src="/wp-content/uploads/2020/05/ErrorInSampleAppProj.png" alt="" style="width:600px;box-shadow: 5px 5px 5px rgba(0,0,0,0.4);border:thin solid #ccc;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">To create the reference of the &#8216;Facade&#8217; project, right-click on the &#8216;SampleApp&#8217; project of the &#8216;Solution Explorer&#8217;, continue toward select the &#8216;Add&#8217; menu then select the &#8216;Project Reference&#8230;&#8217;.</p>
+<p style="display:inline-block;margin-bottom:10px;">
+<img decoding="async" src="/wp-content/uploads/2020/05/addProjectReference.png" alt="" style="width:300px;box-shadow: 5px 5px 5px rgba(0,0,0,0.4);border:thin solid #ccc;"> <img decoding="async" src="/wp-content/uploads/2020/05/AddFacadeProj.png" alt="" style="width:300px;box-shadow: 5px 5px 5px rgba(0,0,0,0.4);border:thin solid #ccc;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Next, the same as fixing errors of the &#8216;Facade&#8217; project, use the &#8216;Quick actions and refactorings &#8230;&#8217;.</p>
+<p style="display:inline-block;margin-bottom:10px;">
+<img decoding="async" src="/wp-content/uploads/2020/05/usingFacadeModels.png" alt="" style="width:600px;box-shadow: 5px 5px 5px rgba(0,0,0,0.4);border:thin solid #ccc;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">In the &#8216;Index&#8217; action of the &#8216;Home&#8217; controller, regarding the &#8216;AccessGraph&#8217; class, it has to changes to the &#8216;MSGpaph&#8217; because it moved to the &#8216;MSGraph&#8217; class of the &#8216;Facade&#8217; project.</p>
+<p style="display:inline-block;margin-bottom:10px;">
+<img decoding="async" src="/wp-content/uploads/2020/05/ChangeNameOfAzureGraph.png" alt="" style="width:600px;box-shadow: 5px 5px 5px rgba(0,0,0,0.4);border:thin solid #ccc;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">At last, select [React.Sample.Webpack.CoreMvc] list item of [Start Debugging] box and press it to launch the app then sign in and confirm the new library is used.</p>
+<p style="margin:10px 0px 0px 5px;text-indent:1em;text-align:right;font-weight:bold;">&gt;&gt;<a href="https://github.com/TetsuroTakao/CreateLibrary" target="_new" style="font-weight:bold;" rel="noopener">The sample code of this article</a></p>
+<p style="display:inline-block;margin-bottom:10px;">
+<img decoding="async" src="/wp-content/uploads/2020/05/librarylast.png" alt="" style="width:600px;box-shadow: 5px 5px 5px rgba(0,0,0,0.4);border:thin solid #ccc;"></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2020/05/27/create-net-core-library/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>appsettings.json in C# .NET Core mvc web app</title>
+		<link>https://blog.processtune.com/2020/04/20/appsettings-json-in-c-net-core-mvc-web-app/</link>
+					<comments>https://blog.processtune.com/2020/04/20/appsettings-json-in-c-net-core-mvc-web-app/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Sun, 19 Apr 2020 23:19:01 +0000</pubDate>
+				<category><![CDATA[Azure Active Directory]]></category>
+		<category><![CDATA[Microsoft Azure]]></category>
+		<category><![CDATA[Microsoft Graph]]></category>
+		<category><![CDATA[Office App]]></category>
+		<category><![CDATA[Office Web App]]></category>
+		<category><![CDATA[ReactJS.NET]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Visual Studio]]></category>
+		<category><![CDATA[未分類]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=5569</guid>
+
+					<description><![CDATA[This article describes how to set configuration values and to acquire them in the controller of mvc web app. This article uses the code sample of the article ‘Programmable authentication flow for accessing to Microsoft Graph‘, thus please download it before reading this article. &#62;&#62;The original code before modifying in this article ・Modify appsettings.json of [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin: 0px 0px 0px 0px; color: #000044; font-size: 0.9rem;">This article describes how to set configuration values and to acquire them in the controller of mvc web app.<br />
+This article uses the code sample of the article ‘<a style="font-weight: bold;" href="https://blog.processtune.com/?p=5509" target="_new" rel="noopener">Programmable authentication flow for accessing to Microsoft Graph</a>‘, thus please download it before reading this article.</p>
+<p style="margin: 0px 0px 0px 5px; text-indent: 1em; text-align: right; font-weight: bold;">&gt;&gt;<a style="font-weight: bold;" href="https://github.com/TetsuroTakao/ShareOneDriveItem" target="_new" rel="noopener">The original code before modifying in this article</a></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Modify appsettings.json of the code sample</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">The code sample of the article ‘<a style="font-weight: bold;" href="https://blog.processtune.com/?p=5509" target="_new" rel="noopener">Programmable authentication flow for accessing to Microsoft Graph</a>‘ accesses Microsoft Graph API. It has to declare a tenant id, client id, and so on when the app access to Microsoft Graph API, thus it might define at appsettings.json.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px;">{
+  "MicrosoftIdentity": {
+    "TenantID": "__YOUR TENANT ID__",
+    "ClientId": "__YOUR CLIENT ID__",
+    "ClientSecret": "YOUR CLIENT SECRET",
+    "Account": "__YOUR AAD ACCOUNT__",
+    "Password": "__YOUR AAD PASSWORD__"
+  },
+  "Logging": {
+    ...
+    },
+    "Console": {
+      ...
+    }
+  }
+}
+</pre>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Modify Startup</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">To acquire configuration values from the appsetting.json, modify the Startup method of the Startup class of the project. Add the below code under the statement &#8216;Configuration = configuration&#8217;. Use variables of the Environment object as a container to pass configuration values from the Startup class to Controllers.</p>
+<p style="display: inline-block; margin-bottom: 10px;"><img decoding="async" style="width: 600px;" src="/wp-content/uploads/2020/05/Startup.png" alt="" /></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Use the environment values from the controller</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">In the AccountController, use the environment value &#8216;TenantID&#8217; and &#8216;ClientId&#8217; for login to Microsoft Azure Active Directory endpoint. Then transfer to the Index action of the Home controller.</p>
+<p style="display: inline-block; margin-bottom: 10px;"><img decoding="async" style="width: 600px;" src="/wp-content/uploads/2020/05/AccountController.png" alt="" /></p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">In the Index action, the endpoint returns the authorized code when a user authenticates ended, so use the environment value &#8216;ClientSecret&#8217; and the code to acquire user information from Microsoft Graph API.</p>
+<p style="display: inline-block; margin-bottom: 10px;"><img decoding="async" style="width: 600px;" src="/wp-content/uploads/2020/05/HomeController.png" alt="" /></p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">When acquired the token from the code as the &#8216;user.read&#8217; scope, the GetToken method of the AccessGraph class acquires user information of the login user from Microsoft Azure Active Directory, then returns a true value as means sign-in is successful. When sign-in successful, get the token as the &#8216;file.read&#8217; scope using the &#8216;password&#8217; grant type for acquiring the web link, so use the environment values &#8216;Account&#8217; and &#8216;Password&#8217;.</p>
+<p style="display: inline-block; margin-bottom: 10px;"><img decoding="async" style="width: 600px;" src="/wp-content/uploads/2020/05/PasswordGrant.png" alt="" /></p>
+<p style="margin: 0px 0px 0px 5px; text-indent: 1em; text-align: right; font-weight: bold;">&gt;&gt;<a style="font-weight: bold;" href="https://github.com/TetsuroTakao/ConfigureEnvironmentValue" target="_new" rel="noopener">The code sample modified by this article</a></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2020/04/20/appsettings-json-in-c-net-core-mvc-web-app/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Programmable authentication flow for accessing to Microsoft Graph</title>
+		<link>https://blog.processtune.com/2020/03/31/programmable-authentication-flow-for-accessing-to-microsoft-graph-2/</link>
+					<comments>https://blog.processtune.com/2020/03/31/programmable-authentication-flow-for-accessing-to-microsoft-graph-2/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Tue, 31 Mar 2020 09:48:28 +0000</pubDate>
+				<category><![CDATA[Azure Active Directory]]></category>
+		<category><![CDATA[Microsoft Azure]]></category>
+		<category><![CDATA[Microsoft Graph]]></category>
+		<category><![CDATA[Office App]]></category>
+		<category><![CDATA[Office Web App]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Visual Studio]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=5509</guid>
+
+					<description><![CDATA[It is good that an app access user resource using minimum permission. Microsoft Graph API provides a token restricted by a scope that has minimum permission to access domain resources. Therefore the app to leverage these features has to use appropriate the grant type and the scope when acquires a token. As one of the [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin: 0px 0px 0px 0px; color: #000044; font-size: 0.9rem;">It is good that an app access user resource using minimum permission.<br />
+Microsoft Graph API provides a token restricted by a scope that has minimum permission to access domain resources. Therefore the app to leverage these features has to use appropriate the grant type and the scope when acquires a token.<br />
+As one of the ideas to correspond these case, the app would provide a feature which acquires a token with the &#8216;user.read&#8217; scope when login and accessing information of self. And when accessing resources of the OneDrive of the login user, acquires another token with the &#8216;file.read&#8217; scope without the &#8216;user.read&#8217; scope.<br />
+Using a token that has properly minimum permission to do execute per an individual feature of the app is better than using a token that has all permission that is enough to execute all features of the app.<br />
+This article describes how to control tokens that have minimum permission to execute per feature. This article uses <a style="font-weight: bold;" href="https://github.com/TetsuroTakao/PreparForProgrammableAuthFlow" target="_new" rel="noopener">the code sample</a> of <a style="font-weight: bold;" href="https://blog.processtune.com/?p=5435" target="_new" rel="noopener">the previous article</a>. <a style="font-weight: bold;" href="https://blog.processtune.com/?p=5435" target="_new" rel="noopener">the previous article</a> describes the scenario of the code sample, this article continues the 4th part of the scenario.</p>
+<p style="margin: 0px 0px 0px 5px; text-indent: 1em; text-align: right; font-weight: bold;">&gt;&gt;<a style="font-weight: bold;" href="https://github.com/TetsuroTakao/ShareOneDriveItem" target="_new" rel="noopener">The code sample of this article</a></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Take token as change scope</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">Create acquire a token that has the &#8216;files.readwrite&#8217; permission and acquire a web link that sharing the OneDrive file of the user at the &#8216;Index&#8217; action of the &#8216;Home&#8217; controller. Insert below code after set the &#8216;GlobalName&#8217; value of the &#8216;user&#8217; object to the ViewBag.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px; margin: 0px;">if (signIn)
+{
+  new AccessGraph().SetUserInfo(user);
+  //Regist '髙尾 哲朗（Tetsuro Takao）' as Azure Active Directory account.
+  user.GlobalName = string.Join("", Regex.Matches(user.displayName, @"[a-z | A-Z]*")).Trim();
+  ViewBag.AccountName = user.GlobalName;
+
+  var grant = "{\"password\":\"__PASSWORD__\",\"username\":\"__ACCOUNT__\"}";
+  var history = new AccessHistory();
+  history.GrantType = grant;
+  history.Scope = "files.readwrite";
+  history.TenantID = user.AccessList.FirstOrDefault().TenantID;
+  history.Redirect = user.AccessList.FirstOrDefault().Redirect;
+  history.ClientId = user.AccessList.FirstOrDefault().ClientId;
+  history.Secret = user.AccessList.FirstOrDefault().Secret;
+  user.AccessList.Add(history);
+  if (new AccessGraph().GetToken(user))
+  {
+    var webLink = new AccessGraph().GetLink("01N7LZHZCQ2D4PKWJ4OJAKWEOBBJWTCOWG", user);
+  }
+}
+</pre>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Create GetLink Method</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">Create the &#8216;GetLink&#8217; method in the &#8216;AccessGraph&#8217; class as below.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px; margin: 0px;">public class AccessGraph
+{
+  public bool GetToken(ApplicationUser user)
+  {
+    ...
+  }
+  public string GetToken(string clientid, string secret, string redirect, string refreshtoken, string authCode, string tenant, string resource = "user.read")
+  {
+    ...
+  }
+  public string GetUser(string token)
+  {
+    ...
+  }
+  public void SetUserInfo(ApplicationUser account)
+  {
+    ...
+  }
+  public string GetLink(string id, ApplicationUser account)
+  {
+    string result = string.Empty;
+    var token = account.AccessList.Where(t =&gt; Regex.IsMatch(t.Scope, @"files\.readwrite", RegexOptions.IgnoreCase)).FirstOrDefault();
+    if (token == null) return result;
+    using (var httpClient = new HttpClient())
+    {
+      httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + token.AuthTokens.access_token);
+      var postBody = "{\"type\": \"edit\", \"scope\": \"anonymous\"}";
+      var content = new StringContent(postBody, Encoding.UTF8, "application/json");
+      var responseMessage = httpClient.PostAsync(string.Format("https://graph.microsoft.com/v1.0/me/drive/items/{0}/createLink", id), content).Result;
+      var response = responseMessage.Content.ReadAsStringAsync().Result;
+      if (responseMessage.IsSuccessStatusCode)
+      {
+        var resLink = JsonConvert.DeserializeObject(response);
+        result = resLink.link.webUrl;
+      }
+    }
+    return result;
+  }
+}
+</pre>
+<p style="display: inline;"><img decoding="async" style="width: 600px;" src="/wp-content/uploads/2020/03/GetLINKCreate.png" alt="" /></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Create MSGraphLink Type</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">Create the &#8216;MSGraphLink&#8217; class to accept the response of Microsoft Graph API. Then go to the &#8216;Index&#8217; action of the &#8216;Home&#8217; controller, set the breakpoint after calling the &#8216;GetLink&#8217; method of the &#8216;AccessGraph&#8217; class.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px; margin: 0px;">public class MSGraphLink
+{
+  public string id { get; set; }
+  public List roles { get; set; }
+  public LinkType link { get; set; }
+}
+public class LinkType
+{
+  public string type { get; set; }
+  public string scope { get; set; }
+  public string webUrl { get; set; }
+  public ApplicationType application { get; set; }
+}
+public class ApplicationType
+{
+  public string id { get; set; }
+  public string displayName { get; set; }
+}
+</pre>
+<p style="display: inline;"><img decoding="async" style="width: 600px;" src="/wp-content/uploads/2020/03/MSGraphLinkTypes.png" alt="" /></p>
+<p style="margin: 10px 0px 0px 0px; text-indent: 1em;">Execute the app with [F5] press, and confirm the method can acquire the web link.</p>
+<p style="margin: 10px 0px 0px 5px; text-indent: 1em; text-align: right; font-weight: bold;">&gt;&gt;<a style="font-weight: bold;" href="https://github.com/TetsuroTakao/ShareOneDriveItem" target="_new" rel="noopener">The code sample of this article</a></p>
+<p style="display: inline;"><img decoding="async" style="width: 600px;" src="/wp-content/uploads/2020/03/GetLINKSuccess.png" alt="" /></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2020/03/31/programmable-authentication-flow-for-accessing-to-microsoft-graph-2/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Preparing to create the app using programmable authentication flow</title>
+		<link>https://blog.processtune.com/2020/03/14/preparing-to-create-the-app-using-programmable-authentication-flow/</link>
+					<comments>https://blog.processtune.com/2020/03/14/preparing-to-create-the-app-using-programmable-authentication-flow/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Sat, 14 Mar 2020 06:14:03 +0000</pubDate>
+				<category><![CDATA[Azure Active Directory]]></category>
+		<category><![CDATA[Microsoft Azure]]></category>
+		<category><![CDATA[Microsoft Graph]]></category>
+		<category><![CDATA[Office App]]></category>
+		<category><![CDATA[Office Web App]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Visual Studio]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=5435</guid>
+
+					<description><![CDATA[In the case of creating RPA or an app executes function automatically, the article ‘Microsoft Graph API provides several grant types of The OAuth 2.0 Authorization Framework’ describes that the ‘password’ and the ‘client_credentials’ grant_type authentication flow is useful. The ‘password’ grant type authentication flow can’t use the Microsoft Account, because the ‘client_credentials’ grant type [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin: 0px 0px 0px 0px; color: #000044; font-size: 0.9rem;">In the case of creating RPA or an app executes function automatically, <a style="font-weight: bold;" href="https://blog.processtune.com/?p=4873" target="_new" rel="noopener">the article ‘Microsoft Graph API provides several grant types of The OAuth 2.0 Authorization Framework’</a> describes that the ‘password’ and the ‘client_credentials’ grant_type authentication flow is useful.<br />
+The ‘password’ grant type authentication flow can’t use the Microsoft Account, because the ‘client_credentials’ grant type needs credential which is authorized by a specific domain. Microsoft Account has not an individual domain that provides a credential for the account.<br />
+Although, there is the &#8216;<a style="font-weight: bold;" href="https://developer.microsoft.com/en-us/microsoft-365/dev-program" target="_new" rel="noopener">Microsoft 365 Developer Program</a>&#8216; for developers, so <a style="font-weight: bold;" href="https://blog.processtune.com/?p=5509" target="_new" rel="noopener">the article ‘Programmable authentication flow for accessing to Microsoft Graph’</a> describes the ‘password’ grant type authentication flow with this program which provides the Organization Account. This article descrives preparing for the article.<br />
+It is important that the ‘password’ grant type is supported on the &#8216;v1.0&#8217; version of the the Azure Active Directory endpoint. In case of creating an app using the Microsoft Graph API, the Azure Active Directory endpoint ‘v2.0’ version is better than using the ‘v1.0’ version.<br />
+This article using <a style="font-weight: bold;" href="https://github.com/TetsuroTakao/SetUserNameToView" target="_new" rel="noopener">the code sample</a> of <a style="font-weight: bold;" href="https://blog.processtune.com/?p=5448" target="_new" rel="noopener">the previous article</a> which already includes the feature of acquiring user information using the token from the ‘authorization code’ grant type authentication flow.</p>
+<p style="margin: 0px 0px 0px 5px; text-indent: 1em; text-align: right; font-weight: bold;">&gt;&gt;<a style="font-weight: bold;" href="https://github.com/TetsuroTakao/PreparForProgrammableAuthFlow" target="_new" rel="noopener">The code sample of this article</a></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Story of programmable auth flow</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">For describing programmable authentication flow, the scenario of this article show below cases as a sample.</p>
+<p style="margin: 0px 0px 0px 30px; text-indent: -1em;">1. The app has a login button.</p>
+<p style="margin: 0px 0px 0px 30px; text-indent: -1em;">2. The app navigates to the action that requests authorization to the Azure Active Directory endpoint when a user presses the login button.</p>
+<p style="margin: 0px 0px 0px 30px; text-indent: -1em;">3. The app acquires a token as the &#8216;user.read&#8217; permission from the Azure Active Directory endpoint. And use it, the app requests user information to the Microsoft Graph API.</p>
+<p style="margin: 0px 0px 0px 30px; text-indent: -1em;">4. The app acquires a token as the &#8216;file.read&#8217; permission from the Azure Active Directory endpoint. And use it, the app requests a share link of the OneDrive item from the Microsoft Graph API.</p>
+<p style="margin: 10px 0px 0px 0px; text-indent: 1em;">This article describes until 3rd part of this scenario for preparing the app that controls tokens that have minimum permission per the feature.</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Set Azure Active Directory application</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">Regarding how to create the Azure Active Directory application is refer to <a style="font-weight: bold;" href="https://blog.processtune.com/?p=4873" target="_new" rel="noopener">the article</a>. Describe how to set the application permission here.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">Go to the Azure portal, and select the Azure Active Directory, continue select target an app. Then select the &#8216;API permission&#8217; section and the &#8216;Add a permission&#8217;, the &#8216;Microsoft Graph&#8217;, the &#8216;Delegated permissions&#8217;, select the &#8216;File.ReadWrite&#8217; after put file to input box of the &#8216;Select permissions&#8217; section. Press the &#8216;Add permissions&#8217; button at last.</p>
+<p style="display: inline;"><img decoding="async" style="width: 600px;" src="/wp-content/uploads/2020/03/AADAppAddPermission.png" alt="" /></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Setting configuration for development environment</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">As first, download the code sample, restore packages and run debug done, then modify &#8216;Sign In&#8217; action in the &#8216;Account&#8217; controller of [Controllers] folder at the Solution Explorer to usable for the development environment.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px; margin: 0px;">using Microsoft.AspNetCore.Mvc;
+
+namespace React.Sample.Webpack.CoreMvc.Controllers
+{
+  public class AccountController : Controller
+    {
+    [Route("Account/SignIn")]
+    [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
+    public void SignIn()
+    {
+      var tenant = "__YOUR TENANT__";//this grant_type allows common
+      var clientId = "__APP CLIENT ID__";
+      var redirectUri = "http://localhost:9457/home";
+      Response.Redirect("https://login.microsoftonline.com/" + tenant
+        + "/oauth2/v2.0/authorize?client_id=" + clientId + "&amp;redirect_uri="
+        + redirectUri + "&amp;grant_type=implicit&amp;response_type=code&amp;scope=User.Read");
+    }
+  }
+}
+</pre>
+<p style="margin: 10px 0px 0px 0px; text-indent: 1em;">Modify lines of the variable &#8216;tenant&#8217; and &#8216;clientId&#8217; to useable for the development environment(11th line and 12th line).</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">And open &#8216;Index&#8217; action in the &#8216;Home&#8217; controller of [Controllers] folder at the Solution Explorer, put a breakpoint at the 45th line. Then run debug and confirm acquiring &#8216;code&#8217; and &#8216;state&#8217; variables.</p>
+<p style="display: inline;"><img decoding="async" style="width: 300px;" src="/wp-content/uploads/2020/03/code.png" alt="" /></p>
+<p style="display: inline;"><img decoding="async" style="width: 300px;" src="/wp-content/uploads/2020/03/state.png" alt="" /></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Share user resource to another user</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">As a sample resource, create an Excel file to OneDrive. it is good which creating an Excel file from Microsoft Teams or OneDrive as without Microsoft Excel or downloading from Microsoft Office.com.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">It has to use account same the OneDrive log in and &#8216;password&#8217; grant type flow.</p>
+<p style="display: inline;"><img decoding="async" style="width: 600px;" src="/wp-content/uploads/2020/03/BusinessExpenseReport.png" alt="" /></p>
+<p style="margin: 10px 0px 0px 0px; text-indent: 1em;">At first, Go to Microsoft Graph Explorer to take the file ID of the OneDrive Driveitem. Sign-in with the OneDrive account, add the ‘OneDrive’ sample category using ‘show more samples’ of the end of the ‘Sample Queries’.</p>
+<p style="display: inline;"><img decoding="async" style="width: 300px;" src="/wp-content/uploads/2020/03/showMoreSample.png" alt="" /><img decoding="async" style="width: 300px;" src="/wp-content/uploads/2020/03/GraphExplorerOneDriveOn.png" alt="" /></p>
+<p style="margin: 10px 0px 0px 0px; text-indent: 1em;">Select the ‘search my OneDrive’ GET method and exchange the ‘finance’ to the sample Excel file name at the ‘Run Query’ input box. Then press the ‘Run Query’ button.<br />
+When the response has taken, take the memo the &#8216;id&#8217; property in the &#8216;value&#8217; property of the response.</p>
+<p style="display: inline;"><img decoding="async" style="width: 600px;" src="/wp-content/uploads/2020/03/searchOneDrive.png" alt="" /></p>
+<p style="margin: 10px 0px 0px 0px; text-indent: 1em;">As continue, change the Method box to the POST method and put code below to the &#8216;Run Query&#8217; input box, set code below to the &#8216;Request Body&#8217; and check the &#8216;Request Header&#8217; is the same as figure below.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">Then press the &#8216;Run Query&#8217; button and confirm to be able to acquire the &#8216;webUrl&#8217; property in the &#8216;link&#8217; property of the response.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px; margin: 0px;">the 'Run Query' input box :
+https://graph.microsoft.com/v1.0/me/drive/items/__FILE ID OF MEMO__/createLink
+
+the 'Request Body' :
+{"type": "edit", "scope": "anonymous"}
+</pre>
+<p style="display: inline;"><img decoding="async" style="width: 300px;" src="/wp-content/uploads/2020/03/createLink.png" alt="" /><img decoding="async" style="width: 300px;" src="/wp-content/uploads/2020/03/header.png" alt="" /></p>
+<p style="margin: 10px 0px 0px 0px; text-indent: 1em;">Creating the shared link refers to <a style="font-weight: bold;" href="https://docs.microsoft.com/en-us/graph/api/driveitem-createlink?view=graph-rest-1.0&amp;tabs=http" target="_new" rel="noopener">the document of the Mictrosoft Docs</a>.</p>
+<p style="display: inline;"><img decoding="async" style="width: 600px;" src="/wp-content/uploads/2020/03/createLinkPermissionMS.png" alt="" /></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Modify the code sample to manage minimum scope per individual access</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">Move four rows in the &#8216;if&#8217; condition that the code was able to acquire, to out of the condition(52nd row to 55th row of the figure below).</p>
+<p style="display: inline;"><img decoding="async" style="width: 600px;" src="/wp-content/uploads/2020/03/moveCodeOutToIfDerective.png" alt="" /></p>
+<p style="margin: 10px 0px 0px 0px; text-indent: 1em;">Create the &#8216;ApplicationUser&#8217; class(use at 41st row of figure below) as a container of login user information instead of the &#8216;accountName&#8217; variable(49th row of the figure below). Comment out the &#8216;accountName&#8217; variable.</p>
+<p style="display: inline;"><img decoding="async" style="width: 600px;" src="/wp-content/uploads/2020/03/accountNameCommentOut.png" alt="" /></p>
+<p style="margin: 10px 0px 0px 0px; text-indent: 1em;">Continue, to fix the error, change all of the &#8216;accountName&#8217; variable to the propertie &#8216;GlobalName&#8217; of the &#8216;user&#8217; variable.</p>
+<p style="display: inline;"><img decoding="async" style="width: 600px;" src="/wp-content/uploads/2020/03/CreateAppUserForContainer.png" alt="" /></p>
+<p style="margin: 10px 0px 0px 0px; text-indent: 1em;">The &#8216;user&#8217; variable has information of connect to Microsoft Graph that has set at the &#8216;AccountConoroller&#8217; when befor trancesion to this contoroller. The &#8216;ApplicationUser&#8217; object has transfered as seriarized text. When accept the object, deserialize it to use.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">When an authorization code acquire, the &#8216;client_id&#8217; parameter has not set, so it add to the &#8216;user&#8217; variable. And the line is execute in the &#8216;if&#8217; condition that the app can acquire the code, so put the line into the &#8216;if&#8217; condition(figure below is before move it). And the &#8216;GlobalName&#8217; property of the &#8216;user&#8217; object also input after the &#8216;if&#8217; condition that the &#8216;user.GlobalName&#8217; is not empty and not null, so it will move correct position but it refer to folow description.</p>
+<p style="display: inline;"><img decoding="async" style="width: 600px;" src="/wp-content/uploads/2020/03/ChangeToUseAppUser.png" alt="" /></p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px; margin: 0px;">if (!string.IsNullOrEmpty(code))
+{
+  user.AccessList.LastOrDefault().Secret = "__CLIENT SECRET__";
+  user.AccessList.LastOrDefault().AuthCode = code;
+  user.AccessList.LastOrDefault().AADEndPoint = "v2.0";
+  ...
+  if (signIn)
+  {
+    ...
+    ViewBag.AccountName = user.GlobalName;
+  }
+}
+</pre>
+<p style="margin: 10px 0px 0px 0px; text-indent: 1em;">The &#8216;ApplicationUser&#8217; class as a container of login user information instead of the &#8216;accountName&#8217; variable.(48th row to 49th row of the figure below). Then Change all of the &#8216;accountName&#8217; variable to the propertie &#8216;GlobalName&#8217; of the &#8216;account&#8217; variable.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px; margin: 0px;">//This Class is to add custom properties for the app
+public class ApplicationUser : MSGraphUser
+{
+    // to select AAD endpoint
+    public bool IsAADUser { get; set; }
+    // to manage minimum scope per individual access
+    public List&lt;AccessHistory&gt; AccessList { get; set; }
+    // for not single bite region
+    public string GlobalName { get; set; }
+}
+public class AccessHistory
+{
+    // to select AAD user or Live ID
+    public string AADEndPoint { get; set; }
+    public string TenantID { get; set; }
+    public string ClientId { get; set; }
+    public string Secret { get; set; }
+    public Uri Redirect { get; set; }
+    public string AuthCode { get; set; }
+    public string Resource { get; set; }
+    public string Scope { get; set; }
+    public string GrantType { get; set; }
+    public string ResponseType { get; set; }
+    // to connect token and how to acquired
+    public MSGraphAuthTokens AuthTokens { get; set; }
+}
+</pre>
+<p style="margin: 10px 0px 0px 0px; text-indent: 1em;">The AccountController has to provides the &#8216;ApplicationUser&#8217; object to the &#8216;Index&#8217; Action of HomeController. The AccountController trancesion to Azure Active Directory Endpoint before the HomeController, so the object has to be serialized and put into TempData of ASP.NET.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px; margin: 0px;">public class AccountController : Controller
+{
+  [Route("Account/SignIn")]
+  [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
+  public void SignIn()
+  {
+    var user = new ApplicationUser();
+    user.AccessList = new List&lt;AccessHistory&gt;();
+    var history = new AccessHistory();
+    //var tenant = "__YOUR TENANT__";
+    history.TenantID = "__YOUR TENANT__";
+    //var clientId = "__APP CLIENT ID__";
+    history.ClientId = "__APP CLIENT ID__";
+    //var redirectUri = "http://localhost:9457/home";
+    history.Redirect = new Uri("http://localhost:9457/home");
+    history.GrantType = "implicit";
+    history.ResponseType = "code";
+    history.Scope = "User.Read";
+    history.AADEndPoint= "v2.0";
+    user.AccessList.Add(history);
+    TempData["User"] = JsonConvert.SerializeObject(user);
+    Response.Redirect("https://login.microsoftonline.com/"
+      + user.AccessList.LastOrDefault().TenantID + "/oauth2/" + history.AADEndPoint
+      + "/authorize?client_id=" + user.AccessList.LastOrDefault().ClientId
+      + "&amp;redirect_uri=" + user.AccessList.LastOrDefault().Redirect
+      + "&amp;grant_type=" + user.AccessList.LastOrDefault().GrantType
+      + "&amp;response_type=" + user.AccessList.LastOrDefault().ResponseType
+      + "&amp;scope=" + user.AccessList.LastOrDefault().Scope);
+  }
+}
+</pre>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Override the GetToken method</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">Copy the &#8216;GetToken&#8217; method and paste above the &#8216;GetToken&#8217; method, then change return value from string to bool and arguments to &#8216;ApplicationUser user&#8217;. Errors to fix like as figure below.</p>
+<p style="display: inline;"><img decoding="async" style="width: 300px;" src="/wp-content/uploads/2020/03/GraphAccessUpdate.png" alt="" /></p>
+<p style="display: inline;"><img decoding="async" style="width: 300px;" src="/wp-content/uploads/2020/03/GraphAccessErrorFixed.png" alt="" /></p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">The part of creating Url change to code below.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px; margin: 0px;">//var url = $"https://login.microsoftonline.com/" + user.AccessList.LastOrDefault().TenantID + "/oauth2/v2.0/token";
+//url = $"https://login.microsoftonline.com/common/oauth2/token";// live API
+var url
+  = $"https://login.microsoftonline.com/" + user.AccessList.LastOrDefault().TenantID + "/oauth2";
+if (user.AccessList.LastOrDefault().GrantType=="password" || !user.IsAADUser
+  || user.AccessList.LastOrDefault().GraphVersion=="v1.0"
+  || string.IsNullOrEmpty(user.AccessList.LastOrDefault().GraphVersion))
+{
+  url += "/token";// live API
+}
+else
+{
+  url += "/" + user.AccessList.LastOrDefault().GraphVersion + "/token";// AAD
+}
+</pre>
+<p style="display: inline;"><img decoding="async" style="width: 600px;" src="/wp-content/uploads/2020/03/urlChange.png" alt="" /></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Set user information</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">The &#8216;ApplicationUser&#8217; class has a container of information of Azure Active Directory account. At next, create the &#8216;SetUserInfo&#8217; method in the &#8216;AccessGraph&#8217; class.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px; margin: 0px;">public void SetUserInfo(ApplicationUser account)
+{
+  var token = account.AccessList
+            .Where(t =&gt; Regex.IsMatch(t.Scope, @"user\.read",RegexOptions.IgnoreCase))
+            .FirstOrDefault();
+  if (token == null) return;
+  MSGraphUser user = null;
+  var url = $"https://graph.microsoft.com/v1.0/me/";
+  using (var httpClient = new HttpClient())
+  {
+    httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + token.AuthTokens.access_token);
+    var res = httpClient.GetAsync(url).Result;
+    string resultJson = res.Content.ReadAsStringAsync().Result;
+    if (res.IsSuccessStatusCode)
+    {
+      user = JsonConvert.DeserializeObject&lt;MSGraphUser&gt;(resultJson);
+      account.businessPhones = user.businessPhones;
+      account.displayName = user.displayName;
+      account.givenName = user.givenName;
+      account.id = user.id;
+      account.jobTitle = user.jobTitle;
+      account.mail = user.mail;
+      account.mobilePhone = user.mobilePhone;
+      account.officeLocation = user.officeLocation;
+      account.preferredLanguage = user.preferredLanguage;
+      account.surname = user.surname;
+      account.userPrincipalName = user.userPrincipalName;
+    }
+  }
+  return;
+}
+</pre>
+<p style="display: inline;"><img decoding="async" style="width: 600px;" src="/wp-content/uploads/2020/03/setUserInfo.png" alt="" /></p>
+<p style="margin: 10px 0px 0px 0px; text-indent: 1em;">In the &#8216;Index&#8217; action of the &#8216;HomeController&#8217;, modify the part of&#8217;!string.IsNullOrEmpty(code)&#8217; of the &#8216;if&#8217; condition as like below code.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px; margin: 0px;">if (!string.IsNullOrEmpty(code))
+{
+  token = new AccessGraph().GetToken(user.AccessList.LastOrDefault().ClientId, user.AccessList.LastOrDefault().Secret, user.AccessList.LastOrDefault().Redirect.AbsoluteUri, "", code, user.AccessList.LastOrDefault().TenantID, "user.read");
+  if (!string.IsNullOrEmpty(token)) signIn = true;
+}
+//if (signIn) accountName = new AccessGraph().GetUser(token);
+if (signIn) user.GlobalName = new AccessGraph().GetUser(token);
+if (!string.IsNullOrEmpty(user.GlobalName))
+{
+  //Regist '髙尾 哲朗（Tetsuro Takao）' as Azure Active Directory account.
+  user.GlobalName = string.Join("", Regex.Matches(user.displayName, @"[a-z | A-Z]*")).Trim();
+}
+
+//to
+
+if (!string.IsNullOrEmpty(code))
+{
+  token = new AccessGraph().GetToken(user.AccessList.LastOrDefault().ClientId, user.AccessList.LastOrDefault().Secret, user.AccessList.LastOrDefault().Redirect.AbsoluteUri, "", code, user.AccessList.LastOrDefault().TenantID, "user.read");
+  if (!string.IsNullOrEmpty(token)) signIn = true;
+}
+if (signIn) user.GlobalName = new AccessGraph().GetUser(token);
+if (signIn)
+{
+  //Regist '髙尾 哲朗（Tetsuro Takao）' as Azure Active Directory account.
+  user.GlobalName = string.Join("", Regex.Matches(user.displayName, @"[a-z | A-Z]*")).Trim();
+}
+
+//to
+
+if (!string.IsNullOrEmpty(code))
+{
+  token = new AccessGraph().GetToken(user.AccessList.LastOrDefault().ClientId, user.AccessList.LastOrDefault().Secret, user.AccessList.LastOrDefault().Redirect.AbsoluteUri, "", code, user.AccessList.LastOrDefault().TenantID, "user.read");
+  if (!string.IsNullOrEmpty(token)) signIn = true;
+}
+if (signIn)
+{
+  user.GlobalName = new AccessGraph().GetUser(token);
+  //Regist '髙尾 哲朗（Tetsuro Takao）' as Azure Active Directory account.
+  user.GlobalName = string.Join("", Regex.Matches(user.displayName, @"[a-z | A-Z]*")).Trim();
+}
+
+//to
+
+if (!string.IsNullOrEmpty(code))
+{
+  token = new AccessGraph().GetToken(user.AccessList.LastOrDefault().ClientId, user.AccessList.LastOrDefault().Secret, user.AccessList.LastOrDefault().Redirect.AbsoluteUri, "", code, user.AccessList.LastOrDefault().TenantID, "user.read");
+  if (!string.IsNullOrEmpty(token)) signIn = true;
+  if (signIn)
+  {
+    user.GlobalName = new AccessGraph().GetUser(token);
+    //Regist '髙尾 哲朗（Tetsuro Takao）' as Azure Active Directory account.
+    user.GlobalName = string.Join("", Regex.Matches(user.displayName, @"[a-z | A-Z]*")).Trim();
+  }
+}
+
+//to
+
+if (!string.IsNullOrEmpty(code))
+{
+  token = new AccessGraph().GetToken(user.AccessList.LastOrDefault().ClientId, user.AccessList.LastOrDefault().Secret, user.AccessList.LastOrDefault().Redirect.AbsoluteUri, "", code, user.AccessList.LastOrDefault().TenantID, "user.read");
+  if (!string.IsNullOrEmpty(token)) signIn = true;
+  if (signIn)
+  {
+    new AccessGraph().SetUserInfo(user);
+    //Regist '髙尾 哲朗（Tetsuro Takao）' as Azure Active Directory account.
+    user.GlobalName = string.Join("", Regex.Matches(user.displayName, @"[a-z | A-Z]*")).Trim();
+  }
+}
+
+//to
+
+if (!string.IsNullOrEmpty(code))
+{
+  user.AccessList.LastOrDefault().Secret = "__CLIENT SECRET__";
+  user.AccessList.LastOrDefault().AuthCode = code;
+  user.AccessList.LastOrDefault().AADEndPoint = "v2.0";
+  signIn = new AccessGraph().GetToken(user);
+  if (signIn)
+  {
+    new AccessGraph().SetUserInfo(user);
+    //Regist '髙尾 哲朗（Tetsuro Takao）' as Azure Active Directory account.
+    user.GlobalName = string.Join("", Regex.Matches(user.displayName, @"[a-z | A-Z]*")).Trim();
+    ViewBag.AccountName = user.GlobalName;
+  }
+}
+</pre>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Change the way to set the POST properties</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">The &#8216;GetToken&#8217; method in the &#8216;AccessGraph&#8217; class argues the variable as the &#8216;ApplicationUser&#8217; class. The object has the &#8216;AccessList&#8217; property that includes all properties of required value to acquire token. Modify request to use it.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px; margin: 0px;">using (var httpClient = new HttpClient())
+{
+    var properties = "client_id=" + user.AccessList.LastOrDefault().ClientId + "&amp;client_secret=" + user.AccessList.LastOrDefault().Secret + "&amp;scope=" + user.AccessList.LastOrDefault().Scope + "&amp;redirect_uri=" + user.AccessList.LastOrDefault().Redirect;
+    if (!string.IsNullOrEmpty(user.AccessList.LastOrDefault().AuthTokens.refresh_token))
+    {
+        properties += "&amp;refresh_token=" + user.AccessList.LastOrDefault().AuthTokens.refresh_token + "&amp;grant_type=refresh_token";
+    }
+    if (!string.IsNullOrEmpty(user.AccessList.LastOrDefault().AuthCode))
+    {
+        properties += "&amp;code=" + user.AccessList.LastOrDefault().AuthCode + "&amp;grant_type=authorization_code";
+    }
+    var content = new StringContent(properties, Encoding.UTF8, "application/x-www-form-urlencoded");
+    var res = httpClient.PostAsync(url, content).Result;
+    string resultJson = res.Content.ReadAsStringAsync().Result;
+    if (res.IsSuccessStatusCode)
+    {
+        user.AccessList.LastOrDefault().AuthTokens = JsonConvert.DeserializeObject&lt;MSGraphAuthTokens&gt;(resultJson);
+        result = true;
+    }
+}
+
+//to
+
+using (var httpClient = new HttpClient())
+{
+  var properties
+        = "client_id=" + user.AccessList.LastOrDefault().ClientId + "&amp;client_secret=" + user.AccessList.LastOrDefault().Secret;
+  if (!string.IsNullOrEmpty(user.AccessList.LastOrDefault().Redirect.AbsoluteUri))
+  {
+    properties += "&amp;redirect_uri=" + user.AccessList.LastOrDefault().Redirect.AbsoluteUri;
+  }
+  if (user.AccessList.LastOrDefault().GrantType.Contains("password"))
+  {
+    var account = JsonConvert.DeserializeObject&lt;JObject&gt;&amp;kt(user.AccessList.LastOrDefault().GrantType);
+    properties += "&amp;grant_type=password&amp;username=" + account["username"];
+    properties += "&amp;password=" + account["password"];
+    properties += "&amp;resource=https://graph.microsoft.com/";
+  }
+  else
+  {
+    properties += "&amp;scope=" + user.AccessList.LastOrDefault().Scope;
+  }
+  if (user.AccessList.LastOrDefault().GrantType == "refresh")
+  {
+    properties += "&amp;refresh_token=" + user.AccessList.LastOrDefault().AuthTokens.refresh_token + "&amp;grant_type=refresh_token";
+  }
+  if (user.AccessList.LastOrDefault().GrantType == "client_credentials") properties += "&amp;grant_type=client_credentials";
+  if (!string.IsNullOrEmpty(user.AccessList.LastOrDefault().AuthCode))
+  {
+    properties += "&amp;code=" + user.AccessList.LastOrDefault().AuthCode + "&amp;grant_type=authorization_code";
+  }
+  var content = new StringContent(properties, Encoding.UTF8, "application/x-www-form-urlencoded");
+  var res = httpClient.PostAsync(url, content).Result;
+  string resultJson = res.Content.ReadAsStringAsync().Result;
+  if (res.IsSuccessStatusCode)
+  {
+    user.AccessList.LastOrDefault().AuthTokens = JsonConvert.DeserializeObject&lt;MSGraphAuthTokens&gt;(resultJson);
+    result = true;
+  }
+}
+</pre>
+<p style="margin: 10px 0px 0px 5px; text-indent: 1em; text-align: right; font-weight: bold;">&gt;&gt;<a style="font-weight: bold;" href="https://github.com/TetsuroTakao/PreparForProgrammableAuthFlow" target="_new" rel="noopener">The code sample of this article</a></p>
+<p style="display: inline;"><img decoding="async" style="width: 300px;" src="/wp-content/uploads/2020/03/Run1.png" alt="" /></p>
+<p style="display: inline;"><img decoding="async" style="width: 300px;" src="/wp-content/uploads/2020/03/Run2.png" alt="" /></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2020/03/14/preparing-to-create-the-app-using-programmable-authentication-flow/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Get user information of Azure Active Directory account using Microsoft Graph API</title>
+		<link>https://blog.processtune.com/2020/02/29/get-user-information-of-azure-active-directory-account-using-microsoft-graph-api/</link>
+					<comments>https://blog.processtune.com/2020/02/29/get-user-information-of-azure-active-directory-account-using-microsoft-graph-api/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Sat, 29 Feb 2020 07:23:46 +0000</pubDate>
+				<category><![CDATA[Azure Active Directory]]></category>
+		<category><![CDATA[Microsoft Azure]]></category>
+		<category><![CDATA[Microsoft Graph]]></category>
+		<category><![CDATA[Office App]]></category>
+		<category><![CDATA[ReactJS.NET]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Visual Studio]]></category>
+		<category><![CDATA[未分類]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=5448</guid>
+
+					<description><![CDATA[Took a token at sign in using the ‘authorization code’ grant type authentication flow in the previous article. So the token has the &#8216;user.read&#8217; permission. Use the token, this article describes how to take user information of the Azure Active Directory account. &#62;&#62;The code sample of this article ・Setting configuration for development environment As first, [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin: 0px 0px 0px 0px; color: #000044; font-size: 0.9rem;">Took a token at sign in using the ‘authorization code’ grant type authentication flow in <a style="font-weight: bold;" href="https://blog.processtune.com/?p=5280" target="_new" rel="noopener">the previous article</a>. So the token has the &#8216;user.read&#8217; permission. Use the token, this article describes how to take user information of the Azure Active Directory account.</p>
+<p style="margin: 0px 0px 0px 5px; text-indent: 1em; text-align: right; font-weight: bold;">&gt;&gt;<a style="font-weight: bold;" href="https://github.com/TetsuroTakao/SetUserNameToView" target="_new" rel="noopener">The code sample of this article</a></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Setting configuration for development environment</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">As first, download the code sample, restore packages and run debug done, then modify &#8216;Sign In&#8217; action in the &#8216;Account&#8217; controller of [Controllers] folder at the Solution Explorer to usable for the development environment.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px; margin: 0px;">using Microsoft.AspNetCore.Mvc;
+
+namespace React.Sample.Webpack.CoreMvc.Controllers
+{
+  public class AccountController : Controller
+    {
+    [Route("Account/SignIn")]
+    [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
+    public void SignIn()
+    {
+      var tenant = "__YOUR TENANT__";//this grant_type allows common
+      var clientId = "__APP CLIENT ID__";
+      var redirectUri = "http://localhost:9457/home";
+      Response.Redirect("https://login.microsoftonline.com/" + tenant
+        + "/oauth2/v2.0/authorize?client_id=" + clientId + "&amp;redirect_uri="
+        + redirectUri + "&amp;grant_type=implicit&amp;response_type=code&amp;scope=User.Read");
+    }
+  }
+}
+</pre>
+<p style="margin: 10px 0px 0px 0px; text-indent: 1em;">Modify lines of the variable &#8216;tenant&#8217; and &#8216;clientId&#8217; to useable for the development environment(11th line and 12th line).</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">And open &#8216;Index&#8217; action in the &#8216;Home&#8217; controller of [Controllers] folder at the Solution Explorer, put a breakpoint at the 45th line. Then run debug and confirm acquiring &#8216;code&#8217; and &#8216;state&#8217; variables.</p>
+<p style="display: inline;"><img decoding="async" style="width: 300px;" src="/wp-content/uploads/2020/03/code.png" alt="" /></p>
+<p style="display: inline;"><img decoding="async" style="width: 300px;" src="/wp-content/uploads/2020/03/state.png" alt="" /></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Get User Information</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">Return to the [Home] controller of the [Controllers] folder at the Solution Explorer, insert code below before the line of putting the &#8216;signIn&#8217; variable to the &#8216;ViewBag.IsSignin&#8217; container at the [Index] action.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px; margin: 0px;">if (signIn) accountName = new AccessGraph().GetUser(token);
+if (!string.IsNullOrEmpty(accountName))
+{
+  //Regist '髙尾 哲朗（Tetsuro Takao）' as Azure Active Directory account.
+  accountName = string.Join("", Regex.Matches(accountName, @"[a-z | A-Z]*")).Trim();
+}
+ViewBag.AccountName = accountName;
+</pre>
+<p style="margin: 10px 0px 0px 0px; text-indent: 1em;">Insert code below to create the &#8216;GetUser&#8217; method in the &#8216;AccessGraph&#8217; class.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px; margin: 0px;">public string GetUser(string token)
+{
+    string result = string.Empty;
+    MSGraphUser user = null;
+    var url = $"https://graph.microsoft.com/v1.0/me/";
+    using (var httpClient = new HttpClient())
+    {
+        httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+        var res = httpClient.GetAsync(url).Result;
+        string resultJson = res.Content.ReadAsStringAsync().Result;
+        if (res.IsSuccessStatusCode)
+        {
+            user = JsonConvert.DeserializeObject(resultJson);
+            result = user.displayName;
+        }
+    }
+    return result;
+}
+
+public class MSGraphUser
+{
+    public string displayName { get; set; }
+    public string surname { get; set; }
+    public string givenName { get; set; }
+    public string id { get; set; }
+    public string userPrincipalName { get; set; }
+    public List businessPhones { get; set; }
+    public string jobTitle { get; set; }
+    public string mail { get; set; }
+    public string mobilePhone { get; set; }
+    public string officeLocation { get; set; }
+    public string preferredLanguage { get; set; }
+}
+</pre>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Exchange a view when sign in and sign out</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">At the last, Open the &#8216;_Layout.cshtml&#8217; in [Shared] folder of [Views] folder to modify a view. Modify like the below code as wrap the [a] tag of the &#8216;sign in&#8217; part.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px; margin: 0px;">&lt;div class="navbar navbar-inverse navbar-fixed-top"&gt;
+    &lt;div class="container"&gt;
+        &lt;div class="col-md-3"&gt;&lt;span&gt;@ViewBag.Title&lt;/span&gt;&lt;/div&gt;
+        &lt;div class="col-md-5"&gt;Menu items&lt;/div&gt;
+        &lt;span class="col-md-3"&gt;
+        @if (ViewBag.IsSignin)
+        {
+            &lt;span&gt;@ViewBag.AccountName&lt;/span&gt;
+        }
+        else
+        {
+            &lt;a href="/Account/SignIn" style="text-decoration: none;margin:0px;"&gt;
+            	...
+            &lt;/a&gt;
+        }
+        &lt;/span&gt;
+        &lt;div class="col-md-1"&gt;&lt;span&gt;@ViewBag.Message&lt;/span&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</pre>
+<p style="margin: 10px 0px 0px 5px; text-indent: 1em; text-align: right; font-weight: bold;">&gt;&gt;<a style="font-weight: bold;" href="https://github.com/TetsuroTakao/SetUserNameToView" target="_new" rel="noopener">The code sample of this article</a></p>
+<p style="display: inline;"><img decoding="async" style="width: 600px;" src="/wp-content/uploads/2020/03/GetUser.png" alt="" /></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2020/02/29/get-user-information-of-azure-active-directory-account-using-microsoft-graph-api/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Take token using &#039;authorized code&#039; grant type of Microsoft Graph API</title>
+		<link>https://blog.processtune.com/2020/01/31/programmable-authentication-flow-for-accessing-to-microsoft-graph/</link>
+					<comments>https://blog.processtune.com/2020/01/31/programmable-authentication-flow-for-accessing-to-microsoft-graph/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Fri, 31 Jan 2020 12:14:29 +0000</pubDate>
+				<category><![CDATA[Azure Active Directory]]></category>
+		<category><![CDATA[Microsoft Azure]]></category>
+		<category><![CDATA[Microsoft Graph]]></category>
+		<category><![CDATA[Office App]]></category>
+		<category><![CDATA[ReactJS.NET]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Visual Studio]]></category>
+		<category><![CDATA[未分類]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=5280</guid>
+
+					<description><![CDATA[Microsoft Graph API supports an authentication flow of The OAuth 2.0 Authorization Framework, there are four types of grant types of it (refer to the article). The &#8216;authorization code&#8217; grant type is one of them, and Microsoft Graph API returns the authorization code when corresponding to the request of the authorizing the Azure Active Directory [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin: 0px 0px 0px 0px; color: #000044; font-size: 0.9rem;">Microsoft Graph API supports an authentication flow of The OAuth 2.0 Authorization Framework, there are four types of grant types of it (refer to the article). The &#8216;authorization code&#8217; grant type is one of them, and Microsoft Graph API returns the authorization code when corresponding to the request of the authorizing the Azure Active Directory account.<br />
+In the authentication flow, an app uses this authorization code to request a token which is used for accessing user resources.<br />
+Microsoft Identity Platform provides a feature that these processes that are from calling authorization an account to taking a token complete automatically. And a token acquired is kept in the cache provided by a feature of the Microsoft Identity Platform.<br />
+If the app wants to use correctly several tokens in an individual situation, it is good that the app interrupts a code or a token and changes to minimum scopes properly to access individual resources.<br />
+For example, in case of the app login as an account of Azure Active Directory and sharing a resource owned by login user to another user and post a message to Microsoft Teams as a login user. In this case, the token acquired at the app login should have all scopes that permitted to execute. there are to post to Microsoft Teams, to read all groups of the domain, to access login user&#8217;s resources.<br />
+It is not bad that the Azure Active Directory application has all scopes, but it is not good to request to acquire a token that has all scopes because the individual request is not needed for all scopes.<br />
+Therefore, it is good to choose properly in case of using the Microsoft Identity Platform and in case of taking a token per minimum scopes.<br />
+This article how to take authorization code and throw requests a token using the code.</p>
+<p style="margin: 0px 0px 0px 5px; text-indent: 1em; text-align: right; font-weight: bold;">&gt;&gt;<a style="font-weight: bold;" href="https://github.com/TetsuroTakao/GetUserInformation" target="_new" rel="noopener">The code sample of this article</a></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Setting configuration for development environment</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">As first, this article using <a style="font-weight: bold;" href="https://github.com/TetsuroTakao/ShowUserInformation" target="_new" rel="noopener">The code sample</a> of <a style="font-weight: bold;" href="https://blog.processtune.com/?p=5212" target="_new" rel="noopener">the article</a> which implements already the ‘authorization code’ grant type authentication flow. Download the code sample, restore packages and run debug done, then modify &#8216;Sign In&#8217; action in the &#8216;Account&#8217; controller of [Controllers] folder at the Solution Explorer to usable for the development environment.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px; margin: 0px;">using Microsoft.AspNetCore.Mvc;
+
+namespace React.Sample.Webpack.CoreMvc.Controllers
+{
+  public class AccountController : Controller
+    {
+    [Route("Account/SignIn")]
+    [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
+    public void SignIn()
+    {
+      var tenant = "__YOUR TENANT__";//this grant_type allows common
+      var clientId = "__APP CLIENT ID__";
+      var redirectUri = "http://localhost:9457/home";
+      Response.Redirect("https://login.microsoftonline.com/" + tenant
+        + "/oauth2/v2.0/authorize?client_id=" + clientId + "&amp;redirect_uri="
+        + redirectUri + "&amp;grant_type=implicit&amp;response_type=code&amp;scope=User.Read");
+    }
+  }
+}
+</pre>
+<p style="margin: 10px 0px 0px 0px; text-indent: 1em;">Modify lines of the variable &#8216;tenant&#8217; and &#8216;clientId&#8217; to useable for the development environment(11th line and 12th line).</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">And open &#8216;Index&#8217; action in the &#8216;Home&#8217; controller of [Controllers] folder at the Solution Explorer, put a breakpoint at the 45th line. Then run debug and confirm acquiring &#8216;code&#8217; and &#8216;state&#8217; variables.</p>
+<p style="display: inline;"><img decoding="async" style="width: 300px;" src="/wp-content/uploads/2020/03/code.png" alt="" /></p>
+<p style="display: inline;"><img decoding="async" style="width: 300px;" src="/wp-content/uploads/2020/03/state.png" alt="" /></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Get token</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">Insert code below after the place that acquiring a &#8216;state&#8217; variable, and modify lines of the variable &#8216;tenant&#8217;, &#8216;clientId&#8217; and &#8216;secret&#8217; to useable for the development environment.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px; margin: 0px;">var signIn = false;
+var token = string.Empty;
+if (!string.IsNullOrEmpty(code))
+{
+  var tenant = "__YOUR TENANT__";//this grant_type allows common
+  var clientId = "__APP CLIENT ID__";
+  var redirectUri = "http://localhost:9457/home";
+  var secret = "__CLIENT SECRET__";
+  token = new AccessGraph().GetToken(clientId, secret, redirectUri, "", code, tenant, "user.read");
+  if (!string.IsNullOrEmpty(token)) signIn = true;
+}
+ViewBag.IsSignin = signIn;
+</pre>
+<p style="margin: 10px 0px 0px 0px; text-indent: 1em;">Add a new class file name that is ‘AccessGraph.cs’ at the root of the solution, and create the ‘GetToken’ method of the ‘AccessGraph’ class. (<a style="font-weight: bold;" href="https://github.com/TetsuroTakao/ShowUserInformation" target="_new" rel="noopener">the code sample</a> includes it)</p>
+<p style="display: inline;"><img decoding="async" style="width: 600px;" src="/wp-content/uploads/2020/03/AccessGraph.png" alt="" /></p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px; margin: 0px;">namespace React.Sample.Webpack.CoreMvc
+{
+  public class AccessGraph
+  {
+    public string GetToken(string clientid, string secret, string redirect, string refreshtoken,
+                           string authCode, string tenant, string resource = "user.read")
+    {
+      string result = string.Empty;
+      MSGraphAuthTokens tokens = null;
+      var url = $"https://login.microsoftonline.com/" + tenant + "/oauth2/v2.0/token";// AAD
+      url = $"https://login.microsoftonline.com/common/oauth2/token";// live API
+      using (var httpClient = new HttpClient())
+      {
+        var properties = "client_id=" + clientid + "&amp;client_secret=" + secret + "&amp;scope=" + resource;
+        properties += "&amp;redirect_uri=" + redirect;
+        if (!string.IsNullOrEmpty(refreshtoken))
+        {
+          properties += "&amp;refresh_token=" + refreshtoken + "&amp;grant_type=refresh_token";
+        }
+        if (!string.IsNullOrEmpty(authCode))
+        {
+          properties += "&amp;code=" + authCode + "&amp;grant_type=authorization_code";
+        }
+        var content
+              = new StringContent(properties, Encoding.UTF8, "application/x-www-form-urlencoded");
+        var res = httpClient.PostAsync(url, content).Result;
+        string resultJson = res.Content.ReadAsStringAsync().Result;
+        if (res.IsSuccessStatusCode)
+        {
+          tokens = JsonConvert.DeserializeObject(resultJson);
+          result = tokens.access_token;
+        }
+      }
+      return result;
+    }
+  }
+  public class MSGraphAuthTokens
+  {
+    public string access_token { get; set; }
+    public string token_type { get; set; }
+    public string expires_in { get; set; }
+    public string scope { get; set; }
+    public string refresh_token { get; set; }
+    public string id_token { get; set; }
+  }
+}
+</pre>
+<p style="margin: 10px 0px 0px 0px; text-indent: 1em;">Put a breakpoint after the line of putting the &#8216;signIn&#8217; variable to the &#8216;ViewBag.IsSignin&#8217; container (56th line) to confirm succeed acquiring token since the &#8216;sign&#8217; variable is &#8216;true&#8217;.</p>
+<p style="display: inline;"><img decoding="async" style="width: 600px;" src="/wp-content/uploads/2020/03/signInConfirm.png" alt="" /></p>
+<p style="margin: 10px 0px 0px 5px; text-indent: 1em; text-align: right; font-weight: bold;">&gt;&gt;<a style="font-weight: bold;" href="https://github.com/TetsuroTakao/GetUserInformation" target="_new" rel="noopener">The code sample of this article</a></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2020/01/31/programmable-authentication-flow-for-accessing-to-microsoft-graph/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>How to acquire an authorization code for Microsoft Graph API with login feature of ASP.NET Core web app</title>
+		<link>https://blog.processtune.com/2019/12/26/how-to-acquire-an-authorization-code-of-microsoft-graph-api-login-feature-with-asp-net-core-web-app/</link>
+					<comments>https://blog.processtune.com/2019/12/26/how-to-acquire-an-authorization-code-of-microsoft-graph-api-login-feature-with-asp-net-core-web-app/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Thu, 26 Dec 2019 02:33:27 +0000</pubDate>
+				<category><![CDATA[Azure Active Directory]]></category>
+		<category><![CDATA[Microsoft Azure]]></category>
+		<category><![CDATA[Microsoft Graph]]></category>
+		<category><![CDATA[Office App]]></category>
+		<category><![CDATA[Office Web App]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Visual Studio]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=5212</guid>
+
+					<description><![CDATA[Microsoft Graph API provides a super-easy way to create an app that includes an authentication feature for the Azure Active Directory account. And Azure portal provides a code sample of various types of app. Its code sample has vast features such as login, logout or login state cache and so on using the Microsoft Identity [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin: 0px 0px 0px 0px; color: #000044; font-size: 0.9rem;">Microsoft Graph API provides a super-easy way to create an app that includes an authentication feature for the Azure Active Directory account. And Azure portal provides a code sample of various types of app. Its code sample has vast features such as login, logout or login state cache and so on using the Microsoft Identity Platform.<br />
+This article describes how to acquire the authorization code in case of excepting using the Microsoft Identity Platform.</p>
+<p style="margin: 0px 0px 0px 5px; text-indent: 1em; text-align: right; font-weight: bold;">&gt;&gt;<a style="font-weight: bold;" href="https://github.com/TetsuroTakao/ShowUserInformation" target="_new" rel="noopener">The code sample of this article</a> (refer to the annotation at the end of this article)</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Create client app with ReactJS.NET</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">Please create the ASP.NET Core web app of <a style="font-weight: bold;" href="https://reactjs.net/" target="_new" rel="noopener">ReactJS.NET</a> as the &#8216;reactnet-webpack&#8217;, if needs please refer to <a style="font-weight: bold;" href="https://blog.processtune.com/?p=5032" target="_new" rel="noopener">the article</a> which described creating the ASP.NET Core web app of ReactJS.NET as &#8216;reactnet-vanilla&#8217;. This article describes instead of it, how to create the ASP.NET Core web app of ReactJS.NET as &#8216;<a style="font-weight: bold;" href="https://reactjs.net/features/react-helmet.html" target="_new" rel="noopener">reactnet-webpack</a>&#8216;.</p>
+<p style="display: inline;"><img decoding="async" style="width: 600px;" src="/wp-content/uploads/2020/03/reacthelmet.png" alt="" /></p>
+<p style="margin: 10px 0px 0px 0px; text-indent: 1em;">Create an app project a folder at any place and launch the PowerShell then put a command like a web page above.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px; margin: 0px;">***&gt; dotnet new -i React.Template
+***&gt; dotnet new reactnet-webpack
+***&gt; dotnet run
+</pre>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">***any place</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">Wait for the BuildServiceProvider builds the service once for the first time.</p>
+<p style="margin: 10px 0px 0px 0px; text-indent: 1em;">The hosting environment is launched(refer to <a style="font-weight: bold;" href="https://blog.processtune.com/?p=5032" target="_new" rel="noopener">the article</a>), press [Ctrl]+[C] to terminate it, and close the PowerShell.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">Launch windows explorer and go to the folder, then open created solution file with Visual Studio(open .sln file at second time or .csproj file at first time).</p>
+<p style="display: inline;"><img decoding="async" style="width: 600px;" src="/wp-content/uploads/2020/03/openSolution.png" alt="" /></p>
+<p style="margin: 10px 0px 0px 0px; text-indent: 1em;">At first, build a solution before do debug, when the build has completed, Visual studio can launch a host and a client both. So when Visual Studio can launch the app, Select [React.Sample.Webpack.CoreMvc] list item of [Start Debugging] box and press it. After building the project complete, Visual Studio launches the console as the host and the browser as the client app.</p>
+<p style="display: inline;"><img decoding="async" style="width: 350px;" src="/wp-content/uploads/2020/03/reactJShost.png" alt="" /><img decoding="async" style="width: 250px;" src="/wp-content/uploads/2020/03/reactjsDemoHome.png" alt="" /></p>
+<p style="margin: 10px 0px 0px 0px; text-indent: 1em;">Modify a view and a controller instead of using the React Component for now. Open a controller from the Solution Explorer, open the HomeController.cs in [Controllers] folder of [SampleApp] project and insert three rows above 40th ([return View…] ) row.</p>
+<p style="display: inline;"><img decoding="async" style="width: 600px;" src="/wp-content/uploads/2020/03/ModifyHomeController.png" alt="" /></p>
+<p style="margin: 10px 0px 0px 0px; text-indent: 1em;">Next, to modify a view, open the _Layout.cshtml in [Shared] folder of [Views] folder of [SampleApp] project. And insert the below code in the first child of [Body] tag (between the [Body] start tag and the [@RenderBody] row).</p>
+<p style="display: inline;"><img decoding="async" style="width: 600px;" src="/wp-content/uploads/2020/03/ModifyLayoutChtml.png" alt="" /></p>
+<p style="margin: 10px 0px 0px 0px; text-indent: 1em;">Pres F5 key to run the app.</p>
+<p style="display: inline;"><img decoding="async" style="width: 600px;" src="/wp-content/uploads/2020/03/setNavibar.png" alt="" /></p>
+<p style="margin: 10px 0px 0px 0px; text-indent: 1em;">Swap the 17th row &#8216;Signin&#8217; character of the _Layout.cshtml to the below code.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px; margin: 0px;">&lt;a href="/Account/SignIn" style="text-decoration: none;margin:0px;"&gt;
+&lt;svg width="180" height="30" xmlns="http://www.w3.org/2000/svg"&gt;
+ &lt;style type="text/css"&gt;
+	.fil0:hover {
+	    fill: #4B4B4B;
+	}
+	.fnt0 {
+	    font-size: 260px;
+	    font-family: 'Segoe UI Semibold', 'Segoe UI';
+	    text-decoration: none;
+	}
+ &lt;/style&gt;
+ &lt;g&gt;
+  &lt;title&gt;background&lt;/title&gt;
+  &lt;rect fill="none" id="canvas_background" height="32" width="182" y="-1" x="-1"/&gt;
+ &lt;/g&gt;
+ &lt;g&gt;
+  &lt;title&gt;the functions will work if login completed&lt;/title&gt;
+  &lt;g stroke="null" id="svg_8"&gt;
+   &lt;rect stroke="null" x="0" y="0" id="svg_1" fill="white" height="29.99781" width="180.15944"
+    class="fil0"/&gt;
+  &lt;/g&gt;
+  &lt;g stroke="null" id="svg_10"&gt;
+   &lt;rect stroke="null" id="svg_2" fill="#F35325" height="8" width="8" y="5" x="2"/&gt;
+   &lt;rect stroke="null" id="svg_3" fill="#81BC06" height="8" width="8" y="5" x="11"/&gt;
+   &lt;rect stroke="null" id="svg_4" fill="#05A6F0" height="8" width="8" y="14" x="2"/&gt;
+   &lt;rect stroke="null" id="svg_5" fill="#FFBA08" height="8" width="8" y="14" x="11"/&gt;
+  &lt;/g&gt;
+  &lt;g id="svg_9" stroke="null"&gt;
+   &lt;text x="445" y="333" id="svg_6" class="fnt0" fill="black" stroke="null"
+    transform="matrix(0.05,0,0,0.06,0,0) "&gt;Sign in to Microsoft Graph&lt;/text&gt;
+  &lt;/g&gt;
+ &lt;/g&gt;
+&lt;/svg&gt;
+&lt;/a&gt;
+</pre>
+<p style="margin: 10px 0px 0px 0px; text-indent: 1em;">This SVG code created at <a style="font-weight: bold;" href="https://editor.method.ac/" target="_new" rel="noopener">the Method Draw</a>, so it is OK which using text or using SVG. It is important that parameters of [a] tag. In the case of using Method Draw, open the site and create some draw, select [View] menu item and select [Source&#8230;] after that, copy the code and paste to _Layout.cshtml.</p>
+<p style="display: inline;"><img decoding="async" style="width: 600px;" src="/wp-content/uploads/2020/03/methodDraw.png" alt="" /></p>
+<p style="display: inline;"><img decoding="async" style="width: 300px;" src="/wp-content/uploads/2020/03/ViewSource.png" alt="" /><img decoding="async" style="width: 300px;" src="/wp-content/uploads/2020/03/CopySource.png" alt="" /></p>
+<p style="margin: 10px 0px 0px 0px; text-indent: 1em;">Pres F5 key to run the app.</p>
+<p style="display: inline;"><img decoding="async" style="width: 600px;" src="/wp-content/uploads/2020/03/setLogin.png" alt="" /></p>
+<p style="margin: 10px 0px 0px 0px; text-indent: 1em;">The next step is creating a controller and an action for [href] attribute of [a] tag. Create &#8216;SignIn&#8217; action in the &#8216;Account&#8217; controller which adds to [Controllers] folder at the Solution Explorer as AccountController.cs file.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">Right-click on the [Controllers] folder and select the [Add] item, continue to select the [Class] item.</p>
+<p style="display: inline;"><img decoding="async" style="width: 600px;" src="/wp-content/uploads/2020/03/addcontroller.png" alt="" /></p>
+<p style="display: inline;"><img decoding="async" style="width: 600px;" src="/wp-content/uploads/2020/03/addAccountcontroller.png" alt="" /></p>
+<p style="margin: 10px 0px 0px 0px; text-indent: 1em;">Define the below code in the AccountController.cs file.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px; margin: 0px;">using Microsoft.AspNetCore.Mvc;
+
+namespace React.Sample.Webpack.CoreMvc.Controllers
+{
+  public class AccountController : Controller
+  {
+    [Route("Account/SignIn")]
+    [ResponseCache(Location = ResponseCacheLocation.None, NoStore = true)]
+    public void SignIn()
+    {
+       var tenant = "__YOUR TENANT__";//this grant_type allows common
+       var clientId = "__APP CLIENT ID__";
+       var redirectUri = "http://localhost:9457/home";
+       Response.Redirect("https://login.microsoftonline.com/" + tenant
+         + "/oauth2/v2.0/authorize?client_id=" + clientId + "&amp;redirect_uri="
+         + redirectUri + "&amp;grant_type=implicit&amp;response_type=code&amp;scope=User.Read"
+         );
+    }
+  }
+}
+</pre>
+<p style="margin: 10px 0px 0px 0px; text-indent: 1em;">Insert below code into the first line in [Index] action of the HomeController.cs file.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px; margin: 0px;">var query = this.Url.ActionContext.HttpContext.Request.Query;
+var code = string.Empty;
+var state = string.Empty;
+if (query.ContainsKey("code")) code = query["code"];
+if (query.ContainsKey("session_state")) state = query["session_state"];
+</pre>
+<p style="margin: 10px 0px 0px 0px; text-indent: 1em;">Set a breakpoint anywhere after the place that taking the &#8216;state&#8217; string variable.</p>
+<p style="display: inline;"><img decoding="async" style="width: 300px;" src="/wp-content/uploads/2020/03/code.png" alt="" /><img decoding="async" style="width: 300px;" src="/wp-content/uploads/2020/03/state.png" alt="" /></p>
+<p style="margin: 10px 0px 0px 5px; text-indent: 1em; text-align: right; font-weight: bold;">&gt;&gt;<a style="font-weight: bold;" href="https://github.com/TetsuroTakao/ShowUserInformation" target="_new" rel="noopener">The code sample of this article</a></p>
+<p style="margin: 10px 0px 0px 0px; text-indent: 1em;">This sample not includes the [npm] and the [Packeges].</p>
+<p style="display: inline;"><img decoding="async" style="width: 600px;" src="/wp-content/uploads/2020/03/nugetList.png" alt="" /></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2019/12/26/how-to-acquire-an-authorization-code-of-microsoft-graph-api-login-feature-with-asp-net-core-web-app/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Download a client app includes an authentication feature for Azure Active Directory account</title>
+		<link>https://blog.processtune.com/2019/11/30/download-a-client-app-includes-an-authentication-feature-for-azure-active-directory-account/</link>
+					<comments>https://blog.processtune.com/2019/11/30/download-a-client-app-includes-an-authentication-feature-for-azure-active-directory-account/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Sat, 30 Nov 2019 06:16:16 +0000</pubDate>
+				<category><![CDATA[Azure Active Directory]]></category>
+		<category><![CDATA[Microsoft Azure]]></category>
+		<category><![CDATA[Microsoft Graph]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Visual Studio]]></category>
+		<category><![CDATA[未分類]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=5285</guid>
+
+					<description><![CDATA[Microsoft Azure provides a super-easy way to create an app that includes an authentication feature for the Azure Active Directory account. There are only three steps, the first step is creating the Azure Active Directory application, the next step is to download code from the Quickstart section, then the last step is executing app from [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin:0px 0px 0px 0px;color:#000044;font-size:0.9rem;font-family:" segoe="" ui";"="">Microsoft Azure provides a super-easy way to create an app that includes an authentication feature for the Azure Active Directory account.<br />
+There are only three steps, the first step is creating the Azure Active Directory application, the next step is to download code from the Quickstart section, then the last step is executing app from Visual studio. It is no coding but is the operation of Visual Studio.<br />
+This super-easy way is described in this article.</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Create Azure Active Directory application</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;"><a href="https://blog.processtune.com/?p=5085" target="_new" style="font-weight:bold;" rel="noopener">The previous article</a> described an overview of the authentication feature provided by Microsoft Graph API. And it authorizes the Azure Active Directory account as four types of grant flow of OAuth 2.0. <a href="https://blog.processtune.com/?p=5085" target="_new" style="font-weight:bold;" rel="noopener">The article</a> also described the &#8216;authorization code&#8217; grant type of authentication as the basic type. Amid described it, also how to create the Azure Active Directory application was described. So please refer to <a href="https://blog.processtune.com/?p=5085" target="_new" style="font-weight:bold;" rel="noopener">the article</a>.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;"><a href="https://blog.processtune.com/?p=5085" target="_new" style="font-weight:bold;" rel="noopener">The article</a> described using &#8216;OAuth 2.0 &lt;debugger/&gt;&#8217; instead of a client app. This article describes how to download a client app from the Azure portal and confirm the execution of its authentication flow.</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Download the code of an app</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">When going to the Azure portal and select [Azure Active Directory] – [App registrations] – target application select, it shows [Overview] section, so in case of select [Quickstart] section, it shows [Download the code sample] button. Press [Make this change for me] button of [Step 1] section.</p>
+<p style="display:inline"><img decoding="async" src="/wp-content/uploads/2020/03/step1configure.png" alt="" style="width:300px;"><img decoding="async" src="/wp-content/uploads/2020/03/QuickstartStep1.png" alt="" style="width:300px;"></p>
+<p style="margin: 10px 0px 0px 0px;text-indent:1em;">It configures an app to use a redirect URL for the local development environment with the port number of IIS Express.</p>
+<p style="display:inline"><img decoding="async" src="/wp-content/uploads/2020/03/QuickstartStep1Done.png" alt="" style="width:600px;"></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Visual Studio common pattern to open the file created under other environments.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Steps below do show this code sample but these steps are common steps that have to do for opening the file created under other environments.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">If the download is done and extracts it then right-click at the file of the extracted folder and select [Properties] item of the context menu for unlocking file protection.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">It unlocked, open [sln] file with Visual Studio.</p>
+<p style="display:inline"><img decoding="async" src="/wp-content/uploads/2020/03/UnlockFileSelect.png" alt="" style="width:400px;"><img decoding="async" src="/wp-content/uploads/2020/03/Unlock.png" alt="" style="width:200px;"></p>
+<p style="display:inline"><img decoding="async" src="/wp-content/uploads/2020/03/FileOpen.png" alt="" style="width:600px;"></p>
+<p style="margin: 10px 0px 0px 0px;text-indent:1em;">Amid file open with Visual Studio, Visual Studio show the confirmation to restart under a different credential if the code asserts more permission needs &#8216;run as administrator&#8217;.</p>
+<p style="display:inline"><img decoding="async" src="/wp-content/uploads/2020/03/FileOpenConfirm.png" alt="" style="width:600px;"></p>
+<p style="margin: 10px 0px 0px 0px;text-indent:1em;">And also shows confirmation to open the project because the code is not created in a fully trusted environment for the PC.</p>
+<p style="display:inline"><img decoding="async" src="/wp-content/uploads/2020/03/FileOpenConfirm2.png" alt="" style="width:600px;"></p>
+<p style="margin: 10px 0px 0px 0px;text-indent:1em;">When the solution(or project) that is not created with the PC opens for the first time, it is good to do that &#8216;Restore NuGet Packages&#8217; which it is necessary or not.</p>
+<p style="display:inline"><img decoding="async" src="/wp-content/uploads/2020/03/restoreNuget.png" alt="" style="width:600px;"></p>
+<p style="margin: 10px 0px 0px 0px;text-indent:1em;">As of press a list item of [Start Debugging] box([IIS Express] selected), the app shows login confirmation with an explanation that the app access to user resources. After the second time, the app shows the Account ID input dialog, the app continues the Password input dialog.</p>
+<p style="display:inline"><img decoding="async" src="/wp-content/uploads/2020/03/login.png" alt="" style="width:300px;"><img decoding="async" src="/wp-content/uploads/2020/03/password.png" alt="" style="width:300px;"></p>
+<p style="margin: 10px 0px 0px 0px;text-indent:1em;">Trancesion to Home of app when login process complete.</p>
+<p style="display:inline"><img decoding="async" src="/wp-content/uploads/2020/03/pageStart.png" alt="" style="width:600px;"></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2019/11/30/download-a-client-app-includes-an-authentication-feature-for-azure-active-directory-account/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Microsoft Graph API provides several grant types of The OAuth 2.0 Authorization Framework</title>
+		<link>https://blog.processtune.com/2019/10/30/microsoft-graph-api-provides-several-grant-types-of-the-oauth-2-0-authorization-framework/</link>
+					<comments>https://blog.processtune.com/2019/10/30/microsoft-graph-api-provides-several-grant-types-of-the-oauth-2-0-authorization-framework/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Wed, 30 Oct 2019 08:16:01 +0000</pubDate>
+				<category><![CDATA[Azure Active Directory]]></category>
+		<category><![CDATA[Microsoft Azure]]></category>
+		<category><![CDATA[Microsoft Graph]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Visual Studio]]></category>
+		<category><![CDATA[未分類]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=4873</guid>
+
+					<description><![CDATA[If your application can’t use OAuth 2.0 authorization flow as a user-interactive flow, such as RPA(Robotic Process Automation) or observation system for some event, it is good that use OAuth 2.0 authorization flow with grant_type parameter as password or client_credentials. This article describes how to use properly these two cases. ・User-interactive type and user-less type [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin: 0px 0px 0px 0px; color: #000044; font-size: 0.9rem;">If your application can’t use OAuth 2.0 authorization flow as a user-interactive flow, such as RPA(Robotic Process Automation) or observation system for some event, it is good that use OAuth 2.0 authorization flow with grant_type parameter as password or client_credentials.<br />
+This article describes how to use properly these two cases.</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・User-interactive type and user-less type flow</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">An app which observes events of a system or executes some function, RPA also have to access to some resource. And when access to some resources, an app has to be authorized to access some resources by the resource owner.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">In case of an app to access a resource managed by Microsoft Graph, an app can use Microsoft Graph API which solves these processes.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">Microsoft Graph API provides several features such as exposing the Office 365 API, resources management the Azure Active Directory. And provides the authentication feature that is a fundamental feature. The authentication feature of Microsoft Graph API supports WS-Fed, SAML, OAuth 2.0, and OpenID Connect.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">Particularly OAuth 2.0 is programmable flow, so this article describes how to control the OAuth 2.0 flow of Microsoft Graph API.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;"><a style="font-weight: bold;" href="https://tools.ietf.org/html/rfc6749" target="_new" rel="noopener">The OAuth 2.0 Authorization Framework</a> defines user-interaction type flow( ‘authorization_code’ grant flow and ‘implicit’ grant flow), and user-less type flows(‘client_credentials’ grant flow and ‘password’ grant flow).<br />
+So ‘client_credentials’ grant flow and ‘password’ grant flow are usable to an app such as observes events of a system, executes some function or RPA.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">OAuth 2.0 defines a mechanism that an app how to access to resources of a resource owner as below.</p>
+<p style="margin: 0px 0px 0px 20px;">1. An app requests for an authorization server to acquire code which represents a resource owner is log in. Meanwhile, an authorization server returns a confirmation form to an app for a user allowing access to user resources. An app waits for a user to allow.</p>
+<p style="margin: 0px 0px 0px 20px;">2. When a user allows access to user resources, an authorization server returns a code to an app, then an app sends a code to a resource server.</p>
+<p style="margin: 0px 0px 0px 20px;">3. Resource server issues access token to an app for an app to access the resource of the owner.</p>
+<p style="margin: 10px 0px 0px 0px; text-indent: 1em;">The &#8216;client_credentials&#8217; grant flow and the ‘password’ grant flow skips &#8216;1&#8217; step and &#8216;2&#8217; step Instead, an app send credential to the resource server on step &#8216;2&#8217;.</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Grant type client_credentials flow</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">An app uses a credential to acquire a token that Microsoft Graph API provided has information which an account and resource that the account can access, maintenance or search. The ‘client_credentials’ grant flow uses credential for an impersonated user which is kept at Microsoft Azure Active Directory application.</p>
+<p style="margin: 0px 0px 0px 5px; text-indent: 1em; text-align: right; font-weight: bold;">&gt;&gt;The article &#8216;<a href="https://blog.processtune.com/?p=5085" target="_new" rel="noopener">Create Azure Active Directory application</a>&#8216;</p>
+<p style="margin: 10px 0px 0px 0px; text-indent: 1em;">Use the Application (client) ID which Azure Active Directory application issues as an account when using the &#8216;client_cledential&#8217; grant flow. In &#8216;The OAuth 2.0 Authorization Framework&#8217;, it says &#8216;Entity&#8217;. For this entity, the Azure Active Directory application issues the Client secret as a password of this account.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">The entity in Microsoft Graph API has default access permission to several resources. Reading basic information of Azure Active Directory accounts and so on.</p>
+<p style="margin: 0px 0px 0px 5px; text-indent: 1em; text-align: right; font-weight: bold;">&gt;&gt;The article &#8216;<a style="font-weight: bold;" href="https://blog.processtune.com/?p=5099" target="_new" rel="noopener">How to set attributes of Azure Active Directory application for impersonated users</a>&#8216;</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Grant type password flow</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">The &#8216;password&#8217; grant flow asserts the user explicitly, the &#8216;client_credentials&#8217; grant flow uses an impersonated user. So when using &#8216;password&#8217; grant_type flow, Microsoft Graph API returns an access_token that has several permissions depend on the login user.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">For Example, add delegate permit &#8216;User.Read.All&#8217; to the Azure Active Directory application.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">&nbsp;</p>
+<p style="display: inline;"><img decoding="async" style="width: 600px;" src="/wp-content/uploads/2020/03/addpermission.png" alt=""></p>
+<p style="margin: 10px 0px 0px 0px; text-indent: 1em;">Then acquire two access tokens both the &#8216;client_credentials&#8217; grant type and the &#8216;password&#8217; grant type with the Postman. At the last, send a post request to URL &#8216;https://graph.microsoft.com/v1.0/users&#8217; with an access token which is acquired.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">&nbsp;</p>
+<p style="display: inline;"><img decoding="async" style="width: 600px;" src="/wp-content/uploads/2020/03/gettokenClientCredentials.png" alt=""></p>
+<p style="margin: 0px 0px 0px 5px; text-indent: 1em; text-align: right; font-weight: bold;">&gt;&gt;The article &#8216;<a style="font-weight: bold;" href="https://blog.processtune.com/?p=5099" target="_new" rel="noopener">How to set attributes of Azure Active Directory application for impersonated users</a>&#8216;</p>
+<p style="display: inline;"><img decoding="async" style="width: 600px;" src="/wp-content/uploads/2020/03/gettokenPassword.png" alt=""></p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">&nbsp;</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px;">key : username and value : user account@domain name.
+key : password and value : password of user account.
+key : client_id and value : copy from Application (client) ID of Azure portal.
+key : client _secretand and value : copy from where kept place at when client secret issued.
+key : grant_type and value : put 'password'.
+</pre>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">The access token using the &#8216;client_credentials&#8217; grant type will return fail, and the &#8216;password&#8217; grant type will return users list of the domain.</p>
+<p style="display: inline;"><img decoding="async" style="width: 600px;" src="/wp-content/uploads/2020/03/getUserList.png" alt=""></p>
+<p style="margin: 10px 0px 0px 0px; text-indent: 1em;">Thus, please check the chart below.</p>
+<table>
+<tbody>
+<tr>
+<td style="color: #ffffff; background-color: #444444; width: 20%;">Microsoft account</td>
+<td style="color: #ffffff; background-color: #444444; width: 80%;" colspan="3">Organization account</td>
+</tr>
+<tr>
+<td style="color: #ffffff; background-color: #444444;" colspan="4">Microsoft Graph authentication grant type</td>
+</tr>
+<tr>
+<td>client_credentials*1</td>
+<td colspan="2">password</td>
+<td style="width: 29%;">client_credentials</td>
+</tr>
+<tr>
+<td style="color: #ffffff; background-color: #444444;" colspan="4">Azure Active Directory application API permissions type</td>
+</tr>
+<tr>
+<td>Application permission</td>
+<td>Application permission</td>
+<td style="width: 24%;">Delegate permission</td>
+<td>Application permission*2</td>
+</tr>
+<tr>
+<td style="background-color: #ffffff;">Using individual Azure Active Directory applications per feature.</td>
+<td style="background-color: #ffffff;">Use to access Microsoft Graph resource or executing common features that sending a mail, post a message to the Microsoft Teams and so on.</td>
+<td style="background-color: #ffffff;">Use to access resources of Azure Active Directory user or executing a feature that Admin Consent Required.</td>
+<td style="background-color: #ffffff;">Use to access Microsoft Graph resource or executing common features that sending a mail, post a message to the Microsoft Teams and so on.</td>
+</tr>
+</tbody>
+</table>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">*1:Can&#8217;t use password grant type flow for the Microsoft Account.</p>
+<p style="margin: 0px 0px 0px 28px; text-indent: -1.4em;">*2:Set maximum API permissions to the Azure Active Directory application, then use minimum scope of the feature when request token.</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2019/10/30/microsoft-graph-api-provides-several-grant-types-of-the-oauth-2-0-authorization-framework/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

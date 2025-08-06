@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>CodeZine &#8211; Processtune Blog</title>
+	<atom:link href="https://blog.processtune.com/category/technical-memo/silverlight/codezine/feed/" rel="self" type="application/rss+xml" />
+	<link>https://blog.processtune.com/</link>
+	<description>Articles offered from Microsoft MVP</description>
+	<lastBuildDate>Wed, 25 May 2011 23:48:46 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.8.2</generator>
+
+<image>
+	<url>/wp-content/uploads/2023/03/cropped-Presentation-32x32.png</url>
+	<title>CodeZine &#8211; Processtune Blog</title>
+	<link>https://blog.processtune.com/</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>「WCF RIA Servicesは.NET Data Serviceの後継技術ではない」訂正記事の作成</title>
+		<link>https://blog.processtune.com/2011/05/26/%e3%80%8cwcf-ria-services%e3%81%af-net-data-service%e3%81%ae%e5%be%8c%e7%b6%99%e6%8a%80%e8%a1%93%e3%81%a7%e3%81%af%e3%81%aa%e3%81%84%e3%80%8d%e8%a8%82%e6%ad%a3%e8%a8%98%e4%ba%8b%e3%81%ae%e4%bd%9c/</link>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Wed, 25 May 2011 23:48:46 +0000</pubDate>
+				<category><![CDATA[CodeZine]]></category>
+		<guid isPermaLink="false">http://www.processtune.com/blog/?p=200</guid>
+
+					<description><![CDATA[訂正内容詳細 本稿5ページの「WCF RIA Servicesは、WCF ServiceにADO.NET Data Serviceを追加したWCF Data Serviceの後継技術です。」という記載は間違っております。 WCF RIA Servicesは、正式リリースまで「.NET RIA Services」として開発が続けられていた経緯があり、正式リリースでWCF RIA Servicesと呼ばれるようになりました。この経緯について筆者は「.NET RIA ServicesがADO.NET Data Servicesの通信フレームワークを使用できること」を「.NET RIA ServicesがADO.NET Data Servicesを包含している」と同様の通信フレームワークを使っていると誤認識しました。さらに「WCF Data Servicesが旧ADO.NET Data Services」であることにつても、上記同様に「WCF RIA ServicesがWCF Data Servicesを包含している」と混同して、.NET Data Servicesの後継技術としてWCF RIA Servicesとなったと誤認識しておりました。 WCF RIA ServicesとWCF Data Servicesは全く別の技術ですので、この記載を削除します。 （旧） WCF RIA Servicesは、WCF ServiceにADO.NET Data Serviceを追加したWCF Data Serviceの後継技術です。機能としては、WCF RIA Servicesには、データのクライアントでの変更追跡と他のユーザーとの同時実行制御を行う機能が付いています。また、データ検証を行うためのロジックを追加することができます。 （新） WCF RIA [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>訂正内容詳細<br />
+本稿5ページの「WCF RIA Servicesは、WCF ServiceにADO.NET Data Serviceを追加したWCF Data Serviceの後継技術です。」という記載は間違っております。<br />
+WCF RIA Servicesは、正式リリースまで「.NET RIA Services」として開発が続けられていた経緯があり、正式リリースでWCF RIA Servicesと呼ばれるようになりました。この経緯について筆者は「.NET RIA ServicesがADO.NET Data Servicesの通信フレームワークを使用できること」を「.NET RIA ServicesがADO.NET Data Servicesを包含している」と同様の通信フレームワークを使っていると誤認識しました。さらに「WCF Data Servicesが旧ADO.NET Data Services」であることにつても、上記同様に「WCF RIA ServicesがWCF Data Servicesを包含している」と混同して、.NET Data Servicesの後継技術としてWCF RIA Servicesとなったと誤認識しておりました。<br />
+WCF RIA ServicesとWCF Data Servicesは全く別の技術ですので、この記載を削除します。</p>
+<p>（旧）<br />
+WCF RIA Servicesは、WCF ServiceにADO.NET Data Serviceを追加したWCF Data Serviceの後継技術です。機能としては、WCF RIA Servicesには、データのクライアントでの変更追跡と他のユーザーとの同時実行制御を行う機能が付いています。また、データ検証を行うためのロジックを追加することができます。</p>
+<p>（新）<br />
+WCF RIA Servicesには、WCFサービスの通信機能に加え、データのクライアントでの変更追跡と他のユーザーとの同時実行制御を行う機能を利用することができます。また、データ検証を行うためのロジックを追加することができます。</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>Silverlightの役割についての間違った認識</title>
+		<link>https://blog.processtune.com/2011/05/26/silverlight%e3%81%ae%e5%bd%b9%e5%89%b2%e3%81%ab%e3%81%a4%e3%81%84%e3%81%a6%e3%81%ae%e9%96%93%e9%81%95%e3%81%a3%e3%81%9f%e8%aa%8d%e8%ad%98/</link>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Wed, 25 May 2011 23:07:30 +0000</pubDate>
+				<category><![CDATA[CodeZine]]></category>
+		<guid isPermaLink="false">http://www.processtune.com/blog/?p=198</guid>
+
+					<description><![CDATA[訂正内容詳細 本稿1ページに「その方法のひとつとして、Silverlightにアプリケーションロジックをまかせる方法を紹介します。」という記載がありますが、.NET Frameworkの役割とSilverlightの役割の区別がつきにくく、Silverlightがアプリケーションロジックをすべて実現するかのような誤解が広がるため訂正いたします。 また、2ページ目「今回のSilverlightの役割」冒頭でインピーダンスミスマッチの解消について解説していますが、インピーダンスミスマッチの解消は、正規化されたデータ表現を業務で扱いやすいオブジェクトにする際の作業となりますので、あわせて訂正いたします。 アプリケーションロジックと本稿で呼んでいる「業務ロジック以外の動作制御」の多くは.NET Frameworkが行います。.NET Frameworkの機能によってさまざまなサービスを提供でき、Silverlightはそれらのさまざまなサービスのクライアントを作成する際、生産性の高いテクノロジーとして利用することができます。 Silverlightでクライアントを作成すると、.NET Frameworkによって提供できるサービスを利用する部分の構築の生産性が上がるので、その分業務ロジックの構築に注力することができます。 本稿では、作業分担や共同作業の際の責任分担、単体試験の簡略化や部分リリースが可能な方法のひとつとしてSilverlightの生産性に注目した解説を行います。 訂正箇所は3箇所です。 （旧） その方法のひとつとして、Silverlightにアプリケーションロジックをまかせる方法を紹介します。 （新） その方法のひとつとして、.NET Frameworkによるサービスの構築とSilverlightによるクライアントアプリケーションの組み合わせの作成方法を紹介します。 （旧） 本連載では、Azure特有のアプリケーションロジックをSilverlightに任せる方法を紹介することで、アプリケーションレイヤーの分割を解説していきます。 （新） 本連載では、.NET Frameworkによるサービスの構築とSilverlightによるクライアントアプリケーションの組み合わせをAzureに移行する作業を通して、アプリケーションレイヤーの分割を解説していきます。 （旧） データベース連携を行うことの多い業務アプリケーションでは、データアクセスレイヤーから正規化されたリレーショナルデータベースなどに接続して、取得したデータを業務ロジックで扱いやすいようにオブジェクトとしてクラス化します。さらにビジネスレイヤーで加工して、概念モデルというアプリケーションの画面に近い形のデータにします。これをインピーダンスミスマッチの解消と言います。 （新） データベース連携を行うことの多い業務アプリケーションでは、データアクセスレイヤーから正規化されたリレーショナルデータベースなどに接続して、取得したデータを業務ロジックで扱いやすいようにオブジェクトとしてクラス化します。これをインピーダンスミスマッチの解消と言います。さらにビジネスレイヤーで加工して、概念モデルというアプリケーションの画面に近い形のデータにします。]]></description>
+										<content:encoded><![CDATA[<p>訂正内容詳細<br />
+本稿1ページに「その方法のひとつとして、Silverlightにアプリケーションロジックをまかせる方法を紹介します。」という記載がありますが、.NET Frameworkの役割とSilverlightの役割の区別がつきにくく、Silverlightがアプリケーションロジックをすべて実現するかのような誤解が広がるため訂正いたします。<br />
+また、2ページ目「今回のSilverlightの役割」冒頭でインピーダンスミスマッチの解消について解説していますが、インピーダンスミスマッチの解消は、正規化されたデータ表現を業務で扱いやすいオブジェクトにする際の作業となりますので、あわせて訂正いたします。</p>
+<p>アプリケーションロジックと本稿で呼んでいる「業務ロジック以外の動作制御」の多くは.NET Frameworkが行います。.NET Frameworkの機能によってさまざまなサービスを提供でき、Silverlightはそれらのさまざまなサービスのクライアントを作成する際、生産性の高いテクノロジーとして利用することができます。<br />
+Silverlightでクライアントを作成すると、.NET Frameworkによって提供できるサービスを利用する部分の構築の生産性が上がるので、その分業務ロジックの構築に注力することができます。<br />
+本稿では、作業分担や共同作業の際の責任分担、単体試験の簡略化や部分リリースが可能な方法のひとつとしてSilverlightの生産性に注目した解説を行います。<br />
+訂正箇所は3箇所です。</p>
+<p>（旧）<br />
+その方法のひとつとして、Silverlightにアプリケーションロジックをまかせる方法を紹介します。</p>
+<p>（新）<br />
+その方法のひとつとして、.NET Frameworkによるサービスの構築とSilverlightによるクライアントアプリケーションの組み合わせの作成方法を紹介します。</p>
+<p>（旧）<br />
+本連載では、Azure特有のアプリケーションロジックをSilverlightに任せる方法を紹介することで、アプリケーションレイヤーの分割を解説していきます。</p>
+<p>（新）<br />
+本連載では、.NET Frameworkによるサービスの構築とSilverlightによるクライアントアプリケーションの組み合わせをAzureに移行する作業を通して、アプリケーションレイヤーの分割を解説していきます。</p>
+<p>（旧）<br />
+データベース連携を行うことの多い業務アプリケーションでは、データアクセスレイヤーから正規化されたリレーショナルデータベースなどに接続して、取得したデータを業務ロジックで扱いやすいようにオブジェクトとしてクラス化します。さらにビジネスレイヤーで加工して、概念モデルというアプリケーションの画面に近い形のデータにします。これをインピーダンスミスマッチの解消と言います。</p>
+<p>（新）<br />
+データベース連携を行うことの多い業務アプリケーションでは、データアクセスレイヤーから正規化されたリレーショナルデータベースなどに接続して、取得したデータを業務ロジックで扱いやすいようにオブジェクトとしてクラス化します。これをインピーダンスミスマッチの解消と言います。さらにビジネスレイヤーで加工して、概念モデルというアプリケーションの画面に近い形のデータにします。</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>「射影」という言葉の使い方</title>
+		<link>https://blog.processtune.com/2011/05/26/%e3%80%8c%e5%b0%84%e5%bd%b1%e3%80%8d%e3%81%a8%e3%81%84%e3%81%86%e8%a8%80%e8%91%89%e3%81%ae%e4%bd%bf%e3%81%84%e6%96%b9/</link>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Wed, 25 May 2011 22:53:37 +0000</pubDate>
+				<category><![CDATA[CodeZine]]></category>
+		<category><![CDATA[未分類]]></category>
+		<guid isPermaLink="false">http://www.processtune.com/blog/?p=193</guid>
+
+					<description><![CDATA[訂正内容詳細 本稿で「射影」という言葉を使っていますが、使い方として間違っており、訂正文の掲載に至りましたことを読者の皆様にお詫び申し上げます。 正しい使い方としては、「正規化されたデータストアのデータから、業務に近い形のデータのセットを作成するための列抽出」を射影と言います。 本稿の使い方は「射影後のオブジェクト化されたデータのセットをサービスとして公開した後にVisual Studioがクライアントコードを自動生成すること」に対して「射影」を使っており、筆者の認識が間違っておりました。 3ページの項「射影」を削除するとともに、本文中で射影を使用していた5ページの以下の部分について訂正いたします。 （旧） 　WCF Servicesでは、コントラクトとしてサーバーで定義していたデータの構造（サービス構造も含まれます）を、Visual Studioの射影によってクライアント側に自動生成されたコードで、クライアント側でも既知のデータ型として扱えるようになります。 （新） 　WCF Servicesでは、コントラクトとしてサーバーで定義していたデータの構造（サービス構造も含まれます）を、Visual Studioのサービス参照の設定によってクライアント側に自動生成されたコードで、クライアント側でも既知のデータ型として扱えるようになります。]]></description>
+										<content:encoded><![CDATA[<p>訂正内容詳細<br />
+本稿で「射影」という言葉を使っていますが、使い方として間違っており、訂正文の掲載に至りましたことを読者の皆様にお詫び申し上げます。<br />
+正しい使い方としては、「正規化されたデータストアのデータから、業務に近い形のデータのセットを作成するための列抽出」を射影と言います。<br />
+本稿の使い方は「射影後のオブジェクト化されたデータのセットをサービスとして公開した後にVisual Studioがクライアントコードを自動生成すること」に対して「射影」を使っており、筆者の認識が間違っておりました。<br />
+3ページの項「射影」を削除するとともに、本文中で射影を使用していた5ページの以下の部分について訂正いたします。</p>
+<p>（旧）<br />
+　WCF Servicesでは、コントラクトとしてサーバーで定義していたデータの構造（サービス構造も含まれます）を、Visual Studioの射影によってクライアント側に自動生成されたコードで、クライアント側でも既知のデータ型として扱えるようになります。</p>
+<p>（新）<br />
+　WCF Servicesでは、コントラクトとしてサーバーで定義していたデータの構造（サービス構造も含まれます）を、Visual Studioのサービス参照の設定によってクライアント側に自動生成されたコードで、クライアント側でも既知のデータ型として扱えるようになります。</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>「レイヤー分割の話がレイヤー分割になっていない」</title>
+		<link>https://blog.processtune.com/2011/05/26/%e3%80%8c%e3%83%ac%e3%82%a4%e3%83%a4%e3%83%bc%e5%88%86%e5%89%b2%e3%81%ae%e8%a9%b1%e3%81%8c%e3%83%ac%e3%82%a4%e3%83%a4%e3%83%bc%e5%88%86%e5%89%b2%e3%81%ab%e3%81%aa%e3%81%a3%e3%81%a6%e3%81%84%e3%81%aa/</link>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Wed, 25 May 2011 22:34:26 +0000</pubDate>
+				<category><![CDATA[CodeZine]]></category>
+		<guid isPermaLink="false">http://www.processtune.com/blog/?p=191</guid>
+
+					<description><![CDATA[訂正内容詳細 本稿はレイヤー分割の話をするという目的を持っていますが、第1回では、具体的なレイヤー構成の話がなく、論理的、物理的にレイヤーがどのように分割、配置されているのかが読み取れない記事になっていますので訂正いたします。 1ページに「レイヤー分割」という項があり、この部分に補足説明を入れ、かつ「Silverlightの役割に関する訂正文」の訂正内容を反映して以下のように訂正します。 また、「レイヤー分割」内にEntity Frameworkはクライアントからデータ層に直接アクセスする技術としていますが、これは間違いです。 （旧） Silverlightアプリケーションは、セキュアな通信やデータ受送信の構築工数を軽減することに長けていますので、この部分にアプリケーションロジックを閉じ込めます。 このようなレイヤー分割を行うと、作業の分担が楽になります。開発の省力化や保守性の向上、機能強化や開発のアウトソーシングなどに役立てることができます。しかし、Microsoftの技術であるWCF RIA ServicesやEntity Framework、ASP.NET Dynamic Data等は、アプリケーションの複数のレイヤーを飛び越えて、クライアントからデータ層に直接アクセスする技術です。そのため、逆にレイヤーを分割する解説が少ないのが現状です。本連載のアプリケーション設計の指針は、WCF RIA Servicesを使い、AzureとSilverlightでレイヤー分割した、効率的なアプリケーション構築が可能であることの一つの例です。 （新） Silverlightアプリケーションは、データ通信のクライアントとして「データの受送信」、「データの表示制御」、「データの編集や更新操作」の構築工数を軽減することに長けている技術のひとつです。Silverlightアプリケーションは、.NET Frameworkがサービスするデータを利用するクライアント側のプログラム（プロキシクラス）の作成が容易だからです。 .NET Frameworkがサービスするデータの実体を社内のSQLサーバーからSQL Azureのデータベースを使うように変更することで、旅費の申請データをAzure上に構築することができます。この変更の際に、データアクセス層であるEntity Data Modelを社内サーバーに残すことで、Silverlightアプリケーションでアプリケーションロジックを完結させることができます。 このようにデータ層とデータアクセス層を物理的に配置変更すると、作業の分担が楽になります。また、開発の省力化や保守性の向上、機能強化や開発のアウトソーシングなどに役立てることができます。 物理的な配置変更が容易な理由は、Silverlightアプリケーションを作成する際にVisual Studioのテンプレートを使ったからです。このテンプレートは、論理的にレイヤー分割されているソリューションなので、物理的な配置変更に柔軟に対応できます。この物理的な配置変更作業を通して、Visual Studioのテンプレートが提供する論理的なレイヤーを理解することができます。作業の分担、開発の省力化、保守性の向上、機能強化や開発のアウトソーシングなどを計画する際の切り分けの指針の参考にしてください。 Microsoftの技術であるWCF RIA Servicesは、アプリケーションの複数のレイヤーを飛び越えて、2層アプリケーションを構築するようなシンプルな開発が可能な技術です。そのため、逆にレイヤーごとの解説が少ないのが現状です。本連載のアプリケーション設計の指針は、WCF RIA Servicesを使い、AzureとSilverlightでレイヤー構成された、効率的なアプリケーション構築が可能であることの一つの例です。 また、この変更により「本連載のゴール」に訂正が入ります。 （旧） 本連載では、Azure特有のアプリケーションロジックをSilverlightに任せる方法を紹介することで、アプリケーションレイヤーの分割を解説していきます。アプリケーションレイヤーの分割の仕組みを知ることで、～ （新） 本連載では、Azure特有のアプリケーションロジックをSilverlightに任せる方法を紹介することで、アプリケーションレイヤーの仕組みを解説していきます。アプリケーションレイヤーの仕組みを知ることで、～ アプリケーションレイヤーの分割方法を解説するものでなく、アプリケーションレイヤーの仕組みを解説する内容です。深くお詫びします。]]></description>
+										<content:encoded><![CDATA[<p>訂正内容詳細<br />
+本稿はレイヤー分割の話をするという目的を持っていますが、第1回では、具体的なレイヤー構成の話がなく、論理的、物理的にレイヤーがどのように分割、配置されているのかが読み取れない記事になっていますので訂正いたします。<br />
+1ページに「レイヤー分割」という項があり、この部分に補足説明を入れ、かつ「Silverlightの役割に関する訂正文」の訂正内容を反映して以下のように訂正します。<br />
+また、「レイヤー分割」内にEntity Frameworkはクライアントからデータ層に直接アクセスする技術としていますが、これは間違いです。</p>
+<p>（旧）<br />
+Silverlightアプリケーションは、セキュアな通信やデータ受送信の構築工数を軽減することに長けていますので、この部分にアプリケーションロジックを閉じ込めます。</p>
+<p>このようなレイヤー分割を行うと、作業の分担が楽になります。開発の省力化や保守性の向上、機能強化や開発のアウトソーシングなどに役立てることができます。しかし、Microsoftの技術であるWCF RIA ServicesやEntity Framework、ASP.NET Dynamic Data等は、アプリケーションの複数のレイヤーを飛び越えて、クライアントからデータ層に直接アクセスする技術です。そのため、逆にレイヤーを分割する解説が少ないのが現状です。本連載のアプリケーション設計の指針は、WCF RIA Servicesを使い、AzureとSilverlightでレイヤー分割した、効率的なアプリケーション構築が可能であることの一つの例です。</p>
+<p>（新）<br />
+Silverlightアプリケーションは、データ通信のクライアントとして「データの受送信」、「データの表示制御」、「データの編集や更新操作」の構築工数を軽減することに長けている技術のひとつです。Silverlightアプリケーションは、.NET Frameworkがサービスするデータを利用するクライアント側のプログラム（プロキシクラス）の作成が容易だからです。<br />
+.NET Frameworkがサービスするデータの実体を社内のSQLサーバーからSQL Azureのデータベースを使うように変更することで、旅費の申請データをAzure上に構築することができます。この変更の際に、データアクセス層であるEntity Data Modelを社内サーバーに残すことで、Silverlightアプリケーションでアプリケーションロジックを完結させることができます。</p>
+<p>このようにデータ層とデータアクセス層を物理的に配置変更すると、作業の分担が楽になります。また、開発の省力化や保守性の向上、機能強化や開発のアウトソーシングなどに役立てることができます。<br />
+物理的な配置変更が容易な理由は、Silverlightアプリケーションを作成する際にVisual Studioのテンプレートを使ったからです。このテンプレートは、論理的にレイヤー分割されているソリューションなので、物理的な配置変更に柔軟に対応できます。この物理的な配置変更作業を通して、Visual Studioのテンプレートが提供する論理的なレイヤーを理解することができます。作業の分担、開発の省力化、保守性の向上、機能強化や開発のアウトソーシングなどを計画する際の切り分けの指針の参考にしてください。</p>
+<p>Microsoftの技術であるWCF RIA Servicesは、アプリケーションの複数のレイヤーを飛び越えて、2層アプリケーションを構築するようなシンプルな開発が可能な技術です。そのため、逆にレイヤーごとの解説が少ないのが現状です。本連載のアプリケーション設計の指針は、WCF RIA Servicesを使い、AzureとSilverlightでレイヤー構成された、効率的なアプリケーション構築が可能であることの一つの例です。</p>
+<p>また、この変更により「本連載のゴール」に訂正が入ります。</p>
+<p>（旧）<br />
+本連載では、Azure特有のアプリケーションロジックをSilverlightに任せる方法を紹介することで、アプリケーションレイヤーの分割を解説していきます。アプリケーションレイヤーの分割の仕組みを知ることで、～</p>
+<p>（新）<br />
+本連載では、Azure特有のアプリケーションロジックをSilverlightに任せる方法を紹介することで、アプリケーションレイヤーの仕組みを解説していきます。アプリケーションレイヤーの仕組みを知ることで、～</p>
+<p>アプリケーションレイヤーの分割方法を解説するものでなく、アプリケーションレイヤーの仕組みを解説する内容です。深くお詫びします。</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>CodeZineの訂正記事を作成する</title>
+		<link>https://blog.processtune.com/2011/05/26/codezine%e3%81%ae%e8%a8%82%e6%ad%a3%e8%a8%98%e4%ba%8b%e3%82%92%e4%bd%9c%e6%88%90%e3%81%99%e3%82%8b/</link>
+					<comments>https://blog.processtune.com/2011/05/26/codezine%e3%81%ae%e8%a8%82%e6%ad%a3%e8%a8%98%e4%ba%8b%e3%82%92%e4%bd%9c%e6%88%90%e3%81%99%e3%82%8b/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Wed, 25 May 2011 22:19:24 +0000</pubDate>
+				<category><![CDATA[CodeZine]]></category>
+		<guid isPermaLink="false">http://www.processtune.com/blog/?p=187</guid>
+
+					<description><![CDATA[訂正記事を作成する]]></description>
+										<content:encoded><![CDATA[<p>「<a href="http://codezine.jp/article/detail/5921/">SilverlightでAzureに飛び出そう！</a>」について、各位よりご指摘いただき、訂正文を作成しました。<br />
+訂正文の項目は4つです。</p>
+<p>■「レイヤー分割方法の解説ではなくレイヤー構成の解説である」<br />
+・レイヤー分割方法について解説しておりません<br />
+本稿の目的が「論理的にすでにレイヤー分割されているVisual Studioソリューションの物理的配置変更によって、アプリケーションのレイヤー構成を理解し、アプリケーション設計時のレイヤー構成の計画に役立てていただきたい」であることは明記されておらず、レイヤー分割方法の解説であるかのような説明になっておりましたので訂正いたします。<br />
+・レイヤーの解説図について<br />
+本稿6頁の「まとめ」の図に「コントローラーやビューモデル」として「ObjectContext」がありますが、ビューモデルに存在するのは「ObjectContexのインスタンス」で、ObjectContexを定義するのはモデルですので、そのように図を修正しました。<br />
+→<a href="http://www.processtune.com/blog/?p=191">投稿へ進む</a><br />
+■「射影という言葉の使い方が不適切」<br />
+・射影という言葉の使い方について<br />
+本稿での使用方法が不適切なため、3頁の「射影」を削除するとともに、5頁の「ドメインサービスを追加する」の以下の部分について訂正いたします。<br />
+→<a href="http://www.processtune.com/blog/?p=193">投稿へ進む</a><br />
+■「Silverlightの役割に.NET Freamworkの役割が混在している」<br />
+・Silverlightの役割について<br />
+本稿1頁の「はじめに」の部分で、本稿におけるSilverlightの役割に.NET Frameworkの役割が混在しているため訂正いたします。<br />
+また、本稿1頁の「本連載のゴール」も同様の記載があり、またレイヤー分割という表現はふさわしくないため訂正いたします。<br />
+・インピーダンスミスマッチの解消について<br />
+本稿2頁の「今回のSilverlightの役割」にて、業務ロジックで扱うクラスから概念モデルを画面に表現するクラスへの転送部分まで含めてしまっておりましたので訂正します。<br />
+→<a href="http://www.processtune.com/blog/?p=198">投稿へ進む</a><br />
+■「WCF RIA Servicesは.NET Data Serviceの後継技術ではない」<br />
+・WCF RIA ServicesはWCF Data Serviceの後継技術ではありません<br />
+情報として間違っておりますので訂正いたします。<br />
+・ASP.NET開発サーバーが起動しないという記述について<br />
+本稿5頁「ドメインサービスを追加する」のASP.NET開発サーバーが起動しないという記述は、起動しないのでなく、WCF RIA ServiceがSilverlightアプリケーション実行のためのASP.NET開発サーバーを使用しているため削除します。<br />
+→<a href="http://www.processtune.com/blog/?p=200">投稿へ進む</a></p>
+<p>本稿で、間違った記載があり訂正いたしますことを深くお詫びします。</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2011/05/26/codezine%e3%81%ae%e8%a8%82%e6%ad%a3%e8%a8%98%e4%ba%8b%e3%82%92%e4%bd%9c%e6%88%90%e3%81%99%e3%82%8b/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

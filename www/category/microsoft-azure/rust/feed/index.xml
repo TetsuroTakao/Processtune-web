@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Rust &#8211; Processtune Blog</title>
+	<atom:link href="https://blog.processtune.com/category/microsoft-azure/rust/feed/" rel="self" type="application/rss+xml" />
+	<link>https://blog.processtune.com/</link>
+	<description>Articles offered from Microsoft MVP</description>
+	<lastBuildDate>Tue, 28 Mar 2023 01:23:46 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.8.2</generator>
+
+<image>
+	<url>/wp-content/uploads/2023/03/cropped-Presentation-32x32.png</url>
+	<title>Rust &#8211; Processtune Blog</title>
+	<link>https://blog.processtune.com/</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>How to compile Rust assembly runnable on Linux for deployment to Azure Functions</title>
+		<link>https://blog.processtune.com/2021/08/01/how-to-compile-rust-assembly-runnable-on-linux-for-deployment-to-azure-functions/</link>
+					<comments>https://blog.processtune.com/2021/08/01/how-to-compile-rust-assembly-runnable-on-linux-for-deployment-to-azure-functions/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Sun, 01 Aug 2021 03:53:59 +0000</pubDate>
+				<category><![CDATA[Azure Functions]]></category>
+		<category><![CDATA[Rust]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Visual Studio]]></category>
+		<category><![CDATA[Visual Studio Code]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=5958</guid>
+
+					<description><![CDATA[Azure Functions is one of great services of serverless computing. It is useful for microservices solution, event-driven messaging middleware and so on. Its functions run on Linux, use C standard library named &#8216;musl'(see musl libc) for system call of Linux. A runnable Rust assembly of Azure Functions is create use &#8216;cargo build&#8217; command that compiles [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin:0px 0px 0px 0px;color:#000044;font-size:0.9rem;font-family:" segoe="" ui";"="">Azure Functions is one of great services of serverless computing. It is useful for microservices solution, event-driven messaging middleware and so on. Its functions run on Linux, use C standard library named &#8216;musl'(see <a href="https://musl.libc.org/" target="_new" style="font-weight:bold;" rel="noopener">musl libc</a>) for system call of Linux.<br />
+A runnable Rust assembly of Azure Functions is create use &#8216;cargo build&#8217; command that compiles source code to assembly, compile process is structed with front-end compiler and back-end compiler.<br />
+At first, front-end compiler generates intermidiate language from source code written on Windows, then back-end compiler use its intermidiate language to make runnable assemblyies that capable system call on Linux. This process is helped by toolchain management tool &#8216;rustup&#8217;.<br />
+There is little bit complexity to struct these development enviromment, so this article describes it step by step.<br />
+In the article [Rust QR code generator App of Azure Functions] describes how to modify the simple of this article (simple rust project) to QR code generator.</p>
+<p style="margin:0px 0px 0px 0px;color:#000044;font-size:0.9rem;font-family:" segoe="" ui";"="">Added at 17th Dec. 2021 :<br />
+Please read Microsoft Official document [<a href="https://docs.microsoft.com/en-us/azure/azure-functions/create-first-function-vs-code-other?tabs=rust%2Cwindows?WT.mc_id=AZ-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">Quickstart: Create a Go or Rust function in Azure using Visual Studio Code</a>].</p>
+<p style="margin:10px 0px 0px 5px;text-indent:1em;text-align:right;font-weight:bold;">&gt;&gt;<a href="https://github.com/TetsuroTakao/QRCodeGenerator" target="_new" style="font-weight:bold;" rel="noopener">Rust sample project to create QR Code, Base program to deploy to Azure Functions</a> (created by <a href="https://blog.processtune.com/?p=5925" target="_new" style="font-weight:bold;" rel="noopener">previous article</a>.)</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Step 1. Rust install and rustup settings comformation</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Install Rust (see <a href="https://www.rust-lang.org/tools/install" target="_new" style="font-weight:bold;" rel="noopener">Install Rust</a>), then comfirm rustup toolchain conditions, it shown if put [rustup show] command in integrated terminal of Visual Studio Code (or Windows terminal).</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Runtime environment of Azure Functions is [x86_64-unknown-linux-musl], so if it needs, use [rustup target add stable-x86_64-unknown-linux-musl] command to install and use [cargo build] command to build it. Below figure is sample of [rustup show] result.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">Default host: x86_64-pc-windows-msvc
+rustup home:  %User root%\.rustup
+
+installed toolchains
+--------------------
+
+stable-x86_64-pc-windows-msvc (default)
+stable-x86_64-unknown-linux-gnu
+stable-x86_64-unknown-linux-musl
+
+installed targets for active toolchain
+--------------------------------------
+
+wasm32-unknown-unknown
+x86_64-pc-windows-msvc
+x86_64-unknown-linux-musl
+
+active toolchain
+----------------
+
+stable-x86_64-pc-windows-msvc (default)
+rustc 1.56.1 (59eed8a2a 2021-11-01)
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">This sample environment has installed [x86_64-unknown-linux-musl] target, and [stable-x86_64-pc-windows-msvc] toolchain is target default (default of Rust install on Windows). This sample development environment is Windows and use native ABI (Application Binary Interface) named MSVC (see <a href="https://rust-lang.github.io/rustup/installation/windows.html" target="_new" style="font-weight:bold;" rel="noopener">the article</a> for Windows Rust developers). So developers who use Visual Studio (includes Visual Studio Code) for development have to do nothing. If not, use <a href="https://visualstudio.microsoft.com/visual-cpp-build-tools/?WT.mc_id=AZ-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">Microsoft C++ Build Tools</a> to compile Linux assembly easily.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The musl is C standerd compiler of MIT license, it will be linked as statical, so should modify the [.cargo/config] file. The [.cargo/config] file is at [%User root%\.cargo\config] as global settings on Windows. However you don&#8217;t always want to generate Linux assembly use MSVC ABI, so I recommend that its file create at Rust project root folder.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Toolchain uses rust-lld linker when compile for Musl libraly.</p>
+<div style="background-color:#cccccc;border:1px solid #00000; padding: 10px 10px 0px 10px;margin-top:20px;">
+<div style="margin:-20px 0px 0px 5px;text-indent:1em;font-weight:bold;background-color:#444;border:1px solid #ccc;color:#fff;">ⓘ As additional information</div>
+<p>The cargo.exe reads [.cargo/config] file to compile source code use the rust-lld.exe, and the cargo.exe expect the file is written as TOML file format. The [\] string in TOML format is special string, so [.cargo/config] file should be written path strings as escaped file path use [&#8221;&#8217;] strings. Addition, cargo.exe needs full path infromation of its linker for compile.<br />
+<span style="font-weight:bold;">In case of without Microsoft C++ Build Tools, Visual Studio and Visual Studio Code</span><br />
+[target.x86_64-unknown-linux-musl]<br />
+linker = &#8221;&#8217;%User root%\.rustup\toolchains\stable-x86_64-pc-windows-msvc\lib\rustlib\x86_64-pc-windows-msvc\bin\rust-lld.exe&#8221;&#8217;<br />
+<span style="font-weight:bold;">In case of using Microsoft C++ Build Tools, Visual Studio or Visual Studio Code</span><br />
+[target.x86_64-unknown-linux-musl]<br />
+linker = &#8220;rust-lld&#8221;</p>
+</div>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">It&#8217;s easy to set path of a linker using MSVC.</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Step 2. Deployment</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">At first, download <a href="https://github.com/TetsuroTakao/QRCodeGenerator" target="_new" style="font-weight:bold;" rel="noopener">Rust sample project</a> created by <a href="https://blog.processtune.com/?p=5925" target="_new" style="font-weight:bold;" rel="noopener">previous article</a> and modify it to runnable on Linux. previous article. For it, create [.cargo/config] in the project and set rust-lld to the linker like above, then type [cargo build &#8211;release &#8211;target=x86_64-unknown-linux-musl] on the [Integrated terminal]. Addition, modify [.funcignore] file to prevent upload files of target folder.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/03/CargoBuildLinuxAssembly.png" alt="" style="width:450px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Next, the [%Project root%\target\x86_64-unknown-linux-musl\release\qrcode_generator] file is not uploaded, because Azure Functions Extension uploads a file at project root. Now the [qrcode_generator.exe] is at project root folder, it is execute file for local debug on Windows, so delete it and copy [%Project root%\target\x86_64-unknown-linux-musl\release\qrcode_generator] file to the project root.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Azure Functions extension recognizes only one executable file which [%project name%.exe] file or [%project name%] file. So delete [%project name%.exe] file when upload the executable file to Azure Functions, and copy [%project name%] file to %project root%.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">For local debug on Windows, there is [qrcode_generator.exe] value in the [host.json] file to the project root. So modify value of the [defaultExecutablePath] property to [qrcode_generator] at the [description] property of the [customHandler] property for using on Azure Functions (Left figure).</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">After these preparation of uploading to Azure Functions, Select the [Deploy to Functions App&#8230;] icon of the [Azure] extension. (Right figure).</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/03/PreperanceToAzureFunctions.png" alt="" style="width:450px;"><img decoding="async" src="/wp-content/uploads/2022/03/DeployToFunctionsApp.png" alt="" style="width:450px;"></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Step 3. Test on Azure Functions</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The [Command palette] shows after select the [Deploy to Functions App&#8230;] icon of the [Azure] extension. And already created a Functions app when create local project using the [Azure] extension, so select the name of the Functions app from list. Then proceed confirmation dialog, if the process ended, show conformation of completing, so select the [View output] button to confirm the [OUTPUT] console (Left figure).</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/03/FunctionsAppUpload.png" alt="" style="width:450px;"><img decoding="async" src="/wp-content/uploads/2022/03/AzureFunctionsConsole1.png" alt="" style="width:450px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Open Azure Functions on the [Azure portal] for the test (Right figure).</p>
+<p style="margin: 0px 0px 0px 10px;padding:1em;background-color:#cccccc;">
+<span style="font-weight:bold;">Steps of the test (figure below)</span><br />
+The display change when the [Functions] section selected, then select target function name (1. [QRCodeGenerationOnAzureFunctions] on the figure)<br />
+Select the [Code + Test] section in displayed target function (2.)<br />
+Select the [Test/Run] tab when navigated display to [Code + Test] (3.)<br />
+Select the [GET] item of the [HTTP method] list on the [Input] tab area of [Code + Test], because uploaded Function app has only get method of warp (4.)<br />
+Add parameter use the [Name] textbox and the [Value] textbox (6.) showed when select the [Add parameter] link (5.)<br />
+At last, select the [Run] button for the test.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/03/AzureFunctionsConsoleSteps.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">A status of the test process on console showed out, then the display is changed to the [Output] tab area of [Code + Test] in automate. So confirm result of the test is that the [HTTP response code] is [200 OK] and the [HTML response content] is outputted.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/03/AzureFunctionsConsoleResult.png" alt="" style="width:450px;"></p>
+<p style="margin:10px 0px 0px 5px;text-indent:1em;text-align:right;font-weight:bold;">&gt;&gt;<a href="https://github.com/TetsuroTakao/QRCodeGeneratorOnAzureFunctions" target="_new" style="font-weight:bold;" rel="noopener">Sample project</a> (this article created)</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2021/08/01/how-to-compile-rust-assembly-runnable-on-linux-for-deployment-to-azure-functions/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>QR code create with Rust language runnable on Azure Functions</title>
+		<link>https://blog.processtune.com/2021/07/01/qr-code-create-with-rust-language-runable-on-azure-functions/</link>
+					<comments>https://blog.processtune.com/2021/07/01/qr-code-create-with-rust-language-runable-on-azure-functions/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Thu, 01 Jul 2021 05:01:01 +0000</pubDate>
+				<category><![CDATA[Azure Functions]]></category>
+		<category><![CDATA[Microsoft Azure]]></category>
+		<category><![CDATA[Rust]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Visual Studio]]></category>
+		<category><![CDATA[Visual Studio Code]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=5925</guid>
+
+					<description><![CDATA[Azure Functions is functions runtime that is able to launch a function created by multiple language, as serverless on cloud (see Microsoft Docs [Supported languages in Azure Functions]). What it is serverless means less code, less maintainance of infrastructure, thus developers are able to focus on code for only business process, managers can save on [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin:0px 0px 0px 0px;color:#000044;font-size:0.9rem;font-family:" segoe="" ui";"="">Azure Functions is functions runtime that is able to launch a function created by multiple language, as serverless on cloud (see Microsoft Docs [<a href="https://docs.microsoft.com/en-us/azure/azure-functions/supported-languages?WT.mc_id=AZ-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">Supported languages in Azure Functions</a>]). What it is serverless means less code, less maintainance of infrastructure, thus developers are able to focus on code for only business process, managers can save on costs as result. Furthermore, when procuring members of some project as using microservices architecture, managers can orchestrate several teams of various language programmers.<br />
+In this article, create <a href="https://github.com/TetsuroTakao/QRCodeGenerator" target="_new" style="font-weight:bold;" rel="noopener">simple rust program that can run on local environment</a> for that will deploy to Azure Functions later.<br />
+In the article [<a href="https://blog.processtune.com/?p=5958" target="_new" style="font-weight:bold;" rel="noopener">How to compile Rust assembly runnable on Linux for deployment to Azure Functions</a>] describes creation of assembly to deploy Azure Functions.<br />
+In the article [<a href="https://blog.processtune.com/?p=5958" target="_new" style="font-weight:bold;" rel="noopener">Rust QR code generator App of Azure Functions</a>] describes how to modify the simple of this article (simple rust project) to QR code generator.</p>
+<p style="margin:0px 0px 0px 0px;color:#000044;font-size:0.9rem;font-family:" segoe="" ui";"="">Added at 9th Feb. 2022 :<br />
+Please read Microsoft Docs [<a href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local?tabs=v4%2Cwindows%2Ccsharp%2Cportal%2Cbash?WT.mc_id=AZ-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">Work with Azure Functions Core Tools</a>] and install it, you can execute command [func start] on console (or tarminal of Visual Studio code, Windows and so on.) when restart PC.</p>
+<p style="margin:10px 0px 0px 5px;text-indent:1em;text-align:right;font-weight:bold;">&gt;&gt;<a href="https://github.com/TetsuroTakao/QRCodeCreation" target="_new" style="font-weight:bold;" rel="noopener">Sample project of Rust language to create QR Code</a></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Azure Functions Visual Studio Code Extensions</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">This article uses Visual Studio Code and it&#8217;s extensions and Rust (see <a href="https://www.rust-lang.org/tools/install" target="_new" style="font-weight:bold;" rel="noopener">Install Rust</a>).</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">For debugging on local development environment and upload to Azure Functions, it needs Azure Functions Core Tools. This tool installed along with other tools of Azure if install Azure Tools Extension (left figure), or if aim to just install Azure Functions extension, install individual(right figure).</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/02/AzureToolsExtension.png" alt="" style="width:450px;vertical-align:middle;"><img decoding="async" src="/wp-content/uploads/2022/02/VSCodeExtensions.png" alt="" style="width:450px;"></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Create local Rust project for Azure Functions</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">It is super easy to create Rust project that run on Windows using Visual Studio Code extension of Azure Functions.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">At first, open work folder in Visual Studio Code. Work folder is able to create using the [Open Folder] dialog box. Select the [Open folder&#8230;] of the [File] menu, then right click on any directory and select the [New] then select the [Folder] (Left figure).</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">While open work folder, create Rust project using extension of Azure Functions. Select the [Create New Project&#8230;] icon of the [FUNCTIONS] area of the [Azure] extension. (Right figure)</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/02/OpenFolderDialog.png" alt="" style="width:450px;"><img decoding="async" src="/wp-content/uploads/2022/02/CreateAzureFunctionsProject.png" alt="" style="width:450px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">[Command Palette] is shown when select [Create New Project&#8230;] icon. there are several steps to create new project, exclude step of &#8216;Function name&#8217; (This setting is used for URL of Functions) and step of &#8216;Folder of the project&#8217;, put values of table below. These values are for sample project.</p>
+<div style="margin: 0px 0px 0px 20px;display:table;">
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;padding-right:10px;">Folder of the project</div>
+<div style="display:table-cell;">QRCodeGeneratorOnAzureFunctions(default : Opened folder from Visual Studio Code. This setting make URL of Azure Functions to figure below)<br />
+<img decoding="async" src="/wp-content/uploads/2022/02/AzurePortalFunctionsFunction.png" alt="" style="width:450px;"></div>
+</div>
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;">Language</div>
+<div style="display:table-cell;">Custom Handler(default : Last used, If first Azure Functions function creation, select this.)</div>
+</div>
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;">Project template</div>
+<div style="display:table-cell;">Http trigger(default : Last used, If first Azure Functions function creation, select this.)</div>
+</div>
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;">Function name</div>
+<div style="display:table-cell;">BlogSampleFunctions(This setting create URL :  https://<span style="font-weight:bold;">blogsamplefunctions</span>.azurewebsites.net/api/QRCodeGeneratorOnAzureFunctions)</div>
+</div>
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;">Authorization</div>
+<div style="display:table-cell;">Anonymous(default : no authentication)</div>
+</div>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/02/FunctionsNewSteps.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Return to the [File Explorer], and type [Ctrl] + [Shift] + [`] key for open the [Integrated terminal] (use [Ctrl] + [K] + [S] for comfirming conbination of keys for your keybord type). Then type [ cargo init &#8211;name qrcode_generator ] on the [Integrated terminal] to create Rust project package (this name value is not relate a name of Azure Functions). After package creation, type [ cargo run ] to run project. It is OK that it shows [ Hello, world! ] in the [Integrated terminal].</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">This Rust project package name [qrcode_generator] is same name as Rust assembly file name (and the [exe] extension), so the [cargo run] command create assembly file at [%project root%\target\debug\qrcode_generator.exe] and launch the file. And this value is defined at the [name] value of [package] definition in the [Cargo.toml] file.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">[ cargo init ] comand generates rust project files such as the [src/main.rs] file and the [Cargo.toml] file and so on, the [src/main.rs] file is startup file, so [ cargo run ] command executes [ println!(“Hello, world!”) ] statement of the [src/main.rs] file (see figure below).</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/02/InitialHelloworld.png" alt="" style="width:450px;"></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Create web server</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Create sample projest with modifying [src/main.rs] file that the [ cargo init ] comand generated.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">TCP listener is standard function of Rust, although HTTP lisner have to process asyncronous task flow. asyncronous feature is provided with async_std or tokio and so on.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">This article select tokio and warp as sample because there is popular and there are a lot of code samples on web. warp is web server framework.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Since warp is for creation of web server, it can listen HTTP request from Azure Functions as HTTP listener. If the setting of Azure Functions environment (host.json at root of project, figure below) to enable forwarding HTTP request, Azure Functions accepts Http request and throw it to the function of Azure Functions that served by warp.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">--host.json file (part of the file)
+...
+  "customHandler": {
+    "description": {
+      "defaultExecutablePath": "qrcode_generator.exe",
+      "workingDirectory": "",
+      "arguments": []
+    },
+    //here is the setting (All figure of host.json is shown later)
+    "enableForwardingHttpRequest": true
+  }
+}
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">At first, modify the [Cargo.toml] file as below to use these eco-systems. And define to use them at main.rs of the [src] folder.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">--Cargo.toml file
+[dependencies]
+warp = "0.3"
+tokio = { version = "1", features = ["rt", "macros", "rt-multi-thread"] }
+
+--src/main.rs file
+use std::env;
+use std::collections::HashMap;
+use std::net::Ipv4Addr;
+use warp::{http::Response, Filter};
+
+fn main() {
+    println!("Hello, world!");
+}
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">These defines are used as table below.</p>
+<div style="margin: 0px 0px 0px 20px;display:table;">
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;">std::env</div>
+<div style="display:table-cell;">Acquire port number that Azure Functions provided.</div>
+</div>
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;">std::collections::HashMap</div>
+<div style="display:table-cell;">Acquire query string of HTTP request.</div>
+</div>
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;">std::net::Ipv4Addr</div>
+<div style="display:table-cell;">Acquire IPv4 address of HTTP request.</div>
+</div>
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;">warp::{http::Response, Filter}</div>
+<div style="display:table-cell;">Create HTTP response, and serve function that defines process of create response.</div>
+</div>
+</div>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Next, acquire port number of incomming stream (distination port number of the stream Azure Functions forwards) using definitioned term (FUNCTIONS_CUSTOMHANDLER_PORT).</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">fn main() {
+    let port: u16 = match env::var("FUNCTIONS_CUSTOMHANDLER_PORT") {
+        Ok(val) =&gt; val.parse().expect("Custom Handler port is not a number!"),
+        Err(_) =&gt; 3000,
+    };
+    ...
+}
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Continues, creating respond in case when HTTP GET message listened. Sample code for POST message is described in the article [<a href="https://blog.processtune.com/?p=5958" target="_new" style="font-weight:bold;" rel="noopener">How to compile Rust assembly runnable on Linux for deployment to Azure Functions</a>].</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">async fn main() {
+    ...
+    let get_source
+        = warp::path!("api" / "QRCodeGeneratorOnAzureFunctions")
+        .and(warp::query::<hashmap<string, string="">&gt;())
+        .map(|q:HashMap<string,string>|
+            match q.get("source") {
+                Some(s) =&gt; Response::builder().body(format!("QR Code source [{}]",s)),
+                None =&gt; Response::builder().body(String::from("Source does not requested"))
+            });
+    ...
+}
+</string,string></hashmap<string,></pre>
+<div style="background-color:#cccccc;border:1px solid #00000; padding: 10px 10px 10px 10px;margin-top:20px;margin-bottom:20px;">
+<div style="margin:-20px 0px 0px 5px;text-indent:1em;font-weight:bold;background-color:#444;border:1px solid #ccc;color:#fff;">ⓘ As additional information</div>
+<p style="margin-top:0.2rem;margin-bottom: 0;">
+Azure Functions provides global URL as format below (as default).</p>
+<div style="border:thin solid #444;padding:1rem 1rem 1rem 1rem;">
+https://<span style="font-weight:bold;">%Function name%</span>.azurewebsites.net/api/<span style="font-weight:bold;">%Folder name of project root%</span></div>
+<p style="margin-top:0.2rem;margin-bottom: 0;">
+So listening HTTP request use [ warp::path!(&#8220;api&#8221; / &#8220;QRCodeGeneratorOnAzureFunctions&#8221;) ] statement. If want to omit path [api], modify host.json as below.</p>
+<div style="border:thin solid #444;padding:1rem 1rem 1rem 1rem;">
+&#8211;host.json file (root parameter [extensions], All figure of host.json is shown later)<br />
+&#8220;extensions&#8221;: {&#8220;http&#8221;: {&#8220;routePrefix&#8221;: &#8220;&#8221;}}</div>
+</div>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">At last, create listening part of HTTP GET message. Below is all code of the [src/main.rs] file.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">use std::env;
+use std::collections::HashMap;
+use std::net::Ipv4Addr;
+use warp::{http::{Response}, Filter};
+
+#[tokio::main]
+async fn main() {
+    let port: u16 = match env::var("FUNCTIONS_CUSTOMHANDLER_PORT") {
+        Ok(val) =&gt; val.parse().expect("Custom Handler port is not a number!"),
+        Err(_) =&gt; 3000,
+    };
+    let get_source
+        = warp::path!("QRCodeGeneratorOnAzureFunctions")
+        .and(warp::query::<hashmap<string, string="">&gt;())
+        .map(|q:HashMap<string,string>|
+            match q.get("source") {
+                Some(s) =&gt; Response::builder().body(format!("QR Code source [{}]",s)),
+                None =&gt; Response::builder().body(String::from("Source does not requested"))
+            });
+    let routes = warp::get().and(get_source);
+    warp::serve(routes).run((Ipv4Addr::UNSPECIFIED, port)).await
+}
+</string,string></hashmap<string,></pre>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Run on local</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Azure Functions Core Tools has web hosting feature, so build Rust project at first, then define builded assembly path to this tool. Build path is [target/relese] folder that are created when type [cargo build &#8211;release] command in the [Integrated terminal]. This tool use execute file at project root folder to host client or upload to Azure Functions. So copy the file from build path to project root.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">cp .\target\release\qrcode_generator.exe
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">This tool hosts the Rust assembly file use [defaultExecutablePath] value in [host.json], the value is defined at description property of customHandler property in the file.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/02/hostJson.png" alt="" style="width:900px;"></p>
+<div style="background-color:#cccccc;border:1px solid #00000; padding: 10px 10px 0px 10px;margin-top:20px;">
+<div style="margin:-20px 0px 0px 5px;text-indent:1em;font-weight:bold;background-color:#444;border:1px solid #ccc;color:#fff;">ⓘ As additional information (8th Feb. 2022)</div>
+<p><a href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-bindings-register#extension-bundles?WT.mc_id=AZ-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">The &#8216;extensionBundle&#8217; values of [%Project root%\host.json] file</a> makes Azure Function project enable runable the project of other language that .NET runtime does not support.</p>
+</div>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Type [ func start ] command in the [Integrated terminal] after put value [qrcode_generator.exe] in the [description] property of the[customHandler] property in this file.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/02/HttpGetRequest.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Termination is type [Ctrl] + [C] key at terminal.</p>
+<p style="margin:10px 0px 0px 5px;text-indent:1em;text-align:right;font-weight:bold;">Next &gt;&gt;<a href="https://blog.processtune.com/?p=5958" target="_new" style="font-weight:bold;" rel="noopener">How to compile Rust assembly runnable on Linux for deployment to Azure Functions</a></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2021/07/01/qr-code-create-with-rust-language-runable-on-azure-functions/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

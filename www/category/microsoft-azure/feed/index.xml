@@ -1,0 +1,1202 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Microsoft Azure &#8211; Processtune Blog</title>
+	<atom:link href="https://blog.processtune.com/category/microsoft-azure/feed/" rel="self" type="application/rss+xml" />
+	<link>https://blog.processtune.com/</link>
+	<description>Articles offered from Microsoft MVP</description>
+	<lastBuildDate>Thu, 11 Apr 2024 03:31:14 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.8.2</generator>
+
+<image>
+	<url>/wp-content/uploads/2023/03/cropped-Presentation-32x32.png</url>
+	<title>Microsoft Azure &#8211; Processtune Blog</title>
+	<link>https://blog.processtune.com/</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>Steps of Introducing AI to companies</title>
+		<link>https://blog.processtune.com/2024/03/26/steps-of-introducing-ai-to-companies/</link>
+					<comments>https://blog.processtune.com/2024/03/26/steps-of-introducing-ai-to-companies/#respond</comments>
+		
+		<dc:creator><![CDATA[TETSURO TAKAO]]></dc:creator>
+		<pubDate>Tue, 26 Mar 2024 09:01:59 +0000</pubDate>
+				<category><![CDATA[AI]]></category>
+		<category><![CDATA[Microsoft Azure]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=7686</guid>
+
+					<description><![CDATA[The previous article [Introducing Artificial Intelligence (AI) in Companies] describes &#8220;AI has objectives depending on its scale&#8221;, &#8220;AI in companies is effective through orchestration using small language models&#8221; and &#8220;Information sources confidentiality also needs to be protected in AI&#8221;. Additionally, it describes &#8220;In the case of Microsoft 365 data is information sources, the confidentiality is [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin: 0px 0px 10px 0px; color: #000044; font-size: 1.4rem; font-weight: normal; line-height: 1.6rem; padding: 10px 0px 10px 20px; border-radius: 60% 90% 90% 60%; font-family: Times, serif; background: linear-gradient(to right, #fff, #ccf, #fff);">The previous article [<a style="font-weight: bold;" href="https://blog.processtune.com/2024/02/07/introducing-artificial-intelligence-ai-in-companies/" target="_new" rel="noopener">Introducing Artificial Intelligence (AI) in Companies</a>] describes &#8220;AI has objectives depending on its scale&#8221;, &#8220;AI in companies is effective through orchestration using small language models&#8221; and &#8220;Information sources confidentiality also needs to be protected in AI&#8221;.<br />
+Additionally, it describes &#8220;In the case of Microsoft 365 data is information sources, the confidentiality is best on Microsoft 365 rather than moving to other storages&#8221; and &#8220;In the case of the information sources being non-Microsoft 365 data, Information sources should be stored in individual storages that match access permissions, and divided schemes of several AI on orchestration foundation when <a style="font-weight: bold;" href="https://en.wikipedia.org/wiki/Federated_identity" target="_new" rel="noopener">the identity federation</a> is not complete&#8221;.</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 1.1rem;">• In the case of the information sources being non-Microsoft 365 data and In the case of the identity federation is complete.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">If the identity federation is aggregated to the Entra ID account, it is good that information sources are stored as Azure resources. Even if information sources are non-Microsoft 365 data, it is super easy to control access to information sources of AI.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">Information sources can be prepared or real time. <a style="font-weight: bold;" href="https://learn.microsoft.com/en-us/azure/ai-services/openai/use-your-data-quickstart?wt.mc_id=DT-MVP-4029060" target="_new" rel="noopener">[Add your data] feature</a> of <a style="font-weight: bold;" href="https://azure.microsoft.com/en-us/products/ai-studio?wt.mc_id=DT-MVP-4029060" target="_new" rel="noopener">Azure AI Studio</a> supports various file types. Or using connector supports Azure AI Search, Azure Cosmos DB for MongoDB vCore, and URL/web address.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">If information sources could not be stored as Azure resources, Entra ID that aggregated as the identity federation should control access to AI.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">Azure provides various connection services such as provisioning or authorization delegation calls (if the service provider supports it) as the identity federation features.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">Thus in the case of AI that uses information sources outside of Azure, it is good that information sources are designed as single access permission.</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 1.1rem;">• Design steps for Introducing AI to companies</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">When introducing AI to the company, consideration of The state of the user account of the organization and the purpose of AI in the company is the first step of design.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">It&#8217;s an important decision point whether the purpose of using AI in the company is to leverage Microsoft 365 data or not. Whether the user account of the organization has already completed the identity federation or not is also important because Microsoft 365 data is protected by the Microsoft 365 identity foundation. <a style="font-weight: bold;" href="https://learn.microsoft.com/en-us/entra/identity/hybrid/connect/four-steps?wt.mc_id=DT-MVP-4029060" target="_new" rel="noopener">This official article provided by Microsoft</a> describes that the identity foundation of Microsoft&#8217;s tremendous robustness and flexibility can address enterprise compliance and governance.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">The next step is considering the need to customize for using the company’s data. Then programming or No/Low code development is necessary or not. These steps lead to how to implement AI in the company.</p>
+<p style="display: inline-block; margin-bottom: 10px; text-align: center; width: 100%;"><img decoding="async" style="width: 900px;" src="/wp-content/uploads/2024/02/DesignSteps.png" alt=""></p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">Most easiest way to introduce AI to the company is Microsoft 365 data leverage on the company. <a style="font-weight: bold;" href="https://learn.microsoft.com/en-us/microsoft-365/syntex/metadata-search?wt.mc_id=DT-MVP-4029060" target="_new" rel="noopener">Microsoft Syntex stores metadata</a> of files of SharePoint, it classifies files as various aspects and then shows them on the SharePoint site. Furthermore, <a style="font-weight: bold;" href="https://learn.microsoft.com/en-us/microsoft-365/syntex/automate-document-generation?wt.mc_id=DT-MVP-4029060" target="_new" rel="noopener">generates documents with Power Automate</a>. On creating UI, <a style="font-weight: bold;" href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/advanced-connectors?wt.mc_id=DT-MVP-4029060" target="_new" rel="noopener">Copilot Studio also relays with Power Automate</a> for using Microsoft 365 data and other data, creating cloud flow. These services will be described in my other articles.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">It is complex in the case of the information sources being non-Microsoft 365 data.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">One way to divide sources is an aspect of access permissions, it said above, and another way is to divide by use case that does not matter accessed identities.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">It is important how data is divided by permission when information sources of AI such as access accounting data or human resource data although, it is not important to divide data with identity to access IoT data unmanaged by id. These data might be divided into use cases for efficiency or agility.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">Furthermore, it is important to consider whether the identity federation is complete or not. If <a style="font-weight: bold;" href="https://techcommunity.microsoft.com/t5/microsoft-mechanics-blog/manage-your-multi-cloud-identity-infrastructure-with-microsoft/ba-p/3709677?wt.mc_id=DT-MVP-4029060" target="_new" rel="noopener">the identity federation is complete with Entra ID</a> and stores the whole of the data as Azure resources, it needs only implement the orchestration of AI.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">So this article describes how to implement AI using Microsoft 365 data with additional data. My other articles describe content other than AI orchestration.</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 1.1rem;">• Story of the sample of this article</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">As a sample of AI using Microsoft 365 data with additional data, design levels of accessing information sources of AI that is like the following figure.</p>
+<p style="display: inline-block; margin-bottom: 10px; text-align: center; width: 100%;"><img decoding="async" style="width: 900px;" src="/wp-content/uploads/2024/02/LevelsOfAccessingInformationSourcesOfAI.png" alt=""></p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">The additional data in the figure above is used in AI. For example, the travel expense data is shared only with the accounting division using SharePoint or Teams. Though the additional data is not shared with the company&#8217;s colleagues explicitly, It is better that colleagues who are not engaged accounting division can search related to the travel expense data such as heuristic&nbsp;knowledge that is assembled by the employee who applied travel expenses. This article creates the AI that orchestrates with Microsoft 365 using such data.</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 1.1rem;">• Preparing a Small Language Model for the company&#8217;s data</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">There are several types of language models, types are such as foundation models, fine-tuned models, and quantization models. Now, the Trainer model such as <a style="font-weight: bold;" href="https://www.microsoft.com/en-us/research/project/orca/" target="_new" rel="noopener">Orca-2</a> exists and creates small language models, training, and creating datasets, for foundation models.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">It is better to use fine-tuned models than foundation models because they are already <a style="font-weight: bold;" href="https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/fine-tuning?tabs=turbo%2Cpython&amp;pivots=programming-language-studio&amp;wt.mc_id=DT-MVP-4029060" target="_new" rel="noopener">fine-tuned using a dataset for specific tasks</a> if the usage of the additional data of the company on AI matches the task of fine-tuning. <a style="font-weight: bold;" href="https://learn.microsoft.com/en-us/microsoft-365-copilot/microsoft-365-copilot-overview?wt.mc_id=DT-MVP-4029060" target="_new" rel="noopener">Copilot for Microsoft 365</a>, <a style="font-weight: bold;" href="https://www.bloomberg.com/company/press/bloomberggpt-50-billion-parameter-llm-tuned-finance/" target="_new" rel="noopener">BloombergGPT</a>, or <a style="font-weight: bold;" href="https://developer.amazon.com/en-US/alexa/alexa-skills-kit/asr" target="_new" rel="noopener">Automatic-Speech Recognition of Alexa</a> are representative.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">Additionally, if <a style="font-weight: bold;" href="https://arxiv.org/pdf/2210.17323.pdf" target="_new" rel="noopener">GPTQ (Quantization for Generative Pre-trained Transformers)</a> for fine-tuned models exists, it is better to use quantization models than fine-tuned models because quantization models are model compression using the one-shot weight quantization method, it can be used without GPU. Thus, the search for a model that aligns with the task at <a style="font-weight: bold;" href="https://huggingface.co/" target="_new" rel="noopener">Hugging Face</a>, <a style="font-weight: bold;" href="https://www.tensorflow.org/hub?hl=en" target="_new" rel="noopener">TensorFlow Hub</a>, or <a style="font-weight: bold;" href="https://pytorch.org/serve/model_zoo.html" target="_new" rel="noopener">PyTorch Zoo</a> at first. This article uses Hugging Face because using a model launcher distributed on Hugging Face. Model launcher is easy to search by typing &#8220;Ollama&#8221; at Hugging Face, Ollama is similar to LlamaIndex, LangChain, Semantic Kernel, Rust LLM, and Roboflow, they support many models.</p>
+<div style="margin: 20px 0px 20px 0px; display: table; border: solid thin #444;">
+<div style="display: table-row; padding: 5px 5px 5px 5px; background: #ccc;">
+<div style="display: table-cell; font-weight: bold; color: #444; white-space: nowrap; text-align: center;">Model tools</div>
+<div style="display: table-cell; font-weight: bold; color: #444; text-align: center;">Support models</div>
+</div>
+<div style="display: table-row; padding: 5px 5px 5px 5px;">
+<div style="display: table-cell; font-weight: bold; white-space: nowrap; padding: 5px 5px 5px 5px;">Ollama</div>
+<div style="display: table-cell; padding: 5px 5px 5px 5px;">Support models of more than <a style="font-weight: bold;" href="https://ollama.com/library" target="_new" rel="noopener">sixty</a>.</div>
+</div>
+<div style="display: table-row; background: #ffc;">
+<div style="display: table-cell; font-weight: bold; white-space: nowrap; padding: 5px 5px 5px 5px;">LlamaIndex</div>
+<div style="display: table-cell; padding: 5px 5px 5px 5px;">Several paid and open-source <a style="font-weight: bold;" href="https://docs.llamaindex.ai/en/stable/module_guides/models/llms.html" target="_new" rel="noopener">LLMs</a> are supported.</div>
+</div>
+<div style="display: table-row;">
+<div style="display: table-cell; font-weight: bold; white-space: nowrap; padding: 5px 5px 5px 5px;">LangChain</div>
+<div style="display: table-cell; padding: 5px 5px 5px 5px;">Does not serve its own LLMs, but rather provides a standard interface for interacting with many different <a style="font-weight: bold;" href="https://python.langchain.com/docs/modules/model_io/llms/quick_start" target="_new" rel="noopener">LLMs</a>.</div>
+</div>
+<div style="display: table-row; background: #ffc;">
+<div style="display: table-cell; font-weight: bold; white-space: nowrap; padding: 5px 5px 5px 5px;">Semantic Kernel</div>
+<div style="display: table-cell; padding: 5px 5px 5px 5px;">SDK that integrates Large Language Models (<a style="font-weight: bold;" href="https://github.com/microsoft/semantic-kernel" target="_new" rel="noopener">LLMs</a>) like OpenAI, Azure OpenAI, and Hugging Face.</div>
+</div>
+<div style="display: table-row;">
+<div style="display: table-cell; font-weight: bold; white-space: nowrap; padding: 5px 5px 5px 5px;">Rust LLM</div>
+<div style="display: table-cell; padding: 5px 5px 5px 5px;">Support several models as <a style="font-weight: bold;" href="https://github.com/rustformers/llm/blob/main/doc/known-good-models.md" target="_new" rel="noopener">Known-good models</a>.</div>
+</div>
+<div style="display: table-row; background: #ffc;">
+<div style="display: table-cell; font-weight: bold; white-space: nowrap; padding: 5px 5px 5px 5px;">Roboflow</div>
+<div style="display: table-cell; padding: 5px 5px 5px 5px;">Several <a style="font-weight: bold;" href="https://roboflow.com/models" target="_new" rel="noopener">computer vision models</a> are supported.</div>
+</div>
+</div>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">Ollama also has an eco-system as Ollama&#8217;s official image at the docker hub or can be installed on Linux using WSL2 as well. Models that are not Quantarizationed can be compressed using a GGUF file.<br />
+There are libraries to create a pipeline for C#, so it&#8217;s easy to implement local AI as figure below using Ollama.</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2024/03/26/steps-of-introducing-ai-to-companies/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>HTTP/3 and the gRPC service in .NET framework</title>
+		<link>https://blog.processtune.com/2022/10/30/http-3-and-the-grpc-service-in-net-framework/</link>
+					<comments>https://blog.processtune.com/2022/10/30/http-3-and-the-grpc-service-in-net-framework/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Sun, 30 Oct 2022 07:50:59 +0000</pubDate>
+				<category><![CDATA[gRPC]]></category>
+		<category><![CDATA[未分類]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=6804</guid>
+
+					<description><![CDATA[The gRPC service can use on HTTP/3 connection. This article describes how the gRPC connection affects HTTP connection, additionally, history of HTTP connection is also described. &#62;&#62;Rust sample project to create QR Code, Base program of implantation to Azure Functions •&#160;History of HTTP connection Internet Engineering Task Force (IETF) has proceeding technical standardization of internet. [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin: 0px 0px 0px 0px; color: #000044; font-size: 0.9rem;"><a style="font-weight: bold;" href="https://github.com/grpc/proposal/blob/master/G2-http3-protocol.md" target="_new" rel="noopener">The gRPC service can use on HTTP/3 connection</a>. This article describes how the gRPC connection affects HTTP connection, additionally, history of HTTP connection is also described.</p>
+<p style="margin: 10px 0px 0px 5px; text-indent: 1em; text-align: right; font-weight: bold;">&gt;&gt;<a style="font-weight: bold;" href="https://github.com/TetsuroTakao/QRCodeCreation" target="_new" rel="noopener">Rust sample project to create QR Code, Base program of implantation to Azure Functions</a></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">•&nbsp;History of HTTP connection</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;"><a style="font-weight: bold;" href="https://docs.microsoft.com/ja-jp/azure/azure-functions/functions-bindings-register#extension-bundles?WT.mc_id=AZ-MVP-4029060" target="_new" rel="noopener">Internet Engineering Task Force (IETF)</a> has proceeding technical standardization of internet. HTTP working group of IETF treats HTTP semantics, caching, and HTTP messaging. HTTP messaging uses the same semantics of HTTP/1.1, HTTP/2 and HTTP/3.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">Therefor RFC 9113 (HTTP/2 bis), <a style="font-weight: bold;" href="https://datatracker.ietf.org/doc/rfc9114/" target="_new" rel="noopener">RFC 9114</a> (HTTP/3) and <a style="font-weight: bold;" href="https://datatracker.ietf.org/doc/rfc9204/" target="_new" rel="noopener">RFC9204 (QPACK)</a> affects to the gRPC connection although, Google and many technicians have contributing to the gRPC connection since April 2016 (when Google&#8217;s the Stubby was opened as the <a style="font-weight: bold;" href="https://cloud.google.com/blog/products/gcp/grpc-a-true-internet-scale-rpc-framework-is-now-1-and-ready-for-production-deployments" target="_new" rel="noopener">gRPC 1.0</a>). Afterwards the [<a style="font-weight: bold;" href="https://github.com/grpc/grpc/blob/master/doc/PROTOCOL-HTTP2.md" target="_new" rel="noopener">gRPC over HTTP2</a>] since 2015, and the [<a style="font-weight: bold;" href="https://github.com/grpc/proposal/blob/master/G2-http3-protocol.md" target="_new" rel="noopener">gRPC over HTTP/3</a>] since 2021 are opened on GitHub. There are standardised considering with the standard of IFTF.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">To simply say about only HTTP messaging, it has been improved as HTTP 0.9 (since 1990) &#8211; 1.0 (1996: POST etc.) &#8211; 1.1 (1997: Virtual host etc.) &#8211; 2.0 (2015: Stream) &#8211; 3.0 (2018: UDP communication).</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">Evolution of HTTP messaging can explain with an aspect of connection and an aspect of data.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">As an aspect of connection, a setting of connection is shared between edge-side and service-side on streaming communication of HTTP/2, as result, edge-side can start next request without waiting for the end of before request.</p>
+<p style="display: inline-block; margin-bottom: 10px; text-align: center; width: 100%;"><img decoding="async" style="width: 900px;" src="/wp-content/uploads/2023/03/HTTPStreaming.png" alt=""></p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">As an aspect of data, the headers of HTTP/2 are compressed, and a content is communicated as binary. Thus, reduces workload of adding new connections because one connection can handle many requests.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">HTTP/3 reduces the communication initiation cost and transport layer confirmation response cost. And using UDP connection, it performs high-speed data transmission and reception.</p>
+<p style="display: inline-block; margin-bottom: 10px; text-align: center; width: 100%;"><img decoding="async" style="width: 900px;" src="/wp-content/uploads/2023/03/HTTPDataEvolution.png" alt=""></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">•&nbsp;QUIC library for development of the gRPC connection</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">Microsoft provides <a style="font-weight: bold;" href="https://github.com/microsoft/msquic" target="_new" rel="noopener">MsQuic</a> that is implementation of IETF&#8217;s <a style="font-weight: bold;" href="https://datatracker.ietf.org/wg/quic/about/" target="_new" rel="noopener">QUIC</a> as library. This library is standard on Windows, thus provided API on over .NET 7.0. Though this library does TLS handshake, it is also provided Windows 11 build 22000 or later as Windows SChannel.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">Therefore does not use MsQuic explicitly on Windows 11 and .NET 7.0.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">There are other libraries for other languages for Quic connection such as below table.</p>
+<div style="margin: 0px 0px 0px 20px; display: table;">
+<div style="display: table-row;">
+<div style="display: table-cell; font-weight: bold; padding-right: 10px; width: 150px;">C++</div>
+<div style="display: table-cell; width: 100px;">QUICHE</div>
+<div style="display: table-cell; font-weight: bold; padding-right: 10px; width: 150px;">Rust</div>
+<div style="display: table-cell; width: 100px;">quinn</div>
+</div>
+<div style="display: table-row;">
+<div style="display: table-cell; font-weight: bold;">C, Rust</div>
+<div style="display: table-cell;">MsQuic</div>
+<div style="display: table-cell; font-weight: bold; padding-right: 10px;">C</div>
+<div style="display: table-cell;">LSQUIC</div>
+</div>
+<div style="display: table-row;">
+<div style="display: table-cell; font-weight: bold;">Python</div>
+<div style="display: table-cell;">aioquic</div>
+<div style="display: table-cell; font-weight: bold; padding-right: 10px;">Rust</div>
+<div style="display: table-cell;">s2n-quic</div>
+</div>
+<div style="display: table-row;">
+<div style="display: table-cell; font-weight: bold;">Go</div>
+<div style="display: table-cell;">quic-go</div>
+<div style="display: table-cell; font-weight: bold;">Rust</div>
+<div style="display: table-cell;">Neqo</div>
+</div>
+</div>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">Implementation of gRPC over HTTP/3 is easy as below code that modified from the &#8216;Program.cs&#8217; of the &#8216;GrpcGreeter&#8217; folder of <a style="font-weight: bold;" href="https://github.com/TetsuroTakao/gRPC" target="_new" rel="noopener">this sample</a>.</p>
+<pre style="background-color: #cccccc; border: 1px solid #00000; padding: 10px;">builder.WebHost.ConfigureKestrel(options =&gt;
+{
+    options.ListenAnyIP(5008);
+    options.ListenAnyIP(7116, listenOptions =&gt;
+    {
+        // listenOptions.Protocols = Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http2;
+        // listenOptions.Protocols = Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http1AndHttp2AndHttp3;
+        listenOptions.Protocols = Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http3;// add only this line
+        listenOptions.UseHttps(options =&gt;
+            {
+                options.ClientCertificateMode = ClientCertificateMode.RequireCertificate;
+                options.ClientCertificateValidation = (certificate, chain, errors) =&gt; {
+                    options.ServerCertificate = certificate;
+                    return true;
+                };
+            }
+        );
+    });
+});
+</pre>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2022/10/30/http-3-and-the-grpc-service-in-net-framework/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Deploy the gRPC service to the Azure App Service</title>
+		<link>https://blog.processtune.com/2022/09/30/deploy-the-grpc-service-to-the-azure-app-service/</link>
+					<comments>https://blog.processtune.com/2022/09/30/deploy-the-grpc-service-to-the-azure-app-service/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Fri, 30 Sep 2022 11:20:48 +0000</pubDate>
+				<category><![CDATA[gRPC]]></category>
+		<category><![CDATA[Microsoft Azure]]></category>
+		<category><![CDATA[未分類]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=6783</guid>
+
+					<description><![CDATA[Microsoft Azure provides hosting feature of the gRPC service as Azure App Service, Azure Container Apps and Azure Kubernetes Service. This article describes how to deploy the gRPC service that is created in the article [ASP.NET Core gRPC &#38; gRPC communication tools] to Azure App Service. &#62;&#62;Sample project to deploy to Azure App Service •&#160;Create [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin:0px 0px 0px 0px;color:#000044;font-size:0.9rem;font-family:" segoe="" ui";"="">Microsoft Azure provides hosting feature of the gRPC service as Azure App Service, Azure Container Apps and Azure Kubernetes Service.<br />
+This article describes how to deploy the gRPC service that is created in the article [<a href="https://blog.processtune.com/?p=6649" target="_new" style="font-weight:bold;" rel="noopener">ASP.NET Core gRPC &amp; gRPC communication tools</a>] to Azure App Service.</p>
+<p style="margin:10px 0px 0px 5px;text-indent:1em;text-align:right;font-weight:bold;">&gt;&gt;<a href="https://github.com/TetsuroTakao/gRPCAzureDeploySample" target="_new" style="font-weight:bold;" rel="noopener">Sample project to deploy to Azure App Service</a></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">•&nbsp;Create the Web App Service using Azure portal</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Open Azure portal and select the [Create a resource] then select the Web App [Create] link, and set values as figure below.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2023/03/AzureAppServiceCreation.png" alt="" style="width:450px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Set values of settings with select the [Configuration] of the [Settings] section of the left pane after selecting the Web App Service (or select the [Go to resource] when complete creating the service) created it.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Though there are application settings and general settings in the [Configuration], set value &#8220;2.0&#8221; to the [HTTP version] property and set value &#8220;On&#8221; to the [HTTP 2.0 Proxy] property in the [General settings] tab.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Select the [+ New application settings] link after the [Application settings] link, then the [Add/Edit application setting] blade displayed, set value &#8220;HTTP20_ONLY_PORT&#8221; to the [Name] property and set value &#8220;5243&#8221; to the [Value] property.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2023/03/AzureAppServiceSettings.png" alt="" style="width:900px;"></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">•&nbsp;Execute the gRPC service with HTTPS</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Created gRPC service uses TSL 1.2 (figure below left), therefore several modifying.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">There are two settings in the [launchsettings.json] file of the [Properties] folder of the sample project that was described in the article &#8216;ASP.NET Core gRPC &amp; gRPC communication tools&#8217;. Execute the project using the setting [https]. Please download the sample project from GitHub, or create the gRPC service with referring of the article.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The figure below right is type the [dotnet run &#8211;launch-profile https] command in the [Ternimal] of Visual Studio Code.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2023/03/TSLSettings.png" alt="" style="width:450px;"><img decoding="async" src="/wp-content/uploads/2023/03/ExecuteHTTPS.png" alt="" style="width:450px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The gRPC communication provided Azure Web App Service needs TSL communication. It needs certificate to communicate while TSL handshake. Therefor create certificate, in many cases, there is the certificate for development already in the PC. For confirming local certificates in development environment use the command [dotnet dev-certs https -v] in the [Terminal] pane of Visual Studio Code. Find the certificate that is in vailed term and copy the certificate id. The certificate is also able to create as self signed with Go language that install in previous article [<a href="https://blog.processtune.com/?p=6649" target="_new" style="font-weight:bold;" rel="noopener">ASP.NET Core gRPC &amp; gRPC communication tools</a>]. Put the command below in the [Terminal] pane of Visual Studio Code (at current directory that moved project root folder).</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">//In the case of self signed
+$Go installed path$\bin\go run $Go installed path$\src\crypto\tls\generate_cert.go --rsa-bits=2048 --host=localhost
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">In the case of certificate for development, check the [ASP.NET Core HTTPS development certificate] is trusted using the [certmgr.msc] command input to Windows [Run] menu item. If not, put the [dotnet dev-certs https &#8211;check &#8211;trust]  in the [Terminal] pane of Visual Studio Code.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2023/03/CheckCertTrusted.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">There is also able to check using the command [dotnet dev-certs https -v] in the [Terminal] pane of Visual Studio Code. And copy collect one certificate to use at C# code (refer to figure below). Select certificate that includes value [localhost] as the [CN] property and also has value of the [IsHttpsDevelopmentCertificate] property is [true] and valid period. If not, use the command [dotnet dev-certs https] to create the development certificate (detail is refer to the <a href="https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-dev-certs?WT.mc_id=DT-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">official document</a>).</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2023/03/devcert.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The code copied is used for the gRPC client app that is able to download from <a href="https://github.com/TetsuroTakao/gRPC/tree/main/GrpcGreeterClient" target="_new" style="font-weight:bold;" rel="noopener">GitHub</a>.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">using System.Security.Cryptography.X509Certificates;
+...
+X509Store store = new X509Store(StoreName.My, StoreLocation.CurrentUser);
+store.Open(OpenFlags.ReadOnly | OpenFlags.OpenExistingOnly);
+var cert = store.Certificates.Where(c =&gt; c.GetCertHashString() =="E73488EF2CD742DE44A31ECA660F9FD8AD3D46C6").FirstOrDefault();
+...
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">There is displayed error when execute the gRPC service use HTTPS and execute client-side app as simple [dotnet run] command with leave downloaded client-side app sample code.  Thus, open the [Program.cs] file of the client-side app project and modify an argument of the [ForAddress] method to [&#8220;http://localhost:5008&/#8221;].</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2023/03/gRPCServiceExecuteOnLocal.png" alt="" style="width:450px;"><img decoding="async" src="/wp-content/uploads/2023/03/gRPCClientExecuteOnLocal.png" alt="" style="width:450px;"></p>
+<p>Confirm certificate for development of localhost using the code above.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">using Grpc.Net.Client;
+// using GrpcGreeterClient;
+using System.Security.Cryptography.X509Certificates;
+
+//using var channel = GrpcChannel.ForAddress("https://localhost:8585/");
+using var channel = GrpcChannel.ForAddress("http://localhost:5008/");
+
+X509Store store = new X509Store(StoreName.My, StoreLocation.CurrentUser);
+store.Open(OpenFlags.ReadOnly | OpenFlags.OpenExistingOnly);
+var cert = store.Certificates.Where(c =&gt; c.GetCertHashString() =="E73488EF2CD742DE44A31ECA660F9FD8AD3D46C6").FirstOrDefault();
+
+// var client = new Greeter.GreeterClient(channel);
+// var reply = await client.SayHelloAsync(new HelloRequest { Name = "GreeterClient" });
+// Console.WriteLine("Greeting: " + reply.Message);
+Console.WriteLine(string.Format("{0}, Press any key to exit...",cert!.FriendlyName));
+Console.ReadKey();
+</pre>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">•&nbsp;Deploy the gRPC service to Azure Web App Service</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">It is able to use Visual Studio Code to deploy the gRPC service to Azure Web App service. Download the sample project that was described in the article &#8216;<a href="https://blog.processtune.com/?p=6649" target="_new" style="font-weight:bold;" rel="noopener">ASP.NET Core gRPC &amp; gRPC communication tools</a>&#8216; from <a href="https://github.com/TetsuroTakao/gRPC2" target="_new" style="font-weight:bold;" rel="noopener">GitHub</a>, or create the gRPC service refer to the article.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The gRPC service has to be able to listen on only port 5243 that set at Azure Web App Service with HTTP 2.0, so modify configuration of the Program.cs file as below. This code needs the <a href="https://www.nuget.org/packages/Microsoft.AspNetCore.Authentication.Certificate" target="_new" style="font-weight:bold;" rel="noopener">nuget package</a>.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">using Microsoft.AspNetCore.Server.Kestrel.Https;
+using Microsoft.AspNetCore.Authentication.Certificate;
+...
+var builder = WebApplication.CreateBuilder();
+builder.Services.AddAuthentication(
+        CertificateAuthenticationDefaults.AuthenticationScheme) // use Microsoft.AspNetCore.Authentication.Certificate
+    .AddCertificate(options =&gt;
+    {
+        options.AllowedCertificateTypes = CertificateTypes.All; // use Microsoft.AspNetCore.Authentication.Certificate
+    });
+builder.Services.AddAuthorization();
+builder.WebHost.ConfigureKestrel(options =&gt;
+{
+    options.ListenAnyIP(5008);
+    options.ListenAnyIP(7116, listenOptions =&gt;
+    {
+        listenOptions.Protocols = Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http2;
+        listenOptions.UseHttps(options =&gt;
+            {
+                options.ClientCertificateMode = ClientCertificateMode.RequireCertificate; // use Microsoft.AspNetCore.Server.Kestrel.Https
+                options.ClientCertificateValidation = (certificate, chain, errors) =&gt; {
+                    options.ServerCertificate = certificate;
+                    return true;
+                };
+            }
+        );
+    });
+});
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">This code adds the Authentication feature and the Authorization feature, also needs the Routing feature, the Authentication feature and the Authorization feature for Web application, thus add code below before the [app.MapGrpcService<greeterservice>();] statement.</greeterservice></p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">app.UseRouting();
+app.UseAuthentication();
+app.UseAuthorization();
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Figure below is all code of service and client, therefore can deploy the service part to Azure.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2023/03/gRPCAllCodeServiceAndClient.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Sign in Azure from Visual Studio Code before proceeding to the next step. Press the key [Ctrl] + [Shift] + [P] to open the [Command palette], and input &#8216;azure sign&#8217; and select the menu item [Azure Sign In] from the list of the palette. This operation needs the [Azure Tools] Visual Studio Code extension, thus install it if the extension is not installed (Figure left).</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Confirm sign in information at the [Azure Account Status] of the [Status bar] and select the [Azure Tools] extension at the [Activity Bar]. Then can select subscription of Azure when select the [RESOURCES] section of the [Azure Tools] extension (Figure right).</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2023/03/VisualStudioCodeAzureToolsExtension.png" alt="" style="width:450px;"><img decoding="async" src="/wp-content/uploads/2023/03/SelectSubscription.png" alt="" style="width:450px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Press the key [Ctrl] + [Shift] + [P] in Visual Studio Code to open the [Command palate], And input &#8216;Azure App Service&#8217; to the palate. Select the Subscription at the [Command palette] and select the Resource (Azure Web App Service) that created in the section above (&#8216;Create the Web App Service using Azure portal&#8217;) too. Select the [OK] button after shown the confirm dialog.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2023/03/DeployAzureAppService.png" alt="" style="width:900px;"></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2022/09/30/deploy-the-grpc-service-to-the-azure-app-service/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>ASP.NET Core gRPC &#038; gRPC communication tools</title>
+		<link>https://blog.processtune.com/2022/05/30/asp-net-core-grpc-grpc-communication-tools/</link>
+					<comments>https://blog.processtune.com/2022/05/30/asp-net-core-grpc-grpc-communication-tools/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Mon, 30 May 2022 09:28:02 +0000</pubDate>
+				<category><![CDATA[gRPC]]></category>
+		<category><![CDATA[未分類]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=6649</guid>
+
+					<description><![CDATA[Microsoft supports several development environments of the gRPC communication implementation, and provides many documents. I want to introduce Microsoft official document and describe mechanism of HTTP/3 protocol, relation between the gRPC and HTTP/3 and so on. Design of gRPC communication was described at previous article &#8216;Design of solution with gRPC communication&#8216;, please refer to it. [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin:0px 0px 0px 0px;color:#000044;font-size:0.9rem;font-family:" segoe="" ui";"="">Microsoft supports several development environments of the gRPC communication implementation, and provides many documents. I want to introduce <a href="https://learn.microsoft.com/en-us/aspnet/core/grpc/test-tools?view=aspnetcore-6.0&amp;WT.mc_id=AZ-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">Microsoft official document</a> and describe mechanism of HTTP/3 protocol, relation between the gRPC and HTTP/3 and so on. Design of gRPC communication was described at previous article &#8216;<a href="https://blog.processtune.com/?p=6651" target="_new" style="font-weight:bold;" rel="noopener">Design of solution with gRPC communication</a>&#8216;, please refer to it.<br />
+This article describes two-thirds steps of implementation of the gRPC service, at first, create the gRPC service with localhost, then query simple request use the <a href="https://github.com/fullstorydev/grpcurl/blob/master/README.md" target="_new" style="font-weight:bold;" rel="noopener">gRPCurl</a> tool. The last step is in the next article [<a href="https://blog.processtune.com/?p=6783" target="_new" style="font-weight:bold;" rel="noopener">Deploy the gRPC service to the Azure App Service</a>] that describes how to deploy the service to Azure Web App Service.<br />
+And mechanism of HTTP/3 protocol and relation between the gRPC and HTTP/3 is described in the article [<a href="https://blog.processtune.com/?p=6804" target="_new" style="font-weight:bold;" rel="noopener">HTTP3 and gRPC service in .NET framework</a>].</p>
+<p style="margin:10px 0px 0px 5px;text-indent:1em;text-align:right;font-weight:bold;">&gt;&gt;<a href="https://github.com/TetsuroTakao/gRPC2" target="_new" style="font-weight:bold;" rel="noopener">The gRPC service sample project, before deployment to Azure Web Service.</a></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">•&nbsp;Implementation of the gRPC service.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">This article refers to Microsoft official document &#8216;<a href="https://learn.microsoft.com/en-us/aspnet/core/tutorials/grpc/grpc-start?view=aspnetcore-6.0&amp;tabs=visual-studio?WT.mc_id=DT-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">Tutorial: Create a gRPC client and server in ASP.NET Core</a>&#8216;, so if lost a step of implementation of the gRPC service, please refer to it too. This article describe steps of the gRPC service with  ASP.NET Core, so the service implementation with one of architectures below.</p>
+<div style="margin: 0px 0px 0px 20px;display:table;">
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;padding-right:10px;">Kestrel</div>
+<div style="display:table-cell;">Cross-platform web server</div>
+</div>
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;">TestServer</div>
+<div style="display:table-cell;">In-memory web server for unit test mainly</div>
+</div>
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;">Internet Information Service</div>
+<div style="display:table-cell;">Standard web server of Windows, the constraints are .NET 5 and Windows 11 Build 22000 or Windows Server 2022 Build 20348 or later.</div>
+</div>
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;">HTTP.sys</div>
+<div style="display:table-cell;">The Windows web service for ASP.NET Core includes several extending features that differ from Kestrel; constraints are same as IIS above.</div>
+</div>
+</div>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">In the step 2, call it from the gRPCurl tool or the Postman, then after confirm runnable of the service, as last step, deploy to any of Azure Services below.</p>
+<div style="margin: 0px 0px 0px 20px;display:table;">
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;">Azure Kubernetes Service (AKS)</div>
+</div>
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;">Azure Container Apps</div>
+</div>
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;">Azure App Service (gRPC-Web)</div>
+</div>
+</div>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The gRPC service have to includes the gRPC reflection service for providing description of the gRPC service (works like as swagger). The gRPC client communicates with the gRPC reflection service for solving objects of the gRPC service before calls method of the service.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">If it needs only communication test, a gRPC service that does not implement the gRPC reflection service can also use the gRPC connection with loading the proto source file to the gRPCurl. Also, the Postman can use as gRPC client as same as the gRPCurl (useable the proto source file).</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">It is easy that the gRPC reflection service implementation, Open Visual Studio Code, use the &#8220;dotnet new&#8221; command at target folder and use the &#8220;dotnet add package&#8221; command for implementation of service on the generic host of ASP.NET Core web app.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2023/02/ImplementationProcess.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">1. Press the Ctrl key + @ key for open the terminal pain of Visual Studio Code. Then put the &#8220;dotnet new list&#8221; command to show all templates of dotnet sdk on development environment. The figure above shows .NET SDK 7.0 environment. There is the ASP.NET Core gRPC Service in the list.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">2. So, move to the target folder in the terminal pain, and put the &#8220;dotnet new grpc&#8221; command to generate project files at target folder.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">3. Install reflection server package use nuget dotnet command &#8220;dotnet add package Grpc.AspNetCore.Server.Reflection &#8211;version 2.51.0&#8221;.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">4. Next, open the Program.cs file from the EXPLORER pain, and put the code &#8220;builder.Services.AddGrpcReflection();&#8221; after the &#8220;var builder = WebApplication.CreateBuilder(args);&#8221; statement.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">5. After the &#8220;var app = builder.Build();&#8221; statement, add the &#8220;IWebHostEnvironment env = app.Environment;&#8221; code and the &#8220;if&#8221; section like code below.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">using gRPC2.Services;
+
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddGrpcReflection();
+// Additional configuration is required to successfully run gRPC on macOS.
+// For instructions on how to configure Kestrel and gRPC clients on macOS, visit https://go.microsoft.com/fwlink/?linkid=2099682
+
+// Add services to the container.
+builder.Services.AddGrpc();
+
+var app = builder.Build();
+IWebHostEnvironment env = app.Environment;
+if (env.IsDevelopment())
+{
+    app.MapGrpcReflectionService();
+}
+// Configure the HTTP request pipeline.
+app.MapGrpcService<greeterservice>();
+app.MapGet("/", () =&gt; "Communication with gRPC endpoints must be made through a gRPC client. To learn how to create a client, visit: https://go.microsoft.com/fwlink/?linkid=2086909");
+
+app.Run();
+</greeterservice></pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">6. Put the &#8220;dotnet run&#8221; command to run gRPC service at local environment, then the &#8220;Now listening on: http://localhost:5008&/#8221; statement displayed on the terminal pain. The HTTPS connection is able to use with the &#8220;dotnet dev-certs https&#8221; command in the terminal pane.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">At first, the Postman is easy to confirm the gRPC service connection than using the gRPCurl because the gRPCurl is command line application. So describes the Postman usage ahead, then the gRPCurl usage follows.</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">•&nbsp;Call the gRPC service use the gRPCurl and the Postman.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The &#8220;New&#8230;&#8221; menu item of the File menu item that displayed when press the hamburger icon of Postman has the gRPC connection feature, refer below figure.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2023/02/PostmanCreateNewgRPC.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">From the terminal pain of Visual Studio Code, copy the part of the URL (localhost:5008) excluded the protocol part that is listening, and paste at the server address textbox of the gRPC Request tub. Then press the [Try again] link of the last item [Use server reflection] of the method select list that is shown when the method textbox selects. After pressing the [Try again] link, the list is changed to be able to select the method (SayHello).</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2023/03/PostmanInvoke.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">This &#8220;SayHello&#8221; method defined at the GreeterService class of the GreeterService.cs file, thus the reflection service create the proto file at the greet.proto file of the Protos folder.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2023/03/FileStructure.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The <a href="https://github.com/fullstorydev/grpcurl/releases" target="_new" style="font-weight:bold;" rel="noopener">gRPCurl</a> is command line application for confirming the gRPC service communication. After install <a href="https://go.dev/doc/install" target="_new" style="font-weight:bold;" rel="noopener">Go language</a>, install the gRPCurl (download the “grpcurl_1.8.7_windows_x86_64.zip” file and unzip it) and run the Windows Command Prompt at the gRPCurl install folder.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2023/03/RungRPCurl.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">This figure is result of that acquire information of the gRPC service then call remote procedure.<br />
+The describe command responds &#8220;greet.Greeter is a service&#8221; (package name and service name), and &#8220;rpc SayHello &#8230;&#8221; (method name). The Method is able to call with format &#8220;grpcurl -plaintext -d %value(s)% %server address% %package name%.%service name%/%methodname%&#8221;.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Definition of argument(s) of the method of the service uses the &#8220;-d&#8221; command. Thus &#8220;grpcurl -plaintext -d %value(s)% localhost:5008 greet.Greeter/SayHello&#8221; warks well. Only in Windows development environment, argument(s) wrap with [&#8221; (double quate)] and JSON format: wrap key/value with [{} (Brace)] and wrap the key and the value each with [&#8221; (double quate)], [&#8221; (double quate)] in argument(s) needs escape.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">"grpcurl -plaintext -d "{\"name\": \"takao\"}" localhost:5008 greet.Greeter/SayHello"
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">If there is Go development environment, it is able to connect to gRPC service with browser. If not, go to the page &#8220;Download and install&#8221; of the Go website and install it. After install it, install gRPC UI use the command &#8220;go install github.com/fullstorydev/grpcui/cmd/grpcui@latest&#8221; (move to the Go installed path if it needs). It is installed at the GOPATH of the system environment variables that is shown from the System Properties dialog&#8217;s [Environment Variables&#8230;] button select. The dialog is shown when select the [Advanced system settings] link of the [Related links] of the [System About] window that is displayed by selection the context menu item [System] of Windows icon (right click).<br />
+Move to the gRPC UI installed path if it needs, type &#8220;grpcui -plaintext localhost:5008&#8221;, then the browser is opened and can test it.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2023/03/EnvironmentVariables.png" alt="" style="width:400px;"><img decoding="async" src="/wp-content/uploads/2023/03/grpcui.png" alt="" style="width:450px;margin-left:1rem;"></p>
+<div style="background-color:#cccccc;border:1px solid #00000; padding: 10px 10px 0px 10px;margin-top:20px;">
+<div style="margin:-20px 0px 0px 5px;text-indent:1em;font-weight:bold;background-color:#444;border:1px solid #ccc;color:#fff;">ⓘ Recomended reference</div>
+<p><a href="https://blog.processtune.com/?p=6649" target="_new" style="font-weight:bold;display:inline-block;margin-left:1rem;margin-top:1rem;" rel="noopener">→ ASP.NET Core gRPC &amp; gRPCurl tool</a><br />
+<a href="https://blog.processtune.com/?p=6783" target="_new" style="font-weight:bold;display:inline-block;margin-left:1rem;margin-top:1rem;" rel="noopener">→ Deploy the gRPC service to the Azure App Service</a><br />
+<a href="https://blog.processtune.com/?p=6804" target="_new" style="font-weight:bold;display:inline-block;margin-left:1rem;margin-top:1rem;margin-bottom:1rem;" rel="noopener">→ HTTP3 and gRPC service in .NET framework</a></p>
+</div>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2022/05/30/asp-net-core-grpc-grpc-communication-tools/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Design of solution with gRPC communication</title>
+		<link>https://blog.processtune.com/2022/04/30/design-of-solution-with-grpc-communication/</link>
+					<comments>https://blog.processtune.com/2022/04/30/design-of-solution-with-grpc-communication/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Sat, 30 Apr 2022 08:29:32 +0000</pubDate>
+				<category><![CDATA[ASP.NET Core]]></category>
+		<category><![CDATA[C#]]></category>
+		<category><![CDATA[gRPC]]></category>
+		<category><![CDATA[Service]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Technical Memo]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=6651</guid>
+
+					<description><![CDATA[The gRPC is one of the Remote Procedure Call (RPC), It was developed by Google. They needed a messaging protocol that can respond on the distributed computing environment in real-time when users operate the Data plane of the Google Cloud. And it was leveraged for maintaining of the Control plane of Google Cloud also, to [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin:0px 0px 0px 0px;color:#000044;font-size:0.9rem;font-family:" segoe="" ui";"=""><a href="https://github.com/grpc" target="_new" style="font-weight:bold;" rel="noopener">The gRPC</a> is one of the <a href="https://en.wikipedia.org/wiki/Remote_procedure_call" target="_new" style="font-weight:bold;" rel="noopener">Remote Procedure Call (RPC)</a>, It was developed by Google. They needed a messaging protocol that can respond on the distributed computing environment in real-time when users operate <a href="https://www.cloudflare.com/learning/network-layer/what-is-the-control-plane/" target="_new" style="font-weight:bold;" rel="noopener">the Data plane</a> of the Google Cloud. And it was leveraged for maintaining of the Control plane of Google Cloud also, to keep high quality cloud services.<br />
+The gRPC uses <a href="https://cloud.google.com/blog/products/gcp/grpc-a-true-internet-scale-rpc-framework-is-now-1-and-ready-for-production-deployments?hl=en" target="_new" style="font-weight:bold;" rel="noopener">the Stubby</a> they created: a framework of one of the RPC. Then the gRPC become to open source, and it has be the incubating project of <a href="https://www.cncf.io/" target="_new" style="font-weight:bold;" rel="noopener">CNCF</a> since 2017.<br />
+Microsoft supports many development environments for an application using the gRPC-Web and the gRPC-over-HTTP/2 (see Microsoft official document &#8216;<a href="https://docs.microsoft.com/ja-jp/aspnet/core/grpc/supported-platforms?view=aspnetcore-6.0&amp;WT.mc_id=DT-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">gRPC on .NET supported platforms</a>&#8216;).<br />
+This article describe mechanism of .NET application using the gRPC architecture and an application that uses the gRPC works as the Message Oriented Middleware.<br />
+The article &#8216;<a href="https://blog.processtune.com/?p=6649" target="_new" style="font-weight:bold;" rel="noopener">ASP.NET Core gRPC &amp; gRPCurl tool</a>&#8216; describes how to implement gRPC application service from Azure App Service.</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">•&nbsp;gRPC-dotnet</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The gRPC-dotnet is implementation of .NET that is to use the <a href="https://grpc.io/blog/grpc-stacks/" target="_new" style="font-weight:bold;" rel="noopener">gRPC Core Stack</a>. It&#8217;s structed with namespaces of <a href="https://www.nuget.org/packages/Grpc.AspNetCore" target="_new" style="font-weight:bold;" rel="noopener">Grpc.AspNetCore</a> and <a href="https://www.nuget.org/packages/Grpc.AspNetCore.Server.Reflection" target="_new" style="font-weight:bold;" rel="noopener">Grpc.AspNetCore.Server.Reflection</a>. For creation of these stub, namespaces <a href="https://www.nuget.org/packages/Grpc.Net.Client" target="_new" style="font-weight:bold;" rel="noopener">Grpc.Net.Client</a>, <a href="https://www.nuget.org/packages/Grpc.Tools/2.51.0" target="_new" style="font-weight:bold;" rel="noopener">Grpc.Tools</a>, and <a href="https://www.nuget.org/packages/Google.Protobuf" target="_new" style="font-weight:bold;" rel="noopener">Google.Protobuf</a> architecture are used.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The Grpc.AspNetCore namespace is the gRPC service itself, and the Grpc.AspNetCore.Server.Reflection namespace works for providing a description of the gRPC service to client apps just like the <a href="https://swagger.io/" target="_new" style="font-weight:bold;" rel="noopener">Swagger</a>.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">On the other hand, the Grpc.Tools namespace is auto generate a stub of client side that uses <a href="https://protobuf.dev/" target="_new" style="font-weight:bold;" rel="noopener">the Protobuf of the gRPC</a>. The Grpc.Tools namespace generates a stub with the Google.Protobuf architecture, The Google.Protobuf called from the Grpc.Tools namespace is pure C# implementation that does not use native component of the gRPC core stack.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">There was no HTTP/2 library of C# until gRPC-dotnet is developed, so gRPC apps of C# were developed with gRPC.Core that includes HTTP/2 library. The gRPC.Core namespace moved to the state of the Maintenance Only at May 2021, then at May 2022, it was in the state of the Deprecated (Please refer to the great article &#8216;<a href="https://grpc.io/blog/grpc-csharp-future/" target="_new" style="font-weight:bold;" rel="noopener">The future of gRPC in C# belongs to grpc-dotnet</a>&#8216;).</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2023/02/gRPC-dotnet.png" alt="" style="width:900px;"></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">•&nbsp;The gRPC is a protocol for the Message Oriented Middleware.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The gRPC extends the Remote Procedure Call (RPC). <a href="https://grpc.io/" target="_new" style="font-weight:bold;" rel="noopener">The official website</a> says, &#8216;A high performance, open-source universal RPC framework&#8217;.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The first description is an aspect of universal RPC framework, it can be used in multiple languages and can enforce service contracts on multiple first- and third-party services using HTTP/2. It means that the gRPC can generate clients and servers in multiple languages, generated code is able to run on each language environment (C++, Java, Go, Node, Ruby, Python and C# across Linux, Windows and Mac). The gRPC as a framework is universal because it supports also development on many environment. For instance, mobile apps development of iOS and Android is supported with Objective-C and Android Java libraries, it can execute single-line installation in most languages.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The RPC calls any functions on destination that are an object, in other words, service contracts have to describe the objects, so gRPC use the Protocol Buffers for run on universal environment. The Protocol Buffers are a language-neutral, platform-neutral extensible mechanism for serializing structured data (quote from <a href="https://protobuf.dev/" target="_new" style="font-weight:bold;" rel="noopener">the official website</a>). It can describe objects of services side and edge side both.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The second description is an aspect of high performance of the gRPC, availability of object description affects streaming or unary flow control from each side of service and edge. In the case of using the forward error correction (FEC) mechanism for error handling, it is better that an object error is supported at communication level same as a connection error instead of at an application level. An access control of authentication &amp; authorization typically uses JSON as a container of a security token, object description of the Protocol Buffers is useful for transfer of a security token too, also useful for serialization/deserialization. The RPC extends of the gRPC are also useful at other aspects such as distributed tracing, binding as synchronization/asynchronization, response of cancel/timeout, health checking, load balancing, logging and monitoring and tracing etc..</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The gRPC was developed for distributed computing. Distributed computing has the Message-Oriented Middleware, the Distributed Directory, the Service Discovery, the Stateful Middle Tier, the Stateless Actor Activator and so on. There are many types in the Message Oriented Middleware such as the Pub-Sub, the Message Queue, the Fan-out, the Request/Response, the Point to Point, the Remote Procedure Call and so forth. The Remote Procedure Call run on several type protocols like the HTTP, the HTTP/2, the TCP/IP, the Internet InterORB protocol. The gRPC is extends HTTP/2 with the Protocol Buffers. Thus, the gRPC has to be used in correct situation, in other words, what kind of a solution architecture, what part of the system or which direction of procedures call.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2023/02/gRPCInDistributedComputing.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The gRPC is like as the WCF or the DCOM that uses the Distributed Object in synchronize communication although, it can communicate asynchronously, and also can bidirectional communication between service and client because it transfer objects with the HTT/2 protocol.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The Distributed Object of unary RPC makes a stub of a service side object on a client side, then a client executes a client-side object. In other hand, the gRPC transfers a description of service side object, then a client side calls service side procedure.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2023/02/gRPCommunicationDirection.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">If you familiar with synchronize communication on the DCOM or the WCF architecture, aware consistency of a state of services on the gRPC communication. In the case of a unary RPC, a client-side application uses same object of service side as stub, thus typically the application care about consistency of only service side state although, in contrast a state of client side or service side is not guaranteed on the gRPC communication because the gRPC communication uses remotely individual object of service side or client side and usually communicate with asynchronously. Though the gRPC can communicate as synchronously for waiting remote procedure response like unary RPC, if use the Backend for Frontends pattern for design of cloud native solution, it needs design as distributed computing like Microservices. Please refer to the website of Sam Newman (&#8216;<a href="https://samnewman.io/patterns/architectural/bff/" target="_new" style="font-weight:bold;" rel="noopener">Pattern: Backends For Frontends</a>&#8216;), and Microsoft official document (&#8216;<a href="https://learn.microsoft.com/en-us/azure/architecture/patterns/backends-for-frontends?WT.mc_id=AZ-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">Backends for Frontends pattern: Microsoft learn</a>&#8216;).</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2023/02/BackendForFrontends.png" alt="" style="width:900px;"></p>
+<div style="background-color:#cccccc;border:1px solid #00000; padding: 10px 10px 0px 10px;margin-top:20px;">
+<div style="margin:-20px 0px 0px 5px;text-indent:1em;font-weight:bold;background-color:#444;border:1px solid #ccc;color:#fff;">ⓘ Recomended reference</div>
+<p><a href="https://blog.processtune.com/?p=6649" target="_new" style="font-weight:bold;display:inline-block;margin-left:1rem;margin-top:1rem;margin-bottom:1rem;" rel="noopener">→ASP.NET Core gRPC &amp; gRPCurl tool</a></p>
+</div>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2022/04/30/design-of-solution-with-grpc-communication/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Node + MongoDB container for Azure Functions</title>
+		<link>https://blog.processtune.com/2022/02/01/node-mongodb-container-for-azure-static-web-apps/</link>
+					<comments>https://blog.processtune.com/2022/02/01/node-mongodb-container-for-azure-static-web-apps/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Tue, 01 Feb 2022 11:33:12 +0000</pubDate>
+				<category><![CDATA[Alpine Linux]]></category>
+		<category><![CDATA[Azure Functions]]></category>
+		<category><![CDATA[Docker]]></category>
+		<category><![CDATA[Express]]></category>
+		<category><![CDATA[Microservice]]></category>
+		<category><![CDATA[MongoDB]]></category>
+		<category><![CDATA[Node]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Ubuntu]]></category>
+		<category><![CDATA[Visual Studio Code]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=6245</guid>
+
+					<description><![CDATA[The article [Nginx run on Windows Subsystem for Linux 2] described mechanism of reverse proxy for development environment. This sample server has not features of logging, service discovery, load balancing, encryption, observability, traceability, authentication &#38; authorization, and the circuit breaker pattern, if create service mesh endpoint that can provide these features, individual service delegates these [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin:0px 0px 0px 0px;color:#000044;font-size:0.9rem;font-family:" segoe="" ui";"="">The article [<a href="https://blog.processtune.com/?p=6177" target="_new" style="font-weight:bold;" rel="noopener">Nginx run on Windows Subsystem for Linux 2</a>] described mechanism of reverse proxy for development environment. This sample server has not features of logging, service discovery, load balancing, encryption, observability, traceability, authentication &amp; authorization, and the circuit breaker pattern, if create service mesh endpoint that can provide these features, individual service delegates these feature to the endpoint. This article describes mecanism of such service that only provides business logic.<br />
+Also the service this article discribes has persistence layer, its data storage type is deferent against other services provides. So this article helps you to get outline of <a href="https://docs.microsoft.com/en-us/azure/architecture/guide/technology-choices/data-store-overview?WT.mc_id=DT-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">polyglot persistence</a>.<br />
+The sample container of this article uses Node for application runtime, Express web app framework, and MongoDB as persistence layer.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/04/OverViewNode_mongoDBContainer.png" alt="" style="width:900px;"></p>
+<p style="margin:10px 0px 0px 5px;text-indent:1em;text-align:right;font-weight:bold;">&gt;&gt;<a href="https://github.com/TetsuroTakao/SVGFreeIconListingApp" target="_new" style="font-weight:bold;" rel="noopener">Sample project of this article that created with Node and Express</a></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・MongoDB Docker official image</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">First step of the sample project creation is same as the sample project of the article [<a href="https://blog.processtune.com/?p=6177" target="_new" style="font-weight:bold;" rel="noopener">Nginx run on Windows Subsystem for Linux 2</a>], download Docker official image then modify Alpine Linux, with some apps or liblary, framework and so on install to it.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">In this article, this sample container use MongoDB as persistence layer, so using MongoDB Docker official image. It is different procedure that using Nginx Docker official image as creation of HTTP listener and web contents response service. It are made from the Express libraly this time.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">It is easy way using the Docker Desktop than following steps that using the Windows Subsystem for Linux 2 to create a container, although reccomend using WSL 2 to create some container for understanding mechanism of inside of a container.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">If following prepare are not complete yet, refer the article [<a href="https://blog.processtune.com/?p=6177" target="_new" style="font-weight:bold;" rel="noopener">Nginx run on Windows Subsystem for Linux 2</a>] to prepare doing follow code such as making WSL 2 usable, set Ubuntu on WSL 2 or how to install Docker.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The command follows means that the port number [3000] is default port number of the Express framework, and the port number [27017] is default port number of the MongoDB. The directory path [/home/node] is application root (in the case of this example). The command [apt update &amp;&amp; apt upgrade -y] is make an installed package or app,  library and so on to be latest. Description of the Express framework is continues after figure.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">-- WSL 2
+$ docker pull mongo
+$ docker run -d -p 8082:3000 -p 27017:27017 --init --name svgfreeicondb mongo:latest
+$ docker exec -it svgfreeicondb /bin/bash
+--Into the container and install the curl, the Node, the Node Package Manager (npm)
+# apt install -y curl
+# curl -fsSL https://deb.nodesource.com/setup_17.x | bash
+# apt install -y nodejs
+# npm install -g npm
+# apt update &amp;&amp; upgrade -y
+# mkdir /home/node
+# chmod 777 /home/node
+# cd /home/node
+--Install the Express
+# apt update &amp;&amp; apt upgrade -y
+# npm init
+-- Type the [package name] or the [description] and so on after the [npm init] command here.
+# npm install –g express-generator
+# express
+# npm i --package-lock-only
+# npm audit fix --force
+# DEBUG=node:* npm start
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">For maintainance of node application, execute initialization of Node Package Manager using the command [npm init], so input [package name] or [description] and so on if it needs. And if use the [-g] option while install the Express framework, usable any directory path as application install target path. The command [express] is creation default web application to the current directory path. It is able to define web application type as arguments, it is described later. The command [npm i –package-lock-only] and [npm audit fix –force] is described at the article [].</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">To confirm running at web browser, use the command [DEBUG=node:* npm start] to run application.</p>
+<p style="display:inline-block;margin-bottom:0px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/04/RunExpress.png" alt="" style="width:900px;"></p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;"> * The image name [svgfreeicondb:v0.1] of the figure above means the image name [mongo:latest] of the command [docker run -d -p 8082:3000 -p 27017:27017
+   –init –name svgfreeicondb mongo:latest].
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Here is able to confirm the port number [8082] is transfer to the port number [3000] at web browser. In next step, confirm the port number [27017] exposes MongoDB default port. This port number is not exposed to outside of the service. The service of api communicates to the port number [27017] to aquire the state of this service self from persistence layer of specific this srevice.</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Access to the document of MongoDB</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">It is easy to development application that uses MongoDB with Visual Studio Code MongoDB Extention.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/04/MongoDBExtention.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">While browsing of contents provided from the port number [8082] is confirmed, Visual Studio Code MongoDB extention can connect to the MongoDB from the port number [27017].</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">There is showing MongoDB extention icon after install Visual Studio Code MongoDB extention form the Extentions. Select the MongoDB extention icon of the [Activity Bar] to launch Visual Studio Code MongoDB extention.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Type the address URL and port number after select Add MongoDB Connection, then MongoDB extention shows default databases of MongoDB Docker official image. The [Add Database&#8230;] icon is showed when mouse over the connected connection tree, same as it, the [Add Collection&#8230;] icon is showed when mouse over the database tree.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The MongoDB Playground is showed when select the [Add Collection&#8230;] icon to add new collection.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/04/MongoDBPlayground.png" alt="" style="width:900px;"></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Create persistence layer of the service using MongoDB Playground</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">This service are assuming to provide several icons that are aquired from free icons web site, there are two patterns use case that the case an identity calling this service already has specific icon because this service called before, and an identity does not have an icon. Return specific icon from data store (MongoDB) if it has icon, and return 10 icons acquire from free icons web site if it has not icon.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">So this service have to store only specific icon that is related an identity and the identity as key. The icon type is SVG image has properties, [Original URL], [SVG XML], [Releted Identity] and so on.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The icon for adding collection to the [local] of figure above is used to create the collection of the [local] database, the [Create New Playground] button of figure above is used to create the collection, the database or the connection settings, the MongoDB Playground is able to control all settings of MongoDB.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">A database schema may be saved as models of project for continuous integration. So about how to modify the Node-Express application of above on Windows, if use <a href="https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker" target="_new" style="font-weight:bold;" rel="noopener">Visual Studio Code Docker extension</a>, save mongodb file using Visual Studio Code on Windows. If not, the Node-Express application in the Docker container that was created from MongoDB Docker official image is able to download from GitHub as <a href="https://github.com/TetsuroTakao/SVGFreeIconListingApp" target="_new" style="font-weight:bold;" rel="noopener">sample project</a>. After it, save mongodb file to the project root.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">As additional way, this sample project was uploaded using <a href="https://cli.github.com/" target="_new" style="font-weight:bold;" rel="noopener">GitHub CLI</a> from inside of the container. The article [<a href="https://blog.processtune.com/?p=6177" target="_new" style="font-weight:bold;" rel="noopener">Nginx run on Windows Subsystem for Linux 2</a>] describes how to use <a href="https://cli.github.com/" target="_new" style="font-weight:bold;" rel="noopener">GitHub CLI</a>. Uploading the Node-Express application of above using <a href="https://cli.github.com/" target="_new" style="font-weight:bold;" rel="noopener">GitHub CLI</a> from inside of the container and sharing to GitHub for modifying on Windows side.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Using any ways, prepare of that the Node-Express application project is able to modify with Visual Studio Code on Windows. Create schema then save it at project root of the sample project.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/04/CreateNewPlayground.png" alt="" style="width:450px;"><img decoding="async" src="/wp-content/uploads/2022/04/DefineSchema.png" alt="" style="width:450px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Selection of the [Create New Playground] button creates sample database definition (figure left above). And defines database and collection same as follows figure (figure right above), then select the [MongoDB : Run All or Selection from Playground] button to create.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">const database = 'SVGFreeIconsDB';
+const collection = 'IDRelatedIcons';
+// The current database to use.
+use(database);
+// The prototype form to create a regular collection:
+db.createCollection(collection);
+// Query insert for creating default schema,
+// because a schema of document DB is dynamic type.
+db.collection.insertOne(
+    {
+        _id:0,
+        Releted_Identity:"0",
+        Original_URL:"0",
+        SVG_XML:"0",
+        Errors:[
+            {
+                Occurs:new Date("0000-00-00T00:00:00.000Z"),
+                Source:"sample",
+                Code:0,
+                Additional:"sample"
+            }
+        ]
+    }
+);
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Select [yes] button of showed dialog box after select the [MongoDB : Run All or Selection from Playground] button. Then confirm created schema with open the [SVGFreeIconsDB] tree.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/04/SavingDialogBox.png" alt="" style="width:450px;vertical-align:top;"><img decoding="async" src="/wp-content/uploads/2022/04/CreatedSchema.png" alt="" style="width:450px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Save the [SCGFreeIconsDB.mongodb] file at project root of the sample project.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/04/SaveDIalogMongoDBFile.png" alt="" style="width:450px;vertical-align:top;"><img decoding="async" src="/wp-content/uploads/2022/04/SaveMongoDBFile.png" alt="" style="width:450px;"></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Use persistence layer of the service</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">At first of modify application, confirm the Node-Express application project is runable on Windows. the Node-Express application project is defined as using the port number [80], or any port number if use the [port] argument. Type the [npm start] command on the Windows terminal, then launch the web browser and type [localhost] in the address box of the web browser.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/04/RunAsDefault.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Structure of routing is processed by order from above of the code that listened a request, so [/][/users][/freeIcons][/setIcon] are processed distinguishably then continues to the follows process if it does not prepared routing path for the request. This error creation function is provided by the Express framework, and this [404] error creation process that means [Not Found] has to set at first.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">So other calls of errors creation function has to set at a routing path for the request respectively. For transfer the processing to the function of error message creation at the bottom of the code, define return code for exit it at an error handling block of the routing path.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Detail of the error creation function provided by the Express framework is able to refer <a href="https://www.npmjs.com/package/http-errors" target="_new" style="font-weight:bold;" rel="noopener">the npm documentation</a> that is a base of the feature.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">So most important task is API caller send information of id and svg xml, then acquire a result as success or falt of saving svg to the data storage. It is better that the response has id information as an evidence for sent id, also it is better that the response has svg information as an evidence for sent svg.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">On the other hand, the request have to include id information, if does not include sent svg, it is OK save empty to the storage as specific svg for the id. If includes original url of svg, it is better that is able to save it to the storage. As result, exchange models are follows.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">If an error occured which a URL of the request is not define routing or an error occurs at individual routing path, the processing is transfered to the function of an error response creation at the bottom of the code. In the case of an error does not created by Express framework before this function is processing, create a response of an error contents with HTTP status [500] in this function.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/04/StructureOfRouting.png" alt="" style="width:450px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">For implementing of the routing path [/setIcon], design an exchange model with an API caller.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">There is simple model that in MongoDB, it has the [Releted_Identity], the [Original_URL] and the [SVG_XML] properties. API caller does not have interesting to the [Original_URL] property, this aspect is important for designing models. Addition, more one point is important for designing models, it is the [Releted_Identity] is not API caller side context but service side context. API caller side context is [Identity] or [ID], so API interface name has to be same as API caller side. This exchange is called [Object-Relational mapping for impedance mismatch]. A lot of a describes on web contents of [Object-Relational mapping for impedance mismatch] says propaties of models excess or deficiency although, follows are also important for designing models,<br />
+<span style="margin-left:10px;">*an interest at inside of the [Boundary Context] for attributes respectively of the [Subdomain].</span><br />
+<span style="margin-left:10px;">*an attribute meanings in the [Boundary Context].</span><br />
+<span style="margin-left:20px;">(above are names as Domain Driven Design, so assume other names of design pattern familiar).</span></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">So most important task is API caller send information of id and SVG XML, then acquire a result as success or falt of saving SVG XML to the data storage. It is better that the response has id information as an evidence for sent id, also it is better that the response has SVG information as an evidence for sent SVG XML.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">On the other hand, the request have to include id information, if does not include sent svg, it is OK save empty to the storage as specific svg for the id. If includes original url of svg, it is better that is able to save it to the storage. As result, exchange models are follows.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">// API caller set the [id] property and the [xml] property of POST body to acquire saved result (responseMessage).
+// Optional request the [url] property of POST body for original url of free icon website as memo.
+// Optional results (id: as an evidence for sent id, svg[n]: as an evidence for is sent SVG information). The SVG information is saved one so far.
+var result = {id: "", svg: [{url: "", xml: ""}], responseMessage: ""};
+// Object-Relational mapping to save SVG XML to the persistence layer.
+var updata = {Releted_Identity:req.body.id,Original_URL:req.body.svg[0].url,SVG_XML:req.body.svg[0].xml};
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Use the <a href="https://www.npmjs.com/package/body-parser" target="_new" style="font-weight:bold;" rel="noopener">body-parser middleware</a> to acquire the HTTP POST request body and use the <a href="https://www.npmjs.com/package/mongodb" target="_new" style="font-weight:bold;" rel="noopener">MongoDB NodeJS Driver</a> to access to MongoDB. The [var app = express();] statement creates an instance of the Express framework, then the [app.use(bodyParser.json());] statement sets a middleware for parse and serialize.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The instance of the Express framework is able to listen HTTP request, aim to create POST method service against a HTTP request this time, so at first, verify HTTP POST request body to store requested SVG XML as requested identity specific.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">var bodyParser = require("body-parser");
+var result = {id: "", svg: [{url: "", xml: ""}], responseMessage};
+var mongoClient = require('mongodb').MongoClient;
+var mongoDbUrl = "mongodb://localhost:27017/";
+var app = express();
+// view engine setup
+app.use(bodyParser.json());
+// APIs
+app.post('/setIcon',(req, res, next) =&gt; {
+  //Verify HTTP POST request
+  if(!req.body.id){
+    next(createError(400,"The [id] attribute of post request body is requirement"));
+    result.responseMessage += format("[BadRequest] : %s");
+    return;
+  }
+  var updata = {Releted_Identity:req.body.id,Original_URL:"",SVG_XML:""};
+  if(req.body.svg.length &gt; 0){
+    if(req.body.svg[0].xml){
+      updata.SVG_XML = req.body.svg[0].xml;
+    }
+    if(req.body.svg[0].url){
+      updata.Original_URL = req.body.svg[0].url;
+    }
+  }
+  //Save to MongoDB ...
+  res.writeHead(200,{'Content-Type' : 'text/plain'});
+  res.write(format('SetIcon service result : \n %s', JSON.stringify(result)));
+  res.end(format('SVG icon for %s saved', req.body.id));
+});
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Creating a feature of save to MongoDB, then create an error handlings. If already the identity specific SVG XML is existing, update data of MongoDB, or insert when there is not the identity specific SVG XML.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">  //Save to MongoDB
+  mongoClient.connect(mongoDbUrl, function(err, db) {
+    var dbo = db.db("SVGFreeIconsDB");
+    dbo.collection("IDRelatedIcons").find({ Releted_Identity: req.body.id }).toArray(function(err, result) {
+      if(result.length &gt; 0){
+        dbo.collection("IDRelatedIcons").updateOne({_id:result._id},{$set : updata}, function(err, res) {
+          result.responseMessage = "[Update MongoID]:" + res._id;
+        });
+      }
+      else {
+        dbo.collection("IDRelatedIcons").insertOne(updata, function(err, res) {
+          result.responseMessage = "[Insert MongoID]:" + res._id;
+        });
+      }
+      result.id = result[0]._id;
+    });
+    db.close();
+  });
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">An error handling will be set at the top of inside the connection function, the finding function, the update function and the insert function respectivery.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">if (err) {
+  next(createError(err.status));
+  err.message = "[Connection Error]: " + err.message;
+    or
+  err.message = "[Finding execution Error]: " + err.message;
+    or
+  err.message = "[Updating execution Error]: " + err.message;
+    or
+  err.message = "[Inserting execution Error]: " + err.message;
+  return;
+}
+</pre>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Deploy to Azure Functions</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Confirm excution of the routing path [/setIcon] after create it. Run container of the MongoDB and the Node-Express app same as description above and send HTTP POST request with body to the service using Visual Studio Code [Thunder Client] extension.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">For confirm error handling actually, select [POST] at the select list of HTTP request method and type [localhost/setIcon] into input box for address then type [{&#8220;svg&#8221;:[{&#8220;url&#8221;:&#8221;https://blog.processtune.com&/#8221;,&#8221;xml&#8221;:&#8221;sample xml&#8221;}]}] into input box for JSON body and select the [Send] button. Confirm the error contents of [400] that create at the code.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/04/ThunderClient.png" alt="" style="width:450px;"><img decoding="async" src="/wp-content/uploads/2022/04/Error400.png" alt="" style="width:450px;"></p>
+<p>Azure Functions provides Functions App feature that is able to host the Docker container and serverless program code of C# or Java, Python or several scripting and so on. And more, there are test feature, monitorring feature and so on. The execution control features etc. such as run/stop/refresh.</p>
+<p>https://blogsamplefunctions.azurewebsites.net/QRCodePOSTMethod?source=microsoft.com</p>
+<p>additional information</p>
+<div style="background-color:#cccccc;border:1px solid #00000; padding: 10px 10px 0px 10px;margin-top:20px;">
+<div style="margin:-20px 0px 0px 5px;text-indent:1em;font-weight:bold;background-color:#444;border:1px solid #ccc;color:#fff;">ⓘ As additional information (8th Feb. 2022)</div>
+<p><a href="https://docs.microsoft.com/ja-jp/azure/azure-functions/functions-bindings-register#extension-bundles?WT.mc_id=AZ-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">The &#8216;extensionBundle&#8217; values of [%Project root%\host.json] file</a> makes Azure Function project enable runable the project of other language that .NET runtime does not support.</p>
+</div>
+<p>table</p>
+<div style="margin: 0px 0px 0px 20px;display:table;">
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;padding-right:10px;">Work local directory</div>
+<div style="display:table-cell;">QRCodeGeneratorOnAzureFunctions(default : Opened folder from Visual Studio Code.)</div>
+</div>
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;">Language</div>
+<div style="display:table-cell;">Custom Handler(default : Last used, If first Azure Functions function creation, select it.)</div>
+</div>
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;">Project template</div>
+<div style="display:table-cell;">Http trigger(default : Last used, If first Azure Functions function creation, select it.)</div>
+</div>
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;">Function name</div>
+<div style="display:table-cell;">qrcode_generator(Rust project name has to be snake format, and Function name has to be same as project name if aim to be enable Http Method call.)</div>
+</div>
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;">Authorization</div>
+<div style="display:table-cell;">Anonymous(default : )</div>
+</div>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2022/02/01/node-mongodb-container-for-azure-static-web-apps/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Create reverse proxy using dotnet minimal</title>
+		<link>https://blog.processtune.com/2022/01/15/create-reverse-proxy-using-dotnet-minimal/</link>
+					<comments>https://blog.processtune.com/2022/01/15/create-reverse-proxy-using-dotnet-minimal/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Sat, 15 Jan 2022 05:04:33 +0000</pubDate>
+				<category><![CDATA[Docker]]></category>
+		<category><![CDATA[Microservice]]></category>
+		<category><![CDATA[Microsoft Azure]]></category>
+		<category><![CDATA[Nginx]]></category>
+		<category><![CDATA[Reverce Proxy]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Static web Apps]]></category>
+		<category><![CDATA[vim]]></category>
+		<category><![CDATA[WSL2]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=5864</guid>
+
+					<description><![CDATA[If you develop some api that is used from external applications, you have to create caller side dummy app for develop your api. Or if already API caller side app exists, for decleasing cost to create development environment, or needs various result patterns as simulate for real functions, there are efficient for development that inbound [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin: 0px 0px 0px 0px; color: #000044; font-size: 0.9rem;">If you develop some api that is used from external applications, you have to create caller side dummy app for develop your api. Or if already API caller side app exists, for decleasing cost to create development environment, or needs various result patterns as simulate for real functions, there are efficient for development that inbound connection create tool such as ngrok or Localtunnel and so on.<br />
+Even if in the case of impossible that use these tools for aspect of security or policies, there is able to create kind of similer feature use ASP.NET Core Web API minimal option template to accept requests of various test patterns from its external applications.<br />
+This article describes how to create reverse proxy as inbound connection creator.</p>
+<p style="margin: 10px 0px 0px 5px; text-indent: 1em; text-align: right; font-weight: bold;">&gt;&gt;<a style="font-weight: bold;" href="https://github.com/TetsuroTakao/svgiconcoloringweb" target="_new" rel="noopener">Sample project of reverse proxy using ASP.NET Core Web API minimal option template</a></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Swagger feature of minimal option</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">ASP.NET Core Web API minimal option template has already swagger service feature. It is great impact for productivity of development team. <a style="font-weight: bold;" href="https://docs.microsoft.com/en-us/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-6.0&amp;tabs=visual-studio?WT.mc_id=DT-MVP-4029060" target="_new" rel="noopener">This swagger service feature alone is able to install to development environment</a>, althogh it is very fast creation that using ASP.NET Core Web API minimal option template if want to create a develoment server.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px;">[Only swagger service feature]
+Install-Package Swashbuckle.AspNetCore -Version 6.2.3
+[Only swagger json generator feature]
+Install-Package Swashbuckle.AspNetCore.SwaggerGen -Version 6.3.0
+[Only swagger UI feature]
+Install-Package Swashbuckle.AspNetCore.SwaggerUI -Version 6.3.0
+
+[ASP.NET Core Web API minimal option]
+dotnet new webapi -minimal
+</pre>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">The command [dotnet new webapi -minimal] generate code of Swagger below. So if install these components respectively, can build Swagger feature to Blazor Server App template or ASP.NET Core Web App template, ASP.NET Core gRPC Service template and so on with same procedure.</p>
+<p style="display: inline-block; margin-bottom: 10px; text-align: center; width: 100%;"><img decoding="async" style="width: 450px;" src="/wp-content/uploads/2022/03/seagger.png" alt=""><img decoding="async" style="width: 450px;" src="/wp-content/uploads/2022/03/swaggerCode.png" alt=""></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Reverse proxy</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">Though this article describes very simple reverse proxy, this sample project is base of development server for developer team, and for API development, it is able to use as development log server or team members authentication/management server, load test server. <a style="font-weight: bold;" href="https://azure.microsoft.com/en-us/updates/azure-service-fabric-mesh-preview-retirement/" target="_new" rel="noopener">Azure Service Fabric Mesh service is already ended</a> although, the service had these team development support features includes swagger service and was very useful for team development. These features are important for team development, so have to create development server for team development.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">It is super easy to create reverse proxy use ASP.NET Core Web API minimal option template. Modify the [MapGet] method of the [Program.cs] file to redirect a request to another URL. HTTP Get request to the Route URL redirect to the port number [5080] in the case of the code below.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px;">app.MapGet("/", context =&gt;
+{
+    context.Response.Redirect("http://localhost:5080/",permanent:true);
+    return Task.FromResult(0);
+});
+</pre>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">Default port of the template is the port number [5078], so use the port number [5080] as redirect port.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">Menbers of the development team does not know infromation involving redirect, so create information as Swagger. When access this server with browser, since the request redirect to the port number [5080] temporalily, then type manually the address [localhost:5078/settingsInfo] into the address box of the browser. swagger can show information because create the feature below.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px;">var hosts = app.Configuration.GetSection("ServiceHosts");
+app.MapGet("/settingsInfo", () =&gt;
+{
+    var result = string.Empty;
+    foreach(var i in hosts.AsEnumerable()){
+        result += string.Format("{0}={1}",i.Key,i.Value) + Environment.NewLine;
+    }
+    return result;
+});
+</pre>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">This code use the [appsettings.json] file to define a settings for host services address of microservices as example.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px;">{
+  "ServiceHosts":{
+    "/":"localhost:5080",
+    "8080":"localhost:8080",
+    "8081":"localhost:8081",
+    "8082":"localhost:8082",
+    "8083":"localhost:8083"
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*"
+}
+</pre>
+<p style="display: inline-block; margin-bottom: 10px; text-align: center; width: 100%;"><img decoding="async" style="width: 900px;" src="/wp-content/uploads/2022/03/settingsinfo.png" alt=""></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2022/01/15/create-reverse-proxy-using-dotnet-minimal/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Rust QR code generator App of Azure Functions</title>
+		<link>https://blog.processtune.com/2021/09/01/rust-qr-code-generator-app-of-azure-functions/</link>
+					<comments>https://blog.processtune.com/2021/09/01/rust-qr-code-generator-app-of-azure-functions/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Wed, 01 Sep 2021 08:34:51 +0000</pubDate>
+				<category><![CDATA[Azure Functions]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Visual Studio Code]]></category>
+		<category><![CDATA[未分類]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=6134</guid>
+
+					<description><![CDATA[In the article [QR code create with Rust language runnable on Azure Functions], created Rust app uses warp library to listen HTTP GET request as web server. In this article, describes steps to add feature to listen POST request and to generate QR code and respond it. Addition, upload it and test it on Azure [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin:0px 0px 0px 0px;color:#000044;font-size:0.9rem;font-family:" segoe="" ui";"="">In the article [<a href="https://blog.processtune.com/?p=5925" target="_new" style="font-weight:bold;" rel="noopener">QR code create with Rust language runnable on Azure Functions</a>], created Rust app uses warp library to listen HTTP GET request as web server.<br />
+In this article, describes steps to add feature to listen POST request and to generate QR code and respond it. Addition, upload it and test it on Azure Functions.</p>
+<p style="margin:10px 0px 0px 5px;text-indent:1em;text-align:right;font-weight:bold;">&gt;&gt;<a href="https://github.com/TetsuroTakao/QRCodeGenerator" target="_new" style="font-weight:bold;" rel="noopener">Sample project as base of this article</a>.</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Add feature of listen POST method</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Download <a href="https://github.com/TetsuroTakao/QRCodeGenerator" target="_new" style="font-weight:bold;" rel="noopener">Sample project as base of this article</a>, and create function use Visual Studio Code Azure Functions extension.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">This article describes example as that the sample are downloaded to the [QRCodePOSTMethod] folder on local PC.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Until show figure below, create local project like as the article [<a href="https://blog.processtune.com/?p=5925" target="_new" style="font-weight:bold;" rel="noopener">QR code create with Rust language runnable on Azure Functions</a>] using the sample.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/03/POSTMethodSample1.png" alt="" style="width:900px;border:thin solid #ccc;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">At first, define name of the Functions app using Azure Functions extension. This example name is [QRCodePOSTMethod].</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Though who read the article [<a href="https://blog.processtune.com/?p=5925" target="_new" style="font-weight:bold;" rel="noopener">QR code create with Rust language runnable on Azure Functions</a>] can use same name used in its article, in this article, it is not good for my development environment that the Rust local project of GitHub is changed for this article. So changed a name using Azure Functions extension.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Next, it&#8217;s flow of steps that add HTTP post method feature to main.rs, then the feature inject to the route definition. HTTP post method feature is code below, is similar as HTTP get method feature.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">    let post_source = warp::post()
+    .and(warp::body::json())
+    .map(|bodyjson: HashMap&lt;String, String&gt;| {
+            Response::builder()
+            .header("content-type", "text/html")
+            .status(StatusCode::OK)
+            .body(format!("QR Code source [{}]", bodyjson.get("source").unwrap()))
+    });
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Create a header and a body with status of the response using the warp response builder. While create the status, use the warp status object. So define using it at top of the [main.rs] file ([use warp::{http::{Response, StatusCode}, Filter};]).</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">As last step, define routing. In case of the warp routing object, define the processing when HTTP get method is listened, then if the request is HTTP post method, executes the processing for it. The routing like it, needs allowing HTTP get method and HTTP post method.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/03/AzureFunctionsCors.png" alt="" style="width:450px;border:thin solid #ccc;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">In addition, Azure Functions does not allow <a href="https://html.spec.whatwg.org/multipage/urls-and-fetching.html#cors-settings-attributes" target="_new" style="font-weight:bold;" rel="noopener">CORS (Cross-Origin Resource Sharing)</a> as default, although it can change to allow. Evenif <a href="https://docs.microsoft.com/en-us/azure/logic-apps/logic-apps-azure-functions?tabs=consumption#find-functions-that-have-openapi-descriptions?WT.mc_id=AZ-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">Azure Functions allow it</a> aiming to accept request from JavaScript or other <a href="https://en.wikipedia.org/wiki/Cross-origin_resource_sharing" target="_new" style="font-weight:bold;" rel="noopener">cross-origin</a>, it not work well since the warp routing definition that does not allow as default. For that reason, create allowing of CORS using warp CORS object, as expand features in the future. The code below is definition of routing that flows from get request to post request, along with allowing them (CORS, creating header and acceptance of HTTP get/post method request).</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">    let cors = warp::cors()
+        .allow_any_origin()
+        .allow_headers(vec!["User-Agent", "Sec-Fetch-Mode", "Referer", "Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"])
+        .allow_methods(vec!["POST", "GET"]);
+    let routes = warp::get().and(get_source)
+        .or(warp::post().and(post_source)).with(cors);
+    warp::serve(routes).run((Ipv4Addr::UNSPECIFIED, port)).await
+</pre>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Build and Confirming</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">For confirming HTTP post method call result, build Rust project, copy created assembly to project root and Azure Functions Core Tools starting.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/03/HttpPostRequestBuild.png" alt="" style="width:450px;border:thin solid #ccc;"><img decoding="async" src="/wp-content/uploads/2022/03/HttpGetRequestInBrowser.png" alt="" style="width:450px;border:thin solid #ccc;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Confirming for HTTP get method request without query string in browser is selection of the link of output starting result. In case of confirming for HTTP get method request with query string, input query string manually at the URL inputbox.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Use Visual Studio Code extension named [Thunder Client] to confirming for HTTP get method request.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/03/HttpPostRequestThunder.png" alt="" style="width:450px;border:thin solid #ccc;"></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Upload to Azure Functions and Test</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Like as the article [How to compile Rust assembly runnable on Linux for deployment to Azure Functions], it&#8217;s super easy to do it.</p>
+<div style="background-color:#cccccc;border:1px solid #00000; padding: 10px 10px 0px 10px;margin-top:20px;">
+<div style="margin:-20px 0px 0px 5px;text-indent:1em;font-weight:bold;background-color:#444;border:1px solid #ccc;color:#fff;">» Basic step is below.</div>
+<ol>
+<li>Delete %projecr name%.exe that used for debugging on local environment.</li>
+<p>In the [Integrated terminal] &gt;rm qrcode_generator.exe</p>
+<li>Build the project for x86_64-unknown-linux-musl platform that Azure Functions provided.</li>
+<p>In the [Integrated terminal] &gt;cargo build &#8211;release &#8211;target=x86_64-unknown-linux-musl</p>
+<li>Copy builded the assembly from bild destination to project root.</li>
+<p>In the [Integrated terminal] &gt;cp target\x86_64-unknown-linux-musl\release\qrcode_generator .</p>
+<li>Modify value [qrcode_generator.exe] of the [defaultExecutablePath] property to [qrcode_generator] on the [host.json] file.</li>
+<p>{&#8230;, &#8220;customHandler&#8221;: { &#8220;description&#8221;: { &#8220;defaultExecutablePath&#8221;: &#8220;qrcode_generator.exe&#8221;, &#8230;}, &#8230;}}</p>
+<li>Upload the assembly to Azure Functions using Azure Functions extention of Visual Studio Code.</li>
+<p style="border:thin solid #444;">
+<span style="font-weight:bold;margin-left:1rem;">the [Integrated terminal] output&#8230;</span><br />
+14:40:22 BlogSampleFunctions: Starting deployment&#8230;<br />
+14:40:23 BlogSampleFunctions: Creating zip package&#8230;<br />
+14:40:23 BlogSampleFunctions: Uploading zip package to storage container&#8230;<br />
+14:40:24 BlogSampleFunctions: Zip package size: 2.13 MB<br />
+14:40:26 BlogSampleFunctions: Deployment successful.<br />
+14:40:36 BlogSampleFunctions: Syncing triggers&#8230;<br />
+14:40:38 BlogSampleFunctions: Querying triggers&#8230;<br />
+14:40:40 BlogSampleFunctions: HTTP Trigger Urls:<br />
+<span style="margin-left:1rem;">QRCodePOSTMethod: https://blogsamplefunctions.azurewebsites.net/qrcodepostmethod</span></p>
+<li>Test Functions app at Azure portal.</li>
+<p><img decoding="async" src="/wp-content/uploads/2022/03/AzureFunctionsPOSTTest.png" alt="" style="width:450px;border:thin solid #ccc;"></ol>
+</div>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Add QR Code generating feature</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">There is the link to the Rust program as base code at the article [<a href="https://blog.processtune.com/?p=5925" target="_new" style="font-weight:bold;" rel="noopener">QR code create with Rust language runnable on Azure Functions</a>].</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><a href="https://blog.processtune.com/?p=5925" target="_new" style="font-weight:bold;" rel="noopener"><img decoding="async" src="/wp-content/uploads/2022/03/ArticleOfLinkToRustQRCode.png" alt="" style="width:450px;border:thin solid #ccc;"></a><a href="https://github.com/TetsuroTakao/QRCodeCreation" target="_new" style="font-weight:bold;" rel="noopener"><img decoding="async" src="/wp-content/uploads/2022/03/RustQRCodeAsBase.png" alt="" style="width:450px;border:thin solid #ccc;"></a></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The code has very simple (is two row code) function that generate QR code using a library of Rust ecosystem. The function argues string as source of QR code and return svg string (XML format). The XML is able to display on browser.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">pub fn create_qrcode_svg(_url: &amp;str) -&gt; String{
+    let code:QrCode = QrCode::new(_url).unwrap();
+    code.render::&lt;svg::Color&gt;().build()
+}
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">For now, the code is not need function. So as temporary, inject the code above inject into the HTTP post listener feature of main procedure.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">    let post_source = warp::post()
+        .and(warp::body::json())
+        .map(|bodyjson: HashMap&lt;String, String&gt;| {
+            let _url = bodyjson.get("source").unwrap();
+            let code:QrCode = QrCode::new(_url).unwrap();
+            let qrcode = code.render::&lt;svg::Color&gt;().build();
+            Response::builder()
+                .header("content-type", "image/svg+xml")
+                .status(StatusCode::OK)
+                .body(qrcode)
+    });
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Injected two lines in the map process needs the [_url] varieble, so use the [bodyjson.get(&#8220;source&#8221;).unwrap()] statement of existing post listener feature. And render directly the result (strings of the [SVG] XML) of the [code.render::<svg::color>().build()] statement to the body. The warp filter generates XML content, so the [content-type] header value is [image/svg+xml]. Below figure is the result of the Thunder Client.</svg::color></p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/03/HttpPostQRRequestResult.png" alt="" style="width:450px;border:thin solid #ccc;"></p>
+<div style="background-color:#cccccc;border:1px solid #00000; padding: 10px 10px 0px 10px;margin-top:20px;">
+<div style="margin:-20px 0px 0px 5px;text-indent:1em;font-weight:bold;background-color:#444;border:1px solid #ccc;color:#fff;">ⓘ Additional information.</div>
+<p>If aim to response as HTML (does not response as API or RPC),  does not use the [Response::builder] object, but also can use the [warp::reply::html] object for create filter feature more easly.<br />
+Reply the body content to the request with the status code and the [content-type] header. For example in case of modifing the HTTP get listener feature, filter is returned as below.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">            let url:&amp;str = match p.get("source") {
+                Some(q)=&gt; q,
+                None =&gt; "https://blog.processtune.com/"
+            };
+            let code:QrCode = QrCode::new(url).unwrap();
+            let qr = code.render::&lt;svg::Color&gt;().build();
+            let content = format!("{}&lt;br /&gt;&lt;span&gt;QR Code source [{}]&lt;/span&gt;", qr, &amp;url);
+            let reply = warp::reply::html(content);
+            let reply = warp::reply::with_status(reply, StatusCode::OK);
+            let reply = warp::reply::with_header(reply, "content-type", "text/html");
+            reply
+</pre>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/03/HttpGetQRRequestResult.png" alt="" style="width:900px;border:thin solid #ccc;"></p>
+<p style="margin:10px 0px 0px 5px;text-indent:1em;text-align:right;font-weight:bold;">&gt;&gt;<a href="https://github.com/TetsuroTakao/QRCodePOSTMethod" target="_new" style="font-weight:bold;" rel="noopener">Complete project of this article</a>.</p>
+</div>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2021/09/01/rust-qr-code-generator-app-of-azure-functions/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>How to compile Rust assembly runnable on Linux for deployment to Azure Functions</title>
+		<link>https://blog.processtune.com/2021/08/01/how-to-compile-rust-assembly-runnable-on-linux-for-deployment-to-azure-functions/</link>
+					<comments>https://blog.processtune.com/2021/08/01/how-to-compile-rust-assembly-runnable-on-linux-for-deployment-to-azure-functions/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Sun, 01 Aug 2021 03:53:59 +0000</pubDate>
+				<category><![CDATA[Azure Functions]]></category>
+		<category><![CDATA[Rust]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Visual Studio]]></category>
+		<category><![CDATA[Visual Studio Code]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=5958</guid>
+
+					<description><![CDATA[Azure Functions is one of great services of serverless computing. It is useful for microservices solution, event-driven messaging middleware and so on. Its functions run on Linux, use C standard library named &#8216;musl'(see musl libc) for system call of Linux. A runnable Rust assembly of Azure Functions is create use &#8216;cargo build&#8217; command that compiles [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin:0px 0px 0px 0px;color:#000044;font-size:0.9rem;font-family:" segoe="" ui";"="">Azure Functions is one of great services of serverless computing. It is useful for microservices solution, event-driven messaging middleware and so on. Its functions run on Linux, use C standard library named &#8216;musl'(see <a href="https://musl.libc.org/" target="_new" style="font-weight:bold;" rel="noopener">musl libc</a>) for system call of Linux.<br />
+A runnable Rust assembly of Azure Functions is create use &#8216;cargo build&#8217; command that compiles source code to assembly, compile process is structed with front-end compiler and back-end compiler.<br />
+At first, front-end compiler generates intermidiate language from source code written on Windows, then back-end compiler use its intermidiate language to make runnable assemblyies that capable system call on Linux. This process is helped by toolchain management tool &#8216;rustup&#8217;.<br />
+There is little bit complexity to struct these development enviromment, so this article describes it step by step.<br />
+In the article [Rust QR code generator App of Azure Functions] describes how to modify the simple of this article (simple rust project) to QR code generator.</p>
+<p style="margin:0px 0px 0px 0px;color:#000044;font-size:0.9rem;font-family:" segoe="" ui";"="">Added at 17th Dec. 2021 :<br />
+Please read Microsoft Official document [<a href="https://docs.microsoft.com/en-us/azure/azure-functions/create-first-function-vs-code-other?tabs=rust%2Cwindows?WT.mc_id=AZ-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">Quickstart: Create a Go or Rust function in Azure using Visual Studio Code</a>].</p>
+<p style="margin:10px 0px 0px 5px;text-indent:1em;text-align:right;font-weight:bold;">&gt;&gt;<a href="https://github.com/TetsuroTakao/QRCodeGenerator" target="_new" style="font-weight:bold;" rel="noopener">Rust sample project to create QR Code, Base program to deploy to Azure Functions</a> (created by <a href="https://blog.processtune.com/?p=5925" target="_new" style="font-weight:bold;" rel="noopener">previous article</a>.)</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Step 1. Rust install and rustup settings comformation</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Install Rust (see <a href="https://www.rust-lang.org/tools/install" target="_new" style="font-weight:bold;" rel="noopener">Install Rust</a>), then comfirm rustup toolchain conditions, it shown if put [rustup show] command in integrated terminal of Visual Studio Code (or Windows terminal).</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Runtime environment of Azure Functions is [x86_64-unknown-linux-musl], so if it needs, use [rustup target add stable-x86_64-unknown-linux-musl] command to install and use [cargo build] command to build it. Below figure is sample of [rustup show] result.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">Default host: x86_64-pc-windows-msvc
+rustup home:  %User root%\.rustup
+
+installed toolchains
+--------------------
+
+stable-x86_64-pc-windows-msvc (default)
+stable-x86_64-unknown-linux-gnu
+stable-x86_64-unknown-linux-musl
+
+installed targets for active toolchain
+--------------------------------------
+
+wasm32-unknown-unknown
+x86_64-pc-windows-msvc
+x86_64-unknown-linux-musl
+
+active toolchain
+----------------
+
+stable-x86_64-pc-windows-msvc (default)
+rustc 1.56.1 (59eed8a2a 2021-11-01)
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">This sample environment has installed [x86_64-unknown-linux-musl] target, and [stable-x86_64-pc-windows-msvc] toolchain is target default (default of Rust install on Windows). This sample development environment is Windows and use native ABI (Application Binary Interface) named MSVC (see <a href="https://rust-lang.github.io/rustup/installation/windows.html" target="_new" style="font-weight:bold;" rel="noopener">the article</a> for Windows Rust developers). So developers who use Visual Studio (includes Visual Studio Code) for development have to do nothing. If not, use <a href="https://visualstudio.microsoft.com/visual-cpp-build-tools/?WT.mc_id=AZ-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">Microsoft C++ Build Tools</a> to compile Linux assembly easily.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The musl is C standerd compiler of MIT license, it will be linked as statical, so should modify the [.cargo/config] file. The [.cargo/config] file is at [%User root%\.cargo\config] as global settings on Windows. However you don&#8217;t always want to generate Linux assembly use MSVC ABI, so I recommend that its file create at Rust project root folder.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Toolchain uses rust-lld linker when compile for Musl libraly.</p>
+<div style="background-color:#cccccc;border:1px solid #00000; padding: 10px 10px 0px 10px;margin-top:20px;">
+<div style="margin:-20px 0px 0px 5px;text-indent:1em;font-weight:bold;background-color:#444;border:1px solid #ccc;color:#fff;">ⓘ As additional information</div>
+<p>The cargo.exe reads [.cargo/config] file to compile source code use the rust-lld.exe, and the cargo.exe expect the file is written as TOML file format. The [\] string in TOML format is special string, so [.cargo/config] file should be written path strings as escaped file path use [&#8221;&#8217;] strings. Addition, cargo.exe needs full path infromation of its linker for compile.<br />
+<span style="font-weight:bold;">In case of without Microsoft C++ Build Tools, Visual Studio and Visual Studio Code</span><br />
+[target.x86_64-unknown-linux-musl]<br />
+linker = &#8221;&#8217;%User root%\.rustup\toolchains\stable-x86_64-pc-windows-msvc\lib\rustlib\x86_64-pc-windows-msvc\bin\rust-lld.exe&#8221;&#8217;<br />
+<span style="font-weight:bold;">In case of using Microsoft C++ Build Tools, Visual Studio or Visual Studio Code</span><br />
+[target.x86_64-unknown-linux-musl]<br />
+linker = &#8220;rust-lld&#8221;</p>
+</div>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">It&#8217;s easy to set path of a linker using MSVC.</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Step 2. Deployment</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">At first, download <a href="https://github.com/TetsuroTakao/QRCodeGenerator" target="_new" style="font-weight:bold;" rel="noopener">Rust sample project</a> created by <a href="https://blog.processtune.com/?p=5925" target="_new" style="font-weight:bold;" rel="noopener">previous article</a> and modify it to runnable on Linux. previous article. For it, create [.cargo/config] in the project and set rust-lld to the linker like above, then type [cargo build &#8211;release &#8211;target=x86_64-unknown-linux-musl] on the [Integrated terminal]. Addition, modify [.funcignore] file to prevent upload files of target folder.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/03/CargoBuildLinuxAssembly.png" alt="" style="width:450px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Next, the [%Project root%\target\x86_64-unknown-linux-musl\release\qrcode_generator] file is not uploaded, because Azure Functions Extension uploads a file at project root. Now the [qrcode_generator.exe] is at project root folder, it is execute file for local debug on Windows, so delete it and copy [%Project root%\target\x86_64-unknown-linux-musl\release\qrcode_generator] file to the project root.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Azure Functions extension recognizes only one executable file which [%project name%.exe] file or [%project name%] file. So delete [%project name%.exe] file when upload the executable file to Azure Functions, and copy [%project name%] file to %project root%.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">For local debug on Windows, there is [qrcode_generator.exe] value in the [host.json] file to the project root. So modify value of the [defaultExecutablePath] property to [qrcode_generator] at the [description] property of the [customHandler] property for using on Azure Functions (Left figure).</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">After these preparation of uploading to Azure Functions, Select the [Deploy to Functions App&#8230;] icon of the [Azure] extension. (Right figure).</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/03/PreperanceToAzureFunctions.png" alt="" style="width:450px;"><img decoding="async" src="/wp-content/uploads/2022/03/DeployToFunctionsApp.png" alt="" style="width:450px;"></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Step 3. Test on Azure Functions</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The [Command palette] shows after select the [Deploy to Functions App&#8230;] icon of the [Azure] extension. And already created a Functions app when create local project using the [Azure] extension, so select the name of the Functions app from list. Then proceed confirmation dialog, if the process ended, show conformation of completing, so select the [View output] button to confirm the [OUTPUT] console (Left figure).</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/03/FunctionsAppUpload.png" alt="" style="width:450px;"><img decoding="async" src="/wp-content/uploads/2022/03/AzureFunctionsConsole1.png" alt="" style="width:450px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Open Azure Functions on the [Azure portal] for the test (Right figure).</p>
+<p style="margin: 0px 0px 0px 10px;padding:1em;background-color:#cccccc;">
+<span style="font-weight:bold;">Steps of the test (figure below)</span><br />
+The display change when the [Functions] section selected, then select target function name (1. [QRCodeGenerationOnAzureFunctions] on the figure)<br />
+Select the [Code + Test] section in displayed target function (2.)<br />
+Select the [Test/Run] tab when navigated display to [Code + Test] (3.)<br />
+Select the [GET] item of the [HTTP method] list on the [Input] tab area of [Code + Test], because uploaded Function app has only get method of warp (4.)<br />
+Add parameter use the [Name] textbox and the [Value] textbox (6.) showed when select the [Add parameter] link (5.)<br />
+At last, select the [Run] button for the test.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/03/AzureFunctionsConsoleSteps.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">A status of the test process on console showed out, then the display is changed to the [Output] tab area of [Code + Test] in automate. So confirm result of the test is that the [HTTP response code] is [200 OK] and the [HTML response content] is outputted.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/03/AzureFunctionsConsoleResult.png" alt="" style="width:450px;"></p>
+<p style="margin:10px 0px 0px 5px;text-indent:1em;text-align:right;font-weight:bold;">&gt;&gt;<a href="https://github.com/TetsuroTakao/QRCodeGeneratorOnAzureFunctions" target="_new" style="font-weight:bold;" rel="noopener">Sample project</a> (this article created)</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2021/08/01/how-to-compile-rust-assembly-runnable-on-linux-for-deployment-to-azure-functions/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>QR code create with Rust language runnable on Azure Functions</title>
+		<link>https://blog.processtune.com/2021/07/01/qr-code-create-with-rust-language-runable-on-azure-functions/</link>
+					<comments>https://blog.processtune.com/2021/07/01/qr-code-create-with-rust-language-runable-on-azure-functions/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Thu, 01 Jul 2021 05:01:01 +0000</pubDate>
+				<category><![CDATA[Azure Functions]]></category>
+		<category><![CDATA[Microsoft Azure]]></category>
+		<category><![CDATA[Rust]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Visual Studio]]></category>
+		<category><![CDATA[Visual Studio Code]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=5925</guid>
+
+					<description><![CDATA[Azure Functions is functions runtime that is able to launch a function created by multiple language, as serverless on cloud (see Microsoft Docs [Supported languages in Azure Functions]). What it is serverless means less code, less maintainance of infrastructure, thus developers are able to focus on code for only business process, managers can save on [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin:0px 0px 0px 0px;color:#000044;font-size:0.9rem;font-family:" segoe="" ui";"="">Azure Functions is functions runtime that is able to launch a function created by multiple language, as serverless on cloud (see Microsoft Docs [<a href="https://docs.microsoft.com/en-us/azure/azure-functions/supported-languages?WT.mc_id=AZ-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">Supported languages in Azure Functions</a>]). What it is serverless means less code, less maintainance of infrastructure, thus developers are able to focus on code for only business process, managers can save on costs as result. Furthermore, when procuring members of some project as using microservices architecture, managers can orchestrate several teams of various language programmers.<br />
+In this article, create <a href="https://github.com/TetsuroTakao/QRCodeGenerator" target="_new" style="font-weight:bold;" rel="noopener">simple rust program that can run on local environment</a> for that will deploy to Azure Functions later.<br />
+In the article [<a href="https://blog.processtune.com/?p=5958" target="_new" style="font-weight:bold;" rel="noopener">How to compile Rust assembly runnable on Linux for deployment to Azure Functions</a>] describes creation of assembly to deploy Azure Functions.<br />
+In the article [<a href="https://blog.processtune.com/?p=5958" target="_new" style="font-weight:bold;" rel="noopener">Rust QR code generator App of Azure Functions</a>] describes how to modify the simple of this article (simple rust project) to QR code generator.</p>
+<p style="margin:0px 0px 0px 0px;color:#000044;font-size:0.9rem;font-family:" segoe="" ui";"="">Added at 9th Feb. 2022 :<br />
+Please read Microsoft Docs [<a href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local?tabs=v4%2Cwindows%2Ccsharp%2Cportal%2Cbash?WT.mc_id=AZ-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">Work with Azure Functions Core Tools</a>] and install it, you can execute command [func start] on console (or tarminal of Visual Studio code, Windows and so on.) when restart PC.</p>
+<p style="margin:10px 0px 0px 5px;text-indent:1em;text-align:right;font-weight:bold;">&gt;&gt;<a href="https://github.com/TetsuroTakao/QRCodeCreation" target="_new" style="font-weight:bold;" rel="noopener">Sample project of Rust language to create QR Code</a></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Azure Functions Visual Studio Code Extensions</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">This article uses Visual Studio Code and it&#8217;s extensions and Rust (see <a href="https://www.rust-lang.org/tools/install" target="_new" style="font-weight:bold;" rel="noopener">Install Rust</a>).</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">For debugging on local development environment and upload to Azure Functions, it needs Azure Functions Core Tools. This tool installed along with other tools of Azure if install Azure Tools Extension (left figure), or if aim to just install Azure Functions extension, install individual(right figure).</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/02/AzureToolsExtension.png" alt="" style="width:450px;vertical-align:middle;"><img decoding="async" src="/wp-content/uploads/2022/02/VSCodeExtensions.png" alt="" style="width:450px;"></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Create local Rust project for Azure Functions</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">It is super easy to create Rust project that run on Windows using Visual Studio Code extension of Azure Functions.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">At first, open work folder in Visual Studio Code. Work folder is able to create using the [Open Folder] dialog box. Select the [Open folder&#8230;] of the [File] menu, then right click on any directory and select the [New] then select the [Folder] (Left figure).</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">While open work folder, create Rust project using extension of Azure Functions. Select the [Create New Project&#8230;] icon of the [FUNCTIONS] area of the [Azure] extension. (Right figure)</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/02/OpenFolderDialog.png" alt="" style="width:450px;"><img decoding="async" src="/wp-content/uploads/2022/02/CreateAzureFunctionsProject.png" alt="" style="width:450px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">[Command Palette] is shown when select [Create New Project&#8230;] icon. there are several steps to create new project, exclude step of &#8216;Function name&#8217; (This setting is used for URL of Functions) and step of &#8216;Folder of the project&#8217;, put values of table below. These values are for sample project.</p>
+<div style="margin: 0px 0px 0px 20px;display:table;">
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;padding-right:10px;">Folder of the project</div>
+<div style="display:table-cell;">QRCodeGeneratorOnAzureFunctions(default : Opened folder from Visual Studio Code. This setting make URL of Azure Functions to figure below)<br />
+<img decoding="async" src="/wp-content/uploads/2022/02/AzurePortalFunctionsFunction.png" alt="" style="width:450px;"></div>
+</div>
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;">Language</div>
+<div style="display:table-cell;">Custom Handler(default : Last used, If first Azure Functions function creation, select this.)</div>
+</div>
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;">Project template</div>
+<div style="display:table-cell;">Http trigger(default : Last used, If first Azure Functions function creation, select this.)</div>
+</div>
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;">Function name</div>
+<div style="display:table-cell;">BlogSampleFunctions(This setting create URL :  https://<span style="font-weight:bold;">blogsamplefunctions</span>.azurewebsites.net/api/QRCodeGeneratorOnAzureFunctions)</div>
+</div>
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;">Authorization</div>
+<div style="display:table-cell;">Anonymous(default : no authentication)</div>
+</div>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/02/FunctionsNewSteps.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Return to the [File Explorer], and type [Ctrl] + [Shift] + [`] key for open the [Integrated terminal] (use [Ctrl] + [K] + [S] for comfirming conbination of keys for your keybord type). Then type [ cargo init &#8211;name qrcode_generator ] on the [Integrated terminal] to create Rust project package (this name value is not relate a name of Azure Functions). After package creation, type [ cargo run ] to run project. It is OK that it shows [ Hello, world! ] in the [Integrated terminal].</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">This Rust project package name [qrcode_generator] is same name as Rust assembly file name (and the [exe] extension), so the [cargo run] command create assembly file at [%project root%\target\debug\qrcode_generator.exe] and launch the file. And this value is defined at the [name] value of [package] definition in the [Cargo.toml] file.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">[ cargo init ] comand generates rust project files such as the [src/main.rs] file and the [Cargo.toml] file and so on, the [src/main.rs] file is startup file, so [ cargo run ] command executes [ println!(“Hello, world!”) ] statement of the [src/main.rs] file (see figure below).</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/02/InitialHelloworld.png" alt="" style="width:450px;"></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Create web server</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Create sample projest with modifying [src/main.rs] file that the [ cargo init ] comand generated.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">TCP listener is standard function of Rust, although HTTP lisner have to process asyncronous task flow. asyncronous feature is provided with async_std or tokio and so on.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">This article select tokio and warp as sample because there is popular and there are a lot of code samples on web. warp is web server framework.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Since warp is for creation of web server, it can listen HTTP request from Azure Functions as HTTP listener. If the setting of Azure Functions environment (host.json at root of project, figure below) to enable forwarding HTTP request, Azure Functions accepts Http request and throw it to the function of Azure Functions that served by warp.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">--host.json file (part of the file)
+...
+  "customHandler": {
+    "description": {
+      "defaultExecutablePath": "qrcode_generator.exe",
+      "workingDirectory": "",
+      "arguments": []
+    },
+    //here is the setting (All figure of host.json is shown later)
+    "enableForwardingHttpRequest": true
+  }
+}
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">At first, modify the [Cargo.toml] file as below to use these eco-systems. And define to use them at main.rs of the [src] folder.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">--Cargo.toml file
+[dependencies]
+warp = "0.3"
+tokio = { version = "1", features = ["rt", "macros", "rt-multi-thread"] }
+
+--src/main.rs file
+use std::env;
+use std::collections::HashMap;
+use std::net::Ipv4Addr;
+use warp::{http::Response, Filter};
+
+fn main() {
+    println!("Hello, world!");
+}
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">These defines are used as table below.</p>
+<div style="margin: 0px 0px 0px 20px;display:table;">
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;">std::env</div>
+<div style="display:table-cell;">Acquire port number that Azure Functions provided.</div>
+</div>
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;">std::collections::HashMap</div>
+<div style="display:table-cell;">Acquire query string of HTTP request.</div>
+</div>
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;">std::net::Ipv4Addr</div>
+<div style="display:table-cell;">Acquire IPv4 address of HTTP request.</div>
+</div>
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;">warp::{http::Response, Filter}</div>
+<div style="display:table-cell;">Create HTTP response, and serve function that defines process of create response.</div>
+</div>
+</div>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Next, acquire port number of incomming stream (distination port number of the stream Azure Functions forwards) using definitioned term (FUNCTIONS_CUSTOMHANDLER_PORT).</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">fn main() {
+    let port: u16 = match env::var("FUNCTIONS_CUSTOMHANDLER_PORT") {
+        Ok(val) =&gt; val.parse().expect("Custom Handler port is not a number!"),
+        Err(_) =&gt; 3000,
+    };
+    ...
+}
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Continues, creating respond in case when HTTP GET message listened. Sample code for POST message is described in the article [<a href="https://blog.processtune.com/?p=5958" target="_new" style="font-weight:bold;" rel="noopener">How to compile Rust assembly runnable on Linux for deployment to Azure Functions</a>].</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">async fn main() {
+    ...
+    let get_source
+        = warp::path!("api" / "QRCodeGeneratorOnAzureFunctions")
+        .and(warp::query::<hashmap<string, string="">&gt;())
+        .map(|q:HashMap<string,string>|
+            match q.get("source") {
+                Some(s) =&gt; Response::builder().body(format!("QR Code source [{}]",s)),
+                None =&gt; Response::builder().body(String::from("Source does not requested"))
+            });
+    ...
+}
+</string,string></hashmap<string,></pre>
+<div style="background-color:#cccccc;border:1px solid #00000; padding: 10px 10px 10px 10px;margin-top:20px;margin-bottom:20px;">
+<div style="margin:-20px 0px 0px 5px;text-indent:1em;font-weight:bold;background-color:#444;border:1px solid #ccc;color:#fff;">ⓘ As additional information</div>
+<p style="margin-top:0.2rem;margin-bottom: 0;">
+Azure Functions provides global URL as format below (as default).</p>
+<div style="border:thin solid #444;padding:1rem 1rem 1rem 1rem;">
+https://<span style="font-weight:bold;">%Function name%</span>.azurewebsites.net/api/<span style="font-weight:bold;">%Folder name of project root%</span></div>
+<p style="margin-top:0.2rem;margin-bottom: 0;">
+So listening HTTP request use [ warp::path!(&#8220;api&#8221; / &#8220;QRCodeGeneratorOnAzureFunctions&#8221;) ] statement. If want to omit path [api], modify host.json as below.</p>
+<div style="border:thin solid #444;padding:1rem 1rem 1rem 1rem;">
+&#8211;host.json file (root parameter [extensions], All figure of host.json is shown later)<br />
+&#8220;extensions&#8221;: {&#8220;http&#8221;: {&#8220;routePrefix&#8221;: &#8220;&#8221;}}</div>
+</div>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">At last, create listening part of HTTP GET message. Below is all code of the [src/main.rs] file.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">use std::env;
+use std::collections::HashMap;
+use std::net::Ipv4Addr;
+use warp::{http::{Response}, Filter};
+
+#[tokio::main]
+async fn main() {
+    let port: u16 = match env::var("FUNCTIONS_CUSTOMHANDLER_PORT") {
+        Ok(val) =&gt; val.parse().expect("Custom Handler port is not a number!"),
+        Err(_) =&gt; 3000,
+    };
+    let get_source
+        = warp::path!("QRCodeGeneratorOnAzureFunctions")
+        .and(warp::query::<hashmap<string, string="">&gt;())
+        .map(|q:HashMap<string,string>|
+            match q.get("source") {
+                Some(s) =&gt; Response::builder().body(format!("QR Code source [{}]",s)),
+                None =&gt; Response::builder().body(String::from("Source does not requested"))
+            });
+    let routes = warp::get().and(get_source);
+    warp::serve(routes).run((Ipv4Addr::UNSPECIFIED, port)).await
+}
+</string,string></hashmap<string,></pre>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Run on local</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Azure Functions Core Tools has web hosting feature, so build Rust project at first, then define builded assembly path to this tool. Build path is [target/relese] folder that are created when type [cargo build &#8211;release] command in the [Integrated terminal]. This tool use execute file at project root folder to host client or upload to Azure Functions. So copy the file from build path to project root.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">cp .\target\release\qrcode_generator.exe
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">This tool hosts the Rust assembly file use [defaultExecutablePath] value in [host.json], the value is defined at description property of customHandler property in the file.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/02/hostJson.png" alt="" style="width:900px;"></p>
+<div style="background-color:#cccccc;border:1px solid #00000; padding: 10px 10px 0px 10px;margin-top:20px;">
+<div style="margin:-20px 0px 0px 5px;text-indent:1em;font-weight:bold;background-color:#444;border:1px solid #ccc;color:#fff;">ⓘ As additional information (8th Feb. 2022)</div>
+<p><a href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-bindings-register#extension-bundles?WT.mc_id=AZ-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">The &#8216;extensionBundle&#8217; values of [%Project root%\host.json] file</a> makes Azure Function project enable runable the project of other language that .NET runtime does not support.</p>
+</div>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Type [ func start ] command in the [Integrated terminal] after put value [qrcode_generator.exe] in the [description] property of the[customHandler] property in this file.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/02/HttpGetRequest.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Termination is type [Ctrl] + [C] key at terminal.</p>
+<p style="margin:10px 0px 0px 5px;text-indent:1em;text-align:right;font-weight:bold;">Next &gt;&gt;<a href="https://blog.processtune.com/?p=5958" target="_new" style="font-weight:bold;" rel="noopener">How to compile Rust assembly runnable on Linux for deployment to Azure Functions</a></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2021/07/01/qr-code-create-with-rust-language-runable-on-azure-functions/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

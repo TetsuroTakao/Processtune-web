@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>gRPC &#8211; Processtune Blog</title>
+	<atom:link href="https://blog.processtune.com/category/microsoft-azure/grpc/feed/" rel="self" type="application/rss+xml" />
+	<link>https://blog.processtune.com/</link>
+	<description>Articles offered from Microsoft MVP</description>
+	<lastBuildDate>Mon, 27 Mar 2023 03:21:36 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.8.2</generator>
+
+<image>
+	<url>/wp-content/uploads/2023/03/cropped-Presentation-32x32.png</url>
+	<title>gRPC &#8211; Processtune Blog</title>
+	<link>https://blog.processtune.com/</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>HTTP/3 and the gRPC service in .NET framework</title>
+		<link>https://blog.processtune.com/2022/10/30/http-3-and-the-grpc-service-in-net-framework/</link>
+					<comments>https://blog.processtune.com/2022/10/30/http-3-and-the-grpc-service-in-net-framework/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Sun, 30 Oct 2022 07:50:59 +0000</pubDate>
+				<category><![CDATA[gRPC]]></category>
+		<category><![CDATA[未分類]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=6804</guid>
+
+					<description><![CDATA[The gRPC service can use on HTTP/3 connection. This article describes how the gRPC connection affects HTTP connection, additionally, history of HTTP connection is also described. &#62;&#62;Rust sample project to create QR Code, Base program of implantation to Azure Functions •&#160;History of HTTP connection Internet Engineering Task Force (IETF) has proceeding technical standardization of internet. [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin: 0px 0px 0px 0px; color: #000044; font-size: 0.9rem;"><a style="font-weight: bold;" href="https://github.com/grpc/proposal/blob/master/G2-http3-protocol.md" target="_new" rel="noopener">The gRPC service can use on HTTP/3 connection</a>. This article describes how the gRPC connection affects HTTP connection, additionally, history of HTTP connection is also described.</p>
+<p style="margin: 10px 0px 0px 5px; text-indent: 1em; text-align: right; font-weight: bold;">&gt;&gt;<a style="font-weight: bold;" href="https://github.com/TetsuroTakao/QRCodeCreation" target="_new" rel="noopener">Rust sample project to create QR Code, Base program of implantation to Azure Functions</a></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">•&nbsp;History of HTTP connection</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;"><a style="font-weight: bold;" href="https://docs.microsoft.com/ja-jp/azure/azure-functions/functions-bindings-register#extension-bundles?WT.mc_id=AZ-MVP-4029060" target="_new" rel="noopener">Internet Engineering Task Force (IETF)</a> has proceeding technical standardization of internet. HTTP working group of IETF treats HTTP semantics, caching, and HTTP messaging. HTTP messaging uses the same semantics of HTTP/1.1, HTTP/2 and HTTP/3.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">Therefor RFC 9113 (HTTP/2 bis), <a style="font-weight: bold;" href="https://datatracker.ietf.org/doc/rfc9114/" target="_new" rel="noopener">RFC 9114</a> (HTTP/3) and <a style="font-weight: bold;" href="https://datatracker.ietf.org/doc/rfc9204/" target="_new" rel="noopener">RFC9204 (QPACK)</a> affects to the gRPC connection although, Google and many technicians have contributing to the gRPC connection since April 2016 (when Google&#8217;s the Stubby was opened as the <a style="font-weight: bold;" href="https://cloud.google.com/blog/products/gcp/grpc-a-true-internet-scale-rpc-framework-is-now-1-and-ready-for-production-deployments" target="_new" rel="noopener">gRPC 1.0</a>). Afterwards the [<a style="font-weight: bold;" href="https://github.com/grpc/grpc/blob/master/doc/PROTOCOL-HTTP2.md" target="_new" rel="noopener">gRPC over HTTP2</a>] since 2015, and the [<a style="font-weight: bold;" href="https://github.com/grpc/proposal/blob/master/G2-http3-protocol.md" target="_new" rel="noopener">gRPC over HTTP/3</a>] since 2021 are opened on GitHub. There are standardised considering with the standard of IFTF.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">To simply say about only HTTP messaging, it has been improved as HTTP 0.9 (since 1990) &#8211; 1.0 (1996: POST etc.) &#8211; 1.1 (1997: Virtual host etc.) &#8211; 2.0 (2015: Stream) &#8211; 3.0 (2018: UDP communication).</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">Evolution of HTTP messaging can explain with an aspect of connection and an aspect of data.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">As an aspect of connection, a setting of connection is shared between edge-side and service-side on streaming communication of HTTP/2, as result, edge-side can start next request without waiting for the end of before request.</p>
+<p style="display: inline-block; margin-bottom: 10px; text-align: center; width: 100%;"><img decoding="async" style="width: 900px;" src="/wp-content/uploads/2023/03/HTTPStreaming.png" alt=""></p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">As an aspect of data, the headers of HTTP/2 are compressed, and a content is communicated as binary. Thus, reduces workload of adding new connections because one connection can handle many requests.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">HTTP/3 reduces the communication initiation cost and transport layer confirmation response cost. And using UDP connection, it performs high-speed data transmission and reception.</p>
+<p style="display: inline-block; margin-bottom: 10px; text-align: center; width: 100%;"><img decoding="async" style="width: 900px;" src="/wp-content/uploads/2023/03/HTTPDataEvolution.png" alt=""></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">•&nbsp;QUIC library for development of the gRPC connection</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">Microsoft provides <a style="font-weight: bold;" href="https://github.com/microsoft/msquic" target="_new" rel="noopener">MsQuic</a> that is implementation of IETF&#8217;s <a style="font-weight: bold;" href="https://datatracker.ietf.org/wg/quic/about/" target="_new" rel="noopener">QUIC</a> as library. This library is standard on Windows, thus provided API on over .NET 7.0. Though this library does TLS handshake, it is also provided Windows 11 build 22000 or later as Windows SChannel.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">Therefore does not use MsQuic explicitly on Windows 11 and .NET 7.0.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">There are other libraries for other languages for Quic connection such as below table.</p>
+<div style="margin: 0px 0px 0px 20px; display: table;">
+<div style="display: table-row;">
+<div style="display: table-cell; font-weight: bold; padding-right: 10px; width: 150px;">C++</div>
+<div style="display: table-cell; width: 100px;">QUICHE</div>
+<div style="display: table-cell; font-weight: bold; padding-right: 10px; width: 150px;">Rust</div>
+<div style="display: table-cell; width: 100px;">quinn</div>
+</div>
+<div style="display: table-row;">
+<div style="display: table-cell; font-weight: bold;">C, Rust</div>
+<div style="display: table-cell;">MsQuic</div>
+<div style="display: table-cell; font-weight: bold; padding-right: 10px;">C</div>
+<div style="display: table-cell;">LSQUIC</div>
+</div>
+<div style="display: table-row;">
+<div style="display: table-cell; font-weight: bold;">Python</div>
+<div style="display: table-cell;">aioquic</div>
+<div style="display: table-cell; font-weight: bold; padding-right: 10px;">Rust</div>
+<div style="display: table-cell;">s2n-quic</div>
+</div>
+<div style="display: table-row;">
+<div style="display: table-cell; font-weight: bold;">Go</div>
+<div style="display: table-cell;">quic-go</div>
+<div style="display: table-cell; font-weight: bold;">Rust</div>
+<div style="display: table-cell;">Neqo</div>
+</div>
+</div>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">Implementation of gRPC over HTTP/3 is easy as below code that modified from the &#8216;Program.cs&#8217; of the &#8216;GrpcGreeter&#8217; folder of <a style="font-weight: bold;" href="https://github.com/TetsuroTakao/gRPC" target="_new" rel="noopener">this sample</a>.</p>
+<pre style="background-color: #cccccc; border: 1px solid #00000; padding: 10px;">builder.WebHost.ConfigureKestrel(options =&gt;
+{
+    options.ListenAnyIP(5008);
+    options.ListenAnyIP(7116, listenOptions =&gt;
+    {
+        // listenOptions.Protocols = Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http2;
+        // listenOptions.Protocols = Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http1AndHttp2AndHttp3;
+        listenOptions.Protocols = Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http3;// add only this line
+        listenOptions.UseHttps(options =&gt;
+            {
+                options.ClientCertificateMode = ClientCertificateMode.RequireCertificate;
+                options.ClientCertificateValidation = (certificate, chain, errors) =&gt; {
+                    options.ServerCertificate = certificate;
+                    return true;
+                };
+            }
+        );
+    });
+});
+</pre>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2022/10/30/http-3-and-the-grpc-service-in-net-framework/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Deploy the gRPC service to the Azure App Service</title>
+		<link>https://blog.processtune.com/2022/09/30/deploy-the-grpc-service-to-the-azure-app-service/</link>
+					<comments>https://blog.processtune.com/2022/09/30/deploy-the-grpc-service-to-the-azure-app-service/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Fri, 30 Sep 2022 11:20:48 +0000</pubDate>
+				<category><![CDATA[gRPC]]></category>
+		<category><![CDATA[Microsoft Azure]]></category>
+		<category><![CDATA[未分類]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=6783</guid>
+
+					<description><![CDATA[Microsoft Azure provides hosting feature of the gRPC service as Azure App Service, Azure Container Apps and Azure Kubernetes Service. This article describes how to deploy the gRPC service that is created in the article [ASP.NET Core gRPC &#38; gRPC communication tools] to Azure App Service. &#62;&#62;Sample project to deploy to Azure App Service •&#160;Create [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin:0px 0px 0px 0px;color:#000044;font-size:0.9rem;font-family:" segoe="" ui";"="">Microsoft Azure provides hosting feature of the gRPC service as Azure App Service, Azure Container Apps and Azure Kubernetes Service.<br />
+This article describes how to deploy the gRPC service that is created in the article [<a href="https://blog.processtune.com/?p=6649" target="_new" style="font-weight:bold;" rel="noopener">ASP.NET Core gRPC &amp; gRPC communication tools</a>] to Azure App Service.</p>
+<p style="margin:10px 0px 0px 5px;text-indent:1em;text-align:right;font-weight:bold;">&gt;&gt;<a href="https://github.com/TetsuroTakao/gRPCAzureDeploySample" target="_new" style="font-weight:bold;" rel="noopener">Sample project to deploy to Azure App Service</a></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">•&nbsp;Create the Web App Service using Azure portal</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Open Azure portal and select the [Create a resource] then select the Web App [Create] link, and set values as figure below.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2023/03/AzureAppServiceCreation.png" alt="" style="width:450px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Set values of settings with select the [Configuration] of the [Settings] section of the left pane after selecting the Web App Service (or select the [Go to resource] when complete creating the service) created it.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Though there are application settings and general settings in the [Configuration], set value &#8220;2.0&#8221; to the [HTTP version] property and set value &#8220;On&#8221; to the [HTTP 2.0 Proxy] property in the [General settings] tab.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Select the [+ New application settings] link after the [Application settings] link, then the [Add/Edit application setting] blade displayed, set value &#8220;HTTP20_ONLY_PORT&#8221; to the [Name] property and set value &#8220;5243&#8221; to the [Value] property.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2023/03/AzureAppServiceSettings.png" alt="" style="width:900px;"></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">•&nbsp;Execute the gRPC service with HTTPS</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Created gRPC service uses TSL 1.2 (figure below left), therefore several modifying.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">There are two settings in the [launchsettings.json] file of the [Properties] folder of the sample project that was described in the article &#8216;ASP.NET Core gRPC &amp; gRPC communication tools&#8217;. Execute the project using the setting [https]. Please download the sample project from GitHub, or create the gRPC service with referring of the article.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The figure below right is type the [dotnet run &#8211;launch-profile https] command in the [Ternimal] of Visual Studio Code.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2023/03/TSLSettings.png" alt="" style="width:450px;"><img decoding="async" src="/wp-content/uploads/2023/03/ExecuteHTTPS.png" alt="" style="width:450px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The gRPC communication provided Azure Web App Service needs TSL communication. It needs certificate to communicate while TSL handshake. Therefor create certificate, in many cases, there is the certificate for development already in the PC. For confirming local certificates in development environment use the command [dotnet dev-certs https -v] in the [Terminal] pane of Visual Studio Code. Find the certificate that is in vailed term and copy the certificate id. The certificate is also able to create as self signed with Go language that install in previous article [<a href="https://blog.processtune.com/?p=6649" target="_new" style="font-weight:bold;" rel="noopener">ASP.NET Core gRPC &amp; gRPC communication tools</a>]. Put the command below in the [Terminal] pane of Visual Studio Code (at current directory that moved project root folder).</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">//In the case of self signed
+$Go installed path$\bin\go run $Go installed path$\src\crypto\tls\generate_cert.go --rsa-bits=2048 --host=localhost
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">In the case of certificate for development, check the [ASP.NET Core HTTPS development certificate] is trusted using the [certmgr.msc] command input to Windows [Run] menu item. If not, put the [dotnet dev-certs https &#8211;check &#8211;trust]  in the [Terminal] pane of Visual Studio Code.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2023/03/CheckCertTrusted.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">There is also able to check using the command [dotnet dev-certs https -v] in the [Terminal] pane of Visual Studio Code. And copy collect one certificate to use at C# code (refer to figure below). Select certificate that includes value [localhost] as the [CN] property and also has value of the [IsHttpsDevelopmentCertificate] property is [true] and valid period. If not, use the command [dotnet dev-certs https] to create the development certificate (detail is refer to the <a href="https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-dev-certs?WT.mc_id=DT-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">official document</a>).</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2023/03/devcert.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The code copied is used for the gRPC client app that is able to download from <a href="https://github.com/TetsuroTakao/gRPC/tree/main/GrpcGreeterClient" target="_new" style="font-weight:bold;" rel="noopener">GitHub</a>.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">using System.Security.Cryptography.X509Certificates;
+...
+X509Store store = new X509Store(StoreName.My, StoreLocation.CurrentUser);
+store.Open(OpenFlags.ReadOnly | OpenFlags.OpenExistingOnly);
+var cert = store.Certificates.Where(c =&gt; c.GetCertHashString() =="E73488EF2CD742DE44A31ECA660F9FD8AD3D46C6").FirstOrDefault();
+...
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">There is displayed error when execute the gRPC service use HTTPS and execute client-side app as simple [dotnet run] command with leave downloaded client-side app sample code.  Thus, open the [Program.cs] file of the client-side app project and modify an argument of the [ForAddress] method to [&#8220;http://localhost:5008&/#8221;].</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2023/03/gRPCServiceExecuteOnLocal.png" alt="" style="width:450px;"><img decoding="async" src="/wp-content/uploads/2023/03/gRPCClientExecuteOnLocal.png" alt="" style="width:450px;"></p>
+<p>Confirm certificate for development of localhost using the code above.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">using Grpc.Net.Client;
+// using GrpcGreeterClient;
+using System.Security.Cryptography.X509Certificates;
+
+//using var channel = GrpcChannel.ForAddress("https://localhost:8585/");
+using var channel = GrpcChannel.ForAddress("http://localhost:5008/");
+
+X509Store store = new X509Store(StoreName.My, StoreLocation.CurrentUser);
+store.Open(OpenFlags.ReadOnly | OpenFlags.OpenExistingOnly);
+var cert = store.Certificates.Where(c =&gt; c.GetCertHashString() =="E73488EF2CD742DE44A31ECA660F9FD8AD3D46C6").FirstOrDefault();
+
+// var client = new Greeter.GreeterClient(channel);
+// var reply = await client.SayHelloAsync(new HelloRequest { Name = "GreeterClient" });
+// Console.WriteLine("Greeting: " + reply.Message);
+Console.WriteLine(string.Format("{0}, Press any key to exit...",cert!.FriendlyName));
+Console.ReadKey();
+</pre>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">•&nbsp;Deploy the gRPC service to Azure Web App Service</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">It is able to use Visual Studio Code to deploy the gRPC service to Azure Web App service. Download the sample project that was described in the article &#8216;<a href="https://blog.processtune.com/?p=6649" target="_new" style="font-weight:bold;" rel="noopener">ASP.NET Core gRPC &amp; gRPC communication tools</a>&#8216; from <a href="https://github.com/TetsuroTakao/gRPC2" target="_new" style="font-weight:bold;" rel="noopener">GitHub</a>, or create the gRPC service refer to the article.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The gRPC service has to be able to listen on only port 5243 that set at Azure Web App Service with HTTP 2.0, so modify configuration of the Program.cs file as below. This code needs the <a href="https://www.nuget.org/packages/Microsoft.AspNetCore.Authentication.Certificate" target="_new" style="font-weight:bold;" rel="noopener">nuget package</a>.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">using Microsoft.AspNetCore.Server.Kestrel.Https;
+using Microsoft.AspNetCore.Authentication.Certificate;
+...
+var builder = WebApplication.CreateBuilder();
+builder.Services.AddAuthentication(
+        CertificateAuthenticationDefaults.AuthenticationScheme) // use Microsoft.AspNetCore.Authentication.Certificate
+    .AddCertificate(options =&gt;
+    {
+        options.AllowedCertificateTypes = CertificateTypes.All; // use Microsoft.AspNetCore.Authentication.Certificate
+    });
+builder.Services.AddAuthorization();
+builder.WebHost.ConfigureKestrel(options =&gt;
+{
+    options.ListenAnyIP(5008);
+    options.ListenAnyIP(7116, listenOptions =&gt;
+    {
+        listenOptions.Protocols = Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http2;
+        listenOptions.UseHttps(options =&gt;
+            {
+                options.ClientCertificateMode = ClientCertificateMode.RequireCertificate; // use Microsoft.AspNetCore.Server.Kestrel.Https
+                options.ClientCertificateValidation = (certificate, chain, errors) =&gt; {
+                    options.ServerCertificate = certificate;
+                    return true;
+                };
+            }
+        );
+    });
+});
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">This code adds the Authentication feature and the Authorization feature, also needs the Routing feature, the Authentication feature and the Authorization feature for Web application, thus add code below before the [app.MapGrpcService<greeterservice>();] statement.</greeterservice></p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">app.UseRouting();
+app.UseAuthentication();
+app.UseAuthorization();
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Figure below is all code of service and client, therefore can deploy the service part to Azure.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2023/03/gRPCAllCodeServiceAndClient.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Sign in Azure from Visual Studio Code before proceeding to the next step. Press the key [Ctrl] + [Shift] + [P] to open the [Command palette], and input &#8216;azure sign&#8217; and select the menu item [Azure Sign In] from the list of the palette. This operation needs the [Azure Tools] Visual Studio Code extension, thus install it if the extension is not installed (Figure left).</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Confirm sign in information at the [Azure Account Status] of the [Status bar] and select the [Azure Tools] extension at the [Activity Bar]. Then can select subscription of Azure when select the [RESOURCES] section of the [Azure Tools] extension (Figure right).</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2023/03/VisualStudioCodeAzureToolsExtension.png" alt="" style="width:450px;"><img decoding="async" src="/wp-content/uploads/2023/03/SelectSubscription.png" alt="" style="width:450px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Press the key [Ctrl] + [Shift] + [P] in Visual Studio Code to open the [Command palate], And input &#8216;Azure App Service&#8217; to the palate. Select the Subscription at the [Command palette] and select the Resource (Azure Web App Service) that created in the section above (&#8216;Create the Web App Service using Azure portal&#8217;) too. Select the [OK] button after shown the confirm dialog.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2023/03/DeployAzureAppService.png" alt="" style="width:900px;"></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2022/09/30/deploy-the-grpc-service-to-the-azure-app-service/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>ASP.NET Core gRPC &#038; gRPC communication tools</title>
+		<link>https://blog.processtune.com/2022/05/30/asp-net-core-grpc-grpc-communication-tools/</link>
+					<comments>https://blog.processtune.com/2022/05/30/asp-net-core-grpc-grpc-communication-tools/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Mon, 30 May 2022 09:28:02 +0000</pubDate>
+				<category><![CDATA[gRPC]]></category>
+		<category><![CDATA[未分類]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=6649</guid>
+
+					<description><![CDATA[Microsoft supports several development environments of the gRPC communication implementation, and provides many documents. I want to introduce Microsoft official document and describe mechanism of HTTP/3 protocol, relation between the gRPC and HTTP/3 and so on. Design of gRPC communication was described at previous article &#8216;Design of solution with gRPC communication&#8216;, please refer to it. [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin:0px 0px 0px 0px;color:#000044;font-size:0.9rem;font-family:" segoe="" ui";"="">Microsoft supports several development environments of the gRPC communication implementation, and provides many documents. I want to introduce <a href="https://learn.microsoft.com/en-us/aspnet/core/grpc/test-tools?view=aspnetcore-6.0&amp;WT.mc_id=AZ-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">Microsoft official document</a> and describe mechanism of HTTP/3 protocol, relation between the gRPC and HTTP/3 and so on. Design of gRPC communication was described at previous article &#8216;<a href="https://blog.processtune.com/?p=6651" target="_new" style="font-weight:bold;" rel="noopener">Design of solution with gRPC communication</a>&#8216;, please refer to it.<br />
+This article describes two-thirds steps of implementation of the gRPC service, at first, create the gRPC service with localhost, then query simple request use the <a href="https://github.com/fullstorydev/grpcurl/blob/master/README.md" target="_new" style="font-weight:bold;" rel="noopener">gRPCurl</a> tool. The last step is in the next article [<a href="https://blog.processtune.com/?p=6783" target="_new" style="font-weight:bold;" rel="noopener">Deploy the gRPC service to the Azure App Service</a>] that describes how to deploy the service to Azure Web App Service.<br />
+And mechanism of HTTP/3 protocol and relation between the gRPC and HTTP/3 is described in the article [<a href="https://blog.processtune.com/?p=6804" target="_new" style="font-weight:bold;" rel="noopener">HTTP3 and gRPC service in .NET framework</a>].</p>
+<p style="margin:10px 0px 0px 5px;text-indent:1em;text-align:right;font-weight:bold;">&gt;&gt;<a href="https://github.com/TetsuroTakao/gRPC2" target="_new" style="font-weight:bold;" rel="noopener">The gRPC service sample project, before deployment to Azure Web Service.</a></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">•&nbsp;Implementation of the gRPC service.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">This article refers to Microsoft official document &#8216;<a href="https://learn.microsoft.com/en-us/aspnet/core/tutorials/grpc/grpc-start?view=aspnetcore-6.0&amp;tabs=visual-studio?WT.mc_id=DT-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">Tutorial: Create a gRPC client and server in ASP.NET Core</a>&#8216;, so if lost a step of implementation of the gRPC service, please refer to it too. This article describe steps of the gRPC service with  ASP.NET Core, so the service implementation with one of architectures below.</p>
+<div style="margin: 0px 0px 0px 20px;display:table;">
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;padding-right:10px;">Kestrel</div>
+<div style="display:table-cell;">Cross-platform web server</div>
+</div>
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;">TestServer</div>
+<div style="display:table-cell;">In-memory web server for unit test mainly</div>
+</div>
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;">Internet Information Service</div>
+<div style="display:table-cell;">Standard web server of Windows, the constraints are .NET 5 and Windows 11 Build 22000 or Windows Server 2022 Build 20348 or later.</div>
+</div>
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;">HTTP.sys</div>
+<div style="display:table-cell;">The Windows web service for ASP.NET Core includes several extending features that differ from Kestrel; constraints are same as IIS above.</div>
+</div>
+</div>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">In the step 2, call it from the gRPCurl tool or the Postman, then after confirm runnable of the service, as last step, deploy to any of Azure Services below.</p>
+<div style="margin: 0px 0px 0px 20px;display:table;">
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;">Azure Kubernetes Service (AKS)</div>
+</div>
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;">Azure Container Apps</div>
+</div>
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;">Azure App Service (gRPC-Web)</div>
+</div>
+</div>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The gRPC service have to includes the gRPC reflection service for providing description of the gRPC service (works like as swagger). The gRPC client communicates with the gRPC reflection service for solving objects of the gRPC service before calls method of the service.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">If it needs only communication test, a gRPC service that does not implement the gRPC reflection service can also use the gRPC connection with loading the proto source file to the gRPCurl. Also, the Postman can use as gRPC client as same as the gRPCurl (useable the proto source file).</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">It is easy that the gRPC reflection service implementation, Open Visual Studio Code, use the &#8220;dotnet new&#8221; command at target folder and use the &#8220;dotnet add package&#8221; command for implementation of service on the generic host of ASP.NET Core web app.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2023/02/ImplementationProcess.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">1. Press the Ctrl key + @ key for open the terminal pain of Visual Studio Code. Then put the &#8220;dotnet new list&#8221; command to show all templates of dotnet sdk on development environment. The figure above shows .NET SDK 7.0 environment. There is the ASP.NET Core gRPC Service in the list.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">2. So, move to the target folder in the terminal pain, and put the &#8220;dotnet new grpc&#8221; command to generate project files at target folder.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">3. Install reflection server package use nuget dotnet command &#8220;dotnet add package Grpc.AspNetCore.Server.Reflection &#8211;version 2.51.0&#8221;.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">4. Next, open the Program.cs file from the EXPLORER pain, and put the code &#8220;builder.Services.AddGrpcReflection();&#8221; after the &#8220;var builder = WebApplication.CreateBuilder(args);&#8221; statement.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">5. After the &#8220;var app = builder.Build();&#8221; statement, add the &#8220;IWebHostEnvironment env = app.Environment;&#8221; code and the &#8220;if&#8221; section like code below.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">using gRPC2.Services;
+
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddGrpcReflection();
+// Additional configuration is required to successfully run gRPC on macOS.
+// For instructions on how to configure Kestrel and gRPC clients on macOS, visit https://go.microsoft.com/fwlink/?linkid=2099682
+
+// Add services to the container.
+builder.Services.AddGrpc();
+
+var app = builder.Build();
+IWebHostEnvironment env = app.Environment;
+if (env.IsDevelopment())
+{
+    app.MapGrpcReflectionService();
+}
+// Configure the HTTP request pipeline.
+app.MapGrpcService<greeterservice>();
+app.MapGet("/", () =&gt; "Communication with gRPC endpoints must be made through a gRPC client. To learn how to create a client, visit: https://go.microsoft.com/fwlink/?linkid=2086909");
+
+app.Run();
+</greeterservice></pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">6. Put the &#8220;dotnet run&#8221; command to run gRPC service at local environment, then the &#8220;Now listening on: http://localhost:5008&/#8221; statement displayed on the terminal pain. The HTTPS connection is able to use with the &#8220;dotnet dev-certs https&#8221; command in the terminal pane.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">At first, the Postman is easy to confirm the gRPC service connection than using the gRPCurl because the gRPCurl is command line application. So describes the Postman usage ahead, then the gRPCurl usage follows.</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">•&nbsp;Call the gRPC service use the gRPCurl and the Postman.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The &#8220;New&#8230;&#8221; menu item of the File menu item that displayed when press the hamburger icon of Postman has the gRPC connection feature, refer below figure.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2023/02/PostmanCreateNewgRPC.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">From the terminal pain of Visual Studio Code, copy the part of the URL (localhost:5008) excluded the protocol part that is listening, and paste at the server address textbox of the gRPC Request tub. Then press the [Try again] link of the last item [Use server reflection] of the method select list that is shown when the method textbox selects. After pressing the [Try again] link, the list is changed to be able to select the method (SayHello).</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2023/03/PostmanInvoke.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">This &#8220;SayHello&#8221; method defined at the GreeterService class of the GreeterService.cs file, thus the reflection service create the proto file at the greet.proto file of the Protos folder.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2023/03/FileStructure.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The <a href="https://github.com/fullstorydev/grpcurl/releases" target="_new" style="font-weight:bold;" rel="noopener">gRPCurl</a> is command line application for confirming the gRPC service communication. After install <a href="https://go.dev/doc/install" target="_new" style="font-weight:bold;" rel="noopener">Go language</a>, install the gRPCurl (download the “grpcurl_1.8.7_windows_x86_64.zip” file and unzip it) and run the Windows Command Prompt at the gRPCurl install folder.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2023/03/RungRPCurl.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">This figure is result of that acquire information of the gRPC service then call remote procedure.<br />
+The describe command responds &#8220;greet.Greeter is a service&#8221; (package name and service name), and &#8220;rpc SayHello &#8230;&#8221; (method name). The Method is able to call with format &#8220;grpcurl -plaintext -d %value(s)% %server address% %package name%.%service name%/%methodname%&#8221;.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Definition of argument(s) of the method of the service uses the &#8220;-d&#8221; command. Thus &#8220;grpcurl -plaintext -d %value(s)% localhost:5008 greet.Greeter/SayHello&#8221; warks well. Only in Windows development environment, argument(s) wrap with [&#8221; (double quate)] and JSON format: wrap key/value with [{} (Brace)] and wrap the key and the value each with [&#8221; (double quate)], [&#8221; (double quate)] in argument(s) needs escape.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">"grpcurl -plaintext -d "{\"name\": \"takao\"}" localhost:5008 greet.Greeter/SayHello"
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">If there is Go development environment, it is able to connect to gRPC service with browser. If not, go to the page &#8220;Download and install&#8221; of the Go website and install it. After install it, install gRPC UI use the command &#8220;go install github.com/fullstorydev/grpcui/cmd/grpcui@latest&#8221; (move to the Go installed path if it needs). It is installed at the GOPATH of the system environment variables that is shown from the System Properties dialog&#8217;s [Environment Variables&#8230;] button select. The dialog is shown when select the [Advanced system settings] link of the [Related links] of the [System About] window that is displayed by selection the context menu item [System] of Windows icon (right click).<br />
+Move to the gRPC UI installed path if it needs, type &#8220;grpcui -plaintext localhost:5008&#8221;, then the browser is opened and can test it.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2023/03/EnvironmentVariables.png" alt="" style="width:400px;"><img decoding="async" src="/wp-content/uploads/2023/03/grpcui.png" alt="" style="width:450px;margin-left:1rem;"></p>
+<div style="background-color:#cccccc;border:1px solid #00000; padding: 10px 10px 0px 10px;margin-top:20px;">
+<div style="margin:-20px 0px 0px 5px;text-indent:1em;font-weight:bold;background-color:#444;border:1px solid #ccc;color:#fff;">ⓘ Recomended reference</div>
+<p><a href="https://blog.processtune.com/?p=6649" target="_new" style="font-weight:bold;display:inline-block;margin-left:1rem;margin-top:1rem;" rel="noopener">→ ASP.NET Core gRPC &amp; gRPCurl tool</a><br />
+<a href="https://blog.processtune.com/?p=6783" target="_new" style="font-weight:bold;display:inline-block;margin-left:1rem;margin-top:1rem;" rel="noopener">→ Deploy the gRPC service to the Azure App Service</a><br />
+<a href="https://blog.processtune.com/?p=6804" target="_new" style="font-weight:bold;display:inline-block;margin-left:1rem;margin-top:1rem;margin-bottom:1rem;" rel="noopener">→ HTTP3 and gRPC service in .NET framework</a></p>
+</div>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2022/05/30/asp-net-core-grpc-grpc-communication-tools/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Design of solution with gRPC communication</title>
+		<link>https://blog.processtune.com/2022/04/30/design-of-solution-with-grpc-communication/</link>
+					<comments>https://blog.processtune.com/2022/04/30/design-of-solution-with-grpc-communication/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Sat, 30 Apr 2022 08:29:32 +0000</pubDate>
+				<category><![CDATA[ASP.NET Core]]></category>
+		<category><![CDATA[C#]]></category>
+		<category><![CDATA[gRPC]]></category>
+		<category><![CDATA[Service]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Technical Memo]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=6651</guid>
+
+					<description><![CDATA[The gRPC is one of the Remote Procedure Call (RPC), It was developed by Google. They needed a messaging protocol that can respond on the distributed computing environment in real-time when users operate the Data plane of the Google Cloud. And it was leveraged for maintaining of the Control plane of Google Cloud also, to [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin:0px 0px 0px 0px;color:#000044;font-size:0.9rem;font-family:" segoe="" ui";"=""><a href="https://github.com/grpc" target="_new" style="font-weight:bold;" rel="noopener">The gRPC</a> is one of the <a href="https://en.wikipedia.org/wiki/Remote_procedure_call" target="_new" style="font-weight:bold;" rel="noopener">Remote Procedure Call (RPC)</a>, It was developed by Google. They needed a messaging protocol that can respond on the distributed computing environment in real-time when users operate <a href="https://www.cloudflare.com/learning/network-layer/what-is-the-control-plane/" target="_new" style="font-weight:bold;" rel="noopener">the Data plane</a> of the Google Cloud. And it was leveraged for maintaining of the Control plane of Google Cloud also, to keep high quality cloud services.<br />
+The gRPC uses <a href="https://cloud.google.com/blog/products/gcp/grpc-a-true-internet-scale-rpc-framework-is-now-1-and-ready-for-production-deployments?hl=en" target="_new" style="font-weight:bold;" rel="noopener">the Stubby</a> they created: a framework of one of the RPC. Then the gRPC become to open source, and it has be the incubating project of <a href="https://www.cncf.io/" target="_new" style="font-weight:bold;" rel="noopener">CNCF</a> since 2017.<br />
+Microsoft supports many development environments for an application using the gRPC-Web and the gRPC-over-HTTP/2 (see Microsoft official document &#8216;<a href="https://docs.microsoft.com/ja-jp/aspnet/core/grpc/supported-platforms?view=aspnetcore-6.0&amp;WT.mc_id=DT-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">gRPC on .NET supported platforms</a>&#8216;).<br />
+This article describe mechanism of .NET application using the gRPC architecture and an application that uses the gRPC works as the Message Oriented Middleware.<br />
+The article &#8216;<a href="https://blog.processtune.com/?p=6649" target="_new" style="font-weight:bold;" rel="noopener">ASP.NET Core gRPC &amp; gRPCurl tool</a>&#8216; describes how to implement gRPC application service from Azure App Service.</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">•&nbsp;gRPC-dotnet</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The gRPC-dotnet is implementation of .NET that is to use the <a href="https://grpc.io/blog/grpc-stacks/" target="_new" style="font-weight:bold;" rel="noopener">gRPC Core Stack</a>. It&#8217;s structed with namespaces of <a href="https://www.nuget.org/packages/Grpc.AspNetCore" target="_new" style="font-weight:bold;" rel="noopener">Grpc.AspNetCore</a> and <a href="https://www.nuget.org/packages/Grpc.AspNetCore.Server.Reflection" target="_new" style="font-weight:bold;" rel="noopener">Grpc.AspNetCore.Server.Reflection</a>. For creation of these stub, namespaces <a href="https://www.nuget.org/packages/Grpc.Net.Client" target="_new" style="font-weight:bold;" rel="noopener">Grpc.Net.Client</a>, <a href="https://www.nuget.org/packages/Grpc.Tools/2.51.0" target="_new" style="font-weight:bold;" rel="noopener">Grpc.Tools</a>, and <a href="https://www.nuget.org/packages/Google.Protobuf" target="_new" style="font-weight:bold;" rel="noopener">Google.Protobuf</a> architecture are used.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The Grpc.AspNetCore namespace is the gRPC service itself, and the Grpc.AspNetCore.Server.Reflection namespace works for providing a description of the gRPC service to client apps just like the <a href="https://swagger.io/" target="_new" style="font-weight:bold;" rel="noopener">Swagger</a>.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">On the other hand, the Grpc.Tools namespace is auto generate a stub of client side that uses <a href="https://protobuf.dev/" target="_new" style="font-weight:bold;" rel="noopener">the Protobuf of the gRPC</a>. The Grpc.Tools namespace generates a stub with the Google.Protobuf architecture, The Google.Protobuf called from the Grpc.Tools namespace is pure C# implementation that does not use native component of the gRPC core stack.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">There was no HTTP/2 library of C# until gRPC-dotnet is developed, so gRPC apps of C# were developed with gRPC.Core that includes HTTP/2 library. The gRPC.Core namespace moved to the state of the Maintenance Only at May 2021, then at May 2022, it was in the state of the Deprecated (Please refer to the great article &#8216;<a href="https://grpc.io/blog/grpc-csharp-future/" target="_new" style="font-weight:bold;" rel="noopener">The future of gRPC in C# belongs to grpc-dotnet</a>&#8216;).</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2023/02/gRPC-dotnet.png" alt="" style="width:900px;"></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">•&nbsp;The gRPC is a protocol for the Message Oriented Middleware.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The gRPC extends the Remote Procedure Call (RPC). <a href="https://grpc.io/" target="_new" style="font-weight:bold;" rel="noopener">The official website</a> says, &#8216;A high performance, open-source universal RPC framework&#8217;.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The first description is an aspect of universal RPC framework, it can be used in multiple languages and can enforce service contracts on multiple first- and third-party services using HTTP/2. It means that the gRPC can generate clients and servers in multiple languages, generated code is able to run on each language environment (C++, Java, Go, Node, Ruby, Python and C# across Linux, Windows and Mac). The gRPC as a framework is universal because it supports also development on many environment. For instance, mobile apps development of iOS and Android is supported with Objective-C and Android Java libraries, it can execute single-line installation in most languages.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The RPC calls any functions on destination that are an object, in other words, service contracts have to describe the objects, so gRPC use the Protocol Buffers for run on universal environment. The Protocol Buffers are a language-neutral, platform-neutral extensible mechanism for serializing structured data (quote from <a href="https://protobuf.dev/" target="_new" style="font-weight:bold;" rel="noopener">the official website</a>). It can describe objects of services side and edge side both.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The second description is an aspect of high performance of the gRPC, availability of object description affects streaming or unary flow control from each side of service and edge. In the case of using the forward error correction (FEC) mechanism for error handling, it is better that an object error is supported at communication level same as a connection error instead of at an application level. An access control of authentication &amp; authorization typically uses JSON as a container of a security token, object description of the Protocol Buffers is useful for transfer of a security token too, also useful for serialization/deserialization. The RPC extends of the gRPC are also useful at other aspects such as distributed tracing, binding as synchronization/asynchronization, response of cancel/timeout, health checking, load balancing, logging and monitoring and tracing etc..</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The gRPC was developed for distributed computing. Distributed computing has the Message-Oriented Middleware, the Distributed Directory, the Service Discovery, the Stateful Middle Tier, the Stateless Actor Activator and so on. There are many types in the Message Oriented Middleware such as the Pub-Sub, the Message Queue, the Fan-out, the Request/Response, the Point to Point, the Remote Procedure Call and so forth. The Remote Procedure Call run on several type protocols like the HTTP, the HTTP/2, the TCP/IP, the Internet InterORB protocol. The gRPC is extends HTTP/2 with the Protocol Buffers. Thus, the gRPC has to be used in correct situation, in other words, what kind of a solution architecture, what part of the system or which direction of procedures call.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2023/02/gRPCInDistributedComputing.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The gRPC is like as the WCF or the DCOM that uses the Distributed Object in synchronize communication although, it can communicate asynchronously, and also can bidirectional communication between service and client because it transfer objects with the HTT/2 protocol.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The Distributed Object of unary RPC makes a stub of a service side object on a client side, then a client executes a client-side object. In other hand, the gRPC transfers a description of service side object, then a client side calls service side procedure.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2023/02/gRPCommunicationDirection.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">If you familiar with synchronize communication on the DCOM or the WCF architecture, aware consistency of a state of services on the gRPC communication. In the case of a unary RPC, a client-side application uses same object of service side as stub, thus typically the application care about consistency of only service side state although, in contrast a state of client side or service side is not guaranteed on the gRPC communication because the gRPC communication uses remotely individual object of service side or client side and usually communicate with asynchronously. Though the gRPC can communicate as synchronously for waiting remote procedure response like unary RPC, if use the Backend for Frontends pattern for design of cloud native solution, it needs design as distributed computing like Microservices. Please refer to the website of Sam Newman (&#8216;<a href="https://samnewman.io/patterns/architectural/bff/" target="_new" style="font-weight:bold;" rel="noopener">Pattern: Backends For Frontends</a>&#8216;), and Microsoft official document (&#8216;<a href="https://learn.microsoft.com/en-us/azure/architecture/patterns/backends-for-frontends?WT.mc_id=AZ-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">Backends for Frontends pattern: Microsoft learn</a>&#8216;).</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2023/02/BackendForFrontends.png" alt="" style="width:900px;"></p>
+<div style="background-color:#cccccc;border:1px solid #00000; padding: 10px 10px 0px 10px;margin-top:20px;">
+<div style="margin:-20px 0px 0px 5px;text-indent:1em;font-weight:bold;background-color:#444;border:1px solid #ccc;color:#fff;">ⓘ Recomended reference</div>
+<p><a href="https://blog.processtune.com/?p=6649" target="_new" style="font-weight:bold;display:inline-block;margin-left:1rem;margin-top:1rem;margin-bottom:1rem;" rel="noopener">→ASP.NET Core gRPC &amp; gRPCurl tool</a></p>
+</div>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2022/04/30/design-of-solution-with-grpc-communication/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

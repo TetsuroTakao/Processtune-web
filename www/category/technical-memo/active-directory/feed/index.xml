@@ -1,0 +1,572 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Active Directory &#8211; Processtune Blog</title>
+	<atom:link href="https://blog.processtune.com/category/technical-memo/active-directory/feed/" rel="self" type="application/rss+xml" />
+	<link>https://blog.processtune.com/</link>
+	<description>Articles offered from Microsoft MVP</description>
+	<lastBuildDate>Thu, 30 Aug 2018 16:57:47 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.8.2</generator>
+
+<image>
+	<url>/wp-content/uploads/2023/03/cropped-Presentation-32x32.png</url>
+	<title>Active Directory &#8211; Processtune Blog</title>
+	<link>https://blog.processtune.com/</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>Local account creation</title>
+		<link>https://blog.processtune.com/2018/08/31/local-account-creation/</link>
+					<comments>https://blog.processtune.com/2018/08/31/local-account-creation/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Thu, 30 Aug 2018 16:57:47 +0000</pubDate>
+				<category><![CDATA[Active Directory]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Visual Studio]]></category>
+		<category><![CDATA[Windows 10 App]]></category>
+		<category><![CDATA[未分類]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=4551</guid>
+
+					<description><![CDATA[This article explains how to create local account on a device which is not managed by Active Directory. These devices are assumed using at several dozens or hundreds places like Windows kiosk mode device. Previous article explains [DataAccessLayer] class, this class provides logging feature. So the file name modify to &#8216;Logging.cs&#8217;. Then Visual Studio ask [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin: 0px 0px 0px 0px;">This article explains how to create local account on a device which is not managed by Active Directory. These devices are assumed using at several dozens or hundreds places like Windows kiosk mode device.</p>
+<p style="margin: 0px 0px 0px 0px;"><a href="https://blog.processtune.com/?p=4590" target="_new" style="font-weight:bold;" rel="noopener">Previous article</a> explains [DataAccessLayer] class, this class provides logging feature. So the file name modify to &#8216;Logging.cs&#8217;. Then Visual Studio ask you &#8220;change refer to DataAccessLayer to Logging ?&#8221;, but it is &#8216;NOT&#8217; need change. But you have to change declare of the [DataAccessLayer] class to &#8216;partial&#8217;.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">
+    public partial class DataAccessLayer
+    {
+        ...
+    }
+</pre>
+<p style="margin: 0px 0px 0px 0px;">This article explain management feature of local account, so this feature is implemented at [DataAccessLayer] class too. And file name is &#8216;AccountManager.cs&#8217;</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;text-align:right;font-weight:bold;"><a href="https://github.com/TetsuroTakao/WPFLockdownSample3" target="_new" rel="noopener">&gt;&gt; Previous article&#8217;s sample code</a></p>
+<p style="display:inline"><img decoding="async" src="/wp-content/uploads/2019/03/AccountManagement.png" alt="" style="width:600px;"/></p>
+<p style="margin: 0px 0px 0px 0px;">This figure represents creating [DataAccessLayer] partial class of &#8216;AccountManager.cs&#8217; added at &#8216;Features&#8217; solution folder.</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Two ways of account creation</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Perhaps, the most popular way to create local accounts is using cmdlets in Windows PowerShell, in C# programming uses &#8216;System.DirectoryServices.DirectoryEntry&#8217; namespace and &#8216;Invoke&#8217; method of &#8216;DirectoryEntry&#8217; object, or use &#8216;PrincipalContext&#8217; object of &#8216;System.DirectoryServices.AccountManagement&#8217; namespace and &#8216;save&#8217; method of &#8216;UserPrincipal&#8217; object.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">These two ways are little bit different approaches. In case of &#8216;DirectoryEntry&#8217; object, user object is com object and also group object is com object, it is both &#8216;DirectoryEntry&#8217; object in C# aspect, and creation or deleting and so on are all using &#8216;Invoke&#8217; method.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">In other hands, &#8216;System.DirectoryServices.AccountManagement&#8217; namespace provides &#8216;UserPrincipal&#8217; object and &#8216;GroupPrincipal&#8217; object. &#8216;UserPrincipal&#8217; object provides [DisplayName] property, [Name] property, [Description] property, [UserCannotChangePassword] property, [SetPassword] method and [Save] method. And &#8216;GroupPrincipal&#8217; object provides [Members] property, it represents members collection of the group, so use [Add] method to add an user object to the member of a group, and then, use [Save] method of the object to commit operations of the group modifying. the steps using &#8216;System.DirectoryServices.AccountManagement&#8217; is easy to understand because it is similar to the management UI of Windows OS.</p>
+<pre style="vertical-align:top;background-color:#cccccc;border:1px solid #00000; padding: 10px;width:300px;display:inline-block;">
+    user.SetPassword(string.Empty);
+    user.DisplayName = "somebody name";
+    user.Name = "somebody name";
+    user.Description = string.Empty;
+    user.UserCannotChangePassword = false;
+    user.PasswordNeverExpires = true;
+    user.Save();
+</pre>
+<p style="display:inline"><img decoding="async" src="/wp-content/uploads/2019/03/UserPropertyDialogGuest.png" alt="" style="width:280px;"/></p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;text-align:right;font-weight:bold;"><a href="https://github.com/TetsuroTakao/WPFLockdownSample4" target="_new" rel="noopener">&gt;&gt;sample code</a></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Create &#8216;CreateUsers&#8217; method</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Partial class &#8216;DataAccessLayer&#8217; aim to provide &#8216;CreateUsers&#8217; method. The method argues user collection and responds logs collection. </p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">
+    public partial class DataAccessLayer
+    {
+        PrincipalContext context
+        {
+            get { return new PrincipalContext(ContextType.Machine); }
+        }
+        public List&lt;Log&gt; CreateUsers(List&lt;Tuple&lt;string, List&lt;string&gt;&gt;&gt; users)
+        {
+            List&lt;Log&gt; result = new List&lt;Log&gt;();
+            Log log = null;
+            UserPrincipal user = null;
+            List&lt;string&gt; groups = null;
+            try
+            {
+                foreach (var username in users)
+                {
+                    user = UserPrincipal.FindByIdentity(context, username.Item1);
+                    if (user == null)
+                    {
+                        user
+                          = new UserPrincipal(context, username.Item1, username.Item1,true);
+                    }
+                    user.SetPassword(string.Empty);
+                    user.DisplayName = username.Item1;
+                    user.Name = username.Item1;
+                    user.Description = string.Empty;
+                    user.UserCannotChangePassword = false;
+                    user.PasswordNeverExpires = true;
+                    user.Save();
+                    groups = username.Item2;
+                    if (groups == null) groups = new List&lt;string&gt;();
+                    if (groups.Where(g =&gt; g == "Users").Count() == 0) groups.Add("Users");
+                    SetUserGroups(user, groups);
+                }
+                //log "Users created"
+                return result;
+            }
+            catch (Exception ex)
+            {
+                //log "Users creation fault reason : {0}", ex.Message
+                return result;
+            }
+        }
+    }
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The argument &#8216;users&#8217; of above code includes a collection of &#8216;user&#8217; object, this &#8216;user&#8217; object has user name as key and groups name collection as value into &#8216;Tuple&#8217; type, so argument &#8216;users&#8217; enumelates for &#8216;FindByIdentity&#8217; method to create &#8216;UserPrincipal&#8217; object, then if it represents &#8216;null&#8217;, use &#8216;new&#8217; to create target &#8216;UserPrincipal&#8217;. After correct &#8216;UserPrincipal&#8217; object acquired, it is added to specific groups.</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Create &#8216;SetUserGroups&#8217; method</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The arguments of this method are &#8216;user&#8217; object as &#8216;UserPrincipal&#8217; type and groups name collection of the user. And responds log collection as execution result.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">
+    public List&lt;Log&gt; SetUserGroups(UserPrincipal user, List&lt;string&gt; groups)
+    {
+        List&lt;Log&gt; result = new List&lt;Log&gt;();
+        Log log = new Log();
+        try
+        {
+            foreach (string groupname in groups)
+            {
+                log = new Log();
+                GroupPrincipal group = GroupPrincipal.FindByIdentity(context, groupname);
+                group.Members.Add(user);
+                group.Save();
+                //log "User[{0}] registered Group[{1}]", user.Name, groupname
+            }
+            //log "Groups of user[{0}] registering complete", user.Name
+            return result;
+        }
+        catch (Exception ex)
+        {
+            //log "User[{0}] creation fault reason : {1}", user.Name, ex.Message
+            return result;
+        }
+    }
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;"><a href="https://blog.processtune.com/?p=4513#scenariosOfThisArticle" target="_new" style="font-weight:bold;" rel="noopener">The scenario of this article</a> is not create new group, So if your scenario needs new group, you should check &#8216;null&#8217; with &#8216;group&#8217; object as &#8216;GroupPrincipal&#8217; type which acquired by using &#8216;FindByIdentity&#8217; method. After correct &#8216;group&#8217; object acquired, add user to the members of the group use &#8216;Add&#8217; method of &#8216;Members&#8217; property. Then use &#8216;Save&#8217; method to commit the operations of the group.</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Call account management with setting users object</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The last step is call &#8216;CreateUsers&#8217; method of the [DtataAccessLayer] class. <a href="https://blog.processtune.com/?p=4513#scenariosOfThisArticle" target="_new" style="font-weight:bold;" rel="noopener">The scenario of this article</a> aim to four account.</p>
+<p style="display:inline"><img decoding="async" src="/wp-content/uploads/2019/03/accountStructure.png" alt="" style="width:600px;"/></p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">
+    DataAccessLayer dataAccessLayer = new DataAccessLayer();
+    ...
+    List&lt;string&gt; groups = new List&lt;string&gt;();
+    List&lt;Tuple&lt;string, List&lt;string&gt;&gt;&gt; users = new List&lt;Tuple&lt;string, List&lt;string&gt;&gt;&gt;();
+    groups.Add("Users");
+    groups.Add("Remote Desktop Users");
+    groups.Add("Administrators");
+    var user = new Tuple&lt;string, List&lt;string&gt;&gt;("superUser", groups);
+    users.Add(user);
+    groups = new List&lt;string&gt;();
+    groups.Add("Users");
+    groups.Add("Administrators");
+    user = new Tuple&lt;string, List&lt;string&gt;&gt;("maintenanceOperator", groups);
+    users.Add(user);
+    groups = new List&lt;string&gt;();
+    groups.Add("Users");
+    groups.Add("Remote Desktop Users");
+    user = new Tuple&lt;string, List&lt;string&gt;&gt;("appOperator", groups);
+    users.Add(user);
+    groups = new List&lt;string&gt;();
+    groups.Add("Users");
+    user = new Tuple&lt;string, List&lt;string&gt;&gt;("appUser", groups);
+    users.Add(user);
+    dataAccessLayer.CreateUsers(users);
+</pre>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2018/08/31/local-account-creation/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Logging file save to Microsoft Azure part 1</title>
+		<link>https://blog.processtune.com/2018/07/28/logging-file-save-to-microsoft-azure-part-1/</link>
+					<comments>https://blog.processtune.com/2018/07/28/logging-file-save-to-microsoft-azure-part-1/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Fri, 27 Jul 2018 21:19:38 +0000</pubDate>
+				<category><![CDATA[Active Directory]]></category>
+		<category><![CDATA[kiosk mode]]></category>
+		<category><![CDATA[Microsoft Azure]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Universal Apps]]></category>
+		<category><![CDATA[Visual Studio]]></category>
+		<category><![CDATA[Windows 10 App]]></category>
+		<category><![CDATA[未分類]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=4590</guid>
+
+					<description><![CDATA[This article is follow of previous article. The article explains overall of several operation scenarios, and a flow control of the accounts use single operation scenario respectively of the operation scenarios. This article explains logging use log information model to make logging to more easily. This article continues to [part 2] which explains how to [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin: 0px 0px 0px 0px;">This article is follow of <a href="https://blog.processtune.com/?p=4562" target="_new" style="font-weight:bold;" rel="noopener">previous article</a>. The article explains overall of several operation scenarios, and a flow control of the accounts use single operation scenario respectively of the operation scenarios. This article explains logging use log information model to make logging to more easily.</p>
+<p style="margin: 0px 0px 0px 0px;">This article continues to <a href="https://blog.processtune.com/?p=4814" target="_new" style="font-weight:bold;" rel="noopener">[part 2]</a> which explains how to send log file to Azure Blob Storage. At first, this article explains how to implement logging.</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・It&#8217;s more better use formal logging tools</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Even if you used to use log4net or NLog, this article &#8216;DOES NOT&#8217; explains these formal logging tool, but implements super easy logging instead of it. Because I want to show you that MVC(in this case, MVVM) implementation model is easy to choice for your solution product. Then, it affects very important point in development scenes later for CD/CI or servicing your software as API.</p>
+<p style="display:inline"><img decoding="async" src="/wp-content/uploads/2019/03/log4.png" alt="" style="width:300px;"/></p>
+<p style="display:inline"><img decoding="async" src="/wp-content/uploads/2019/03/NLog.png" alt="" style="width:300px;"/></p>
+<p></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">At first, please download the solution file from GitHub to your local pc.</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;text-align:right;font-weight:bold;"><a href="https://github.com/TetsuroTakao/WPFLockdownSample2" target="_new" rel="noopener">&gt;&gt; previous article&#8217;s sample code</a></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">And This is the sample code which applied contents of this article.</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;text-align:right;font-weight:bold;"><a href="https://github.com/TetsuroTakao/WPFLockdownSample3" target="_new" rel="noopener">&gt;&gt; The sample code</a></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Create a model of log information</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Create solution folder named &#8216;Models&#8217; at root of the solution. And create model class [Log].</p>
+<p style="display:inline"><img decoding="async" src="/wp-content/uploads/2019/03/solutionExplorer03.png" alt="" style="width:200px;"/></p>
+<p style="display:inline"><img decoding="async" src="/wp-content/uploads/2019/03/solutionExplorer04.png" alt="" style="width:400px;"/></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The model [Log] class has simple properties [Message],[OccurredTime],[OperatorName],[LogType] and create Type name [LogType] which has types [Default],[Information],[Error],[Operation]</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">
+namespace WPFLockdownSample.Models
+{
+    public class Log
+    {
+        public string Message { get; set; }
+        public DateTime OccurredTime { get; set; }
+        public string OperatorName { get; set; }
+        public LogType LogType { get; set; }
+    }
+
+    public enum LogType
+    {
+        Default = 0,
+        Information = 1,
+        Error = 2,
+        Operation = 4
+    }
+}
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">As Next step, modify App_Startup method of App.xaml.cs to be able to logging. One point which you have to aware in this step, if some data has DateTime type data, you have to consider both when the data is used by local time and is used at Microsoft Azure programmatically. So the data is held as DateTime type better.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">
+void App_Startup()
+{
+        void App_Startup(object sender, StartupEventArgs e)
+        {
+            List<log> logs = new List<log>();
+            Log log = new Log()
+                        {
+                            Message = "checkking app files ...", OccurredTime = DateTime.Now,
+                            OperatorName = typeof(App).Name, LogType = LogType.Information
+                        };
+            logs.Add(log);
+            //Check existing of log file.
+            //if (logging.ReadLogs().Count == 0)
+            //{
+            //    [Local account creation] explains how to create these four accounts.
+            //    And how to navigate use logon script
+            //    CoreApplication.Exit();
+            //}
+            //else if (logFile.Exists) check current user
+            //{
+            //    [Desktop UI control] explains how to check current user
+            //    if (UserName == "maintenanceOperator") navigate to MaintenanceWindow
+            //    if (UserName == "appOperator") quiet this app. This account has specific automatic
+            //                                        run application when this account sign in.
+            //    if (UserName == "appUser") quiet this app. This account has specific automatic
+            //                                        run application when this account sign in.
+            //}
+        }
+}
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The type [Log] is in the Namespace [WPFLockdownSample.Models], so add &#8216;using WPFLockdownSample.Models;&#8217; statement at top of App.xml.cs. &#8216;List&lt;Log&gt; logs&#8217; holds several logs information while the logs will be written to log file( and the contents of the file will send to Microsoft Azure later).</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The [OperatorName] property is used for recording operations of application with [LogType] property. The [Operation]&#8217;s value in [LogType] type. In case of this sample code, the message is application information, so use [LogType.Information] and &#8216;typeof(App).Name&#8217; for the value. if application message occurs in MainPage, use [LogType.Information] and &#8216;typeof(MainPage).Name&#8217; value. So it will modified to &#8216;this.GetType().Name&#8217; later, but it&#8217;s keep it so far.</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Write log information to log file</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">To create function of log writing, create solution folder named [Features] and create [DataAccessLayer] class, The class use Json, so please install Json serializer using NuGet. And then create method below.</p>
+<p style="display:inline"><img decoding="async" src="/wp-content/uploads/2019/03/jsonserialiser.png" alt="" style="width:300px;"/></p>
+<p style="display:inline"><img decoding="async" src="/wp-content/uploads/2019/03/logging.png" alt="" style="width:300px;"/></p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">
+    public class DataAccessLayer
+    {
+        public FileInfo LogFile { get; private set; }
+        const string appFilesPath = @"c:\WFPLockdownSample";
+        DirectoryInfo logFolder = new DirectoryInfo(appFilesPath);
+        public DataAccessLayer()
+        {
+            LogFile = new FileInfo (
+                            appFilesPath + @"\" + DateTime.Now.ToString("yyyyMMdd") + "logs.log"
+                        );
+        }
+        public void AppendWriteLogs(List&lt;Log&gt; logs, bool reverse = true)
+        {
+            if(reverse) logs.Reverse();
+            string jsonstring = string.Empty;
+            logs.AddRange(ReadLogs());
+            using (StreamWriter file = File.CreateText(LogFile.FullName))
+            {
+                JsonSerializer serializer = new JsonSerializer();
+                serializer.Serialize(file, logs);
+            }
+        }
+        public List&lt;Log&gt; ReadLogs()
+        {
+            List&lt;Log&gt; logs = new List&lt;Log&gt;();
+            string jsonstring = string.Empty;
+            if (LogFile.Exists) jsonstring = File.ReadAllText(LogFile.FullName);
+            if (!string.IsNullOrEmpty(jsonstring))
+            {
+                logs = JsonConvert.DeserializeObject&lt;List&lt;Log&gt;&gt;(jsonstring);
+            }
+            return logs;
+        }
+    }
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">This logging feature of [DataAccessLayer] class access to local folder, and in the future, other data sources or data service API, so it should be created as &#8216;partial&#8217; class, it will be modified as partial class later, but it is normal class so far. </p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">This class has public property [LogFile], it set instance at constructor. And provides two features, one is [AppendWriteLogs] method and another is [ReadLogs] method.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">[AppendWriteLogs] method is a feature which outputs logs information to log file, [logs] argument is a container of log information which added when it occurred, so log information listed by time series order in [logs] argument, therefore most newest log information should be written at top most of log file. So order of logs information which accepted are reversed as default execution.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Then logs of the log file append to [logs] argument and write back to the log file.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">On other hand, [ReadLogs] method provides a feature of read contents of the log file. If log file is not exists or log file has not any contents, it returns blank container of logs information. This state is first time execution of this application. So if log information count of this log container is zero, this application try to create four accounts for operation scenarios.</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Use log functions</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">To use write log function [AppendWriteLogs] method of the [DataAccessLayer] class, call the [DataAccessLayer] class at top of [App_Startup] method, then use [ReadLogs] method and count logs.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">And create log information which scenario was choosen, then write logs information use [AppendWriteLogs] method at end of all step.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">
+public partial class App : Application
+{
+    DataAccessLayer dataAccessLayer = new DataAccessLayer();
+    void App_Startup(object sender, StartupEventArgs e)
+    {
+        List<log> logs = new List<log>();
+        Log log = new Log()
+                {
+                        Message = "checkking app files ...", OccurredTime = DateTime.Now,
+                        OperatorName = typeof(App).Name, LogType = LogType.Information
+                };
+        logs.Add(log);
+        if (dataAccessLayer.ReadLogs().Count == 0)
+        {
+            log = new Log()
+                {
+                        Message = "this exesution is first time.", OccurredTime = DateTime.Now,
+                        OperatorName = typeof(App).Name, LogType = LogType.Information
+                };
+            logs.Add(log);
+            //[Local account creation] explains how to create these four accounts.
+            //And how to navigate use logon script
+            //CoreApplication.Exit();
+        }
+        else
+        {
+            log = new Log()
+                {
+                        Message = "this execution has run on this device more than twice.",
+                        OccurredTime = DateTime.Now, OperatorName = typeof(App).Name,
+                        LogType = LogType.Information
+                };
+            logs.Add(log);
+            //[Desktop UI control] explains how to check current user
+            //if (UserName == "maintenanceOperator") navigate to MaintenanceWindow
+            //if (UserName == "appOperator") quiet this app. This account has specific automatic
+            //run application when this account sign in.
+            //if (UserName == "appUser") quiet this app. This account has specific automatic
+            //run application when this account sign in.
+        }
+        log = new Log()
+                {
+                        Message = "checkking app files is complete.", OccurredTime = DateTime.Now,
+                        OperatorName = typeof(App).Name, LogType = LogType.Information
+                };
+        logs.Add(log);
+        dataAccessLayer.AppendWriteLogs(logs);
+    }
+}
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Go next step <a href="https://blog.processtune.com/?p=4814" target="_new" style="font-weight:bold;" rel="noopener">[part 2] >></a></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">or <a href="https://blog.processtune.com/?p=4551" target="_new" style="font-weight:bold;" rel="noopener">[Local account creation] >></a></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">, <a href="https://blog.processtune.com/?p=4781" target="_new" style="font-weight:bold;" rel="noopener">[Desktop UI controlling] >></a></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">, <a href="https://blog.processtune.com/?p=4785" target="_new" style="font-weight:bold;" rel="noopener">[Launch correct app by specific account] >></a></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2018/07/28/logging-file-save-to-microsoft-azure-part-1/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>kiosk mode operation design 2</title>
+		<link>https://blog.processtune.com/2018/06/30/kiosk-mode-operation-design-2/</link>
+					<comments>https://blog.processtune.com/2018/06/30/kiosk-mode-operation-design-2/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Fri, 29 Jun 2018 20:57:26 +0000</pubDate>
+				<category><![CDATA[Active Directory]]></category>
+		<category><![CDATA[kiosk mode]]></category>
+		<category><![CDATA[Microsoft Azure]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Visual Studio]]></category>
+		<category><![CDATA[Windows 10 App]]></category>
+		<category><![CDATA[Windows Store App]]></category>
+		<category><![CDATA[未分類]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=4562</guid>
+
+					<description><![CDATA[This article is follow of previous article. The article includes steps below. 1.Run Visual Studio as Administrator. 2.Create new blank WPF. 3.Midify App.xaml and App.xaml.cs to execute App_Startup method of App.xaml.cs at first. figures of Visual Studio Japanese edition. &#62;&#62;The sample code ・Implement a flow of multiple accounts which for multiple operation scenarios As scenarios [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin: 0px 0px 0px 0px;">This article is follow of <a href="https://blog.processtune.com/?p=4513" target="_new" style="font-weight:bold;" rel="noopener">previous article</a>. The article includes steps below.</p>
+<p></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">1.Run Visual Studio as Administrator.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">2.Create new blank WPF.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">3.Midify App.xaml and App.xaml.cs to execute App_Startup method of App.xaml.cs at first.</p>
+<p></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">figures of Visual Studio Japanese edition.</p>
+<p style="display:inline"><img decoding="async" src="/wp-content/uploads/2019/03/createnew.png" alt="" style="width:400px;"/></p>
+<p style="display:inline"><img decoding="async" src="/wp-content/uploads/2019/03/solutionExplorer01.png" alt="" style="width:200px;"/></p>
+<p style="display:inline"><img decoding="async" src="/wp-content/uploads/2019/03/solutionExplorer02.png" alt="" style="width:600px;"/></p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;text-align:right;font-weight:bold;"><a href="https://github.com/TetsuroTakao/WPFLockdownSample1" target="_new" rel="noopener">&gt;&gt;The sample code</a></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Implement a flow of multiple accounts which for multiple operation scenarios</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">As scenarios of <a href="https://blog.processtune.com/?p=4513" target="_new" style="font-weight:bold;" rel="noopener">previous article</a>, create four accounts below.</p>
+<p></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">1.’appUser’ account is used to use some user application.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">2.’appOperator’ account is used to manage this user application settings.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">3.’maintenanceOperator’ account is used to install this user application, and to set several device settings for this user application.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">4.&#8217;superUser&#8217; account is top level administrator of the device.</p>
+<p></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Follow article [<a href="https://blog.processtune.com/?p=4551" target="_new" style="font-weight:bold;" rel="noopener">Local account creation</a>] explains how to create these four accounts.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">And [<a href="https://blog.processtune.com/?p=4590" target="_new" style="font-weight:bold;" rel="noopener">Logging and save the Log file to Microsoft Azure</a>] explains how to send a log file which is described at next step to Azure Blob Storage.</p>
+<p></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">As next step, check existing of a log file to judge current execution is first time or not. If it is first time, create four accounts and assign their permissions. If it is not first time, check sign in account and navigate correct flow respectively for individual account.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">For &#8216;maintenanceOperator&#8217; account, create maintenance console which leads maintenance operator to maintenance tasks.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">For &#8216;appUser&#8217; account, create an application which runs like the kiosk mode.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">For &#8216;appOperator&#8217; account, the application for &#8216;appUser&#8217; account modify that the application can execute maintenance mode.</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;text-align:right;font-weight:bold;"><a href="https://github.com/TetsuroTakao/WPFLockdownSamlpe2" target="_new" rel="noopener">&gt;&gt;The sample code</a></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Sample code of a flow of multiple operation scenarios</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Overall of the flow control is below.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">
+void App_Startup(object sender, StartupEventArgs e)
+{
+    //1.Check existing of log file.
+
+    //2.if (!logFile.Exists) current execution is first time execution,
+    //so create four accounts. And set logon script respectively for individual account,
+    //run user application as normal mode for "appOperator", run user application
+    //as maintenance mode for "appOperator", "maintenanceOperator" will expire out
+    //while 24 hours which means maintenance working time.
+
+    //3.if (logFile.Exists) check current user
+
+    //4.if (UserName == "maintenanceOperator") navigate to MaintenanceWindow
+
+    //5.if (UserName == "appOperator") quiet this app. This account has specific automatic
+    //run application when this account sign in.
+
+    //6.if (UserName == "appUser") quiet this app. This account has specific automatic run
+    //application when this account sign in.
+}
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Follow article [<a href="https://docs.microsoft.com/en-us/windows/uwp/packaging/app-capability-declarations" target="_new" style="font-weight:bold;" rel="noopener">Desktop UI control</a>] explains how to <span style="font-weight:bold;">check current user</span>, and [<a href="https://docs.microsoft.com/en-us/windows/uwp/packaging/app-capability-declarations" target="_new" style="font-weight:bold;" rel="noopener">Launch app by correct account</a>] explains how to navigate user use <span style="font-weight:bold;">logon script</span> of above code.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">
+void App_Startup(object sender, StartupEventArgs e)
+{
+    //[Logging and save the Log file to Microsoft Azure] explains how to send a log file
+    //which is described at next step to Azure Blob Storage.
+    //And explains creating model of log information for easy logging
+    //LogModel message = new LogModel() { message = "check app files ..." };
+    //Check existing of log file.
+    //Logging logging = new Logging();
+    //if (logging.ReadLogs().Count == 0)
+    //{
+    //    //[Local account creation] explains how to create these four accounts.
+    //    //And how to navigate use logon script
+    //    //CoreApplication.Exit();
+    //}
+    //else //if (logFile.Exists) check current user
+    //{
+    //    //[Desktop UI control] explains how to check current user
+    //    //if (UserName == "maintenanceOperator") navigate to MaintenanceWindow
+    //    //if (UserName == "appOperator") quiet this app. This account has specific automatic
+    //run application when this account sign in.
+
+    //    //if (UserName == "appUser") quiet this app. This account has specific automatic
+    //run application when this account sign in.
+    //}
+}
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Go next step <a href="https://blog.processtune.com/?p=4590" target="_new" style="font-weight:bold;" rel="noopener">[Logging and save the Log file to Microsoft Azure] >></a></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">or <a href="https://docs.microsoft.com/en-us/windows/uwp/packaging/app-capability-declarations" target="_new" style="font-weight:bold;" rel="noopener">[Local account creation] >></a></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">, <a href="https://docs.microsoft.com/en-us/windows/uwp/packaging/app-capability-declarations" target="_new" style="font-weight:bold;" rel="noopener">[Desktop UI control] >></a></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">, <a href="https://docs.microsoft.com/en-us/windows/uwp/packaging/app-capability-declarations" target="_new" style="font-weight:bold;" rel="noopener">[Launch app by correct account] >></a></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2018/06/30/kiosk-mode-operation-design-2/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>kiosk mode operation design 1</title>
+		<link>https://blog.processtune.com/2018/05/26/kiosk-mode-operation-design-1/</link>
+					<comments>https://blog.processtune.com/2018/05/26/kiosk-mode-operation-design-1/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Fri, 25 May 2018 20:03:46 +0000</pubDate>
+				<category><![CDATA[Active Directory]]></category>
+		<category><![CDATA[kiosk mode]]></category>
+		<category><![CDATA[Microsoft Azure]]></category>
+		<category><![CDATA[Visual Studio]]></category>
+		<category><![CDATA[Windows 10 App]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=4513</guid>
+
+					<description><![CDATA[This article explains how to create app which runs single account like kiosk mode. And also this article explains how to manage multiple accounts for multiple operation scenarios using this single account apps respectively. Therefor, this article &#8216;DOES NOT&#8217; explain how to set a device of kiosk mode by the AssignedAccess configuration service provider(it says [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin: 0px 0px 0px 0px;">This article explains how to create app which runs single account like kiosk mode. And also this article explains how to manage multiple accounts for multiple operation scenarios using this single account apps respectively.</p>
+<p style="margin: 0px 0px 0px 0px;">Therefor, this article &#8216;DOES NOT&#8217; explain how to set a device of kiosk mode by the AssignedAccess configuration service provider(it says &#8216;<span style="font-weight:bold;">CSP</span>&#8216; from this). Not only that, this article &#8216;DOES NOT&#8217; use the kiosk feature of Windows operating system.</p>
+<p style="margin: 0px 0px 0px 0px;">This article explains how to create ‘fake’ kiosk mode for some requirements which are difficult to create by UWP, such as creating local account of a device, or modifying the Windows Registry to set logon script for individual account. This ‘fake’ kiosk mode create by WPF.</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・What is kiosk mode</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The kiosk mode is just one of features which is provided by Windows operating system, so we should consider details of operation scenarios when we want to use the feature.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The kiosk mode is designed thought to be used single application of a device, and the app is executed by single account. So if your operation scenarios does not fit for it, you should create same other mechanisms which is equal to or greater than the kiosk mode of Windows OS.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">If you want to use the kiosk mode with several different accounts to fit your several scenarios, you should manage multiple accounts with multiple correct security levels. And if you want to provide different application respectively for individual account, you should control the application to launch by correct account.</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;text-align:right;font-weight:bold;"><a href="https://www.slideshare.net/ssusera5136d/kiosk-mode-and-customizing-lockdown" target="_new" rel="noopener">&gt;&gt;The summary of this article</a>(Japanese:日本語)</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・The AssignedAccess configuration service provider</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The kiosk mode is controlled by the <span style="font-weight:bold;">CSP</span>, the <span style="font-weight:bold;">CSP</span> set some parameters below with XML format<br /> (see involved article provided by Microsoft &gt;&gt;<a href="https://docs.microsoft.com/en-us/windows/client-management/mdm/assignedaccess-csp" target="_new" style="font-weight:bold;" rel="noopener">AssignedAccess CSP</a>).</p>
+<p></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">1.Define the account which is used in kiosk mode.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">2.The account is used for specified one application.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">3.The application can only use specified features of Windows OS. It is the Lockdown feature of kiosk mode.</p>
+<p style="margin: 10px 0px 0px 10px; font-weight: bold; font-size: 14px;">New features of kiosk mode</p>
+<p style="margin: 0px 0px 0px 10px;">you can assign group for kiosk app(Windows 10 Ver.1803-)</p>
+<p style="margin: 0px 0px 0px 10px;">you can assign multiple apps which created as UWP or native app to account(or group), and can set auto run an app of them(Windows 10 Ver.1809-)</p>
+<p style="margin: 0px 0px 0px 10px;">you can set specific folders when user use the File Open Dialog（Windows 10 Ver.1809～）</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・What is the Lockdown feature of kiosk mode</p>
+<p style="display:inline-block;width:300px;vertical-align:top;text-indent:1em;">The lockdown feature is controlled by <a href="https://docs.microsoft.com/en-us/windows/uwp/packaging/app-capability-declarations" target="_new" style="font-weight:bold;" rel="noopener">the App capability declarations</a> of UWP, it&#8217;s also available for native desktop application using <span style="font-weight:bold;">CSP</span>.<br />
+　Almost all of applications on Windows OS run in the AppContainers of Windows OS. If an application needs features of Windows OS, Windows OS provides the AppCntainer which bridges an instance which has minimum features of Windows OS for the application, these features are controlled by the App capability declarations.<br />
+　This mechanism intends to divide an application from Windows os, this isolation includes window isolation , network isolation and process isolation(see involved article provided by Microsoft &gt;&gt;<a href="https://docs.microsoft.com/en-us/windows/desktop/SecAuthZ/appcontainer-isolation" target="_new" style="font-weight:bold;" rel="noopener">the AppContainer isolation</a>), this mechanism is provided by modern Windows OS(since Windows 8).<br />
+　the Lockdown feature is the App capability declarations which is specified on application development.</p>
+<p style="display:inline"><img decoding="async" src="/wp-content/uploads/2019/03/lockdown.png" alt="" style="width:300px;"/></p>
+<p><a name="#scenariosOfThisArticle"><br /></a></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Scenarios of this article</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">I want to explain something about &#8216;fake&#8217; kiosk mode lockdown mechanism for the scenario that multiple accounts which ready for several operation scenarios use specific app respectively. The overview below is scenarios of this article.</p>
+<p style="margin: 0px 0px 0px 24px;text-indent:-1em;">1.It is assumed that, you create an app which is used like kiosk mode by end user.</p>
+<p style="margin: 0px 0px 0px 24px;text-indent:-1em;">2.The app will be used by several dozens or hundreds users at many places.</p>
+<p style="margin: 0px 0px 0px 24px;text-indent:-1em;">3.The app is supported by application operators who are dispatched at the places where the app is set. So you plan to create another application for the application operator.</p>
+<p style="margin: 0px 0px 0px 24px;text-indent:-1em;">4.When you procure new Windows 10 devices, you order setup works of your app to maintenance operators. And you think that this scenario needs another application.</p>
+<p style="margin: 0px 0px 0px 24px;text-indent:-1em;">5.You attempt to set an administrator account because you want to manage the devices completely.</p>
+<p style="margin: 0px 0px 0px 24px;text-indent:-1em;">>>As a result, you planned creating three apps, setting four account and logging working state of maintenance operators and application operators.</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・How to lockdown a device for multiple accounts respectively</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">This article explain how to control several accounts like kiosk mode for above scenario using my blog&#8217;s implementations [<a href="https://blog.processtune.com/?p=4551" target="_new" style="font-weight:bold;" rel="noopener">Local account creation</a>],[<a href="https://blog.processtune.com/?p=4781" target="_new" style="font-weight:bold;" rel="noopener">Desktop UI controlling</a>],[<a href="https://blog.processtune.com/?p=4785" target="_new" style="font-weight:bold;" rel="noopener">Launch correct app by specific account</a>],[<a href="https://blog.processtune.com/?p=4590" target="_new" style="font-weight:bold;" rel="noopener">Logging file save to Microsoft Azure</a>] by C#.</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Preparation of sample code</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">This sample is created by WPF. And almost all logic of sample code is in &#8216;App_Startup&#8217; method in App.xaml.cs. So at first, we set tiniest modify at App.xaml.cs , see below.</p>
+<p>Modify [StartupUri=&#8221;MainWindow.xaml&#8221;] to [Startup=&#8221;App_Startup&#8221;] of App.xaml, and add [void App_Startup()] method to [App] class of App.xaml.cs.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">
+&lt;Application x:Class="WPFLockdownSample.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:WPFLockdownSample"
+             Startup="App_Startup"&gt;
+    &lt;Application.Resources&gt;
+
+    &lt;/Application.Resources&gt;
+&lt;/Application&gt;
+
+    public partial class App : Application
+    {
+        void App_Startup(object sender, StartupEventArgs e)
+        {
+
+        }
+    }
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;"><a href="https://blog.processtune.com/?p=4562" target="_new" style="font-weight:bold;" rel="noopener">Go next step to create logic of App_Startup method >></a></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2018/05/26/kiosk-mode-operation-design-1/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

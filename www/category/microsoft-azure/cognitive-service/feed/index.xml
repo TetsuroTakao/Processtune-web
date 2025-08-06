@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Cognitive Service &#8211; Processtune Blog</title>
+	<atom:link href="https://blog.processtune.com/category/microsoft-azure/cognitive-service/feed/" rel="self" type="application/rss+xml" />
+	<link>https://blog.processtune.com/</link>
+	<description>Articles offered from Microsoft MVP</description>
+	<lastBuildDate>Tue, 28 Mar 2023 02:41:11 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.8.2</generator>
+
+<image>
+	<url>/wp-content/uploads/2023/03/cropped-Presentation-32x32.png</url>
+	<title>Cognitive Service &#8211; Processtune Blog</title>
+	<link>https://blog.processtune.com/</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>Cognitive Services QnA Maker &#8211; Setting Azure Bot Service</title>
+		<link>https://blog.processtune.com/2020/03/13/cognitive-services-qna-maker-setting-azure-bot-service/</link>
+					<comments>https://blog.processtune.com/2020/03/13/cognitive-services-qna-maker-setting-azure-bot-service/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Fri, 13 Mar 2020 08:33:41 +0000</pubDate>
+				<category><![CDATA[Cognitive Service]]></category>
+		<category><![CDATA[Microsoft Azure]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=4946</guid>
+
+					<description><![CDATA[Microsoft Azure Cognitive Services QnA Maker helps creating knowledge base which chatbot app uses. In case knowledge base created, it have to publish for chatbot app. Then create bot from [Create Bot] button of QnA Maker portal page when the knowledge base publishing done. It is super easy to create bot with QnA Maker. ・Start [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin:0px 0px 0px 0px;color:#000044;font-size:0.9rem;font-family:" segoe="" ui";"="">Microsoft Azure Cognitive Services QnA Maker helps creating knowledge base which chatbot app uses. In case knowledge base created, it have to publish for chatbot app.<br />
+Then create bot from [Create Bot] button of QnA Maker portal page when the knowledge base publishing done. It is super easy to create bot with QnA Maker.</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Start from QnA Maker portal</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">In <a href="https://blog.processtune.com/?p=4500" target="_new" style="font-weight:bold;" rel="noopener">previous article</a>, created knowledge base with QnA Maker.</p>
+<p style="display:inline-block;margin-bottom:10px;">
+<img decoding="async" src="/wp-content/uploads/2020/03/My-knowledge-base.png" alt="" style="width:600px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The publish feature of QnA portal console connect between knowledge base which is publishing and Microsoft Azure Bot Service creating new.</p>
+<p style="display:inline-block;margin-bottom:10px;">
+<img decoding="async" src="/wp-content/uploads/2020/03/Publish-a-knowledge-base.png" alt="" style="width:600px;"></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Publish knowledge base</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Select [Publish] button of [Publish] tab, window is transferred to success view when publishing process is done. Then it shows you [Create Bot] button and how to post request to QnA Maker API.</p>
+<p style="display:inline-block;margin-bottom:10px;">
+<img decoding="async" src="/wp-content/uploads/2020/03/Create-Bot-from-QnA-Maker-portal.png" alt="" style="width:600px;"></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Test with Postman app for health check of QnA Maker API</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Test using Postman app to confirm QnA maker API responds same answer as test of previous article. It represents that published knowledge base  is working well.</p>
+<p style="display:inline-block;margin-bottom:10px;">
+<img decoding="async" src="/wp-content/uploads/2020/03/test-use-postman.png" alt="" style="width:600px;"></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Create Bot</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Create Bot from [Create Bot] button of success view makes creating Microsoft Azure Bot Service easily. Transfer to Azure portal and set parameters to create Bot service window. Then I modify some parameters such as cost level parameter and so on (should not change parameters of QnA auth key, location of Application insight, App service plan and location : it specified on existing Cognitive Services QnA Maker). Sorry for Japanese screen shot, because these settings depends on Japanese screen shot of <a href="https://blog.processtune.com/?p=4500" target="_new" style="font-weight:bold;" rel="noopener">previous article</a>.</p>
+<p style="display:inline-block;margin-bottom:10px;">
+<img decoding="async" src="/wp-content/uploads/2020/03/Create-Bot-window.png" alt="" style="width:600px;"></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2020/03/13/cognitive-services-qna-maker-setting-azure-bot-service/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Cognitive Services QnA Maker – Create Bot Client App</title>
+		<link>https://blog.processtune.com/2019/07/30/cognitive-services-qna-maker-create-bot-client-app/</link>
+					<comments>https://blog.processtune.com/2019/07/30/cognitive-services-qna-maker-create-bot-client-app/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Tue, 30 Jul 2019 10:03:36 +0000</pubDate>
+				<category><![CDATA[Cognitive Service]]></category>
+		<category><![CDATA[Microsoft Azure]]></category>
+		<category><![CDATA[Office App]]></category>
+		<category><![CDATA[Office Web App]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Visual Studio]]></category>
+		<category><![CDATA[未分類]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=5032</guid>
+
+					<description><![CDATA[I wrote three articles of this series, and this article is the last one. [Cognitive Services QnA Maker &#8211; Create knowledge base from online FAQ] [Cognitive Services QnA Maker &#8211; Setting Azure Bot Service] [Cognitive Services QnA Maker – Make embed code for Bot client app] This article describes how to create a chatbot client [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin:0px 0px 0px 0px;color:#000044;font-size:0.9rem;font-family:"Segoe UI";">I wrote three articles of this series, and this article is the last one.<br />
+[<a href="https://blog.processtune.com/?p=4500" target="_new" style="font-weight:bold;" rel="noopener">Cognitive Services QnA Maker &#8211; Create knowledge base from online FAQ</a>]<br />
+[<a href="https://blog.processtune.com/?p=4500" target="_new" style="font-weight:bold;" rel="noopener">Cognitive Services QnA Maker &#8211; Setting Azure Bot Service</a>]<br />
+[<a href="https://blog.processtune.com/?p=4982" target="_new" style="font-weight:bold;" rel="noopener">Cognitive Services QnA Maker – Make embed code for Bot client app</a>]</p>
+<p style="margin:10px 0px 0px 0px;color:#000044;font-size:0.9rem;font-family:"Segoe UI";">This article describes how to create a chatbot client app. Already created embed code for Bot client app at <a href="https://blog.processtune.com/?p=4982" target="_new" style="font-weight:bold;" rel="noopener">the article before</a>, so this article describes create .NET core web app and embedding the embed code that created to the web app.</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Create .NET core web app and run</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Create chatbot client app as ASP.NET core web app of ReactJS.NET because super-easy way to create app.</p>
+<p style="display:inline-block;margin-bottom:10px;">
+<img decoding="async" src="/wp-content/uploads/2020/03/reactjsnet.png" alt="" style="width:600px;"/>
+</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Create app project a folder at any place and launch the PowerShell then put command as web page above.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">
+***&gt; dotnet new -i React.Template
+***&gt; dotnet new reactnet-vanilla
+***&gt; dotnet run
+</pre>
+<p style="display:inline-block;margin-bottom:10px;"><img decoding="async" src="/wp-content/uploads/2020/03/PSreactjsnet.png" alt="" style="width:300px;"/><img decoding="async" src="/wp-content/uploads/2020/03/PSreactjsnet2.png" alt="" style="width:300px;"/></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Wait for the BuildServiceProvider builds the service for the first time.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">In case confirm hosting environment can launch, press [Ctrl]+[C] to terminate it.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Launch windows exploere and go to the folder, then open created solution file with Visual Studio and run the app.</p>
+<p style="display:inline-block;margin-bottom:10px;">
+<img decoding="async" src="/wp-content/uploads/2020/03/openapp.png" alt="" style="width:600px;"/></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Select [ReactDemo] list item of [Start Debugging] box and press it. Then after build project, launch the console as the host and the browser as the client app.</p>
+<p style="display:inline-block;margin-bottom:10px;"><img decoding="async" src="/wp-content/uploads/2020/03/reactHost.png" alt="" style="width:300px;"/><img decoding="async" src="/wp-content/uploads/2020/03/reactClient.png" alt="" style="width:300px;"/></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Embedding the embed code to the web app</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Open and modify index.chtml from [tutorial-code] project -[Views]-[Home] of Visual Studio&#8217;s solution explorer.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Change [title] tag to &#8216;Van Halen Interview&#8217; and comment out part of [Html.React] HTML helper, and also put embed code Azure auto genelated to the bottom of the contents.</p>
+<p style="display:inline-block;margin-bottom:10px;">
+<img decoding="async" src="/wp-content/uploads/2020/03/modifyCode.png" alt="" style="width:600px;"/></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Run app and confirm getting same response as test feature of Azure web app bot Channels list when put same phrase of it.</p>
+<p style="display:inline-block;margin-bottom:10px;">
+<img decoding="async" src="/wp-content/uploads/2020/03/WebClient.png" alt="" style="width:600px;"/></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2019/07/30/cognitive-services-qna-maker-create-bot-client-app/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Cognitive Services QnA Maker – Make embed code for Bot Client App</title>
+		<link>https://blog.processtune.com/2019/06/30/cognitive-services-qna-maker-make-embed-code-for-bot-client-app/</link>
+					<comments>https://blog.processtune.com/2019/06/30/cognitive-services-qna-maker-make-embed-code-for-bot-client-app/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Sun, 30 Jun 2019 03:57:53 +0000</pubDate>
+				<category><![CDATA[Cognitive Service]]></category>
+		<category><![CDATA[Microsoft Azure]]></category>
+		<category><![CDATA[Office App]]></category>
+		<category><![CDATA[Office Web App]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Visual Studio]]></category>
+		<category><![CDATA[未分類]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=4982</guid>
+
+					<description><![CDATA[Using Microsoft Azure Cognitive Services QnA Maker is super easy way to create chatbot app.I wrote two articles [Cognitive Services QnA Maker &#8211; Create knowledge base from online FAQ] and [Cognitive Services QnA Maker &#8211; Setting Azure Bot Service] before this article. Next, this article describes making embed code for the chatbot client app. ・Test [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin:0px 0px 0px 0px;color:#000044;font-size:0.9rem;font-family:"Segoe UI";">Using Microsoft Azure Cognitive Services QnA Maker is super easy way to create chatbot app.<br />I wrote two articles [<a href="https://blog.processtune.com/?p=4500" target="_new" style="font-weight:bold;" rel="noopener">Cognitive Services QnA Maker &#8211; Create knowledge base from online FAQ</a>] and [<a href="https://blog.processtune.com/?p=4500" target="_new" style="font-weight:bold;" rel="noopener">Cognitive Services QnA Maker &#8211; Setting Azure Bot Service</a>] before this article. Next, this article describes making embed code for the chatbot client app.</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Test in web chat</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Web app bot created when the knowledge base publish process has done has a test feature in the Azure portal. So if input the phrase as same as the phrase was used at [Test] console in the QnA maker portal page when the knowledge base created, can confirm the same answer is replied on the test console of Web app bot test feature of the Azure portal.</p>
+<p style="display:inline-block;margin-bottom:10px;">
+<img decoding="async" src="/wp-content/uploads/2020/03/TestInWebChat.png" alt="" style="width:600px;"/>
+</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Web Chat Channel</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">And already has one channel in Channels list in Azure console. We will create a chatbot client app use this channel.</p>
+<p style="display:inline-block;margin-bottom:10px;">
+<img decoding="async" src="/wp-content/uploads/2020/03/Channels.png" alt="" style="width:600px;"/></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Get embed codes</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Azure web app bot Channels list has auto-generate feature of web bot embedded code, use [Get bot embed codes] link to get code for a client web app.</p>
+<p style="display:inline-block;margin-bottom:10px;">
+<img decoding="async" src="/wp-content/uploads/2020/03/Bot-embed-code.png" alt="" style="width:600px;"/></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Set secret code to iframe parameter</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Press [Copy] link next to the text of [Embed code] text area, and paste to anywhere you want. Then press either [Show] links to show secret code and copy secret code and replace ‘YOUR_SECRET_HERE’ in the last of [src] attribute of [iframe] tag of copied text for completing bot embed code creating.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Check both [Enable Preview] checkbox and [Block attachment upload from user] checkbox, then press [Copy] link of Embed code text area and keep anywhere you want. At last, press [Done] button at the bottom.<br />
+*[Enable Preview] check is not required, If you want to test the preview feature before the feature generalizes, it may be checked.</p>
+<p style="display:inline-block;margin-bottom:10px;">
+<img decoding="async" src="/wp-content/uploads/2020/03/Set-embed-code-parameters.png" alt="" style="width:600px;"/></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2019/06/30/cognitive-services-qna-maker-make-embed-code-for-bot-client-app/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Cognitive Services QnA Maker &#8211; Create knowledge base from online FAQ</title>
+		<link>https://blog.processtune.com/2019/04/30/cognitive-services-qna-maker-create-knowledge-base-from-online-faq/</link>
+					<comments>https://blog.processtune.com/2019/04/30/cognitive-services-qna-maker-create-knowledge-base-from-online-faq/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Tue, 30 Apr 2019 10:24:26 +0000</pubDate>
+				<category><![CDATA[Cognitive Service]]></category>
+		<category><![CDATA[Microservice]]></category>
+		<category><![CDATA[Microsoft Azure]]></category>
+		<category><![CDATA[Office App]]></category>
+		<category><![CDATA[Office Web App]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Visual Studio]]></category>
+		<category><![CDATA[未分類]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=4500</guid>
+
+					<description><![CDATA[I want to describe how to create chatbot client communicate with the QnA Maker API. Although, at this article have to describe preparation for creating chatbot client app. If already created Microsoft Azure Cognitive Services QnA Maker, please skip this article then check next. A chatbot responds using knowledge base when chatbot is asked some [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin: 0px 0px 0px 0px; color: #000044; font-size: 0.9rem;">I want to describe how to create chatbot client communicate with the QnA Maker API. Although, at this article have to describe preparation for creating chatbot client app. If already created Microsoft Azure Cognitive Services QnA Maker, please skip this article then check next.<br />
+A chatbot responds using knowledge base when chatbot is asked some question. QnA Maker makes creating first knowledge base easily.</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Solution idea</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">Microsoft provides great guidance to design a solution architecture for chatbot which using QnA Maker API at <a style="font-weight: bold;" href="https://docs.microsoft.com/en-us/azure/architecture/solution-ideas/articles/information-chatbot" target="_new" rel="noopener">this web site</a>.</p>
+<p style="display: inline;"><img decoding="async" style="width: 600px;" src="/wp-content/uploads/2020/03/Information-Chatbot.png" alt="" /></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Over view</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">A knowledge base creating feature of QnA Maker lead creating process as step by step.</p>
+<p style="display: inline;"><img decoding="async" style="width: 600px;" src="/wp-content/uploads/2020/03/Create-a-knowledge-base.png" alt="" /></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・The analyze feature for FAQ web page</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">I wanna show you a sample to describe that the analyze feature for FAQ web page provided by the QnA Maker is so smart.</p>
+<p style="margin: 10px 0px 0px 0px; text-indent: 1em;">Rolling Stone, LLC, a subsidiary of Penske Business Media, LLC publishes article &#8216;<a style="font-weight: bold;" href="https://www.rollingstone.com/music/music-news/qa-eddie-van-halen-177607/" target="_new" rel="noopener">Q&amp;A: Eddie Van Halen</a>&#8216; on the web site, I want to use this web site as sample to describe how useful the QnA Maker API is. This page is not create aim to work well online FAQ page analyze feature, because I chosen it as random one from search engine results. Nevertheless, the feature made very great results.</p>
+<p style="margin: 10px 0px 0px 0px; text-indent: 1em;">Below is a part of page source of the sample FAQ page.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px;">&lt;p&gt;
+&lt;strong&gt;Will old fans like this record?&lt;br /&gt;&lt;/strong&gt;
+A lot of people hate it. It’s the third incarnation of the band. It’s not a departure,
+but we’re branching out. I was listening to the radio yesterday and the DJ was just rambling over it,
+saying Gary sounds like a weak Sammy Hagar. Then they took phone calls and one guy was like,
+“Ah, I still like Dave.” So obviously he’s not gonna like it. What’s
+funny to me is that this isn’t international espionage  — we’re
+a fucking rock &amp; roll band. People, get a life, will ya? If you can’t,
+get on the Internet and join the club.
+&lt;/p&gt;
+</pre>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">There is no ID attribute or Name attribute in the sample FAQ page source, but has only style class definition.</p>
+<p style="margin: 10px 0px 0px 0px; text-indent: 1em;">The online FAQ page analyze feature of the QnA Maker can understand that the content is question text using “?”. And also can understand that another part is the answer of it, with structure of the contents.</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Step 1 Create Microsoft Azure QnA Service of Cognitive Service</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">I created QnA Maker as free, F0 cost level and F search lebel. Sorry for Japanese screen shot.</p>
+<p style="display: inline;"><img decoding="async" style="width: 600px;" src="/wp-content/uploads/2020/03/AzureQnAMaker.png" alt="" /></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Step 2 Select items of &#8216;Step 1&#8217;</p>
+<p style="display: inline;"><img decoding="async" style="width: 600px;" src="/wp-content/uploads/2020/03/Create-a-knowledge-base-Step-2.png" alt="" /></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Step 3 and 4 Define name and source</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">I defined used source as the name, this way is useful for maintenance such as relearning because correct answer ratio of chatbot is depended on knowledge base.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">I used default text to Default answer text of multi-turn extraction. If the chatbot is used in specific circumstanse, change this text such as &#8216;do you want to know one of below ?&#8217; because multi-turn extraction is used when chatbot selected multiple answers and needs to do continuous conversation.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">And set online FAQ page address to URL.</p>
+<p style="display: inline;"><img decoding="async" style="width: 600px;" src="/wp-content/uploads/2020/03/Create-a-knowledge-base-Step-34.png" alt="" /></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Chit-chat and Create</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">Using Chit-chat section to control atmosphere of conversation. This default set of Q and A helps establishing character of chatbot.(see &#8216;<a style="font-weight: bold;" href="https://docs.microsoft.com/en-us/azure/cognitive-services/qnamaker/how-to/chit-chat-knowledge-base" target="_new" rel="noopener">Add Chit-chat to a knowledge base</a>&#8216; of Microsoft Docs)</p>
+<p style="display: inline;"><img decoding="async" style="width: 600px;" src="/wp-content/uploads/2020/03/Create-a-knowledge-base-Step-5.png" alt="" /></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Test</p>
+<p style="display: inline;"><img decoding="async" style="width: 300px;" src="/wp-content/uploads/2020/03/Test-a-knowledge-base.png" alt="" /><img decoding="async" style="width: 300px;" src="/wp-content/uploads/2020/03/My-knowledge-base.png" alt="" /></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2019/04/30/cognitive-services-qna-maker-create-knowledge-base-from-online-faq/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

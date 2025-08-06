@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>ComCamp &#8211; Processtune Blog</title>
+	<atom:link href="https://blog.processtune.com/category/technical-memo/events/communityopenday/feed/" rel="self" type="application/rss+xml" />
+	<link>https://blog.processtune.com/</link>
+	<description>Articles offered from Microsoft MVP</description>
+	<lastBuildDate>Sat, 11 May 2013 03:34:32 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.8.2</generator>
+
+<image>
+	<url>/wp-content/uploads/2023/03/cropped-Presentation-32x32.png</url>
+	<title>ComCamp &#8211; Processtune Blog</title>
+	<link>https://blog.processtune.com/</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>Windows 8 animation architecture</title>
+		<link>https://blog.processtune.com/2013/05/11/windows-8-animation-architecture/</link>
+					<comments>https://blog.processtune.com/2013/05/11/windows-8-animation-architecture/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Sat, 11 May 2013 03:34:32 +0000</pubDate>
+				<category><![CDATA[ComCamp]]></category>
+		<category><![CDATA[Windows 8 App]]></category>
+		<category><![CDATA[Windows Store App]]></category>
+		<guid isPermaLink="false">http://www.processtune.com/blog/?p=745</guid>
+
+					<description><![CDATA[Presentation document for Community Open Day 2013 http://sdrv.ms/13LYYJ7 Microsoft Virtual Academy]]></description>
+										<content:encoded><![CDATA[<p>Presentation document for</p>
+<p>Community Open Day 2013</p>
+<p><a href="http://sdrv.ms/13LYYJ7">http://sdrv.ms/13LYYJ7</a></p>
+<p><a href ="http://technet.microsoft.com/ja-jp/jj149699.aspx?mtag=MVP4029060">Microsoft Virtual Academy</a></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2013/05/11/windows-8-animation-architecture/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Community Open Day 2012 資料公開</title>
+		<link>https://blog.processtune.com/2012/06/10/community-open-day-2012-%e8%b3%87%e6%96%99%e5%85%ac%e9%96%8b/</link>
+					<comments>https://blog.processtune.com/2012/06/10/community-open-day-2012-%e8%b3%87%e6%96%99%e5%85%ac%e9%96%8b/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Sun, 10 Jun 2012 06:19:16 +0000</pubDate>
+				<category><![CDATA[ComCamp]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<guid isPermaLink="false">http://www.processtune.com/blog/?p=414</guid>
+
+					<description><![CDATA[コミュニティオープンディのD6資料公開しました。 資料はこちら]]></description>
+										<content:encoded><![CDATA[<p>コミュニティオープンディのD6資料公開しました。</p>
+<p><a href="http://processtuneblog.azurewebsites.net/wp-content/uploads/2012/06/ThinkingOfGreatDeveloper.zip">資料はこちら</a></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2012/06/10/community-open-day-2012-%e8%b3%87%e6%96%99%e5%85%ac%e9%96%8b/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

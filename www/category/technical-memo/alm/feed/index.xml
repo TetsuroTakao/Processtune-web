@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>ALM &#8211; Processtune Blog</title>
+	<atom:link href="https://blog.processtune.com/category/technical-memo/alm/feed/" rel="self" type="application/rss+xml" />
+	<link>https://blog.processtune.com/</link>
+	<description>Articles offered from Microsoft MVP</description>
+	<lastBuildDate>Wed, 24 May 2017 14:52:55 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.8.2</generator>
+
+<image>
+	<url>/wp-content/uploads/2023/03/cropped-Presentation-32x32.png</url>
+	<title>ALM &#8211; Processtune Blog</title>
+	<link>https://blog.processtune.com/</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>VSALM4：Azure Web Appの継続的デリバリー</title>
+		<link>https://blog.processtune.com/2017/05/24/vsalm4%ef%bc%9aazure-web-app%e3%81%ae%e7%b6%99%e7%b6%9a%e7%9a%84%e3%83%87%e3%83%aa%e3%83%90%e3%83%aa%e3%83%bc/</link>
+					<comments>https://blog.processtune.com/2017/05/24/vsalm4%ef%bc%9aazure-web-app%e3%81%ae%e7%b6%99%e7%b6%9a%e7%9a%84%e3%83%87%e3%83%aa%e3%83%90%e3%83%aa%e3%83%bc/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Wed, 24 May 2017 14:52:55 +0000</pubDate>
+				<category><![CDATA[ALM]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[未分類]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=4298</guid>
+
+					<description><![CDATA[ALM（Application Lifecycle Management）の目的はシステムの継続的な配布（と統合）です。継続的デリバリを考慮した場合、製品の配布パッケージ（リソースとコンパイル済みコード）、開発環境プロジェクトのリポジトリ、ステージングやリサーチ用のソースコードの3つをどのように連携するかが肝になります。Microsoft製品の場合、これらが容易に連携できるようになっています。 各種リソースの連携 Visual StudioでWeb Appを作成し、Azureのプロダクション環境へ発行、同じくVisual StudioでWeb AppをVisual Studio Team Servicesへ登録しソース管理を行う方法を紹介します。 まずテンプレートから作成したWeb Appをそのままソリューションエクスプローラーで右クリックして[公開]を選択し、Azureのプロダクション環境へ発行します ソース管理へ登録 Web Appのソリューションを右クリックして[ソリューションをソース管理に追加]を選択します]]></description>
+										<content:encoded><![CDATA[<p style="margin: 0px 0px 0px 0px;">
+ALM（Application Lifecycle Management）の目的はシステムの継続的な配布（と統合）です。継続的デリバリを考慮した場合、製品の配布パッケージ（リソースとコンパイル済みコード）、開発環境プロジェクトのリポジトリ、ステージングやリサーチ用のソースコードの3つをどのように連携するかが肝になります。Microsoft製品の場合、これらが容易に連携できるようになっています。
+</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">各種リソースの連携</p>
+<p style="margin: 0px 0px 0px 5px; text-indent: 1em;">
+Visual StudioでWeb Appを作成し、Azureのプロダクション環境へ発行、同じくVisual StudioでWeb AppをVisual Studio Team Servicesへ登録しソース管理を行う方法を紹介します。</p>
+<p style="margin: 0px 0px 0px 5px; text-indent: 1em;">
+まずテンプレートから作成したWeb Appをそのままソリューションエクスプローラーで右クリックして[公開]を選択し、Azureのプロダクション環境へ発行します</p>
+<p style="display:inline">
+<img decoding="async" src="/wp-content/uploads/2018/03/Deploy1.png" alt="" style="width:600px;"/></p>
+<p style="display:inline">
+<img decoding="async" src="/wp-content/uploads/2018/03/Deploy2.png" alt="" style="width:600px;"/></p>
+<p style="display:inline">
+<img decoding="async" src="/wp-content/uploads/2018/03/Deploy3.png" alt="" style="width:600px;"/></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">
+ソース管理へ登録</p>
+<p style="margin: 0px 0px 0px 5px; text-indent: 1em;">
+Web Appのソリューションを右クリックして[ソリューションをソース管理に追加]を選択します</p>
+<p style="display:inline">
+<img decoding="async" src="/wp-content/uploads/2018/03/SourceManage1.png" alt="" style="width:600px;"/></p>
+<p style="display:inline">
+<img decoding="async" src="/wp-content/uploads/2018/03/SourceManage2.png" alt="" style="width:600px;"/></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2017/05/24/vsalm4%ef%bc%9aazure-web-app%e3%81%ae%e7%b6%99%e7%b6%9a%e7%9a%84%e3%83%87%e3%83%aa%e3%83%90%e3%83%aa%e3%83%bc/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>VSALM3：ソース管理</title>
+		<link>https://blog.processtune.com/2017/05/17/vsalm3%ef%bc%9a%e3%82%bd%e3%83%bc%e3%82%b9%e7%ae%a1%e7%90%86/</link>
+					<comments>https://blog.processtune.com/2017/05/17/vsalm3%ef%bc%9a%e3%82%bd%e3%83%bc%e3%82%b9%e7%ae%a1%e7%90%86/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Wed, 17 May 2017 13:28:39 +0000</pubDate>
+				<category><![CDATA[ALM]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Technical Memo]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=4283</guid>
+
+					<description><![CDATA[ALM（Application Lifecycle Management）で重要な要素にバージョン管理があります。ALM管理ツールのバージョンの管理として「イテレーションに紐づける方法」や「ユーザーストーリーに紐づける方法」、「フィーチャーに紐づける方法」などがあると思いますが、プログラマーが主体となってバージョンを管理する場合、ALMツールの「フィーチャーに紐づける方法」によって、ソース管理ツールのリポジトリの「features」と連動させます。しかし、このケースでは「masterへのマージまで複数のリビジョンやビルドが残りドキュメントとの整合に工数がかかる」、「イシューが残ったままバージョンインクリメントが発生し、イシュー管理が困難」といった問題を抱えるケースが少なくありません。 バージョン管理をALMツール側の「ユーザーストーリーに紐づける方法」によって、ユーザーストーリーに「masterへのマージ」をタスクとして入れる方法は、製品バージョンに同期した文書管理やリリース判定テストを煩雑にしないひとつの手法です。この場合、製品バージョンとプログラムソースのバージョンの動きはユーザーストーリー進行中は連動しませんが、ユーザーストーリーのClose時に製品とソースコードのマイナーバージョンレベルの一致が容易です。マネージャーレベルの担当者は、常に製品とソースコード管理を意識する必要があります。 バージョン管理ツール バージョン管理ができるツールにはいかのようなものがあります。 ビルド ビルドツールには以下のようなものがあります。 カバレッジツール カバレッジツールには以下のようなものがあります。 ユニットテストツール ユニットテストツールには以下のようなものがあります。 統合開発環境 統合開発環境は前述の各種ツールと連携をとれるものが一般的です。統合開発環境には以下のようなものがあります。]]></description>
+										<content:encoded><![CDATA[<p style="margin: 0px 0px 0px 0px;">
+ALM（Application Lifecycle Management）で重要な要素にバージョン管理があります。ALM管理ツールのバージョンの管理として「イテレーションに紐づける方法」や「ユーザーストーリーに紐づける方法」、「フィーチャーに紐づける方法」などがあると思いますが、プログラマーが主体となってバージョンを管理する場合、ALMツールの「フィーチャーに紐づける方法」によって、ソース管理ツールのリポジトリの「features」と連動させます。しかし、このケースでは「masterへのマージまで複数のリビジョンやビルドが残りドキュメントとの整合に工数がかかる」、「イシューが残ったままバージョンインクリメントが発生し、イシュー管理が困難」といった問題を抱えるケースが少なくありません。
+</p>
+<p style="margin: 0px 0px 0px 0px;">
+バージョン管理をALMツール側の「ユーザーストーリーに紐づける方法」によって、ユーザーストーリーに「masterへのマージ」をタスクとして入れる方法は、製品バージョンに同期した文書管理やリリース判定テストを煩雑にしないひとつの手法です。この場合、製品バージョンとプログラムソースのバージョンの動きはユーザーストーリー進行中は連動しませんが、ユーザーストーリーのClose時に製品とソースコードのマイナーバージョンレベルの一致が容易です。マネージャーレベルの担当者は、常に製品とソースコード管理を意識する必要があります。
+</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">バージョン管理ツール</p>
+<p style="margin: 0px 0px 0px 5px; text-indent: 1em;">
+バージョン管理ができるツールにはいかのようなものがあります。</p>
+<p style="display:inline">
+<img decoding="async" src="/wp-content/uploads/2018/03/VersionManagementTool.png" alt="" style="width:600px;background-color:#000000;"/></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">
+ビルド</p>
+<p style="margin: 0px 0px 0px 5px; text-indent: 1em;">
+ビルドツールには以下のようなものがあります。</p>
+<p style="display:inline">
+<img decoding="async" src="/wp-content/uploads/2018/03/BuildTool.png" alt="" style="width:600px;background-color:#000000;"/></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">カバレッジツール</p>
+<p style="margin: 0px 0px 0px 5px; text-indent: 1em;">
+カバレッジツールには以下のようなものがあります。</p>
+<p style="display:inline">
+<img decoding="async" src="/wp-content/uploads/2018/03/coveredge.png" alt="" style="width:600px;background-color:#000000;"/></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">ユニットテストツール</p>
+<p style="margin: 0px 0px 0px 5px; text-indent: 1em;">
+ユニットテストツールには以下のようなものがあります。</p>
+<p style="display:inline">
+<img decoding="async" src="/wp-content/uploads/2018/03/UnitTest.png" alt="" style="width:600px;background-color:#000000;"/></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">統合開発環境</p>
+<p style="margin: 0px 0px 0px 5px; text-indent: 1em;">
+統合開発環境は前述の各種ツールと連携をとれるものが一般的です。統合開発環境には以下のようなものがあります。</p>
+<p style="display:inline">
+<img decoding="async" src="/wp-content/uploads/2018/03/IDE.png" alt="" style="width:600px;background-color:#000000;"/></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2017/05/17/vsalm3%ef%bc%9a%e3%82%bd%e3%83%bc%e3%82%b9%e7%ae%a1%e7%90%86/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>VSALM2：開発プロセス管理</title>
+		<link>https://blog.processtune.com/2017/05/10/vsalm2%ef%bc%9a%e9%96%8b%e7%99%ba%e3%83%97%e3%83%ad%e3%82%bb%e3%82%b9%e7%ae%a1%e7%90%86/</link>
+					<comments>https://blog.processtune.com/2017/05/10/vsalm2%ef%bc%9a%e9%96%8b%e7%99%ba%e3%83%97%e3%83%ad%e3%82%bb%e3%82%b9%e7%ae%a1%e7%90%86/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Wed, 10 May 2017 12:15:47 +0000</pubDate>
+				<category><![CDATA[ALM]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Technical Memo]]></category>
+		<category><![CDATA[未分類]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=4262</guid>
+
+					<description><![CDATA[ALM（Application Lifecycle Management）は、CMMI（Capability Maturity Model Integration）やAgile、Scrumといった開発プロセスにも必要な作業であり、それら開発プロセスによって量の単位や質の単位の定義が異なるため、アジャイル開発プロセスも管理できる機能を持つALMツールが一般的です。 アジャイル統合管理 アジャイル統合管理ができるツールにはいかのようなものがあります。 Visual Studio Team Services Visual Studio Team Servicesの場合、プロジェクト作成時に開発プロセスを選択します。 タスクの構成 アジャイル開発プロセスでは、一般的に以下のようなタスクの階層を構成したバックログが作成されます。しかし各イテレーションで構成は異なりますし、スプリント（アジャイル開発におけるイテレーション）にシナリオテストが必ずなければいけないということはありません。そのため、アジャイル統合管理機能を持つALMツールはテンプレートのカスタマイズ機能があり、Visual Studio Team Servicesではタスクやイシュー（課題）をイテレーションに入れたユーザーストーリーに自由に入れることができます。]]></description>
+										<content:encoded><![CDATA[<p style="margin: 0px 0px 0px 0px;">
+ALM（Application Lifecycle Management）は、CMMI（Capability Maturity Model Integration）やAgile、Scrumといった開発プロセスにも必要な作業であり、それら開発プロセスによって量の単位や質の単位の定義が異なるため、アジャイル開発プロセスも管理できる機能を持つALMツールが一般的です。
+</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">アジャイル統合管理</p>
+<p style="margin: 0px 0px 0px 5px; text-indent: 1em;">
+アジャイル統合管理ができるツールにはいかのようなものがあります。</p>
+<p style="display:inline">
+<img decoding="async" src="/wp-content/uploads/2018/03/AgileTools.png" alt="" style="width:600px;background-color:#000000;"/></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">
+Visual Studio Team Services</p>
+<p style="margin: 0px 0px 0px 5px; text-indent: 1em;">
+Visual Studio Team Servicesの場合、プロジェクト作成時に開発プロセスを選択します。</p>
+<p style="display:inline">
+<img decoding="async" src="/wp-content/uploads/2018/03/VSTS.png" alt="" style="width:600px;"/></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">タスクの構成</p>
+<p style="margin: 0px 0px 0px 5px; text-indent: 1em;">
+アジャイル開発プロセスでは、一般的に以下のようなタスクの階層を構成したバックログが作成されます。しかし各イテレーションで構成は異なりますし、スプリント（アジャイル開発におけるイテレーション）にシナリオテストが必ずなければいけないということはありません。そのため、アジャイル統合管理機能を持つALMツールはテンプレートのカスタマイズ機能があり、Visual Studio Team Servicesではタスクやイシュー（課題）をイテレーションに入れたユーザーストーリーに自由に入れることができます。
+</p>
+<p style="display:inline">
+<img decoding="async" src="/wp-content/uploads/2018/03/ProjectStructure.png" alt="" style="width:600px;"/></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2017/05/10/vsalm2%ef%bc%9a%e9%96%8b%e7%99%ba%e3%83%97%e3%83%ad%e3%82%bb%e3%82%b9%e7%ae%a1%e7%90%86/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>VSALM1：製品戦略とシステム構築</title>
+		<link>https://blog.processtune.com/2017/05/06/vsalm1%ef%bc%9a%e8%a3%bd%e5%93%81%e6%88%a6%e7%95%a5%e3%81%a8%e3%82%b7%e3%82%b9%e3%83%86%e3%83%a0%e6%a7%8b%e7%af%89/</link>
+					<comments>https://blog.processtune.com/2017/05/06/vsalm1%ef%bc%9a%e8%a3%bd%e5%93%81%e6%88%a6%e7%95%a5%e3%81%a8%e3%82%b7%e3%82%b9%e3%83%86%e3%83%a0%e6%a7%8b%e7%af%89/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Sat, 06 May 2017 10:30:42 +0000</pubDate>
+				<category><![CDATA[ALM]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[未分類]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=4247</guid>
+
+					<description><![CDATA[ソース管理ツールは、製品のロードマップがあって組織内の様々なプロセスの後に形成されるALMを基盤として、その上で利用するものですから、それらの先行作業なしにツールを利用することはできません。しかしながら、多くの組織ではバージョン管理ツールを使うことに執心し、製品戦略との兼ね合いや構築プロジェクト完了後の継続的デリバリを意識すること無く、納品後のソースコードそのものがファイルサーバーに置かれていたりします。この記事では、ソース管理ツールが製品戦略の中でどのような役割を果たし、製品の継続的デリバリがどのようになされるのかについて解説します。 ALM ALM（Application Lifecycle Management）は、継続的デリバリには欠かせない作業です。ALMはPLM（Product Lifecycle Management）の一部であり、サービスのリリース時期、機能の拡張時期といったビジネスに直結する要素と分離された状態では、機能を実現する際の技術検証や懸念事項が犠牲にされプロジェクトのリスクが高まります。 ALMツール PLMで定義された製品化カタログはALM側でユーザーストーリーに置き換え、PLMで計画されたリリース単位、リリース時期をALM側でイテレーションに置き換えて、機能以外のドキュメントっ作成なども考慮したタスク群の入れ物となるバックログを作成していきます。その作業を支えるのがALMツールであり、いくつかの製品が販売されています。 ALMでは、ソースコードやバッチなどのリソース（≒プロジェクトの成果物）の状態を定義し管理します。設計文書などの状態なども定義し管理します。 ソースコード等のリソースの状態の定義とは、イテレーション内のユースケースを構成する複数のタスクのうちプログラムやバッチとして定義したタスクをフィーチャー（機能）として複製し量と質を管理していきます。量の管理とは、機能単位でソースコードが追加された、改修された、拡張された等を指し、アジャイル開発プロセスを採用している場合はできる限り1日単位（8h程度）のタスクにすることを推奨します。 また質の管理とは、その機能はどのような作業（コードレビューが終了した、単体試験が終了した等）で構成されているのかといった質の単位を定義し管理します。]]></description>
+										<content:encoded><![CDATA[<p style="margin: 0px 0px 0px 0px;">
+ソース管理ツールは、製品のロードマップがあって組織内の様々なプロセスの後に形成されるALMを基盤として、その上で利用するものですから、それらの先行作業なしにツールを利用することはできません。しかしながら、多くの組織ではバージョン管理ツールを使うことに執心し、製品戦略との兼ね合いや構築プロジェクト完了後の継続的デリバリを意識すること無く、納品後のソースコードそのものがファイルサーバーに置かれていたりします。この記事では、ソース管理ツールが製品戦略の中でどのような役割を果たし、製品の継続的デリバリがどのようになされるのかについて解説します。
+</p>
+<p style="display:inline">
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">ALM</p>
+<p style="margin: 0px 0px 0px 5px; text-indent: 1em;">
+ALM（Application Lifecycle Management）は、継続的デリバリには欠かせない作業です。ALMはPLM（Product Lifecycle Management）の一部であり、サービスのリリース時期、機能の拡張時期といったビジネスに直結する要素と分離された状態では、機能を実現する際の技術検証や懸念事項が犠牲にされプロジェクトのリスクが高まります。</p>
+<p><img decoding="async" src="/wp-content/uploads/2018/03/BusinessDecisionFlow.png" alt="" style="width:600px;"/></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">ALMツール</p>
+<p style="margin: 0px 0px 0px 5px; text-indent: 1em;">
+PLMで定義された製品化カタログはALM側でユーザーストーリーに置き換え、PLMで計画されたリリース単位、リリース時期をALM側でイテレーションに置き換えて、機能以外のドキュメントっ作成なども考慮したタスク群の入れ物となるバックログを作成していきます。その作業を支えるのがALMツールであり、いくつかの製品が販売されています。
+</p>
+<p><img decoding="async" src="/wp-content/uploads/2018/03/ALMTools.png" alt="" style="width:600px;background-color:#000000;"/></p>
+<p style="margin: 0px 0px 0px 5px; text-indent: 1em;">
+ALMでは、ソースコードやバッチなどのリソース（≒プロジェクトの成果物）の状態を定義し管理します。設計文書などの状態なども定義し管理します。<br />
+ソースコード等のリソースの状態の定義とは、イテレーション内のユースケースを構成する複数のタスクのうちプログラムやバッチとして定義したタスクをフィーチャー（機能）として複製し量と質を管理していきます。量の管理とは、機能単位でソースコードが追加された、改修された、拡張された等を指し、アジャイル開発プロセスを採用している場合はできる限り1日単位（8h程度）のタスクにすることを推奨します。<br />
+また質の管理とは、その機能はどのような作業（コードレビューが終了した、単体試験が終了した等）で構成されているのかといった質の単位を定義し管理します。
+</p>
+<p style="display:inline">
+<img decoding="async" src="/wp-content/uploads/2018/03/ALMRoll.png" alt="" style="width:600px;"/></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2017/05/06/vsalm1%ef%bc%9a%e8%a3%bd%e5%93%81%e6%88%a6%e7%95%a5%e3%81%a8%e3%82%b7%e3%82%b9%e3%83%86%e3%83%a0%e6%a7%8b%e7%af%89/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>コラム：Agile Unified Process</title>
+		<link>https://blog.processtune.com/2014/08/18/%e3%82%b3%e3%83%a9%e3%83%a0%ef%bc%9aagile-unified-process/</link>
+					<comments>https://blog.processtune.com/2014/08/18/%e3%82%b3%e3%83%a9%e3%83%a0%ef%bc%9aagile-unified-process/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Mon, 18 Aug 2014 08:28:17 +0000</pubDate>
+				<category><![CDATA[ALM]]></category>
+		<guid isPermaLink="false">http://www.processtune.com/blog/?p=1044</guid>
+
+					<description><![CDATA[業務用かどうかに関わらず、ソフトウェアの開発ではユニファイド・プロセスが重要であると考えます。ユニファイド・プロセスはAgileやScrum、Extream Programming等と相反するものではなく、ユニファイド・プロセスがカスタマイズされたものであると考えられるからです。元来、ユニファイド・プロセスはプロジェクトや組織によってカスタマイズされることを期待しており、適切なカスタマイズは、ユニファイド・プロセスの導入効果を最も発揮する重要な手法です。 業務用ソフトウェアの場合、このプロセスの単位は大小さまざまであると考えます。大きなひとつの構築プロセスと小さな改修プロセスや機能追加プロセス、技術検証プロセスなどが同時に推進していくことの方が多く、構築がひと段落してから第2フェーズの機能追加、バグ改修といった&#8221;裕福な&#8221;プロジェクトはそう多くはありません。多くの場合、運用しながら並行して機能追加や既知の潜在バグ改修といったプロジェクト推進が求められます。 このような形態のプロジェクト推進に対応しやすいと思われるのがAgile Unified Processです。Rational Unified Processを簡素化したAgile Unified Processは、規律をベースとするプロセス推進法であり、 Test-Driven Development (TDD)やAgile Modelingなどを含み、それらの作業を簡略化するツールの使用が推奨されています。Agile Unified Processは、大小さまざまな各プロセスの規律がイテレーション後に充足、改修されながら確立されていくため、最初に試験的なプロセスが必要となります。 この最初に提示するプロセスこそが、Rational Unified Processを簡素化したもので、この簡素化はプロジェクトや組織に応じた最初のカスタマイズのことを指します。 たとえば、アジャイル宣言における4つの価値のうちのひとつに「Working software over comprehensive documentation」というのがあり、要求仕様書や要件定義書を完成させてから基本設計に入るといったプロセスは必須ではなく、私の経験則上、要求仕様や要件定義を部分的にまとめながら基本設計を進めていくことが可能です。要求のほとんどは稼働プラットフォームに依存することなく、要求～基本設計までは、実装上の制約を受けるはずが無いからです。この一連の流れを機能別などに細分化し、イテレーションとして繰り返していく手法がAgile Unified Processの特徴です。これらの定義は結果的に要求仕様書や要件定義書、基本設計書になるかもしれませんし、設計メモやマインドマップになるかもしれません（どのように成果物を作成していくかは規律となります）。ただし、基本設計が部分的に終わった段階で詳細設計を進めるといったことはできません。これがAgileであり、Unified Processである所以だといえます。 もうひとつ重要な点は、全プロセスの規律は簡潔であり単純化されているということです。換言すると、簡潔に単純化できるほどに細分化されている必要があるということです。細分化された規律はソース管理ツールのチェックインポリシーやチケットに反映できます。つまり、プロジェクトに関与するメンバー全員のタスクが数量化でき、その消化率を管理することが重要であり、それらのタスクは「やらなければいけないこと」ではなく「できること」を主軸にしたWork Breakdown Structure（以降「WBS」）を策定できるPMが必要だということです。 この能力が不足しているPMの場合、この規律をガイドラインや規約などで明文化しようとします。ガイドラインや規約を作成すること自体に問題はありませんが、明文化では数量化ができないことに注意が必要です。明文化は、あくまで品質向上のアプローチのひとつです。これについても管理するならば、やはりチケットによる収束率など数量化して管理すべきであり、Agile Unified Processでは管理にツールを活用するよう推奨されています。結果的にプロジェクトがうまく推進できなかった場合に、タスクが数量化されてなく進捗管理ができなかったことに対する反省を行わず、プログラマーやSE、協力会社に責任を転嫁できるようにガイドラインや規約を前もって作成するSIerも少なくありません（あくまで日本の場合です）。]]></description>
+										<content:encoded><![CDATA[<p>業務用かどうかに関わらず、ソフトウェアの開発ではユニファイド・プロセスが重要であると考えます。ユニファイド・プロセスはAgileやScrum、Extream Programming等と相反するものではなく、ユニファイド・プロセスがカスタマイズされたものであると考えられるからです。元来、ユニファイド・プロセスはプロジェクトや組織によってカスタマイズされることを期待しており、適切なカスタマイズは、ユニファイド・プロセスの導入効果を最も発揮する重要な手法です。<br />
+業務用ソフトウェアの場合、このプロセスの単位は大小さまざまであると考えます。大きなひとつの構築プロセスと小さな改修プロセスや機能追加プロセス、技術検証プロセスなどが同時に推進していくことの方が多く、構築がひと段落してから第2フェーズの機能追加、バグ改修といった&#8221;裕福な&#8221;プロジェクトはそう多くはありません。多くの場合、運用しながら並行して機能追加や既知の潜在バグ改修といったプロジェクト推進が求められます。<br />
+このような形態のプロジェクト推進に対応しやすいと思われるのがAgile Unified Processです。Rational Unified Processを簡素化したAgile Unified Processは、規律をベースとするプロセス推進法であり、 Test-Driven Development (TDD)やAgile Modelingなどを含み、それらの作業を簡略化するツールの使用が推奨されています。Agile Unified Processは、大小さまざまな各プロセスの規律がイテレーション後に充足、改修されながら確立されていくため、最初に試験的なプロセスが必要となります。<br />
+この最初に提示するプロセスこそが、Rational Unified Processを簡素化したもので、この簡素化はプロジェクトや組織に応じた最初のカスタマイズのことを指します。<br />
+たとえば、アジャイル宣言における4つの価値のうちのひとつに「Working software over comprehensive documentation」というのがあり、要求仕様書や要件定義書を完成させてから基本設計に入るといったプロセスは必須ではなく、私の経験則上、要求仕様や要件定義を部分的にまとめながら基本設計を進めていくことが可能です。要求のほとんどは稼働プラットフォームに依存することなく、要求～基本設計までは、実装上の制約を受けるはずが無いからです。この一連の流れを機能別などに細分化し、イテレーションとして繰り返していく手法がAgile Unified Processの特徴です。これらの定義は結果的に要求仕様書や要件定義書、基本設計書になるかもしれませんし、設計メモやマインドマップになるかもしれません（どのように成果物を作成していくかは規律となります）。ただし、基本設計が部分的に終わった段階で詳細設計を進めるといったことはできません。これがAgileであり、Unified Processである所以だといえます。<br />
+もうひとつ重要な点は、全プロセスの規律は簡潔であり単純化されているということです。換言すると、簡潔に単純化できるほどに細分化されている必要があるということです。細分化された規律はソース管理ツールのチェックインポリシーやチケットに反映できます。つまり、プロジェクトに関与するメンバー全員のタスクが数量化でき、その消化率を管理することが重要であり、それらのタスクは「やらなければいけないこと」ではなく「できること」を主軸にしたWork Breakdown Structure（以降「WBS」）を策定できるPMが必要だということです。<br />
+この能力が不足しているPMの場合、この規律をガイドラインや規約などで明文化しようとします。ガイドラインや規約を作成すること自体に問題はありませんが、明文化では数量化ができないことに注意が必要です。明文化は、あくまで品質向上のアプローチのひとつです。これについても管理するならば、やはりチケットによる収束率など数量化して管理すべきであり、Agile Unified Processでは管理にツールを活用するよう推奨されています。結果的にプロジェクトがうまく推進できなかった場合に、タスクが数量化されてなく進捗管理ができなかったことに対する反省を行わず、プログラマーやSE、協力会社に責任を転嫁できるようにガイドラインや規約を前もって作成するSIerも少なくありません（あくまで日本の場合です）。</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2014/08/18/%e3%82%b3%e3%83%a9%e3%83%a0%ef%bc%9aagile-unified-process/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

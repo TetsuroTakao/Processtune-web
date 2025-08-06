@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>AI &#8211; Processtune Blog</title>
+	<atom:link href="https://blog.processtune.com/category/ai/feed/" rel="self" type="application/rss+xml" />
+	<link>https://blog.processtune.com/</link>
+	<description>Articles offered from Microsoft MVP</description>
+	<lastBuildDate>Thu, 11 Apr 2024 03:34:14 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.8.2</generator>
+
+<image>
+	<url>/wp-content/uploads/2023/03/cropped-Presentation-32x32.png</url>
+	<title>AI &#8211; Processtune Blog</title>
+	<link>https://blog.processtune.com/</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>Steps of Introducing AI to companies</title>
+		<link>https://blog.processtune.com/2024/03/26/steps-of-introducing-ai-to-companies/</link>
+					<comments>https://blog.processtune.com/2024/03/26/steps-of-introducing-ai-to-companies/#respond</comments>
+		
+		<dc:creator><![CDATA[TETSURO TAKAO]]></dc:creator>
+		<pubDate>Tue, 26 Mar 2024 09:01:59 +0000</pubDate>
+				<category><![CDATA[AI]]></category>
+		<category><![CDATA[Microsoft Azure]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=7686</guid>
+
+					<description><![CDATA[The previous article [Introducing Artificial Intelligence (AI) in Companies] describes &#8220;AI has objectives depending on its scale&#8221;, &#8220;AI in companies is effective through orchestration using small language models&#8221; and &#8220;Information sources confidentiality also needs to be protected in AI&#8221;. Additionally, it describes &#8220;In the case of Microsoft 365 data is information sources, the confidentiality is [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin: 0px 0px 10px 0px; color: #000044; font-size: 1.4rem; font-weight: normal; line-height: 1.6rem; padding: 10px 0px 10px 20px; border-radius: 60% 90% 90% 60%; font-family: Times, serif; background: linear-gradient(to right, #fff, #ccf, #fff);">The previous article [<a style="font-weight: bold;" href="https://blog.processtune.com/2024/02/07/introducing-artificial-intelligence-ai-in-companies/" target="_new" rel="noopener">Introducing Artificial Intelligence (AI) in Companies</a>] describes &#8220;AI has objectives depending on its scale&#8221;, &#8220;AI in companies is effective through orchestration using small language models&#8221; and &#8220;Information sources confidentiality also needs to be protected in AI&#8221;.<br />
+Additionally, it describes &#8220;In the case of Microsoft 365 data is information sources, the confidentiality is best on Microsoft 365 rather than moving to other storages&#8221; and &#8220;In the case of the information sources being non-Microsoft 365 data, Information sources should be stored in individual storages that match access permissions, and divided schemes of several AI on orchestration foundation when <a style="font-weight: bold;" href="https://en.wikipedia.org/wiki/Federated_identity" target="_new" rel="noopener">the identity federation</a> is not complete&#8221;.</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 1.1rem;">• In the case of the information sources being non-Microsoft 365 data and In the case of the identity federation is complete.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">If the identity federation is aggregated to the Entra ID account, it is good that information sources are stored as Azure resources. Even if information sources are non-Microsoft 365 data, it is super easy to control access to information sources of AI.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">Information sources can be prepared or real time. <a style="font-weight: bold;" href="https://learn.microsoft.com/en-us/azure/ai-services/openai/use-your-data-quickstart?wt.mc_id=DT-MVP-4029060" target="_new" rel="noopener">[Add your data] feature</a> of <a style="font-weight: bold;" href="https://azure.microsoft.com/en-us/products/ai-studio?wt.mc_id=DT-MVP-4029060" target="_new" rel="noopener">Azure AI Studio</a> supports various file types. Or using connector supports Azure AI Search, Azure Cosmos DB for MongoDB vCore, and URL/web address.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">If information sources could not be stored as Azure resources, Entra ID that aggregated as the identity federation should control access to AI.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">Azure provides various connection services such as provisioning or authorization delegation calls (if the service provider supports it) as the identity federation features.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">Thus in the case of AI that uses information sources outside of Azure, it is good that information sources are designed as single access permission.</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 1.1rem;">• Design steps for Introducing AI to companies</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">When introducing AI to the company, consideration of The state of the user account of the organization and the purpose of AI in the company is the first step of design.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">It&#8217;s an important decision point whether the purpose of using AI in the company is to leverage Microsoft 365 data or not. Whether the user account of the organization has already completed the identity federation or not is also important because Microsoft 365 data is protected by the Microsoft 365 identity foundation. <a style="font-weight: bold;" href="https://learn.microsoft.com/en-us/entra/identity/hybrid/connect/four-steps?wt.mc_id=DT-MVP-4029060" target="_new" rel="noopener">This official article provided by Microsoft</a> describes that the identity foundation of Microsoft&#8217;s tremendous robustness and flexibility can address enterprise compliance and governance.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">The next step is considering the need to customize for using the company’s data. Then programming or No/Low code development is necessary or not. These steps lead to how to implement AI in the company.</p>
+<p style="display: inline-block; margin-bottom: 10px; text-align: center; width: 100%;"><img decoding="async" style="width: 900px;" src="/wp-content/uploads/2024/02/DesignSteps.png" alt=""></p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">Most easiest way to introduce AI to the company is Microsoft 365 data leverage on the company. <a style="font-weight: bold;" href="https://learn.microsoft.com/en-us/microsoft-365/syntex/metadata-search?wt.mc_id=DT-MVP-4029060" target="_new" rel="noopener">Microsoft Syntex stores metadata</a> of files of SharePoint, it classifies files as various aspects and then shows them on the SharePoint site. Furthermore, <a style="font-weight: bold;" href="https://learn.microsoft.com/en-us/microsoft-365/syntex/automate-document-generation?wt.mc_id=DT-MVP-4029060" target="_new" rel="noopener">generates documents with Power Automate</a>. On creating UI, <a style="font-weight: bold;" href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/advanced-connectors?wt.mc_id=DT-MVP-4029060" target="_new" rel="noopener">Copilot Studio also relays with Power Automate</a> for using Microsoft 365 data and other data, creating cloud flow. These services will be described in my other articles.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">It is complex in the case of the information sources being non-Microsoft 365 data.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">One way to divide sources is an aspect of access permissions, it said above, and another way is to divide by use case that does not matter accessed identities.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">It is important how data is divided by permission when information sources of AI such as access accounting data or human resource data although, it is not important to divide data with identity to access IoT data unmanaged by id. These data might be divided into use cases for efficiency or agility.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">Furthermore, it is important to consider whether the identity federation is complete or not. If <a style="font-weight: bold;" href="https://techcommunity.microsoft.com/t5/microsoft-mechanics-blog/manage-your-multi-cloud-identity-infrastructure-with-microsoft/ba-p/3709677?wt.mc_id=DT-MVP-4029060" target="_new" rel="noopener">the identity federation is complete with Entra ID</a> and stores the whole of the data as Azure resources, it needs only implement the orchestration of AI.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">So this article describes how to implement AI using Microsoft 365 data with additional data. My other articles describe content other than AI orchestration.</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 1.1rem;">• Story of the sample of this article</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">As a sample of AI using Microsoft 365 data with additional data, design levels of accessing information sources of AI that is like the following figure.</p>
+<p style="display: inline-block; margin-bottom: 10px; text-align: center; width: 100%;"><img decoding="async" style="width: 900px;" src="/wp-content/uploads/2024/02/LevelsOfAccessingInformationSourcesOfAI.png" alt=""></p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">The additional data in the figure above is used in AI. For example, the travel expense data is shared only with the accounting division using SharePoint or Teams. Though the additional data is not shared with the company&#8217;s colleagues explicitly, It is better that colleagues who are not engaged accounting division can search related to the travel expense data such as heuristic&nbsp;knowledge that is assembled by the employee who applied travel expenses. This article creates the AI that orchestrates with Microsoft 365 using such data.</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 1.1rem;">• Preparing a Small Language Model for the company&#8217;s data</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">There are several types of language models, types are such as foundation models, fine-tuned models, and quantization models. Now, the Trainer model such as <a style="font-weight: bold;" href="https://www.microsoft.com/en-us/research/project/orca/" target="_new" rel="noopener">Orca-2</a> exists and creates small language models, training, and creating datasets, for foundation models.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">It is better to use fine-tuned models than foundation models because they are already <a style="font-weight: bold;" href="https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/fine-tuning?tabs=turbo%2Cpython&amp;pivots=programming-language-studio&amp;wt.mc_id=DT-MVP-4029060" target="_new" rel="noopener">fine-tuned using a dataset for specific tasks</a> if the usage of the additional data of the company on AI matches the task of fine-tuning. <a style="font-weight: bold;" href="https://learn.microsoft.com/en-us/microsoft-365-copilot/microsoft-365-copilot-overview?wt.mc_id=DT-MVP-4029060" target="_new" rel="noopener">Copilot for Microsoft 365</a>, <a style="font-weight: bold;" href="https://www.bloomberg.com/company/press/bloomberggpt-50-billion-parameter-llm-tuned-finance/" target="_new" rel="noopener">BloombergGPT</a>, or <a style="font-weight: bold;" href="https://developer.amazon.com/en-US/alexa/alexa-skills-kit/asr" target="_new" rel="noopener">Automatic-Speech Recognition of Alexa</a> are representative.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">Additionally, if <a style="font-weight: bold;" href="https://arxiv.org/pdf/2210.17323.pdf" target="_new" rel="noopener">GPTQ (Quantization for Generative Pre-trained Transformers)</a> for fine-tuned models exists, it is better to use quantization models than fine-tuned models because quantization models are model compression using the one-shot weight quantization method, it can be used without GPU. Thus, the search for a model that aligns with the task at <a style="font-weight: bold;" href="https://huggingface.co/" target="_new" rel="noopener">Hugging Face</a>, <a style="font-weight: bold;" href="https://www.tensorflow.org/hub?hl=en" target="_new" rel="noopener">TensorFlow Hub</a>, or <a style="font-weight: bold;" href="https://pytorch.org/serve/model_zoo.html" target="_new" rel="noopener">PyTorch Zoo</a> at first. This article uses Hugging Face because using a model launcher distributed on Hugging Face. Model launcher is easy to search by typing &#8220;Ollama&#8221; at Hugging Face, Ollama is similar to LlamaIndex, LangChain, Semantic Kernel, Rust LLM, and Roboflow, they support many models.</p>
+<div style="margin: 20px 0px 20px 0px; display: table; border: solid thin #444;">
+<div style="display: table-row; padding: 5px 5px 5px 5px; background: #ccc;">
+<div style="display: table-cell; font-weight: bold; color: #444; white-space: nowrap; text-align: center;">Model tools</div>
+<div style="display: table-cell; font-weight: bold; color: #444; text-align: center;">Support models</div>
+</div>
+<div style="display: table-row; padding: 5px 5px 5px 5px;">
+<div style="display: table-cell; font-weight: bold; white-space: nowrap; padding: 5px 5px 5px 5px;">Ollama</div>
+<div style="display: table-cell; padding: 5px 5px 5px 5px;">Support models of more than <a style="font-weight: bold;" href="https://ollama.com/library" target="_new" rel="noopener">sixty</a>.</div>
+</div>
+<div style="display: table-row; background: #ffc;">
+<div style="display: table-cell; font-weight: bold; white-space: nowrap; padding: 5px 5px 5px 5px;">LlamaIndex</div>
+<div style="display: table-cell; padding: 5px 5px 5px 5px;">Several paid and open-source <a style="font-weight: bold;" href="https://docs.llamaindex.ai/en/stable/module_guides/models/llms.html" target="_new" rel="noopener">LLMs</a> are supported.</div>
+</div>
+<div style="display: table-row;">
+<div style="display: table-cell; font-weight: bold; white-space: nowrap; padding: 5px 5px 5px 5px;">LangChain</div>
+<div style="display: table-cell; padding: 5px 5px 5px 5px;">Does not serve its own LLMs, but rather provides a standard interface for interacting with many different <a style="font-weight: bold;" href="https://python.langchain.com/docs/modules/model_io/llms/quick_start" target="_new" rel="noopener">LLMs</a>.</div>
+</div>
+<div style="display: table-row; background: #ffc;">
+<div style="display: table-cell; font-weight: bold; white-space: nowrap; padding: 5px 5px 5px 5px;">Semantic Kernel</div>
+<div style="display: table-cell; padding: 5px 5px 5px 5px;">SDK that integrates Large Language Models (<a style="font-weight: bold;" href="https://github.com/microsoft/semantic-kernel" target="_new" rel="noopener">LLMs</a>) like OpenAI, Azure OpenAI, and Hugging Face.</div>
+</div>
+<div style="display: table-row;">
+<div style="display: table-cell; font-weight: bold; white-space: nowrap; padding: 5px 5px 5px 5px;">Rust LLM</div>
+<div style="display: table-cell; padding: 5px 5px 5px 5px;">Support several models as <a style="font-weight: bold;" href="https://github.com/rustformers/llm/blob/main/doc/known-good-models.md" target="_new" rel="noopener">Known-good models</a>.</div>
+</div>
+<div style="display: table-row; background: #ffc;">
+<div style="display: table-cell; font-weight: bold; white-space: nowrap; padding: 5px 5px 5px 5px;">Roboflow</div>
+<div style="display: table-cell; padding: 5px 5px 5px 5px;">Several <a style="font-weight: bold;" href="https://roboflow.com/models" target="_new" rel="noopener">computer vision models</a> are supported.</div>
+</div>
+</div>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">Ollama also has an eco-system as Ollama&#8217;s official image at the docker hub or can be installed on Linux using WSL2 as well. Models that are not Quantarizationed can be compressed using a GGUF file.<br />
+There are libraries to create a pipeline for C#, so it&#8217;s easy to implement local AI as figure below using Ollama.</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2024/03/26/steps-of-introducing-ai-to-companies/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Introducing Artificial Intelligence (AI) in Companies</title>
+		<link>https://blog.processtune.com/2024/02/07/introducing-artificial-intelligence-ai-in-companies/</link>
+					<comments>https://blog.processtune.com/2024/02/07/introducing-artificial-intelligence-ai-in-companies/#respond</comments>
+		
+		<dc:creator><![CDATA[TETSURO TAKAO]]></dc:creator>
+		<pubDate>Wed, 07 Feb 2024 10:06:48 +0000</pubDate>
+				<category><![CDATA[AI]]></category>
+		<category><![CDATA[Microsoft Graph]]></category>
+		<category><![CDATA[MongoDB]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=7519</guid>
+
+					<description><![CDATA[There is a lot of interest in introducing AI in companies, and many types of language models also are created by many organizations. AI has the size indicated by the parameters of a language model, and AI has purposes in a commensurate manner with its size. This article describes how to introduce AI in companies. [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin: 0px 0px 10px 0px; color: #000044; font-size: 1.4rem; font-weight: normal; line-height: 1.6rem; padding: 10px 0px 10px 20px; border-radius: 60% 90% 90% 60%; font-family: Times, serif; background: linear-gradient(to right, #fff, #ccf, #fff);">There is a lot of interest in introducing AI in companies, and many types of language models also are created by many organizations.<br />
+AI has the size indicated by the parameters of a language model, and AI has purposes in a commensurate manner with its size.<br />
+This article describes how to introduce AI in companies.</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 1.1rem;">• Large Language Model (LLM) and Small Language Model (SLM)</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">AI comes in different sizes and aims. LLM is aiming for AGI (Artificial General Intelligence). And I think SLM aims to solve specific tasks with AI orchestration. Therefore Multimodal AI, RAG (Retrieval-Augmented Generation), and so on are essential for SLM.</p>
+<p style="display: inline-block; margin-bottom: 10px; text-align: center; width: 100%;"><img decoding="async" style="width: 900px;" src="/wp-content/uploads/2024/01/AIOutlook.png" alt="" /></p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">What I would like you to note here is that Apple is not included in the figure above.<br />
+Apple&#8217;s Edge AI does not add to this article about the size and purpose of Edge AI, because it&#8217;s used in a different use-case than Cloud AI.<br />
+It is possible to introduce Edge AI into a company, but at this stage, I think it is difficult to introduce Edge AI into a company unless cloud AI has already been introduced.<br />
+This article will focus on cloud AI, rather than Edge AI, as an introduction to AI in companies.</p>
+<div style="background-color: #cccccc; border: 1px solid #00000; padding: 10px 10px 0px 10px; margin-top: 20px;">
+<div style="margin: -20px 0px 0px 5px; text-indent: 1em; font-weight: bold; background-color: #444; border: 1px solid #ccc; color: #fff;">ⓘ Edge AI</div>
+<p><img decoding="async" style="width: 450px; display: inline-block;" src="/wp-content/uploads/2024/01/MegaCapGreenLine20240129.png" alt="" align="right" /><br />
+The image on the right is a screen capture of https://companiesmarketcap.com/ on 29th Jan. 2024. During the last year, investors expected investment in cloud AI of Microsoft, Google (Alphabet), NVIDIA, and Amazon. The green line charts are its results.<br />
+However, while cloud AI has been attracting attention so far, this year we may be entering the era of Edge AI.<br />
+<img decoding="async" style="width: 900px;" src="/wp-content/uploads/2024/01/EdgeAIUsecase.png" alt="" /></p>
+</div>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 1.1rem;">• Utilization of accumulated data in the AI era</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">Size is one of the indicators for AI classification, and another indicator for AI classification is the &#8220;confidentiality of the information source.&#8221;　More precisely, it is the right to access information.</p>
+<p style="display: inline-block; margin-bottom: 10px; text-align: center; width: 100%;"><img decoding="async" style="width: 900px;" src="/wp-content/uploads/2024/02/SizeAndUsage.png" alt="" /></p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">Many companies find it useful to orchestrate using a small language model without the need for a large language model. At this time, it is possible to use RAG to generate a solution that incorporates information from outside the company, or it is also possible to generate a solution using confidential internal data. What is important is that companies utilize accumulated data in the same way that they have done in the past, and this will not change in the AI era.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">Oracle, one of the companies that specializes in data utilization, provides the foundation for corporate data utilization extending with AI (below left). This website describes an architecture for introducing AI with a product called VizSeek (below right) that provides secure access to data.</p>
+<p style="display: inline-block; margin-bottom: 10px; text-align: center; width: 100%;"><img decoding="async" style="width: 420px; display: inline-block;" src="/wp-content/uploads/2024/01/OracleDataScienceBlog.png" alt="" /><img decoding="async" style="width: 420px; display: inline-block;" src="/wp-content/uploads/2024/01/OracleVizSeek.png" alt="" /></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 1.1rem;">• If the organization already introduced Microsoft 365</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">Accumulated data with Microsoft 365 are already protected with Microsoft 365. In responding to <a style="font-weight: bold;" href="https://learn.microsoft.com/en-us/microsoft-365/community/microsoft365-maturity-model--governance-and-compliance" target="_new" rel="noopener">implementing organization maturity of security approach</a>(below right), there is secure access that is under compliance policy, and paradigm with the governance of the organization.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">Thus for introducing AI to organizations, it is not good that move their data to other storage bother, such as S3 of AWS or Google Drive, because it should re-struct IAM roles of AWS Control Tower of AWS Organizations IAM, or Google Cloud Project.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">Utilizing accumulated data of the company with AI is the same as leveraging SharePoint data or OneDrive data in Microsoft 365. The data can not be accessed in SharePoint is also can not be accessed using AI. On the other hand, when generating content with AI, it will be grounded with SharePoint data OneDrive data, and so on that can be accessed. Copilot for Microsoft 365 is the service, and Microsoft Copilot Studio (below left) is used to customize its service for specific companies.</p>
+<p style="display: inline-block; margin-bottom: 10px; text-align: center; width: 100%;"><img decoding="async" style="width: 420px; display: inline-block;" src="/wp-content/uploads/2024/02/CopilotStudioOverview.png" alt="" /><img decoding="async" style="width: 420px; display: inline-block;" src="/wp-content/uploads/2024/02/Microsoft365MaturityModel.png" alt="" /></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 1.1rem;">• AI in Companies without Microsoft 365 data</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">Accounting data or human resource data is divided from business data generally, so there are cases in which several workforces have an accounting system&#8217;s ID or human resource system&#8217;s ID. If the identity federation is not complete, Its permissions are held in these systems. In addition, there might be device management without Intune, asset management, and access to IoT data as unmanaged.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">These data should be stored in individual storage match access permission, then divided schemes of several AI on orchestration foundation. These cases can be implemented with Azure AI Studio or semantic kernel programming.</p>
+<p style="display: inline-block; margin-bottom: 10px; text-align: center; width: 100%;"><img decoding="async" style="width: 900px; display: inline-block;" src="/wp-content/uploads/2024/02/Prepare.png" alt="" /></p>
+<p style="margin: 10px 0px 0px 5px; text-indent: 1em; text-align: right; font-weight: bold;">&gt;&gt;<a style="font-weight: bold;" target="_new" rel="noopener">Next Model local launch(under construction)</a></p>
+<div style="background-color: #cccccc; border: 1px solid #00000; padding: 10px 10px 0px 10px; margin-top: 20px;">
+<div style="margin: -20px 0px 0px 5px; text-indent: 1em; font-weight: bold; background-color: #444; border: 1px solid #ccc; color: #fff;">ⓘ Navigation</div>
+<p><a href="https://blog.processtune.com/2024/03/26/steps-of-introducing-ai-to-companies/">Steps of Introducing AI to companies</a><br />
+Copilot Studio(under construction)<br />
+Azure AI Studio(under construction)<br />
+Prompt Injection(under construction)</p>
+</div>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2024/02/07/introducing-artificial-intelligence-ai-in-companies/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

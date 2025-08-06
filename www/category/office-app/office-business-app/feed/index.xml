@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Office Business App &#8211; Processtune Blog</title>
+	<atom:link href="https://blog.processtune.com/category/office-app/office-business-app/feed/" rel="self" type="application/rss+xml" />
+	<link>https://blog.processtune.com/</link>
+	<description>Articles offered from Microsoft MVP</description>
+	<lastBuildDate>Mon, 26 Aug 2013 03:41:06 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.8.2</generator>
+
+<image>
+	<url>/wp-content/uploads/2023/03/cropped-Presentation-32x32.png</url>
+	<title>Office Business App &#8211; Processtune Blog</title>
+	<link>https://blog.processtune.com/</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>WPF app that display Excel file.</title>
+		<link>https://blog.processtune.com/2013/08/26/wpf-app-that-display-excel-file-2/</link>
+					<comments>https://blog.processtune.com/2013/08/26/wpf-app-that-display-excel-file-2/#comments</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Mon, 26 Aug 2013 03:41:06 +0000</pubDate>
+				<category><![CDATA[Office Business App]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Windows 8 App]]></category>
+		<guid isPermaLink="false">http://www.processtune.com/blog/?p=566</guid>
+
+					<description><![CDATA[I tryed to display the Microsoft Excel file in a WPF app. but, I was not able to find it out by web about to do that. So I tryed next step which the Excel file converted to XPS file display in the DocumemtViewer of a WPF app. That was run well as I expected, [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin:5px;text-indent:1em;">I tryed to display the Microsoft Excel file in a WPF app. but, I was not able to find it out by web about to do that. So I tryed next step which the Excel file converted to XPS file display in the DocumemtViewer of a WPF app. </p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">That was run well as I expected, so I report a detail as below.</p>
+<p style="margin:0px 0px 0px 15px;text-indent:-1em;padding-left:1em;">1. How to convert Excel file to XPS file (use PIA).</p>
+<p style="margin:0px 0px 0px 15px;text-indent:-1em;padding-left:1em;">2. How to display XPS file in WPF app (use a feature in Windows OS).</p>
+<p style="margin:5px;text-indent:1em;">This is the presentation file (Japanese ver. Microsoft PowerPoint file)<a href="http://t.co/KwMbkU96sI">http://t.co/KwMbkU96sI</a></p>
+<p style="margin:5px;text-indent:1em;">This is the Visual Studio 2012 sample solution file<a href="http://sdrv.ms/16fTtHr">http://sdrv.ms/16fTtHr</a></p>
+<p style="margin:20px 0px 0px 0px;font-size:14pt;font-weight:700;">1. How to convert Excel file to XPS file.</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">Primary Interop Assemblies(PIA) can controls Excel file finely, but PIA depends on version of the Office. So we must decide on target version or use another architecture as VSTO.</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">This time, use the Microsoft Office 2013 PIA, because of want to create Windows 8 desktop app. the Microsoft Office 2013 PIA is download from Office Developer Tools for Visual Studio 2012 page (<a href="http://www.microsoft.com/visualstudio/eng/office-dev-tools-for-visual-studio">http://www.microsoft.com/visualstudio/eng/office-dev-tools-for-visual-studio</a>).</p>
+<p style="margin:10px 0px 0px 0px;">figure. Office Developer Tools for Visual Studio 2012.</p>
+<p><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2013/04/OfficeDeveloperToolsForVisualStudio2012.png" alt=""/></p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">If you want to target the Microsoft Office 2010, use the 2013 PIA or download from below ( Office Developer Tools for Visual Studio 2012 includes dlls for 2010 and 2013 both ).</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;"><a href="http://www.microsoft.com/en-us/download/details.aspx?id=3508">http://www.microsoft.com/en-us/download/details.aspx?id=3508</a></p>
+<p style="margin:10px 0px 0px 0px;">figure. Microsoft Office 2010: Primary Interop Assemblies Redistributable.</p>
+<p><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2013/04/042613_0337_WPFappthatd1.png" alt=""/></p>
+<p><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2013/04/VSToolsPIA.png" alt=""/></p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">After download and installing that, create new WPF app solution from the Visual Studio file menu.</p>
+<p style="margin:10px 0px 0px 0px;">figure. VS 2012 image.</p>
+<p><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2013/04/042613_0337_WPFappthatd2.png" alt=""/><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2013/04/042613_0337_WPFappthatd3.png" alt=""/>
+</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">In order to enable drag and drop the Excel file to this app, open the project property window from right click at project name on the Solution Explorer. And put sample Excel file path of local PC into the Debug [Command line arguments] box.</p>
+<p style="margin:10px 0px 0px 0px;">figure. the Command line arguments box.</p>
+<p><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2013/04/AddComanndlineArgs.png" alt=""/></p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">Create start up event handler from the App.xaml. Defines the event to call the handler at the tag attribute place, it&#8217;s complementary when type &#8220;Startup = &#8220;.</p>
+<p style="margin:10px 0px 0px 0px;">figure. the Startup attribute in the Application tag</p>
+<p><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2013/04/AddNewHandler.png" alt=""/></p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">To catch an argument at the Startup event handler and open the sample Excel file. First, add reference the Excel name space from the [Assemblies] &#8211; [Extentions] of the Reference Manager how to show right click on the References folder of the Solution Explorer.</p>
+<p style="margin:10px 0px 0px 0px;">figue. Add Microsoft.Office.Interop.Excel.dll reference.</p>
+<p><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2013/04/AddReferencePIAFor15Dll.png" alt=""/></p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">Second, the Excel file open by Excel application object of PIA as below.</p>
+<div style="margin:0px 0px 10px 0px;">
+<table style="border-collapse:collapse; background: #d9d9d9" border="0">
+<tbody valign="top">
+<tr>
+<td vAlign="middle" style="border-top:solid 0.5pt; border-left:solid 0.5pt; border-bottom:solid 0.5pt; border-right:solid 0.5pt;">
+<p style="margin:0px 0px 0px 5px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:blue">var</span> excelApp = <span style="text-decoration:underline"><span style="color:blue">new</span> Microsoft.Office.Interop.Excel.<span style="color:#2b91af">Application</span></span>()<sup>*</sup></p>
+<p style="margin:0px 0px 0px 5px;font-family:Consolas; font-size:9pt;font-color:black;">excelApp.DisplayAlerts = <span style="color:blue">false</span>;</p>
+<p style="margin:0px 0px 0px 5px;font-family:Consolas; font-size:9pt;font-color:black;">excelApp.Visible = <span style="color:blue">false</span>;</p>
+<p style="margin:0px 0px 0px 5px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="text-decoration:underline">Microsoft.Office.Interop.Excel.<span style="color:#2b91af">Workbook </span></span>excelWorkbook = excelApp.Workbooks.Open(<span style="color:red">path</span>);</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p style="margin:0px 0px 0px 10px;text-indent:-3px;font-size:7pt;font-weight:500;">*Perfect name space is in order to distinguish Microsoft.Office.Interop.Excel.Application and System.Windows.Application.</p>
+<p style="margin:0px 0px 0px 10px;text-indent:-3px;font-size:7pt;font-weight:500;">*In the future, this app controls a contents of the Excel file by Open XML SDK, so perfect name space is in order to distinguish Microsoft.Office.Interop.Excel.Workbook and DocumentFormat.OpenXml.Spreadsheet.Workbook.</p>
+</div>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">&#8220;path&#8221; create from the argument of Application_Startup_1 event handler of App class defined in App.xaml.cs.</p>
+<div style="margin:0px 0px 10px 0px;">
+<table style="border-collapse:collapse; background: #d9d9d9" border="0">
+<tbody valign="top">
+<tr style="height: 126px">
+<td style="padding-left: 7px; padding-right: 7px; border-top:  solid 0.5pt; border-left:  solid 0.5pt; border-bottom:  solid 0.5pt; border-right:  solid 0.5pt">
+<p style="margin:0px 0px 0px 5px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:blue">public static string</span> ExcelPath { <span style="color:blue">get</span>; <span style="color:blue">set</span>; }
+</p>
+<p style="margin:0px 0px 0px 5px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:blue">private void</span> Application_Startup_1(<span style="color:blue">object</span> sender, <span style="color:#2b91af">StartupEventArgs </span>e)</p>
+<p style="margin:0px 0px 0px 5px;font-family:Consolas; font-size:9pt;font-color:black;">{</p>
+<p style="margin:0px 0px 0px 25px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:blue">foreach</span> (<span style="color:blue">string</span> arg <span style="color:blue">in</span> e.Args)</p>
+<p style="margin:0px 0px 0px 25px;font-family:Consolas; font-size:9pt;font-color:black;">{</p>
+<p style="margin:0px 0px 0px 45px;font-family:Consolas; font-size:9pt;font-color:black;">ExcelPath = arg;</p>
+<p style="margin:0px 0px 0px 25px;font-family:Consolas; font-size:9pt;font-color:black;">}</p>
+<p style="margin:5px;font-family:Consolas; font-size:9pt;font-color:black;">}</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">In MainWindow.xaml.cs, Static variable of App class &#8220;ExcelPath&#8221; input to variable &#8220;path&#8221; of class MainWindow. And add the Window Loaded event handler at MainWindow class constructor</p>
+<div style="margin:0px 0px 10px 0px;">
+<table style="border-collapse:collapse; background: #d9d9d9" border="0">
+<tbody valign="top">
+<tr style="height: 18px">
+<td vAlign="middle" style="padding-left: 7px; padding-right: 7px; border-top:  solid 0.5pt; border-left:  solid 0.5pt; border-bottom:  solid 0.5pt; border-right:  solid 0.5pt">
+<p style="margin:0px 0px 0px 5px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:blue">private string</span> path = <span style="color:#2b91af">App</span>.ExcelPath;<span style="color:green"> // add this line</span></p>
+<p style="margin:0px 0px 0px 5px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:blue">public </span>MainWindow()</p>
+<p style="margin:0px 0px 0px 5px;font-family:Consolas; font-size:9pt;font-color:black;">{</p>
+<p style="margin:0px 0px 0px 25px;font-family:Consolas; font-size:9pt;font-color:black;">InitializeComponent();</p>
+<p style="margin:0px 0px 0px 25px;font-family:Consolas; font-size:9pt;font-color:black;">Loaded += MainWindow_Loaded;<span style="color:green"> // add this line</span></p>
+<p style="margin:0px 0px 0px 5px;font-family:Consolas; font-size:9pt;font-color:black;">}</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">In MainWindow_Loaded event handler of MainWindow.xaml.cs, follow the code above, add code  that the XPS file export from the Excel file..</p>
+<div style="margin:0px 0px 10px 0px;">
+<table style="border-collapse:collapse; background: #d9d9d9" border="0">
+<tbody valign="top">
+<tr style="height: 33px">
+<td style="padding-left: 7px; padding-right: 7px; border-top:  solid 0.5pt; border-left:  solid 0.5pt; border-bottom:  solid 0.5pt; border-right:  solid 0.5pt">
+<p style="margin:0px 0px 0px 5px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:blue">void </span>MainWindow_Loaded(<span style="color:blue">object </span>sender, <span style="color:#2b91af">RoutedEventArgs </span>e)</p>
+<p style="margin:0px 0px 0px 5px;font-family:Consolas; font-size:9pt;font-color:black;">{</p>
+<p style="margin:0px 0px 0px 25px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:blue">var</span> excelApp = <span style="color:blue">new</span> Microsoft.Office.Interop.Excel.<span style="color:#2b91af">Application</span>();</p>
+<p style="margin:0px 0px 0px 25px;font-family:Consolas; font-size:9pt;font-color:black;">excelApp.DisplayAlerts = <span style="color:blue">false</span>;</p>
+<p style="margin:0px 0px 0px 25px;font-family:Consolas; font-size:9pt;font-color:black;">excelApp.Visible = <span style="color:blue">false</span>;</p>
+<p style="margin:0px 0px 0px 25px;font-family:Consolas; font-size:9pt;font-color:black;">Microsoft.Office.Interop.Excel.<span style="color:#2b91af">Workbook </span>excelWorkbook = excelApp.Workbooks.Open(path);</p>
+<p style="margin:0px 0px 0px 25px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:green">// add below</span></p>
+<p style="margin:0px 0px 0px 25px;font-family:Consolas; font-size:9pt;font-color:black;">ExportXPS(excelWorkbook);<span style="color:green"> // XPS Exporter is explained at next description</span></p>
+<p style="margin:0px 0px 0px 25px;font-family:Consolas; font-size:9pt;font-color:black;">excelWorkbook.Close(<span style="color:blue">false</span>, <span style="color:blue">null</span>, <span style="color:blue">null</span>);</p>
+<p style="margin:0px 0px 0px 25px;font-family:Consolas; font-size:9pt;font-color:black;">excelApp.Quit();</p>
+<p style="margin:0px 0px 0px 25px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:green">// release com object</span></p>
+<p style="margin:0px 0px 0px 25px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:#2b91af">Marshal</span>.ReleaseComObject(excelApp);</p>
+<p style="margin:0px 0px 0px 25px;font-family:Consolas; font-size:9pt;font-color:black;">excelApp = <span style="color:blue">null</span>;</p>
+<p style="margin:0px 0px 0px 5px;font-family:Consolas; font-size:9pt;font-color:black;">}</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">Save the XPS file from the Excel file.</p>
+<div style="margin:0px 0px 10px 0px;">
+<table style="border-collapse:collapse; background: #d9d9d9" border="0">
+<tbody valign="top">
+<tr style="height: 18px">
+<td style="padding-left: 7px; padding-right: 7px; border-top:  solid 0.5pt; border-left:  solid 0.5pt; border-bottom:  solid 0.5pt; border-right:  solid 0.5pt">
+<p style="margin:0px 0px 0px 5px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:blue">string</span> xpsFileName = <span style="color:#a31515">&#8220;&#8221;</span>;</p>
+<p style="margin:0px 0px 0px 5px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:blue">void </span>ExportXPS(Microsoft.Office.Interop.Excel.<span style="color:#2b91af">Workbook </span>excelWorkbook)</p>
+<p style="margin:0px 0px 0px 5px;font-family:Consolas; font-size:9pt;font-color:black;">{</p>
+<p style="margin:0px 0px 0px 25px;font-family:Consolas; font-size:9pt;font-color:black;">xpsFileName = (<span style="color:blue">new</span> <span style="color:#2b91af">DirectoryInfo</span>(path)).FullName;</p>
+<p style="margin:0px 0px 0px 25px;font-family:Consolas; font-size:9pt;font-color:black;">xpsFileName = xpsFileName.Replace(<span style="color:blue">new</span> <span style="color:#2b91af">FileInfo</span>(path).Extension, <span style="color:#a31515">&#8220;&#8221;</span>) + <span style="color:#a31515">&#8220;.xps&#8221;</span>;</p>
+<p style="margin:0px 0px 0px 25px;font-family:Consolas; font-size:9pt;font-color:black;">excelWorkbook.ExportAsFixedFormat(<span style="color:#2b91af">XlFixedFormatType</span>.xlTypeXPS,</p>
+<p style="margin:0px 0px 0px 65px;font-family:Consolas; font-size:9pt;font-color:black;">Filename: xpsFileName,</p>
+<p style="margin:0px 0px 0px 65px;font-family:Consolas; font-size:9pt;font-color:black;">OpenAfterPublish: <span style="color:blue">false</span>);</p>
+<p style="margin:0px 0px 0px 5px;font-family:Consolas; font-size:9pt;font-color:black;">}</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p style="margin:10px 0px 0px 0px;font-size:14pt;font-weight:700;">2. How to display XPS file in WPF app.</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">To read XPS file for display to the DocumentViewer, placement the DocumentViewer component from the Tool box to MainWindow.xaml. If set the Window height size to 768 and width size to 1024, the DocumentViewer is stretched to same size by default.</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">Drag the DocumentViewer component from the All WPF Controls of Toolbox and drop into the Grid area and set x:Name property to &#8220;DocumentViewer&#8221;. </p>
+<div style="margin:0px 0px 10px 0px;">
+<table style="border-collapse:collapse; background: #d9d9d9" border="0">
+<tbody valign="top">
+<tr style="height: 76px">
+<td style="padding-left: 7px; padding-right: 7px; border-top:  solid 0.5pt; border-left:  solid 0.5pt; border-bottom:  solid 0.5pt; border-right:  solid 0.5pt">
+<p style="margin:0px 0px 0px 5px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:blue">&lt;<span style="color:#a31515">Window </span><span style="color:red">x</span><span style="color:blue">:</span><span style="color:red">Class</span><span style="color:blue">=&#8221;ExcelViewer.MainWindow&#8221;</span></p>
+<p style="margin:0px 0px 0px 55px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:red">xmlns</span><span style="color:blue">=&#8221;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#8221;</span></p>
+<p style="margin:0px 0px 0px 55px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:red">xmlns</span><span style="color:blue">:</span><span style="color:red">x</span><span style="color:blue">=&#8221;http://schemas.microsoft.com/winfx/2006/xaml&#8221;</span>
+</p>
+<p style="margin:0px 0px 0px 55px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:red">Title</span><span style="color:blue">=&#8221;MainWindow&#8221;</span> <span style="color:red">Height</span><span style="color:blue">=&#8221;768&#8243;</span> <span style="color:red">Width</span><span style="color:blue">=&#8221;1024&#8243;&gt;</span></p>
+<p style="margin:0px 0px 0px 25px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:blue">&lt;</span><span style="color:#a31515">Grid</span><span style="color:blue">&gt;</span></p>
+<p style="margin:0px 0px 0px 45px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:blue">&lt;</span><span style="color:#a31515">DocumentViewer </span><span style="color:red">x</span><span style="color:blue">:</span><span style="color:red">Name</span><span style="color:blue">=&#8221;DocumentWindow&#8221; /&gt;</span></p>
+<p style="margin:0px 0px 0px 25px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:blue">&lt;/<span style="color:#a31515">Grid<span style="color:blue">&gt;</span></p>
+<p style="margin:0px 0px 0px 5px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:blue">&lt;/<span style="color:#a31515">Window<span style="color:blue">&gt;</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p style="margin:10px 0px 0px 0px;">figure. Stretch every direction to parent element is default property of the DocumentViewer.</p>
+<p><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2013/04/Documentviewer.png" alt=""/></p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">Read the XPS file that create from the Excel file and display into the DocumentViewer control &#8220;DocumentWindow&#8221; by feature of the Windows OS. Add reference the ReachFremework, several using and create handler &#8220;DisplayXPSFile&#8221; for that the GetFixedDocumentSequence method of the XpsDocument object provide the FixedDocumentSequence to the DocumentViewer.</p>
+<p style="margin:10px 0px 0px 0px;text-indent:1em;">figure. the ReachFramework for read XPS file.</p>
+<p><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2013/04/reachframework.png" alt=""/></p>
+<div style="margin:0px 0px 10px 0px;">
+<table style="border-collapse:collapse; background: #d9d9d9" border="0">
+<tbody valign="top">
+<tr style="height: 76px">
+<td style="padding-left: 7px; padding-right: 7px; border-top:  solid 0.5pt; border-left:  solid 0.5pt; border-bottom:  solid 0.5pt; border-right:  solid 0.5pt">
+<p style="margin:0px 0px 0px 5px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:blue">using</span> Microsoft.Office.Interop.Excel;</p>
+<p style="margin:0px 0px 0px 5px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:blue">using</span> System.IO;</p>
+<p style="margin:0px 0px 0px 5px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:blue">using</span> System.Runtime.InteropServices;</p>
+<p style="margin:0px 0px 0px 5px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:blue">using</span> System.Windows;</p>
+<p style="margin:0px 0px 0px 5px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:blue">using</span> System.Windows.Documents;</p>
+<p style="margin:0px 0px 0px 5px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:blue">using</span> System.Windows.Xps.Packaging;</p>
+<p style="margin:0px 0px 0px 5px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:blue">using</span> System.IO.Packaging;</p>
+<p></p>
+<p style="margin:0px 0px 0px 5px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:blue">namespace</span> ExcelViewer</p>
+<p style="margin:0px 0px 0px 5px;font-family:Consolas; font-size:9pt;font-color:black;">{</p>
+<p style="margin:0px 0px 0px 25px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:blue">public partial class</span> <span style="color:#2b91af">MainWindow</span> : System.Windows.<span style="color:#2b91af">Window</span></p>
+<p style="margin:0px 0px 0px 25px;font-family:Consolas; font-size:9pt;font-color:black;">{</p>
+<p style="margin:0px 0px 0px 45px;font-family:Consolas; font-size:9pt;font-color:black;">&#8230;</p>
+<p style="margin:0px 0px 0px 45px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:blue">void</span> MainWindow_Loaded(<span style="color:blue">object</span> sender, <span style="color:#2b91af">RoutedEventArgs</span> e)</p>
+<p style="margin:0px 0px 0px 45px;font-family:Consolas; font-size:9pt;font-color:black;">{</p>
+<p style="margin:0px 0px 0px 65px;font-family:Consolas; font-size:9pt;font-color:black;">&#8230;</p>
+<p style="margin:0px 0px 0px 65px;font-family:Consolas; font-size:9pt;font-color:black;">excelApp = <span style="color:blue">null</span>;</p>
+<p style="margin:0px 0px 0px 65px;font-family:Consolas; font-size:9pt;font-color:black;">DisplayXPSFile();</p>
+<p style="margin:0px 0px 0px 45px;font-family:Consolas; font-size:9pt;font-color:black;">}</p>
+<p style="margin:0px 0px 0px 45px;font-family:Consolas; font-size:9pt;font-color:black;">&#8230;</p>
+<p style="margin:0px 0px 0px 45px;font-family:Consolas; font-size:9pt;font-color:black;">void DisplayXPSFile()</p>
+<p style="margin:0px 0px 0px 45px;font-family:Consolas; font-size:9pt;font-color:black;">{</p>
+<p style="margin:0px 0px 0px 65px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:#2b91af">XpsDocument</span> xpsPackage = <span style="color:blue">new</span> XpsDocument(xpsFileName, <span style="color:#2b91af">FileAccess</span>.Read, <span style="color:#2b91af">CompressionOption</span>.NotCompressed);</p>
+<p style="margin:0px 0px 0px 65px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:#2b91af">FixedDocumentSequence</span> fixedDocumentSequence = xpsPackage.GetFixedDocumentSequence();</p>
+<p style="margin:0px 0px 0px 65px;font-family:Consolas; font-size:9pt;font-color:black;">DocumentWindow.Document = fixedDocumentSequence;</p>
+<p style="margin:0px 0px 0px 45px;font-family:Consolas; font-size:9pt;font-color:black;">}</p>
+<p style="margin:0px 0px 0px 25px;font-family:Consolas; font-size:9pt;font-color:black;">}</p>
+<p style="margin:0px 0px 0px 5px;font-family:Consolas; font-size:9pt;font-color:black;">}</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p style="margin:10px 0px 0px 0px;text-indent:1em;">figure. Simple Excel file viewer created by WPF app.</p>
+<p><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2013/04/LaunchExcelViewer.png" alt=""/></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2013/08/26/wpf-app-that-display-excel-file-2/feed/</wfw:commentRss>
+			<slash:comments>2</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Integrating OWA( Office Web App) to business solution.</title>
+		<link>https://blog.processtune.com/2013/01/26/integrating-owa-office-web-app-to-business-solution/</link>
+					<comments>https://blog.processtune.com/2013/01/26/integrating-owa-office-web-app-to-business-solution/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Sat, 26 Jan 2013 05:59:20 +0000</pubDate>
+				<category><![CDATA[Office Business App]]></category>
+		<category><![CDATA[Office Web App]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<guid isPermaLink="false">http://www.processtune.com/blog/?p=467</guid>
+
+					<description><![CDATA[OWA is provide few features. But there is standerd way to connect office app and web system. Therefore OWA integrating a data and a business logic of solution existing to Office. This is document for foundation of OWA and explain inprimentation code.]]></description>
+										<content:encoded><![CDATA[<p>OWA is provide few features. But there is standerd way to connect office app and web system. Therefore OWA integrating a data and a business logic of solution existing to Office.</p>
+<p><a href="http://processtuneblog.azurewebsites.net/wp-content/uploads/2013/01/OWAHokuriku.zip">This is document for foundation of OWA and explain inprimentation code.</a></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2013/01/26/integrating-owa-office-web-app-to-business-solution/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

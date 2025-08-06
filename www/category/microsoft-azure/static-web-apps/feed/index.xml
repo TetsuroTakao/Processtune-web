@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Static web Apps &#8211; Processtune Blog</title>
+	<atom:link href="https://blog.processtune.com/category/microsoft-azure/static-web-apps/feed/" rel="self" type="application/rss+xml" />
+	<link>https://blog.processtune.com/</link>
+	<description>Articles offered from Microsoft MVP</description>
+	<lastBuildDate>Mon, 27 Mar 2023 07:39:51 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.8.2</generator>
+
+<image>
+	<url>/wp-content/uploads/2023/03/cropped-Presentation-32x32.png</url>
+	<title>Static web Apps &#8211; Processtune Blog</title>
+	<link>https://blog.processtune.com/</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>Create reverse proxy using dotnet minimal</title>
+		<link>https://blog.processtune.com/2022/01/15/create-reverse-proxy-using-dotnet-minimal/</link>
+					<comments>https://blog.processtune.com/2022/01/15/create-reverse-proxy-using-dotnet-minimal/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Sat, 15 Jan 2022 05:04:33 +0000</pubDate>
+				<category><![CDATA[Docker]]></category>
+		<category><![CDATA[Microservice]]></category>
+		<category><![CDATA[Microsoft Azure]]></category>
+		<category><![CDATA[Nginx]]></category>
+		<category><![CDATA[Reverce Proxy]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Static web Apps]]></category>
+		<category><![CDATA[vim]]></category>
+		<category><![CDATA[WSL2]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=5864</guid>
+
+					<description><![CDATA[If you develop some api that is used from external applications, you have to create caller side dummy app for develop your api. Or if already API caller side app exists, for decleasing cost to create development environment, or needs various result patterns as simulate for real functions, there are efficient for development that inbound [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin: 0px 0px 0px 0px; color: #000044; font-size: 0.9rem;">If you develop some api that is used from external applications, you have to create caller side dummy app for develop your api. Or if already API caller side app exists, for decleasing cost to create development environment, or needs various result patterns as simulate for real functions, there are efficient for development that inbound connection create tool such as ngrok or Localtunnel and so on.<br />
+Even if in the case of impossible that use these tools for aspect of security or policies, there is able to create kind of similer feature use ASP.NET Core Web API minimal option template to accept requests of various test patterns from its external applications.<br />
+This article describes how to create reverse proxy as inbound connection creator.</p>
+<p style="margin: 10px 0px 0px 5px; text-indent: 1em; text-align: right; font-weight: bold;">&gt;&gt;<a style="font-weight: bold;" href="https://github.com/TetsuroTakao/svgiconcoloringweb" target="_new" rel="noopener">Sample project of reverse proxy using ASP.NET Core Web API minimal option template</a></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Swagger feature of minimal option</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">ASP.NET Core Web API minimal option template has already swagger service feature. It is great impact for productivity of development team. <a style="font-weight: bold;" href="https://docs.microsoft.com/en-us/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-6.0&amp;tabs=visual-studio?WT.mc_id=DT-MVP-4029060" target="_new" rel="noopener">This swagger service feature alone is able to install to development environment</a>, althogh it is very fast creation that using ASP.NET Core Web API minimal option template if want to create a develoment server.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px;">[Only swagger service feature]
+Install-Package Swashbuckle.AspNetCore -Version 6.2.3
+[Only swagger json generator feature]
+Install-Package Swashbuckle.AspNetCore.SwaggerGen -Version 6.3.0
+[Only swagger UI feature]
+Install-Package Swashbuckle.AspNetCore.SwaggerUI -Version 6.3.0
+
+[ASP.NET Core Web API minimal option]
+dotnet new webapi -minimal
+</pre>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">The command [dotnet new webapi -minimal] generate code of Swagger below. So if install these components respectively, can build Swagger feature to Blazor Server App template or ASP.NET Core Web App template, ASP.NET Core gRPC Service template and so on with same procedure.</p>
+<p style="display: inline-block; margin-bottom: 10px; text-align: center; width: 100%;"><img decoding="async" style="width: 450px;" src="/wp-content/uploads/2022/03/seagger.png" alt=""><img decoding="async" style="width: 450px;" src="/wp-content/uploads/2022/03/swaggerCode.png" alt=""></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Reverse proxy</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">Though this article describes very simple reverse proxy, this sample project is base of development server for developer team, and for API development, it is able to use as development log server or team members authentication/management server, load test server. <a style="font-weight: bold;" href="https://azure.microsoft.com/en-us/updates/azure-service-fabric-mesh-preview-retirement/" target="_new" rel="noopener">Azure Service Fabric Mesh service is already ended</a> although, the service had these team development support features includes swagger service and was very useful for team development. These features are important for team development, so have to create development server for team development.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">It is super easy to create reverse proxy use ASP.NET Core Web API minimal option template. Modify the [MapGet] method of the [Program.cs] file to redirect a request to another URL. HTTP Get request to the Route URL redirect to the port number [5080] in the case of the code below.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px;">app.MapGet("/", context =&gt;
+{
+    context.Response.Redirect("http://localhost:5080/",permanent:true);
+    return Task.FromResult(0);
+});
+</pre>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">Default port of the template is the port number [5078], so use the port number [5080] as redirect port.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">Menbers of the development team does not know infromation involving redirect, so create information as Swagger. When access this server with browser, since the request redirect to the port number [5080] temporalily, then type manually the address [localhost:5078/settingsInfo] into the address box of the browser. swagger can show information because create the feature below.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px;">var hosts = app.Configuration.GetSection("ServiceHosts");
+app.MapGet("/settingsInfo", () =&gt;
+{
+    var result = string.Empty;
+    foreach(var i in hosts.AsEnumerable()){
+        result += string.Format("{0}={1}",i.Key,i.Value) + Environment.NewLine;
+    }
+    return result;
+});
+</pre>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">This code use the [appsettings.json] file to define a settings for host services address of microservices as example.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px;">{
+  "ServiceHosts":{
+    "/":"localhost:5080",
+    "8080":"localhost:8080",
+    "8081":"localhost:8081",
+    "8082":"localhost:8082",
+    "8083":"localhost:8083"
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*"
+}
+</pre>
+<p style="display: inline-block; margin-bottom: 10px; text-align: center; width: 100%;"><img decoding="async" style="width: 900px;" src="/wp-content/uploads/2022/03/settingsinfo.png" alt=""></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2022/01/15/create-reverse-proxy-using-dotnet-minimal/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

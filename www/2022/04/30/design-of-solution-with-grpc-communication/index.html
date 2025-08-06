@@ -1,0 +1,2120 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="profile" href="http://gmpg.org/xfn/11">
+    <title>Design of solution with gRPC communication &ndash; Processtune Blog</title>
+<meta name="robots" content="max-image-preview:large">
+	<style>img:is([sizes="auto" i], [sizes^="auto," i]) { contain-intrinsic-size: 3000px 1500px }</style>
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+<link rel="alternate" type="application/rss+xml" title="Processtune Blog &raquo; Feed" href="https://blog.processtune.com/feed/">
+<link rel="alternate" type="application/rss+xml" title="Processtune Blog &raquo; Comments Feed" href="https://blog.processtune.com/comments/feed/">
+<link rel="alternate" type="application/rss+xml" title="Processtune Blog &raquo; Design of solution with gRPC communication Comments Feed" href="https://blog.processtune.com/2022/04/30/design-of-solution-with-grpc-communication/feed/">
+<script type="text/javascript">
+/* <![CDATA[ */
+window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/16.0.1\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/16.0.1\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/blog.processtune.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=6.8.2"}};
+/*! This file is auto-generated */
+!function(s,n){var o,i,e;function c(e){try{var t={supportTests:e,timestamp:(new Date).valueOf()};sessionStorage.setItem(o,JSON.stringify(t))}catch(e){}}function p(e,t,n){e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(t,0,0);var t=new Uint32Array(e.getImageData(0,0,e.canvas.width,e.canvas.height).data),a=(e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(n,0,0),new Uint32Array(e.getImageData(0,0,e.canvas.width,e.canvas.height).data));return t.every(function(e,t){return e===a[t]})}function u(e,t){e.clearRect(0,0,e.canvas.width,e.canvas.height),e.fillText(t,0,0);for(var n=e.getImageData(16,16,1,1),a=0;a<n.data.length;a++)if(0!==n.data[a])return!1;return!0}function f(e,t,n,a){switch(t){case"flag":return n(e,"\ud83c\udff3\ufe0f\u200d\u26a7\ufe0f","\ud83c\udff3\ufe0f\u200b\u26a7\ufe0f")?!1:!n(e,"\ud83c\udde8\ud83c\uddf6","\ud83c\udde8\u200b\ud83c\uddf6")&&!n(e,"\ud83c\udff4\udb40\udc67\udb40\udc62\udb40\udc65\udb40\udc6e\udb40\udc67\udb40\udc7f","\ud83c\udff4\u200b\udb40\udc67\u200b\udb40\udc62\u200b\udb40\udc65\u200b\udb40\udc6e\u200b\udb40\udc67\u200b\udb40\udc7f");case"emoji":return!a(e,"\ud83e\udedf")}return!1}function g(e,t,n,a){var r="undefined"!=typeof WorkerGlobalScope&&self instanceof WorkerGlobalScope?new OffscreenCanvas(300,150):s.createElement("canvas"),o=r.getContext("2d",{willReadFrequently:!0}),i=(o.textBaseline="top",o.font="600 32px Arial",{});return e.forEach(function(e){i[e]=t(o,e,n,a)}),i}function t(e){var t=s.createElement("script");t.src=e,t.defer=!0,s.head.appendChild(t)}"undefined"!=typeof Promise&&(o="wpEmojiSettingsSupports",i=["flag","emoji"],n.supports={everything:!0,everythingExceptFlag:!0},e=new Promise(function(e){s.addEventListener("DOMContentLoaded",e,{once:!0})}),new Promise(function(t){var n=function(){try{var e=JSON.parse(sessionStorage.getItem(o));if("object"==typeof e&&"number"==typeof e.timestamp&&(new Date).valueOf()<e.timestamp+604800&&"object"==typeof e.supportTests)return e.supportTests}catch(e){}return null}();if(!n){if("undefined"!=typeof Worker&&"undefined"!=typeof OffscreenCanvas&&"undefined"!=typeof URL&&URL.createObjectURL&&"undefined"!=typeof Blob)try{var e="postMessage("+g.toString()+"("+[JSON.stringify(i),f.toString(),p.toString(),u.toString()].join(",")+"));",a=new Blob([e],{type:"text/javascript"}),r=new Worker(URL.createObjectURL(a),{name:"wpTestEmojiSupports"});return void(r.onmessage=function(e){c(n=e.data),r.terminate(),t(n)})}catch(e){}c(n=g(i,f,p,u))}t(n)}).then(function(e){for(var t in e)n.supports[t]=e[t],n.supports.everything=n.supports.everything&&n.supports[t],"flag"!==t&&(n.supports.everythingExceptFlag=n.supports.everythingExceptFlag&&n.supports[t]);n.supports.everythingExceptFlag=n.supports.everythingExceptFlag&&!n.supports.flag,n.DOMReady=!1,n.readyCallback=function(){n.DOMReady=!0}}).then(function(){return e}).then(function(){var e;n.supports.everything||(n.readyCallback(),(e=n.source||{}).concatemoji?t(e.concatemoji):e.wpemoji&&e.twemoji&&(t(e.twemoji),t(e.wpemoji)))}))}((window,document),window._wpemojiSettings);
+/* ]]> */
+</script>
+<link rel="stylesheet" id="extend-builder-css-css" href="https://blog.processtune.com/wp-content/plugins/colibri-page-builder/extend-builder/assets/static/css/theme.css?ver=1.0.222" type="text/css" media="all">
+<style id="extend-builder-css-inline-css" type="text/css">
+/* page css */
+/* part css : theme-shapes */
+.colibri-shape-circles {
+background-image:url('https://blog.processtune.com/wp-content/themes/colibri-wp/resources/images/header-shapes/circles.png')
+}
+.colibri-shape-10degree-stripes {
+background-image:url('https://blog.processtune.com/wp-content/themes/colibri-wp/resources/images/header-shapes/10degree-stripes.png')
+}
+.colibri-shape-rounded-squares-blue {
+background-image:url('https://blog.processtune.com/wp-content/themes/colibri-wp/resources/images/header-shapes/rounded-squares-blue.png')
+}
+.colibri-shape-many-rounded-squares-blue {
+background-image:url('https://blog.processtune.com/wp-content/themes/colibri-wp/resources/images/header-shapes/many-rounded-squares-blue.png')
+}
+.colibri-shape-two-circles {
+background-image:url('https://blog.processtune.com/wp-content/themes/colibri-wp/resources/images/header-shapes/two-circles.png')
+}
+.colibri-shape-circles-2 {
+background-image:url('https://blog.processtune.com/wp-content/themes/colibri-wp/resources/images/header-shapes/circles-2.png')
+}
+.colibri-shape-circles-3 {
+background-image:url('https://blog.processtune.com/wp-content/themes/colibri-wp/resources/images/header-shapes/circles-3.png')
+}
+.colibri-shape-circles-gradient {
+background-image:url('https://blog.processtune.com/wp-content/themes/colibri-wp/resources/images/header-shapes/circles-gradient.png')
+}
+.colibri-shape-circles-white-gradient {
+background-image:url('https://blog.processtune.com/wp-content/themes/colibri-wp/resources/images/header-shapes/circles-white-gradient.png')
+}
+.colibri-shape-waves {
+background-image:url('https://blog.processtune.com/wp-content/themes/colibri-wp/resources/images/header-shapes/waves.png')
+}
+.colibri-shape-waves-inverted {
+background-image:url('https://blog.processtune.com/wp-content/themes/colibri-wp/resources/images/header-shapes/waves-inverted.png')
+}
+.colibri-shape-dots {
+background-image:url('https://blog.processtune.com/wp-content/themes/colibri-wp/resources/images/header-shapes/dots.png')
+}
+.colibri-shape-left-tilted-lines {
+background-image:url('https://blog.processtune.com/wp-content/themes/colibri-wp/resources/images/header-shapes/left-tilted-lines.png')
+}
+.colibri-shape-right-tilted-lines {
+background-image:url('https://blog.processtune.com/wp-content/themes/colibri-wp/resources/images/header-shapes/right-tilted-lines.png')
+}
+.colibri-shape-right-tilted-strips {
+background-image:url('https://blog.processtune.com/wp-content/themes/colibri-wp/resources/images/header-shapes/right-tilted-strips.png')
+}
+/* part css : theme */
+
+.h-y-container > *:not(:last-child), .h-x-container-inner > * {
+  margin-bottom: 20px;
+}
+.h-x-container-inner, .h-column__content > .h-x-container > *:last-child {
+  margin-bottom: -20px;
+}
+.h-x-container-inner > * {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.h-x-container-inner {
+  margin-left: -10px;
+  margin-right: -10px;
+}
+[class*=style-], [class*=local-style-], .h-global-transition, .h-global-transition-all, .h-global-transition-all * {
+  transition-duration: 0.5s;
+}
+.wp-block-button .wp-block-button__link:not(.has-background),.wp-block-file .wp-block-file__button {
+  background-color: #03a9f4;
+  background-image: none;
+}
+.wp-block-button .wp-block-button__link:not(.has-background):hover,.wp-block-button .wp-block-button__link:not(.has-background):focus,.wp-block-button .wp-block-button__link:not(.has-background):active,.wp-block-file .wp-block-file__button:hover,.wp-block-file .wp-block-file__button:focus,.wp-block-file .wp-block-file__button:active {
+  background-color: rgb(2, 110, 159);
+  background-image: none;
+}
+.wp-block-button.is-style-outline .wp-block-button__link:not(.has-background) {
+  color: #03a9f4;
+  background-color: transparent;
+  background-image: none;
+  border-top-width: 2px;
+  border-top-color: #03a9f4;
+  border-top-style: solid;
+  border-right-width: 2px;
+  border-right-color: #03a9f4;
+  border-right-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #03a9f4;
+  border-bottom-style: solid;
+  border-left-width: 2px;
+  border-left-color: #03a9f4;
+  border-left-style: solid;
+}
+.wp-block-button.is-style-outline .wp-block-button__link:not(.has-background):hover,.wp-block-button.is-style-outline .wp-block-button__link:not(.has-background):focus,.wp-block-button.is-style-outline .wp-block-button__link:not(.has-background):active {
+  color: #fff;
+  background-color: #03a9f4;
+  background-image: none;
+}
+.has-background-color,*[class^="wp-block-"].is-style-solid-color {
+  background-color: #03a9f4;
+  background-image: none;
+}
+.has-colibri-color-1-background-color {
+  background-color: #03a9f4;
+  background-image: none;
+}
+.wp-block-button .wp-block-button__link.has-colibri-color-1-background-color {
+  background-color: #03a9f4;
+  background-image: none;
+}
+.wp-block-button .wp-block-button__link.has-colibri-color-1-background-color:hover,.wp-block-button .wp-block-button__link.has-colibri-color-1-background-color:focus,.wp-block-button .wp-block-button__link.has-colibri-color-1-background-color:active {
+  background-color: rgb(2, 110, 159);
+  background-image: none;
+}
+.wp-block-button.is-style-outline .wp-block-button__link.has-colibri-color-1-background-color {
+  color: #03a9f4;
+  background-color: transparent;
+  background-image: none;
+  border-top-width: 2px;
+  border-top-color: #03a9f4;
+  border-top-style: solid;
+  border-right-width: 2px;
+  border-right-color: #03a9f4;
+  border-right-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #03a9f4;
+  border-bottom-style: solid;
+  border-left-width: 2px;
+  border-left-color: #03a9f4;
+  border-left-style: solid;
+}
+.wp-block-button.is-style-outline .wp-block-button__link.has-colibri-color-1-background-color:hover,.wp-block-button.is-style-outline .wp-block-button__link.has-colibri-color-1-background-color:focus,.wp-block-button.is-style-outline .wp-block-button__link.has-colibri-color-1-background-color:active {
+  color: #fff;
+  background-color: #03a9f4;
+  background-image: none;
+}
+*[class^="wp-block-"].has-colibri-color-1-background-color,*[class^="wp-block-"] .has-colibri-color-1-background-color,*[class^="wp-block-"].is-style-solid-color.has-colibri-color-1-color,*[class^="wp-block-"].is-style-solid-color blockquote.has-colibri-color-1-color,*[class^="wp-block-"].is-style-solid-color blockquote.has-colibri-color-1-color p {
+  background-color: #03a9f4;
+  background-image: none;
+}
+.has-colibri-color-1-color {
+  color: #03a9f4;
+}
+.has-colibri-color-2-background-color {
+  background-color: #f79007;
+  background-image: none;
+}
+.wp-block-button .wp-block-button__link.has-colibri-color-2-background-color {
+  background-color: #f79007;
+  background-image: none;
+}
+.wp-block-button .wp-block-button__link.has-colibri-color-2-background-color:hover,.wp-block-button .wp-block-button__link.has-colibri-color-2-background-color:focus,.wp-block-button .wp-block-button__link.has-colibri-color-2-background-color:active {
+  background-color: rgb(162, 94, 5);
+  background-image: none;
+}
+.wp-block-button.is-style-outline .wp-block-button__link.has-colibri-color-2-background-color {
+  color: #f79007;
+  background-color: transparent;
+  background-image: none;
+  border-top-width: 2px;
+  border-top-color: #f79007;
+  border-top-style: solid;
+  border-right-width: 2px;
+  border-right-color: #f79007;
+  border-right-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #f79007;
+  border-bottom-style: solid;
+  border-left-width: 2px;
+  border-left-color: #f79007;
+  border-left-style: solid;
+}
+.wp-block-button.is-style-outline .wp-block-button__link.has-colibri-color-2-background-color:hover,.wp-block-button.is-style-outline .wp-block-button__link.has-colibri-color-2-background-color:focus,.wp-block-button.is-style-outline .wp-block-button__link.has-colibri-color-2-background-color:active {
+  color: #fff;
+  background-color: #f79007;
+  background-image: none;
+}
+*[class^="wp-block-"].has-colibri-color-2-background-color,*[class^="wp-block-"] .has-colibri-color-2-background-color,*[class^="wp-block-"].is-style-solid-color.has-colibri-color-2-color,*[class^="wp-block-"].is-style-solid-color blockquote.has-colibri-color-2-color,*[class^="wp-block-"].is-style-solid-color blockquote.has-colibri-color-2-color p {
+  background-color: #f79007;
+  background-image: none;
+}
+.has-colibri-color-2-color {
+  color: #f79007;
+}
+.has-colibri-color-3-background-color {
+  background-color: #00bf87;
+  background-image: none;
+}
+.wp-block-button .wp-block-button__link.has-colibri-color-3-background-color {
+  background-color: #00bf87;
+  background-image: none;
+}
+.wp-block-button .wp-block-button__link.has-colibri-color-3-background-color:hover,.wp-block-button .wp-block-button__link.has-colibri-color-3-background-color:focus,.wp-block-button .wp-block-button__link.has-colibri-color-3-background-color:active {
+  background-color: rgb(0, 106, 75);
+  background-image: none;
+}
+.wp-block-button.is-style-outline .wp-block-button__link.has-colibri-color-3-background-color {
+  color: #00bf87;
+  background-color: transparent;
+  background-image: none;
+  border-top-width: 2px;
+  border-top-color: #00bf87;
+  border-top-style: solid;
+  border-right-width: 2px;
+  border-right-color: #00bf87;
+  border-right-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #00bf87;
+  border-bottom-style: solid;
+  border-left-width: 2px;
+  border-left-color: #00bf87;
+  border-left-style: solid;
+}
+.wp-block-button.is-style-outline .wp-block-button__link.has-colibri-color-3-background-color:hover,.wp-block-button.is-style-outline .wp-block-button__link.has-colibri-color-3-background-color:focus,.wp-block-button.is-style-outline .wp-block-button__link.has-colibri-color-3-background-color:active {
+  color: #fff;
+  background-color: #00bf87;
+  background-image: none;
+}
+*[class^="wp-block-"].has-colibri-color-3-background-color,*[class^="wp-block-"] .has-colibri-color-3-background-color,*[class^="wp-block-"].is-style-solid-color.has-colibri-color-3-color,*[class^="wp-block-"].is-style-solid-color blockquote.has-colibri-color-3-color,*[class^="wp-block-"].is-style-solid-color blockquote.has-colibri-color-3-color p {
+  background-color: #00bf87;
+  background-image: none;
+}
+.has-colibri-color-3-color {
+  color: #00bf87;
+}
+.has-colibri-color-4-background-color {
+  background-color: #6632ff;
+  background-image: none;
+}
+.wp-block-button .wp-block-button__link.has-colibri-color-4-background-color {
+  background-color: #6632ff;
+  background-image: none;
+}
+.wp-block-button .wp-block-button__link.has-colibri-color-4-background-color:hover,.wp-block-button .wp-block-button__link.has-colibri-color-4-background-color:focus,.wp-block-button .wp-block-button__link.has-colibri-color-4-background-color:active {
+  background-color: rgb(68, 33, 170);
+  background-image: none;
+}
+.wp-block-button.is-style-outline .wp-block-button__link.has-colibri-color-4-background-color {
+  color: #6632ff;
+  background-color: transparent;
+  background-image: none;
+  border-top-width: 2px;
+  border-top-color: #6632ff;
+  border-top-style: solid;
+  border-right-width: 2px;
+  border-right-color: #6632ff;
+  border-right-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #6632ff;
+  border-bottom-style: solid;
+  border-left-width: 2px;
+  border-left-color: #6632ff;
+  border-left-style: solid;
+}
+.wp-block-button.is-style-outline .wp-block-button__link.has-colibri-color-4-background-color:hover,.wp-block-button.is-style-outline .wp-block-button__link.has-colibri-color-4-background-color:focus,.wp-block-button.is-style-outline .wp-block-button__link.has-colibri-color-4-background-color:active {
+  color: #fff;
+  background-color: #6632ff;
+  background-image: none;
+}
+*[class^="wp-block-"].has-colibri-color-4-background-color,*[class^="wp-block-"] .has-colibri-color-4-background-color,*[class^="wp-block-"].is-style-solid-color.has-colibri-color-4-color,*[class^="wp-block-"].is-style-solid-color blockquote.has-colibri-color-4-color,*[class^="wp-block-"].is-style-solid-color blockquote.has-colibri-color-4-color p {
+  background-color: #6632ff;
+  background-image: none;
+}
+.has-colibri-color-4-color {
+  color: #6632ff;
+}
+.has-colibri-color-5-background-color {
+  background-color: #FFFFFF;
+  background-image: none;
+}
+.wp-block-button .wp-block-button__link.has-colibri-color-5-background-color {
+  background-color: #FFFFFF;
+  background-image: none;
+}
+.wp-block-button .wp-block-button__link.has-colibri-color-5-background-color:hover,.wp-block-button .wp-block-button__link.has-colibri-color-5-background-color:focus,.wp-block-button .wp-block-button__link.has-colibri-color-5-background-color:active {
+  background-color: rgb(102, 102, 102);
+  background-image: none;
+}
+.wp-block-button.is-style-outline .wp-block-button__link.has-colibri-color-5-background-color {
+  color: #FFFFFF;
+  background-color: transparent;
+  background-image: none;
+  border-top-width: 2px;
+  border-top-color: #FFFFFF;
+  border-top-style: solid;
+  border-right-width: 2px;
+  border-right-color: #FFFFFF;
+  border-right-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-style: solid;
+  border-left-width: 2px;
+  border-left-color: #FFFFFF;
+  border-left-style: solid;
+}
+.wp-block-button.is-style-outline .wp-block-button__link.has-colibri-color-5-background-color:hover,.wp-block-button.is-style-outline .wp-block-button__link.has-colibri-color-5-background-color:focus,.wp-block-button.is-style-outline .wp-block-button__link.has-colibri-color-5-background-color:active {
+  color: #fff;
+  background-color: #FFFFFF;
+  background-image: none;
+}
+*[class^="wp-block-"].has-colibri-color-5-background-color,*[class^="wp-block-"] .has-colibri-color-5-background-color,*[class^="wp-block-"].is-style-solid-color.has-colibri-color-5-color,*[class^="wp-block-"].is-style-solid-color blockquote.has-colibri-color-5-color,*[class^="wp-block-"].is-style-solid-color blockquote.has-colibri-color-5-color p {
+  background-color: #FFFFFF;
+  background-image: none;
+}
+.has-colibri-color-5-color {
+  color: #FFFFFF;
+}
+.has-colibri-color-6-background-color {
+  background-color: #17252a;
+  background-image: none;
+}
+.wp-block-button .wp-block-button__link.has-colibri-color-6-background-color {
+  background-color: #17252a;
+  background-image: none;
+}
+.wp-block-button .wp-block-button__link.has-colibri-color-6-background-color:hover,.wp-block-button .wp-block-button__link.has-colibri-color-6-background-color:focus,.wp-block-button .wp-block-button__link.has-colibri-color-6-background-color:active {
+  background-color: rgb(23, 37, 42);
+  background-image: none;
+}
+.wp-block-button.is-style-outline .wp-block-button__link.has-colibri-color-6-background-color {
+  color: #17252a;
+  background-color: transparent;
+  background-image: none;
+  border-top-width: 2px;
+  border-top-color: #17252a;
+  border-top-style: solid;
+  border-right-width: 2px;
+  border-right-color: #17252a;
+  border-right-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #17252a;
+  border-bottom-style: solid;
+  border-left-width: 2px;
+  border-left-color: #17252a;
+  border-left-style: solid;
+}
+.wp-block-button.is-style-outline .wp-block-button__link.has-colibri-color-6-background-color:hover,.wp-block-button.is-style-outline .wp-block-button__link.has-colibri-color-6-background-color:focus,.wp-block-button.is-style-outline .wp-block-button__link.has-colibri-color-6-background-color:active {
+  color: #fff;
+  background-color: #17252a;
+  background-image: none;
+}
+*[class^="wp-block-"].has-colibri-color-6-background-color,*[class^="wp-block-"] .has-colibri-color-6-background-color,*[class^="wp-block-"].is-style-solid-color.has-colibri-color-6-color,*[class^="wp-block-"].is-style-solid-color blockquote.has-colibri-color-6-color,*[class^="wp-block-"].is-style-solid-color blockquote.has-colibri-color-6-color p {
+  background-color: #17252a;
+  background-image: none;
+}
+.has-colibri-color-6-color {
+  color: #17252a;
+}
+#colibri .woocommerce-store-notice,#colibri.woocommerce .content .h-section input[type=submit],#colibri.woocommerce-page  .content .h-section  input[type=button],#colibri.woocommerce .content .h-section  input[type=button],#colibri.woocommerce-page  .content .h-section .button,#colibri.woocommerce .content .h-section .button,#colibri.woocommerce-page  .content .h-section  a.button,#colibri.woocommerce .content .h-section  a.button,#colibri.woocommerce-page  .content .h-section button.button,#colibri.woocommerce .content .h-section button.button,#colibri.woocommerce-page  .content .h-section input.button,#colibri.woocommerce .content .h-section input.button,#colibri.woocommerce-page  .content .h-section input#submit,#colibri.woocommerce .content .h-section input#submit,#colibri.woocommerce-page  .content .h-section a.added_to_cart,#colibri.woocommerce .content .h-section a.added_to_cart,#colibri.woocommerce-page  .content .h-section .ui-slider-range,#colibri.woocommerce .content .h-section .ui-slider-range,#colibri.woocommerce-page  .content .h-section .ui-slider-handle,#colibri.woocommerce .content .h-section .ui-slider-handle {
+  background-color: #03a9f4;
+  background-image: none;
+  border-top-width: 0px;
+  border-top-color: #03a9f4;
+  border-top-style: solid;
+  border-right-width: 0px;
+  border-right-color: #03a9f4;
+  border-right-style: solid;
+  border-bottom-width: 0px;
+  border-bottom-color: #03a9f4;
+  border-bottom-style: solid;
+  border-left-width: 0px;
+  border-left-color: #03a9f4;
+  border-left-style: solid;
+}
+#colibri .woocommerce-store-notice:hover,#colibri .woocommerce-store-notice:focus,#colibri .woocommerce-store-notice:active,#colibri.woocommerce .content .h-section input[type=submit]:hover,#colibri.woocommerce .content .h-section input[type=submit]:focus,#colibri.woocommerce .content .h-section input[type=submit]:active,#colibri.woocommerce-page  .content .h-section  input[type=button]:hover,#colibri.woocommerce-page  .content .h-section  input[type=button]:focus,#colibri.woocommerce-page  .content .h-section  input[type=button]:active,#colibri.woocommerce .content .h-section  input[type=button]:hover,#colibri.woocommerce .content .h-section  input[type=button]:focus,#colibri.woocommerce .content .h-section  input[type=button]:active,#colibri.woocommerce-page  .content .h-section .button:hover,#colibri.woocommerce-page  .content .h-section .button:focus,#colibri.woocommerce-page  .content .h-section .button:active,#colibri.woocommerce .content .h-section .button:hover,#colibri.woocommerce .content .h-section .button:focus,#colibri.woocommerce .content .h-section .button:active,#colibri.woocommerce-page  .content .h-section  a.button:hover,#colibri.woocommerce-page  .content .h-section  a.button:focus,#colibri.woocommerce-page  .content .h-section  a.button:active,#colibri.woocommerce .content .h-section  a.button:hover,#colibri.woocommerce .content .h-section  a.button:focus,#colibri.woocommerce .content .h-section  a.button:active,#colibri.woocommerce-page  .content .h-section button.button:hover,#colibri.woocommerce-page  .content .h-section button.button:focus,#colibri.woocommerce-page  .content .h-section button.button:active,#colibri.woocommerce .content .h-section button.button:hover,#colibri.woocommerce .content .h-section button.button:focus,#colibri.woocommerce .content .h-section button.button:active,#colibri.woocommerce-page  .content .h-section input.button:hover,#colibri.woocommerce-page  .content .h-section input.button:focus,#colibri.woocommerce-page  .content .h-section input.button:active,#colibri.woocommerce .content .h-section input.button:hover,#colibri.woocommerce .content .h-section input.button:focus,#colibri.woocommerce .content .h-section input.button:active,#colibri.woocommerce-page  .content .h-section input#submit:hover,#colibri.woocommerce-page  .content .h-section input#submit:focus,#colibri.woocommerce-page  .content .h-section input#submit:active,#colibri.woocommerce .content .h-section input#submit:hover,#colibri.woocommerce .content .h-section input#submit:focus,#colibri.woocommerce .content .h-section input#submit:active,#colibri.woocommerce-page  .content .h-section a.added_to_cart:hover,#colibri.woocommerce-page  .content .h-section a.added_to_cart:focus,#colibri.woocommerce-page  .content .h-section a.added_to_cart:active,#colibri.woocommerce .content .h-section a.added_to_cart:hover,#colibri.woocommerce .content .h-section a.added_to_cart:focus,#colibri.woocommerce .content .h-section a.added_to_cart:active,#colibri.woocommerce-page  .content .h-section .ui-slider-range:hover,#colibri.woocommerce-page  .content .h-section .ui-slider-range:focus,#colibri.woocommerce-page  .content .h-section .ui-slider-range:active,#colibri.woocommerce .content .h-section .ui-slider-range:hover,#colibri.woocommerce .content .h-section .ui-slider-range:focus,#colibri.woocommerce .content .h-section .ui-slider-range:active,#colibri.woocommerce-page  .content .h-section .ui-slider-handle:hover,#colibri.woocommerce-page  .content .h-section .ui-slider-handle:focus,#colibri.woocommerce-page  .content .h-section .ui-slider-handle:active,#colibri.woocommerce .content .h-section .ui-slider-handle:hover,#colibri.woocommerce .content .h-section .ui-slider-handle:focus,#colibri.woocommerce .content .h-section .ui-slider-handle:active {
+  background-color: rgb(2, 110, 159);
+  background-image: none;
+  border-top-width: 0px;
+  border-top-color: rgb(2, 110, 159);
+  border-top-style: solid;
+  border-right-width: 0px;
+  border-right-color: rgb(2, 110, 159);
+  border-right-style: solid;
+  border-bottom-width: 0px;
+  border-bottom-color: rgb(2, 110, 159);
+  border-bottom-style: solid;
+  border-left-width: 0px;
+  border-left-color: rgb(2, 110, 159);
+  border-left-style: solid;
+}
+#colibri.woocommerce-page  .content .h-section .star-rating::before,#colibri.woocommerce .content .h-section .star-rating::before,#colibri.woocommerce-page  .content .h-section .star-rating span::before,#colibri.woocommerce .content .h-section .star-rating span::before {
+  color: #03a9f4;
+}
+#colibri.woocommerce-page  .content .h-section .price,#colibri.woocommerce .content .h-section .price {
+  color: #03a9f4;
+}
+#colibri.woocommerce-page  .content .h-section .price del,#colibri.woocommerce .content .h-section .price del {
+  color: rgb(84, 194, 244);
+}
+#colibri.woocommerce-page  .content .h-section .onsale,#colibri.woocommerce .content .h-section .onsale {
+  background-color: #03a9f4;
+  background-image: none;
+}
+#colibri.woocommerce-page  .content .h-section .onsale:hover,#colibri.woocommerce-page  .content .h-section .onsale:focus,#colibri.woocommerce-page  .content .h-section .onsale:active,#colibri.woocommerce .content .h-section .onsale:hover,#colibri.woocommerce .content .h-section .onsale:focus,#colibri.woocommerce .content .h-section .onsale:active {
+  background-color: rgb(2, 110, 159);
+  background-image: none;
+}
+#colibri.woocommerce ul.products li.product h2:hover {
+  color: #03a9f4;
+}
+#colibri.woocommerce-page  .content .h-section .woocommerce-pagination .page-numbers.current,#colibri.woocommerce .content .h-section .woocommerce-pagination .page-numbers.current,#colibri.woocommerce-page  .content .h-section .woocommerce-pagination a.page-numbers:hover,#colibri.woocommerce .content .h-section .woocommerce-pagination a.page-numbers:hover {
+  background-color: #03a9f4;
+  background-image: none;
+}
+#colibri.woocommerce-page  .content .h-section .comment-form-rating .stars a,#colibri.woocommerce .content .h-section .comment-form-rating .stars a {
+  color: #03a9f4;
+}
+.h-section-global-spacing {
+  padding-top: 90px;
+  padding-bottom: 90px;
+}
+#colibri .colibri-language-switcher {
+  background-color: white;
+  background-image: none;
+  top: 80px;
+  border-top-width: 0px;
+  border-top-style: none;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 0px;
+  border-right-width: 0px;
+  border-right-style: none;
+  border-bottom-width: 0px;
+  border-bottom-style: none;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 0px;
+  border-left-width: 0px;
+  border-left-style: none;
+}
+#colibri .colibri-language-switcher .lang-item {
+  padding-top: 14px;
+  padding-right: 18px;
+  padding-bottom: 14px;
+  padding-left: 18px;
+}
+body {
+  font-family: Open Sans;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.6;
+  color: rgb(70, 112, 127);
+}
+body a {
+  font-family: Open Sans;
+  font-weight: 400;
+  text-decoration: none;
+  font-size: 1em;
+  line-height: 1.5;
+  color: #03a9f4;
+}
+body p {
+  margin-bottom: 16px;
+  font-family: Open Sans;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.6;
+  color: rgb(70, 112, 127);
+}
+body .h-lead p {
+  margin-bottom: 16px;
+  font-family: Open Sans;
+  font-weight: 300;
+  font-size: 1.25em;
+  line-height: 1.5;
+  color: rgb(37, 41, 42);
+}
+body blockquote p {
+  margin-bottom: 16px;
+  font-family: Open Sans;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.6;
+  color: rgb(70, 112, 127);
+}
+body h1 {
+  margin-bottom: 16px;
+  font-family: Open Sans;
+  font-weight: 300;
+  font-size: 3.375em;
+  line-height: 1.26;
+  color: rgb(23, 37, 42);
+}
+body h2 {
+  margin-bottom: 16px;
+  font-family: Open Sans;
+  font-weight: 300;
+  font-size: 2.625em;
+  line-height: 1.143;
+  color: rgb(23, 37, 42);
+}
+body h3 {
+  margin-bottom: 16px;
+  font-family: Open Sans;
+  font-weight: 300;
+  font-size: 2.25em;
+  line-height: 1.25;
+  color: rgb(23, 37, 42);
+}
+body h4 {
+  margin-bottom: 16px;
+  font-family: Open Sans;
+  font-weight: 600;
+  font-size: 1.25em;
+  line-height: 1.6;
+  color: rgb(23, 37, 42);
+}
+body h5 {
+  margin-bottom: 16px;
+  font-family: Open Sans;
+  font-weight: 600;
+  font-size: 1.125em;
+  line-height: 1.55;
+  color: rgb(23, 37, 42);
+}
+body h6 {
+  margin-bottom: 16px;
+  font-family: Open Sans;
+  font-weight: 600;
+  font-size: 1em;
+  line-height: 1.6;
+  color: rgb(23, 37, 42);
+}
+
+
+@media (min-width: 768px) and (max-width: 1023px){
+.h-section-global-spacing {
+  padding-top: 60px;
+  padding-bottom: 60px;
+}
+
+}
+
+@media (max-width: 767px){
+.h-section-global-spacing {
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+}
+/* part css : page */
+#colibri .style-32 {
+  animation-duration: 0.5s;
+  padding-top: 20px;
+  padding-right: 15px;
+  padding-bottom: 20px;
+  padding-left: 15px;
+  background-color: transparent;
+  background-image: none;
+}
+#colibri .h-navigation_sticky .style-32,#colibri .h-navigation_sticky.style-32 {
+  background-color: #ffffff;
+  background-image: none;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.5) ;
+}
+#colibri .style-34 {
+  text-align: center;
+  height: auto;
+  min-height: unset;
+}
+#colibri .style-35-image {
+  max-height: 70px;
+}
+#colibri .style-35 a,#colibri .style-35  .logo-text {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 24px;
+}
+#colibri .style-35 .logo-text {
+  color: #FFFFFF;
+}
+#colibri .h-navigation_sticky .style-35-image,#colibri .h-navigation_sticky.style-35-image {
+  max-height: 70px;
+}
+#colibri .h-navigation_sticky .style-35 a,#colibri .h-navigation_sticky .style-35  .logo-text,#colibri .h-navigation_sticky.style-35 a,#colibri .h-navigation_sticky.style-35  .logo-text {
+  color: #000000;
+  text-decoration: none;
+}
+#colibri .style-36 {
+  text-align: center;
+  height: auto;
+  min-height: unset;
+}
+#colibri .style-37 {
+  height: 50px;
+}
+#colibri .style-38 {
+  text-align: center;
+  height: auto;
+  min-height: unset;
+}
+#colibri .style-39 >  div > .colibri-menu-container > ul.colibri-menu {
+  justify-content: flex-end;
+}
+#colibri .style-39 >  div > .colibri-menu-container > ul.colibri-menu > li {
+  margin-top: 0px;
+  margin-right: 20px;
+  margin-bottom: 0px;
+  margin-left: 20px;
+  padding-top: 10px;
+  padding-right: 0px;
+  padding-bottom: 10px;
+  padding-left: 0px;
+}
+#colibri .style-39 >  div > .colibri-menu-container > ul.colibri-menu > li.current_page_item,#colibri .style-39  >  div > .colibri-menu-container > ul.colibri-menu > li.current_page_item:hover {
+  margin-top: 0px;
+  margin-right: 20px;
+  margin-bottom: 0px;
+  margin-left: 20px;
+  padding-top: 10px;
+  padding-right: 0px;
+  padding-bottom: 10px;
+  padding-left: 0px;
+}
+#colibri .style-39 >  div > .colibri-menu-container > ul.colibri-menu > li > a {
+  font-family: Open Sans;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 14px;
+  line-height: 1.5em;
+  letter-spacing: 0px;
+  color: #FFFFFF;
+}
+#colibri .style-39  >  div > .colibri-menu-container > ul.colibri-menu > li.hover  > a {
+  color: rgb(166, 220, 244);
+}
+#colibri .style-39  >  div > .colibri-menu-container > ul.colibri-menu > li:hover > a,#colibri .style-39  >  div > .colibri-menu-container > ul.colibri-menu > li.hover  > a {
+  color: rgb(166, 220, 244);
+}
+#colibri .style-39  >  div > .colibri-menu-container > ul.colibri-menu > li.current_page_item > a,#colibri .style-39  >  div > .colibri-menu-container > ul.colibri-menu > li.current_page_item > a:hover {
+  font-family: Open Sans;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 14px;
+  line-height: 1.5em;
+  letter-spacing: 0px;
+  color: rgb(166, 220, 244);
+}
+#colibri .style-39 >  div > .colibri-menu-container > ul.colibri-menu li > ul {
+  background-color: #ffffff;
+  background-image: none;
+  margin-right: 5px;
+  margin-left: 5px;
+  box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.04) ;
+}
+#colibri .style-39 >  div > .colibri-menu-container > ul.colibri-menu li > ul  li {
+  padding-top: 10px;
+  padding-right: 20px;
+  padding-bottom: 10px;
+  padding-left: 20px;
+  border-top-width: 0px;
+  border-top-style: none;
+  border-right-width: 0px;
+  border-right-style: none;
+  border-bottom-width: 1px;
+  border-bottom-color: rgba(128,128,128,.2);
+  border-bottom-style: solid;
+  border-left-width: 0px;
+  border-left-style: none;
+  background-color: rgb(255, 255, 255);
+  background-image: none;
+}
+#colibri .style-39  >  div > .colibri-menu-container > ul.colibri-menu li > ul > li.hover {
+  background-color: #03a9f4;
+}
+#colibri .style-39  >  div > .colibri-menu-container > ul.colibri-menu li > ul > li:hover,#colibri .style-39  >  div > .colibri-menu-container > ul.colibri-menu li > ul > li.hover {
+  background-color: #03a9f4;
+}
+#colibri .style-39 >  div > .colibri-menu-container > ul.colibri-menu li > ul li.current_page_item,#colibri .style-39  >  div > .colibri-menu-container > ul.colibri-menu li > ul > li.current_page_item:hover {
+  padding-top: 10px;
+  padding-right: 20px;
+  padding-bottom: 10px;
+  padding-left: 20px;
+  border-top-width: 0px;
+  border-top-style: none;
+  border-right-width: 0px;
+  border-right-style: none;
+  border-bottom-width: 1px;
+  border-bottom-color: rgba(128,128,128,.2);
+  border-bottom-style: solid;
+  border-left-width: 0px;
+  border-left-style: none;
+  background-color: #03a9f4;
+  background-image: none;
+}
+#colibri .style-39 >  div > .colibri-menu-container > ul.colibri-menu li > ul > li > a {
+  font-size: 14px;
+  color: rgb(37, 41, 42);
+}
+#colibri .style-39  >  div > .colibri-menu-container > ul.colibri-menu li > ul > li.hover  > a {
+  color: rgb(255, 255, 255);
+}
+#colibri .style-39  >  div > .colibri-menu-container > ul.colibri-menu li > ul > li:hover > a,#colibri .style-39  >  div > .colibri-menu-container > ul.colibri-menu li > ul > li.hover  > a {
+  color: rgb(255, 255, 255);
+}
+#colibri .style-39 >  div > .colibri-menu-container > ul.colibri-menu li > ul > li.current_page_item > a,#colibri .style-39  >  div > .colibri-menu-container > ul.colibri-menu li > ul > li.current_page_item > a:hover {
+  font-size: 14px;
+  color: rgb(255, 255, 255);
+}
+#colibri .style-39 >  div > .colibri-menu-container > ul.colibri-menu.bordered-active-item > li::after,#colibri .style-39 
+      ul.colibri-menu.bordered-active-item > li::before {
+  background-color: rgb(166, 220, 244);
+  background-image: none;
+  height: 3px;
+}
+#colibri .style-39 >  div > .colibri-menu-container > ul.colibri-menu.solid-active-item > li::after,#colibri .style-39 
+      ul.colibri-menu.solid-active-item > li::before {
+  background-color: white;
+  background-image: none;
+  border-top-width: 0px;
+  border-top-style: none;
+  border-top-left-radius: 0%;
+  border-top-right-radius: 0%;
+  border-right-width: 0px;
+  border-right-style: none;
+  border-bottom-width: 0px;
+  border-bottom-style: none;
+  border-bottom-left-radius: 0%;
+  border-bottom-right-radius: 0%;
+  border-left-width: 0px;
+  border-left-style: none;
+}
+#colibri .style-39 >  div > .colibri-menu-container > ul.colibri-menu > li > ul {
+  margin-top: 0px;
+}
+#colibri .style-39 >  div > .colibri-menu-container > ul.colibri-menu > li > ul::before {
+  height: 0px;
+  width: 100% ;
+}
+#colibri .style-39 >  div > .colibri-menu-container > ul.colibri-menu  li > a > svg,#colibri .style-39 >  div > .colibri-menu-container > ul.colibri-menu  li > a >  .arrow-wrapper {
+  padding-right: 5px;
+  padding-left: 5px;
+  color: black;
+}
+#colibri .style-39 >  div > .colibri-menu-container > ul.colibri-menu li.current_page_item > a > svg,#colibri .style-39 >  div > .colibri-menu-container > ul.colibri-menu > li.current_page_item:hover > a > svg,#colibri .style-39 >  div > .colibri-menu-container > ul.colibri-menu li.current_page_item > a > .arrow-wrapper,#colibri .style-39 >  div > .colibri-menu-container > ul.colibri-menu > li.current_page_item:hover > a > .arrow-wrapper {
+  padding-right: 5px;
+  padding-left: 5px;
+  color: black;
+}
+#colibri .style-39 >  div > .colibri-menu-container > ul.colibri-menu li > ul  li > a > svg,#colibri .style-39 >  div > .colibri-menu-container > ul.colibri-menu li > ul  li > a >  .arrow-wrapper {
+  color: rgb(255, 255, 255);
+}
+#colibri .style-39 >  div > .colibri-menu-container > ul.colibri-menu li > ul li.current_page_item > a > svg,#colibri .style-39 >  div > .colibri-menu-container > ul.colibri-menu li > ul > li.current_page_item:hover > a > svg,#colibri .style-39 >  div > .colibri-menu-container > ul.colibri-menu li > ul li.current_page_item > a > .arrow-wrapper,#colibri .style-39 >  div > .colibri-menu-container > ul.colibri-menu li > ul > li.current_page_item:hover > a > .arrow-wrapper {
+  color: rgb(255, 255, 255);
+}
+#colibri .h-navigation_sticky .style-39 >  div > .colibri-menu-container > ul.colibri-menu > li > a,#colibri .h-navigation_sticky.style-39 >  div > .colibri-menu-container > ul.colibri-menu > li > a {
+  color: rgb(2, 110, 159);
+}
+#colibri .h-navigation_sticky .style-39  >  div > .colibri-menu-container > ul.colibri-menu > li.hover  > a,#colibri .h-navigation_sticky.style-39  >  div > .colibri-menu-container > ul.colibri-menu > li.hover  > a {
+  color: #03a9f4;
+}
+#colibri .h-navigation_sticky .style-39  >  div > .colibri-menu-container > ul.colibri-menu > li:hover > a,#colibri .h-navigation_sticky .style-39  >  div > .colibri-menu-container > ul.colibri-menu > li.hover  > a,#colibri .h-navigation_sticky.style-39  >  div > .colibri-menu-container > ul.colibri-menu > li:hover > a,#colibri .h-navigation_sticky.style-39  >  div > .colibri-menu-container > ul.colibri-menu > li.hover  > a {
+  color: #03a9f4;
+}
+#colibri .h-navigation_sticky .style-39  >  div > .colibri-menu-container > ul.colibri-menu > li.current_page_item > a,#colibri .h-navigation_sticky .style-39  >  div > .colibri-menu-container > ul.colibri-menu > li.current_page_item > a:hover,#colibri .h-navigation_sticky.style-39  >  div > .colibri-menu-container > ul.colibri-menu > li.current_page_item > a,#colibri .h-navigation_sticky.style-39  >  div > .colibri-menu-container > ul.colibri-menu > li.current_page_item > a:hover {
+  color: #03a9f4;
+}
+#colibri .h-navigation_sticky .style-39 >  div > .colibri-menu-container > ul.colibri-menu.bordered-active-item > li::after,#colibri .h-navigation_sticky .style-39 
+      ul.colibri-menu.bordered-active-item > li::before,#colibri .h-navigation_sticky.style-39 >  div > .colibri-menu-container > ul.colibri-menu.bordered-active-item > li::after,#colibri .h-navigation_sticky.style-39 
+      ul.colibri-menu.bordered-active-item > li::before {
+  background-color: #03a9f4;
+  background-image: none;
+}
+#colibri .style-40-offscreen {
+  background-color: #222B34;
+  background-image: none;
+  width: 300px !important;
+}
+#colibri .style-40-offscreenOverlay {
+  background-color: rgba(0,0,0,0.5);
+  background-image: none;
+}
+#colibri .style-40  .h-hamburger-icon {
+  background-color: rgba(0, 0, 0, 0.1);
+  background-image: none;
+  border-top-width: 0px;
+  border-top-color: black;
+  border-top-style: solid;
+  border-top-left-radius: 100%;
+  border-top-right-radius: 100%;
+  border-right-width: 0px;
+  border-right-color: black;
+  border-right-style: solid;
+  border-bottom-width: 0px;
+  border-bottom-color: black;
+  border-bottom-style: solid;
+  border-bottom-left-radius: 100%;
+  border-bottom-right-radius: 100%;
+  border-left-width: 0px;
+  border-left-color: black;
+  border-left-style: solid;
+  fill: white;
+  padding-top: 5px;
+  padding-right: 5px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  width: 24px;
+  height: 24px;
+}
+#colibri .style-43 {
+  text-align: center;
+  height: auto;
+  min-height: unset;
+}
+#colibri .style-44-image {
+  max-height: 70px;
+}
+#colibri .style-44 a,#colibri .style-44  .logo-text {
+  color: #ffffff;
+  text-decoration: none;
+}
+#colibri .h-navigation_sticky .style-44-image,#colibri .h-navigation_sticky.style-44-image {
+  max-height: 70px;
+}
+#colibri .h-navigation_sticky .style-44 a,#colibri .h-navigation_sticky .style-44  .logo-text,#colibri .h-navigation_sticky.style-44 a,#colibri .h-navigation_sticky.style-44  .logo-text {
+  color: #000000;
+  text-decoration: none;
+}
+#colibri .style-46 {
+  text-align: center;
+  height: auto;
+  min-height: unset;
+}
+#colibri .style-47 >  div > .colibri-menu-container > ul.colibri-menu > li > a {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  padding-left: 40px;
+  border-top-width: 0px;
+  border-top-color: #808080;
+  border-top-style: solid;
+  border-right-width: 0px;
+  border-right-color: #808080;
+  border-right-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: #808080;
+  border-bottom-style: solid;
+  border-left-width: 0px;
+  border-left-color: #808080;
+  border-left-style: solid;
+  font-size: 14px;
+  color: white;
+}
+#colibri .style-47  >  div > .colibri-menu-container > ul.colibri-menu > li.current_page_item > a,#colibri .style-47  >  div > .colibri-menu-container > ul.colibri-menu > li.current_page_item > a:hover {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  padding-left: 40px;
+  border-top-width: 0px;
+  border-top-color: #808080;
+  border-top-style: solid;
+  border-right-width: 0px;
+  border-right-color: #808080;
+  border-right-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: #808080;
+  border-bottom-style: solid;
+  border-left-width: 0px;
+  border-left-color: #808080;
+  border-left-style: solid;
+  font-size: 14px;
+  color: white;
+}
+#colibri .style-47 >  div > .colibri-menu-container > ul.colibri-menu li > ul > li > a {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  padding-left: 40px;
+  border-top-width: 0px;
+  border-top-color: #808080;
+  border-top-style: solid;
+  border-right-width: 0px;
+  border-right-color: #808080;
+  border-right-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: #808080;
+  border-bottom-style: solid;
+  border-left-width: 0px;
+  border-left-color: #808080;
+  border-left-style: solid;
+  font-size: 14px;
+  color: white;
+}
+#colibri .style-47 >  div > .colibri-menu-container > ul.colibri-menu li > ul > li.current_page_item > a,#colibri .style-47  >  div > .colibri-menu-container > ul.colibri-menu li > ul > li.current_page_item > a:hover {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  padding-left: 40px;
+  border-top-width: 0px;
+  border-top-color: #808080;
+  border-top-style: solid;
+  border-right-width: 0px;
+  border-right-color: #808080;
+  border-right-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: #808080;
+  border-bottom-style: solid;
+  border-left-width: 0px;
+  border-left-color: #808080;
+  border-left-style: solid;
+  font-size: 14px;
+  color: white;
+}
+#colibri .style-47 >  div > .colibri-menu-container > ul.colibri-menu  li > a > svg,#colibri .style-47 >  div > .colibri-menu-container > ul.colibri-menu  li > a >  .arrow-wrapper {
+  padding-right: 20px;
+  padding-left: 20px;
+  color: black;
+}
+#colibri .style-47 >  div > .colibri-menu-container > ul.colibri-menu li.current_page_item > a > svg,#colibri .style-47 >  div > .colibri-menu-container > ul.colibri-menu > li.current_page_item:hover > a > svg,#colibri .style-47 >  div > .colibri-menu-container > ul.colibri-menu li.current_page_item > a > .arrow-wrapper,#colibri .style-47 >  div > .colibri-menu-container > ul.colibri-menu > li.current_page_item:hover > a > .arrow-wrapper {
+  padding-right: 20px;
+  padding-left: 20px;
+  color: black;
+}
+#colibri .style-47 >  div > .colibri-menu-container > ul.colibri-menu li > ul  li > a > svg,#colibri .style-47 >  div > .colibri-menu-container > ul.colibri-menu li > ul  li > a >  .arrow-wrapper {
+  color: white;
+  padding-right: 20px;
+  padding-left: 20px;
+}
+#colibri .style-47 >  div > .colibri-menu-container > ul.colibri-menu li > ul li.current_page_item > a > svg,#colibri .style-47 >  div > .colibri-menu-container > ul.colibri-menu li > ul > li.current_page_item:hover > a > svg,#colibri .style-47 >  div > .colibri-menu-container > ul.colibri-menu li > ul li.current_page_item > a > .arrow-wrapper,#colibri .style-47 >  div > .colibri-menu-container > ul.colibri-menu li > ul > li.current_page_item:hover > a > .arrow-wrapper {
+  color: white;
+  padding-right: 20px;
+  padding-left: 20px;
+}
+#colibri .style-54 {
+  min-height: 64px;
+  color: #FFFFFF;
+  background-color: #03a9f4;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+#colibri .style-54 h1 {
+  color: #FFFFFF;
+}
+#colibri .style-54 h2 {
+  color: #FFFFFF;
+}
+#colibri .style-54 h3 {
+  color: #FFFFFF;
+}
+#colibri .style-54 h4 {
+  color: #FFFFFF;
+}
+#colibri .style-54 h5 {
+  color: #FFFFFF;
+}
+#colibri .style-54 h6 {
+  color: #FFFFFF;
+}
+#colibri .style-54 p {
+  color: #FFFFFF;
+}
+#colibri .style-56 {
+  text-align: center;
+  height: auto;
+  min-height: unset;
+}
+#colibri .style-local-14-h4-outer {
+  flex: 0 0 auto;
+  -ms-flex: 0 0 auto;
+  width: auto;
+  max-width: 100%;
+}
+#colibri .h-navigation_sticky .style-local-14-h4-outer,#colibri .h-navigation_sticky.style-local-14-h4-outer {
+  flex: 0 0 auto;
+  -ms-flex: 0 0 auto;
+  width: auto;
+  max-width: 100%;
+}
+#colibri .style-local-14-h6-outer {
+  flex: 1 1 0;
+  -ms-flex: 1 1 0%;
+  max-width: 100%;
+}
+#colibri .style-local-14-h8-outer {
+  flex: 0 0 auto;
+  -ms-flex: 0 0 auto;
+  width: auto;
+  max-width: 100%;
+}
+#colibri .h-navigation_sticky .style-local-14-h8-outer,#colibri .h-navigation_sticky.style-local-14-h8-outer {
+  flex: 0 0 auto;
+  -ms-flex: 0 0 auto;
+  width: auto;
+  max-width: 100%;
+}
+#colibri .style-local-14-h26-outer {
+  width: 80% ;
+  flex: 0 0 auto;
+  -ms-flex: 0 0 auto;
+}
+#colibri .style-60 {
+  height: auto;
+  min-height: unset;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+.style-62 > .h-y-container > *:not(:last-child) {
+  margin-bottom: 0px;
+}
+#colibri .style-62 {
+  text-align: center;
+  height: auto;
+  min-height: unset;
+}
+#colibri .style-local-21-f4-outer {
+  width: 100% ;
+  flex: 0 0 auto;
+  -ms-flex: 0 0 auto;
+}
+#colibri .style-local-49-s4-outer {
+  width: 100% ;
+  flex: 0 0 auto;
+  -ms-flex: 0 0 auto;
+}
+#colibri .style-64 {
+  background-color: #FFFFFF;
+  background-image: none;
+  box-shadow: 0px 10px 40px 0px rgba(1, 51, 74, 0.15) ;
+  border-top-width: 0px;
+  border-top-style: none;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-right-width: 0px;
+  border-right-style: none;
+  border-bottom-width: 0px;
+  border-bottom-style: none;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-left-width: 0px;
+  border-left-style: none;
+}
+#colibri .style-65 {
+  height: auto;
+  min-height: unset;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+#colibri .style-70 {
+  background-color: unset;
+  background-image: none;
+}
+.style-71 > .h-y-container > *:not(:last-child) {
+  margin-bottom: 0px;
+}
+#colibri .style-71 {
+  text-align: center;
+  height: auto;
+  min-height: unset;
+  background-color: unset;
+  background-image: none;
+}
+#colibri .style-72 {
+  background-color: #03a9f4;
+  background-image: none;
+  text-align: center;
+}
+#colibri .style-72 .colibri-post-thumbnail-shortcode img {
+  height: 300px;
+  object-position: center center;
+  object-fit: cover;
+}
+#colibri .style-74 {
+  text-align: left;
+  height: auto;
+  min-height: unset;
+}
+#colibri .style-75 a {
+  font-family: Open Sans;
+  font-weight: 400;
+  text-decoration: none;
+  font-size: 14px;
+  color: rgb(70, 112, 127);
+}
+#colibri .style-75 a:hover {
+  color: #17252a;
+}
+#colibri .style-75 a:hover {
+  color: #17252a;
+}
+#colibri .style-75 .metadata-prefix {
+  font-size: 14px;
+  color: rgb(37, 41, 42);
+}
+#colibri .style-75 .metadata-suffix {
+  font-size: 14px;
+}
+#colibri .style-75 .metadata-suffix:hover {
+  color: rgb(70, 112, 127);
+}
+#colibri .style-75 .metadata-suffix:hover {
+  color: rgb(70, 112, 127);
+}
+#colibri .style-75 svg {
+  width: 18px ;
+  height: 18px;
+  display: none;
+  margin-right: 5px;
+}
+#colibri .style-76 .colibri-post-content {
+  margin-bottom: 0px;
+  color: rgb(23, 37, 42);
+}
+#colibri .style-76 .colibri-post-content p {
+  color: rgb(37, 41, 42);
+}
+#colibri .style-77 {
+  margin-bottom: 0px;
+}
+#colibri .style-78 {
+  text-align: center;
+  height: auto;
+  min-height: unset;
+}
+#colibri .style-79 {
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgb(37, 41, 42);
+  margin-right: 5px;
+}
+#colibri .style-79 p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgb(37, 41, 42);
+}
+#colibri .style-80 {
+  text-align: left;
+  height: auto;
+  min-height: unset;
+}
+#colibri .style-81 a,#colibri .style-81  .colibri-post-category {
+  margin-right: 5px;
+  margin-left: 5px;
+  text-decoration: none;
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgb(153, 153, 153);
+}
+#colibri .style-81 a:hover,#colibri .style-81  .colibri-post-category:hover {
+  color: #17252a;
+}
+#colibri .style-81 a:hover,#colibri .style-81  .colibri-post-category:hover {
+  color: #17252a;
+}
+#colibri .style-81 .categories-prefix {
+  margin-right: 16px;
+}
+#colibri .style-83 {
+  text-align: center;
+  height: auto;
+  min-height: unset;
+}
+#colibri .style-84 {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgb(37, 41, 42);
+  margin-right: 5px;
+}
+#colibri .style-84 p {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgb(37, 41, 42);
+}
+.style-85 > .h-y-container > *:not(:last-child) {
+  margin-bottom: 23px;
+}
+#colibri .style-85 {
+  text-align: left;
+  height: auto;
+  min-height: unset;
+}
+#colibri .style-86 a,#colibri .style-86  .colibri-post-tag {
+  margin-right: 5px;
+  margin-left: 5px;
+  text-decoration: none;
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgb(153, 153, 153);
+}
+#colibri .style-86 a:hover,#colibri .style-86  .colibri-post-tag:hover {
+  color: #17252a;
+}
+#colibri .style-86 a:hover,#colibri .style-86  .colibri-post-tag:hover {
+  color: #17252a;
+}
+#colibri .style-86 .tags-prefix {
+  margin-right: 5px;
+  font-size: 14px;
+  color: rgb(70, 112, 127);
+}
+#colibri .style-87 {
+  margin-right: 30px;
+  margin-left: 30px;
+  border-top-width: 1px;
+  border-top-color: rgb(238, 238, 238);
+  border-top-style: solid;
+  border-right-width: 0px;
+  border-right-color: rgb(238, 238, 238);
+  border-right-style: solid;
+  border-bottom-width: 0px;
+  border-bottom-color: rgb(238, 238, 238);
+  border-bottom-style: solid;
+  border-left-width: 0px;
+  border-left-color: rgb(238, 238, 238);
+  border-left-style: solid;
+}
+#colibri .style-88 {
+  text-align: left;
+  height: auto;
+  min-height: unset;
+}
+#colibri .style-89 .nav-previous a,#colibri .style-89 .nav-next a {
+  text-decoration: none;
+  color: rgb(23, 37, 42);
+  border-top-width: 2px;
+  border-top-color: black;
+  border-top-style: none;
+  border-right-width: 2px;
+  border-right-color: black;
+  border-right-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: black;
+  border-bottom-style: none;
+  border-left-width: 2px;
+  border-left-color: black;
+  border-left-style: none;
+  background-color: unset;
+  background-image: none;
+}
+#colibri .style-89 .nav-previous a:hover,#colibri .style-89 .nav-next a:hover {
+  color: #03a9f4;
+}
+#colibri .style-89 .nav-previous a:hover,#colibri .style-89 .nav-next a:hover {
+  color: #03a9f4;
+}
+#colibri .style-89 .post-title {
+  max-width: 40ch;
+}
+#colibri .style-90 {
+  text-align: right;
+  height: auto;
+  min-height: unset;
+}
+#colibri .style-91 .nav-previous a,#colibri .style-91 .nav-next a {
+  text-decoration: none;
+  color: rgb(23, 37, 42);
+  border-top-width: 2px;
+  border-top-color: black;
+  border-top-style: none;
+  border-right-width: 2px;
+  border-right-color: black;
+  border-right-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: black;
+  border-bottom-style: none;
+  border-left-width: 2px;
+  border-left-color: black;
+  border-left-style: none;
+}
+#colibri .style-91 .nav-previous a:hover,#colibri .style-91 .nav-next a:hover {
+  color: #03a9f4;
+}
+#colibri .style-91 .nav-previous a:hover,#colibri .style-91 .nav-next a:hover {
+  color: #03a9f4;
+}
+#colibri .style-92 {
+  height: auto;
+  min-height: unset;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+#colibri .style-98 {
+  text-align: left;
+  height: auto;
+  min-height: unset;
+  padding-top: 0px;
+  padding-bottom: 15px;
+}
+#colibri .style-99 .blog-post-comments {
+  border-top-width: 1px;
+  border-top-color: rgb(238, 238, 238);
+  border-top-style: solid;
+  border-right-width: 0px;
+  border-right-color: rgb(238, 238, 238);
+  border-right-style: solid;
+  border-bottom-width: 0px;
+  border-bottom-color: rgb(238, 238, 238);
+  border-bottom-style: solid;
+  border-left-width: 0px;
+  border-left-color: rgb(238, 238, 238);
+  border-left-style: solid;
+  padding-top: 15px;
+}
+#colibri .style-99 .comment.even {
+  background-color: #FFFFFF;
+  background-image: none;
+  border-top-width: 0px;
+  border-top-style: none;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-right-width: 0px;
+  border-right-style: none;
+  border-bottom-width: 0px;
+  border-bottom-style: none;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-left-width: 0px;
+  border-left-style: none;
+  padding-top: 12px;
+  padding-right: 12px;
+  padding-bottom: 12px;
+  padding-left: 12px;
+}
+#colibri .style-99 .comment.odd {
+  background-color: rgba(166, 220, 244, 0.1);
+  background-image: none;
+  border-top-width: 0px;
+  border-top-style: none;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-right-width: 0px;
+  border-right-style: none;
+  border-bottom-width: 0px;
+  border-bottom-style: none;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-left-width: 0px;
+  border-left-style: none;
+  padding-top: 12px;
+  padding-right: 12px;
+  padding-bottom: 12px;
+  padding-left: 12px;
+}
+#colibri .style-99 .comments-title {
+  font-family: Open Sans;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 1.25em;
+  color: #17252a;
+}
+#colibri .style-99 .comment-meta {
+  color: rgb(153, 153, 153);
+  margin-bottom: 16px;
+}
+#colibri .style-99 .comment-author img {
+  width: 30px ;
+  height: 30px;
+  background-color: unset;
+  background-image: none;
+  border-top-width: 0px;
+  border-top-style: none;
+  border-top-left-radius: 300px;
+  border-top-right-radius: 300px;
+  border-right-width: 0px;
+  border-right-style: none;
+  border-bottom-width: 0px;
+  border-bottom-style: none;
+  border-bottom-left-radius: 300px;
+  border-bottom-right-radius: 300px;
+  border-left-width: 0px;
+  border-left-style: none;
+}
+#colibri .style-99 .comment-author .url {
+  font-weight: 600;
+  font-style: normal;
+  text-decoration: none;
+  color: rgb(23, 37, 42);
+  background-color: unset;
+  background-image: none;
+  margin-left: 5px;
+}
+#colibri .style-99 .comment-metadata {
+  text-decoration: none;
+  font-size: 14px;
+  color: rgb(70, 112, 127);
+  background-color: unset;
+  background-image: none;
+  transition-duration: 0.5s;
+}
+#colibri .style-99 .comment-metadata:hover {
+  color: #17252a;
+}
+#colibri .style-99 .comment-metadata:hover {
+  color: #17252a;
+}
+#colibri .style-99 .comment-content {
+  text-decoration: none;
+  font-size: 16px;
+  color: rgb(37, 41, 42);
+}
+#colibri .style-99 .comment-content p {
+  color: rgb(37, 41, 42);
+}
+#colibri .style-99 .comment-content a:hover {
+  color: rgb(2, 110, 159);
+}
+#colibri .style-99 .comment-body .reply a {
+  margin-bottom: 10px;
+  font-weight: 400;
+  text-transform: lowercase;
+  font-size: 1em;
+  line-height: 1.5;
+  color: #03a9f4;
+}
+#colibri .style-99 .comment-body .reply a:hover {
+  color: rgb(2, 110, 159);
+}
+#colibri .style-99 .comment-body .reply a:hover {
+  color: rgb(2, 110, 159);
+}
+#colibri .style-99 .children {
+  margin-left: 12px;
+}
+#colibri .style-99 .comments-disabled {
+  text-align: center;
+  margin-bottom: 0px;
+  text-decoration: none;
+  color: rgb(37, 41, 42);
+}
+#colibri .comment-respond {
+  border-top-width: 1px;
+  border-top-color: rgb(238, 238, 238);
+  border-top-style: solid;
+  border-right-width: 0px;
+  border-right-color: rgb(238, 238, 238);
+  border-right-style: solid;
+  border-bottom-width: 0px;
+  border-bottom-color: rgb(238, 238, 238);
+  border-bottom-style: solid;
+  border-left-width: 0px;
+  border-left-color: rgb(238, 238, 238);
+  border-left-style: solid;
+  padding-top: 15px;
+}
+#colibri .comment-respond .comment-reply-title {
+  font-family: Open Sans;
+  font-weight: 600;
+  font-size: 1.25em;
+  color: #17252a;
+}
+#colibri .comment-respond label {
+  color: rgb(37, 41, 42);
+  border-top-width: 0px;
+  border-top-style: none;
+  border-right-width: 0px;
+  border-right-style: none;
+  border-bottom-width: 0px;
+  border-bottom-style: none;
+  border-left-width: 0px;
+  border-left-style: none;
+}
+#colibri .comment-respond input:not([type="submit"]),#colibri .comment-respond textarea {
+  border-top-width: 1px;
+  border-top-color: rgb(238, 238, 238);
+  border-top-style: solid;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-right-width: 1px;
+  border-right-color: rgb(238, 238, 238);
+  border-right-style: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: rgb(238, 238, 238);
+  border-bottom-style: solid;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-left-width: 1px;
+  border-left-color: rgb(238, 238, 238);
+  border-left-style: solid;
+  font-family: Open Sans;
+  font-weight: 400;
+  font-size: 16px;
+  color: rgb(37, 41, 42);
+  background-color: rgba(0,0,0,0);
+  background-image: none;
+  padding-top: 5px;
+  padding-right: 5px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+}
+#colibri .comment-respond .comment-form [type="submit"] {
+  background-color: #03a9f4;
+  background-image: none;
+  border-top-width: 2px;
+  border-top-color: #03a9f4;
+  border-top-style: solid;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-right-width: 2px;
+  border-right-color: #03a9f4;
+  border-right-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #03a9f4;
+  border-bottom-style: solid;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-left-width: 2px;
+  border-left-color: #03a9f4;
+  border-left-style: solid;
+  padding-top: 12px;
+  padding-right: 24px;
+  padding-bottom: 12px;
+  padding-left: 24px;
+  font-family: Open Sans;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 12px;
+  line-height: 1;
+  letter-spacing: 1px;
+  color: #FFFFFF;
+}
+#colibri .comment-respond .comment-form [type="submit"]:hover {
+  background-color: rgb(2, 110, 159);
+  border-top-color: rgb(2, 110, 159);
+  border-right-color: rgb(2, 110, 159);
+  border-bottom-color: rgb(2, 110, 159);
+  border-left-color: rgb(2, 110, 159);
+}
+#colibri .comment-respond .comment-form [type="submit"]:hover {
+  background-color: rgb(2, 110, 159);
+  border-top-color: rgb(2, 110, 159);
+  border-right-color: rgb(2, 110, 159);
+  border-bottom-color: rgb(2, 110, 159);
+  border-left-color: rgb(2, 110, 159);
+}
+#colibri .comment-respond .comment-form [type="submit"]:active {
+  background-color: #03a9f4;
+  background-image: none;
+  border-top-width: 2px;
+  border-top-color: #03a9f4;
+  border-top-style: solid;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border-right-width: 2px;
+  border-right-color: #03a9f4;
+  border-right-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #03a9f4;
+  border-bottom-style: solid;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-left-width: 2px;
+  border-left-color: #03a9f4;
+  border-left-style: solid;
+  padding-top: 12px;
+  padding-right: 24px;
+  padding-bottom: 12px;
+  padding-left: 24px;
+  font-family: Open Sans;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 12px;
+  line-height: 1;
+  letter-spacing: 1px;
+  color: #FFFFFF;
+}
+#colibri .comment-respond .comment-notes {
+  font-family: Open Sans;
+  font-weight: 400;
+  font-size: 14px;
+  color: rgb(70, 112, 127);
+}
+.site .style-dynamic-25-m5-height {
+  min-height: 300px;
+}
+#colibri .style-local-25-m7-outer {
+  width: 100% ;
+  flex: 0 0 auto;
+  -ms-flex: 0 0 auto;
+}
+#colibri .style-local-25-m21-outer {
+  width: 50% ;
+  flex: 0 0 auto;
+  -ms-flex: 0 0 auto;
+}
+#colibri .style-local-25-m23-outer {
+  width: 50% ;
+  flex: 0 0 auto;
+  -ms-flex: 0 0 auto;
+}
+#colibri .style-local-25-m31-outer {
+  width: 100% ;
+  flex: 0 0 auto;
+  -ms-flex: 0 0 auto;
+}
+@media (max-width: 767px){
+#colibri .style-32 {
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+#colibri .h-navigation_sticky .style-32,#colibri .h-navigation_sticky.style-32 {
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+#colibri .style-local-14-h4-outer {
+  flex: 1 1 0;
+  -ms-flex: 1 1 0%;
+}
+#colibri .h-navigation_sticky .style-local-14-h4-outer,#colibri .h-navigation_sticky.style-local-14-h4-outer {
+  flex: 1 1 0;
+  -ms-flex: 1 1 0%;
+}
+#colibri .style-local-14-h14-outer {
+  width: 100% ;
+  flex: 0 0 auto;
+  -ms-flex: 0 0 auto;
+}
+#colibri .style-local-14-h17-outer {
+  width: 100% ;
+  flex: 0 0 auto;
+  -ms-flex: 0 0 auto;
+}
+#colibri .style-local-14-h26-outer {
+  width: 100% ;
+}
+#colibri .style-64 {
+  margin-top: 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+}
+#colibri .style-87 {
+  margin-right: 15px;
+  margin-left: 15px;
+}
+#colibri .style-98 {
+  padding-bottom: 5px;
+}
+#colibri .style-local-25-m4-outer {
+  width: 100% ;
+  flex: 0 0 auto;
+  -ms-flex: 0 0 auto;
+}}
+@media (min-width: 768px) and (max-width: 1023px){
+#colibri .style-87 {
+  margin-right: 15px;
+  margin-left: 15px;
+}
+#colibri .style-98 {
+  padding-bottom: 5px;
+}}
+
+</style>
+<link rel="stylesheet" id="fancybox-css" href="https://blog.processtune.com/wp-content/plugins/colibri-page-builder/extend-builder/assets/static/fancybox/jquery.fancybox.min.css?ver=1.0.222" type="text/css" media="all">
+<style id="wp-emoji-styles-inline-css" type="text/css">
+
+	img.wp-smiley, img.emoji {
+		display: inline !important;
+		border: none !important;
+		box-shadow: none !important;
+		height: 1em !important;
+		width: 1em !important;
+		margin: 0 0.07em !important;
+		vertical-align: -0.1em !important;
+		background: none !important;
+		padding: 0 !important;
+	}
+</style>
+<link rel="stylesheet" id="wp-block-library-css" href="https://blog.processtune.com/wp-includes/css/dist/block-library/style.min.css?ver=6.8.2" type="text/css" media="all">
+<style id="classic-theme-styles-inline-css" type="text/css">
+/*! This file is auto-generated */
+.wp-block-button__link{color:#fff;background-color:#32373c;border-radius:9999px;box-shadow:none;text-decoration:none;padding:calc(.667em + 2px) calc(1.333em + 2px);font-size:1.125em}.wp-block-file__button{background:#32373c;color:#fff;text-decoration:none}
+</style>
+<style id="global-styles-inline-css" type="text/css">
+:root{--wp--preset--aspect-ratio--square: 1;--wp--preset--aspect-ratio--4-3: 4/3;--wp--preset--aspect-ratio--3-4: 3/4;--wp--preset--aspect-ratio--3-2: 3/2;--wp--preset--aspect-ratio--2-3: 2/3;--wp--preset--aspect-ratio--16-9: 16/9;--wp--preset--aspect-ratio--9-16: 9/16;--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--color--colibri-color-1: #03a9f4;--wp--preset--color--colibri-color-2: #f79007;--wp--preset--color--colibri-color-3: #00bf87;--wp--preset--color--colibri-color-4: #6632ff;--wp--preset--color--colibri-color-5: #FFFFFF;--wp--preset--color--colibri-color-6: #17252a;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;--wp--preset--spacing--20: 0.44rem;--wp--preset--spacing--30: 0.67rem;--wp--preset--spacing--40: 1rem;--wp--preset--spacing--50: 1.5rem;--wp--preset--spacing--60: 2.25rem;--wp--preset--spacing--70: 3.38rem;--wp--preset--spacing--80: 5.06rem;--wp--preset--shadow--natural: 6px 6px 9px rgba(0, 0, 0, 0.2);--wp--preset--shadow--deep: 12px 12px 50px rgba(0, 0, 0, 0.4);--wp--preset--shadow--sharp: 6px 6px 0px rgba(0, 0, 0, 0.2);--wp--preset--shadow--outlined: 6px 6px 0px -3px rgba(255, 255, 255, 1), 6px 6px rgba(0, 0, 0, 1);--wp--preset--shadow--crisp: 6px 6px 0px rgba(0, 0, 0, 1);}:where(.is-layout-flex){gap: 0.5em;}:where(.is-layout-grid){gap: 0.5em;}body .is-layout-flex{display: flex;}.is-layout-flex{flex-wrap: wrap;align-items: center;}.is-layout-flex > :is(*, div){margin: 0;}body .is-layout-grid{display: grid;}.is-layout-grid > :is(*, div){margin: 0;}:where(.wp-block-columns.is-layout-flex){gap: 2em;}:where(.wp-block-columns.is-layout-grid){gap: 2em;}:where(.wp-block-post-template.is-layout-flex){gap: 1.25em;}:where(.wp-block-post-template.is-layout-grid){gap: 1.25em;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
+:where(.wp-block-post-template.is-layout-flex){gap: 1.25em;}:where(.wp-block-post-template.is-layout-grid){gap: 1.25em;}
+:where(.wp-block-columns.is-layout-flex){gap: 2em;}:where(.wp-block-columns.is-layout-grid){gap: 2em;}
+:root :where(.wp-block-pullquote){font-size: 1.5em;line-height: 1.6;}
+</style>
+<link rel="stylesheet" id="extend_builder_-fonts-css" href="https://fonts.googleapis.com/css?family=Muli%3A200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7COpen+Sans%3A300%2C300italic%2C400%2C400italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%7CPlayfair+Display%3A400%2C400italic%2C700%2C700italic%2C900%2C900italic%7CBree+Serif%3A400%7CAbril+Fatface%3A400%7CAclonica%3A400%7CAmarante%3A400%7CAlice%3A400%7CArchivo+Black%3A400%7CAudiowide%3A400&amp;subset=latin%2Clatin-ext&amp;display=swap" type="text/css" media="all">
+<script type="text/javascript" src="https://blog.processtune.com/wp-includes/js/jquery/jquery.min.js?ver=3.7.1" id="jquery-core-js"></script>
+<script type="text/javascript" src="https://blog.processtune.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1" id="jquery-migrate-js"></script>
+<script type="text/javascript" src="https://blog.processtune.com/wp-includes/js/imagesloaded.min.js?ver=5.0.0" id="imagesloaded-js"></script>
+<script type="text/javascript" src="https://blog.processtune.com/wp-includes/js/masonry.min.js?ver=4.2.2" id="masonry-js"></script>
+<script type="text/javascript" id="colibri-js-extra">
+/* <![CDATA[ */
+var colibriData = {"14-h2":{"data":{"sticky":{"className":"h-navigation_sticky animated","topSpacing":0,"top":0,"stickyOnMobile":true,"stickyOnTablet":true,"startAfterNode":{"enabled":false,"selector":".header, .page-header"},"animations":{"enabled":false,"currentInAnimationClass":"slideInDown","currentOutAnimationClass":"slideOutDownNavigation","allInAnimationsClasses":"slideInDown fadeIn h-global-transition-disable","allOutAnimationsClasses":"slideOutDownNavigation fadeOut h-global-transition-disable","duration":500}},"overlap":true}},"14-h9":{"data":{"type":"horizontal"}},"14-h12":{"data":[]},"49-s5":{"data":{"componentsWithEffects":[]}}};
+/* ]]> */
+</script>
+<script type="text/javascript" src="https://blog.processtune.com/wp-content/plugins/colibri-page-builder/extend-builder/assets/static/colibri.js?ver=1.0.222" id="colibri-js"></script>
+<script type="text/javascript" src="https://blog.processtune.com/wp-content/plugins/colibri-page-builder/extend-builder/assets/static/typed.js?ver=1.0.222" id="typed-js"></script>
+<script type="text/javascript" src="https://blog.processtune.com/wp-content/plugins/colibri-page-builder/extend-builder/assets/static/fancybox/jquery.fancybox.min.js?ver=1.0.222" id="fancybox-js"></script>
+<script type="text/javascript" src="https://blog.processtune.com/wp-content/plugins/colibri-page-builder/extend-builder/assets/static/js/theme.js?ver=1.0.222" id="extend-builder-js-js"></script>
+<link rel="https://api.w.org/" href="https://blog.processtune.com/wp-json/"><link rel="alternate" title="JSON" type="application/json" href="https://blog.processtune.com/wp-json/wp/v2/posts/6651"><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://blog.processtune.com/xmlrpc.php?rsd">
+<meta name="generator" content="WordPress 6.8.2">
+<link rel="canonical" href="https://blog.processtune.com/2022/04/30/design-of-solution-with-grpc-communication/">
+<link rel="shortlink" href="https://blog.processtune.com/?p=6651">
+<link rel="alternate" title="oEmbed (JSON)" type="application/json+oembed" href="https://blog.processtune.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fhttps%3A%2F%2Fblog.processtune.com%2F2022%2F04%2F30%2Fdesign-of-solution-with-grpc-communication%2F">
+<link rel="alternate" title="oEmbed (XML)" type="text/xml+oembed" href="https://blog.processtune.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fhttps%3A%2F%2Fblog.processtune.com%2F2022%2F04%2F30%2Fdesign-of-solution-with-grpc-communication%2F&amp;format=xml">
+                <style>
+                    #wpadminbar ul li#wp-admin-bar-colibri_top_bar_menu {
+                        background-color: rgba(3, 169, 244, 0.3);
+                        padding-left: 8px;
+                        padding-right: 8px;
+                        margin: 0px 16px;
+                    }
+
+                    #wpadminbar ul li#wp-admin-bar-colibri_top_bar_menu > a {
+                        background-color: transparent;
+                        color: #fff;
+                    }
+
+
+                    #wpadminbar ul li#wp-admin-bar-colibri_top_bar_menu > a img {
+                        max-height: 24px;
+                        margin-top: -4px;
+                        margin-right: 6px;
+                    }
+
+                    #wpadminbar ul li#wp-admin-bar-colibri_top_bar_menu > .ab-sub-wrapper {
+                        margin-left: -8px;
+                    }
+
+                    
+                </style>
+				<link rel="icon" href="https://blog.processtune.com/wp-content/uploads/2023/03/cropped-Presentation-32x32.png" sizes="32x32">
+<link rel="icon" href="https://blog.processtune.com/wp-content/uploads/2023/03/cropped-Presentation-192x192.png" sizes="192x192">
+<link rel="apple-touch-icon" href="https://blog.processtune.com/wp-content/uploads/2023/03/cropped-Presentation-180x180.png">
+<meta name="msapplication-TileImage" content="/wp-content/uploads/2023/03/cropped-Presentation-270x270.png">
+    <style>
+        .colibri-featured-img-bg {
+            background-image: url("https://blog.processtune.com/wp-content/uploads/2023/03/SeriesTitle.png") !important;
+        }
+    </style>
+        </head>
+
+<body id="colibri" class="wp-singular post-template-default single single-post postid-6651 single-format-standard wp-custom-logo wp-theme-colibri-wp wp-child-theme-calliope">
+<div class="site" id="page-top">
+            <script>
+            /(trident|msie)/i.test(navigator.userAgent) && document.getElementById && window.addEventListener && window.addEventListener("hashchange", function () {
+                var t, e = location.hash.substring(1);
+                /^[A-z0-9_-]+$/.test(e) && (t = document.getElementById(e)) && (/^(?:a|select|input|button|textarea)$/i.test(t.tagName) || (t.tabIndex = -1), t.focus())
+            }, !1);
+        </script>
+        <a class="skip-link screen-reader-text" href="#content">
+            Skip to content        </a>
+        <!-- dynamic header start --><div data-colibri-id="14-h1" class="page-header style-31 style-local-14-h1 position-relative">
+  <!---->
+  <div data-colibri-navigation-overlap="true" role="banner" class="h-navigation_outer h-navigation_overlap style-32-outer style-local-14-h2-outer">
+    <!---->
+    <div id="navigation" data-colibri-component="navigation" data-colibri-id="14-h2" class="h-section h-navigation h-navigation d-flex style-32 style-local-14-h2">
+      <!---->
+      <div class="h-section-grid-container h-section-fluid-container">
+        <div data-nav-normal="">
+          <div data-colibri-id="14-h3" class="h-row-container h-section-boxed-container gutters-row-lg-0 gutters-row-md-0 gutters-row-2 gutters-row-v-lg-0 gutters-row-v-md-0 gutters-row-v-2 style-33 style-local-14-h3 position-relative">
+            <!---->
+            <div class="h-row justify-content-lg-center justify-content-md-center justify-content-center align-items-lg-stretch align-items-md-stretch align-items-stretch gutters-col-lg-0 gutters-col-md-0 gutters-col-2 gutters-col-v-lg-0 gutters-col-v-md-0 gutters-col-v-2">
+              <!---->
+              <div class="h-column h-column-container d-flex h-col-none style-34-outer style-local-14-h4-outer">
+                <div data-colibri-id="14-h4" data-placeholder-provider="navigation-logo" class="d-flex h-flex-basis h-column__inner h-px-lg-0 h-px-md-0 h-px-0 v-inner-lg-0 v-inner-md-0 v-inner-0 style-34 style-local-14-h4 position-relative">
+                  <!---->
+                  <!---->
+                  <div class="w-100 h-y-container h-column__content h-column__v-align flex-basis-auto align-self-lg-center align-self-md-center align-self-center">
+                    <!---->
+                    <div data-colibri-id="14-h5" class="d-flex align-items-center text-lg-left text-md-left text-left justify-content-lg-start justify-content-md-start justify-content-start style-35 style-local-14-h5 position-relative h-element">
+                      <!---->
+                      <a rel="home" href="https://blog.processtune.com/" h-use-smooth-scroll="true" class="d-flex align-items-center"><span class="h-logo__text h-logo__text_h logo-text d-inline-block style-35-text style-local-14-h5-text">Processtune Blog</span></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="h-column h-column-container d-flex h-col-none style-36-outer style-local-14-h6-outer h-hide-sm">
+                <div data-colibri-id="14-h6" data-placeholder-provider="navigation-spacing" class="d-flex h-flex-basis h-column__inner h-px-lg-0 h-px-md-0 h-px-0 v-inner-lg-0 v-inner-md-0 v-inner-0 style-36 style-local-14-h6 h-hide-sm position-relative">
+                  <!---->
+                  <!---->
+                  <div class="w-100 h-y-container h-column__content h-column__v-align flex-basis-100 align-self-lg-center align-self-md-center align-self-center">
+                    <!---->
+                    <div data-colibri-id="14-h7" class="style-37 style-local-14-h7 position-relative h-element">
+                      <!---->
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="h-column h-column-container d-flex h-col-none style-38-outer style-local-14-h8-outer">
+                <div data-colibri-id="14-h8" data-placeholder-provider="navigation-menu" class="d-flex h-flex-basis h-column__inner h-px-lg-0 h-px-md-0 h-px-0 v-inner-lg-0 v-inner-md-0 v-inner-0 style-38 style-local-14-h8 position-relative">
+                  <!---->
+                  <!---->
+                  <div class="w-100 h-y-container h-column__content h-column__v-align flex-basis-auto align-self-lg-center align-self-md-center align-self-center">
+                    <!---->
+                    <div data-colibri-component="dropdown-menu" role="navigation" h-use-smooth-scroll-all="true" data-colibri-id="14-h9" class="h-menu h-global-transition-all h-ignore-global-body-typography has-offcanvas-tablet h-menu-horizontal h-dropdown-menu style-39 style-local-14-h9 position-relative h-element">
+                      <!---->
+                      <div class="h-global-transition-all h-main-menu"><div class="colibri-menu-container"><ul id="menu-main" class="colibri-menu bordered-active-item bordered-active-item--bottom effect-borders-grow grow-from-center"><li id="menu-item-6808" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor menu-item-6808"><a href="https://blog.processtune.com/category/microsoft-azure/">Microsoft Azure</a></li>
+<li id="menu-item-6809" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6809"><a href="https://blog.processtune.com/category/microsoft-azure/azure-active-directory/">Azure Active Directory</a></li>
+<li id="menu-item-6810" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6810"><a href="https://blog.processtune.com/category/visual-studio/">Visual Studio</a></li>
+<li id="menu-item-6811" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6811"><a href="https://blog.processtune.com/category/microservice/">Microservice</a></li>
+</ul></div></div>
+                      <div data-colibri-id="14-h10" class="h-mobile-menu h-global-transition-disable style-40 style-local-14-h10 position-relative h-element">
+                        <!---->
+                        <a data-click-outside="true" data-target="#offcanvas-wrapper-14-h10" data-target-id="offcanvas-wrapper-14-h10" data-offcanvas-overlay-id="offcanvas-overlay-14-h10" href="#" data-colibri-component="offcanvas" data-direction="right" data-push="false" title="Menu" class="h-hamburger-button">
+                          <div class="icon-container h-hamburger-icon">
+                            <div class="h-icon-svg" style="width: 100%; height: 100%;">
+                              <!--Icon by Font Awesome (https://fontawesome.com)-->
+                              <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="bars" viewbox="0 0 1536 1896.0833">
+                                <path d="M1536 1344v128q0 26-19 45t-45 19H64q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19H64q-26 0-45-19T0 960V832q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19H64q-26 0-45-19T0 448V320q0-26 19-45t45-19h1408q26 0 45 19t19 45z"></path>
+                              </svg>
+                            </div>
+                          </div>
+                        </a>
+                        <div id="offcanvas-wrapper-14-h10" class="h-offcanvas-panel offcanvas offcanvas-right hide force-hide style-40-offscreen style-local-14-h10-offscreen">
+                          <div data-colibri-id="14-h11" class="d-flex flex-column h-offscreen-panel style-41 style-local-14-h11 position-relative h-element">
+                            <!---->
+                            <div class="offscreen-header h-ui-empty-state-container">
+                              <div data-colibri-id="14-h13" class="h-row-container gutters-row-lg-2 gutters-row-md-2 gutters-row-0 gutters-row-v-lg-2 gutters-row-v-md-2 gutters-row-v-2 style-42 style-local-14-h13 position-relative">
+                                <!---->
+                                <div class="h-row justify-content-lg-center justify-content-md-center justify-content-center align-items-lg-stretch align-items-md-stretch align-items-stretch gutters-col-lg-2 gutters-col-md-2 gutters-col-0 gutters-col-v-lg-2 gutters-col-v-md-2 gutters-col-v-2">
+                                  <!---->
+                                  <div class="h-column h-column-container d-flex h-col-lg-6 h-col-md-6 h-col-12 style-43-outer style-local-14-h14-outer">
+                                    <div data-colibri-id="14-h14" class="d-flex h-flex-basis h-column__inner h-px-lg-2 h-px-md-2 h-px-2 v-inner-lg-2 v-inner-md-2 v-inner-2 style-43 style-local-14-h14 position-relative">
+                                      <!---->
+                                      <!---->
+                                      <div class="w-100 h-y-container h-column__content h-column__v-align flex-basis-100 align-self-lg-start align-self-md-start align-self-start">
+                                        <!---->
+                                        <div data-colibri-id="14-h15" class="d-flex align-items-center text-lg-center text-md-center text-center justify-content-lg-center justify-content-md-center justify-content-center style-44 style-local-14-h15 position-relative h-element">
+                                          <!---->
+                                          <a rel="home" href="https://blog.processtune.com/" h-use-smooth-scroll="true" class="d-flex align-items-center"><span class="h-logo__text h-logo__text_h logo-text d-inline-block style-44-text style-local-14-h15-text">Processtune Blog</span></a>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="offscreen-content">
+                              <!---->
+                              <div data-colibri-component="accordion-menu" role="navigation" h-use-smooth-scroll-all="true" data-colibri-id="14-h12" class="h-menu h-global-transition-all h-ignore-global-body-typography h-mobile-menu h-menu-accordion style-47 style-local-14-h12 position-relative h-element">
+                                <!---->
+                                <div class="h-global-transition-all h-mobile-menu"><div class="colibri-menu-container"><ul id="menu-main-1" class="colibri-menu none "><li class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor menu-item-6808"><a href="https://blog.processtune.com/category/microsoft-azure/">Microsoft Azure</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6809"><a href="https://blog.processtune.com/category/microsoft-azure/azure-active-directory/">Azure Active Directory</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6810"><a href="https://blog.processtune.com/category/visual-studio/">Visual Studio</a></li>
+<li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-6811"><a href="https://blog.processtune.com/category/microservice/">Microservice</a></li>
+</ul></div></div>
+                              </div>
+                            </div>
+                            <div class="offscreen-footer h-ui-empty-state-container">
+                              <div data-colibri-id="14-h16" class="h-row-container gutters-row-lg-2 gutters-row-md-2 gutters-row-0 gutters-row-v-lg-2 gutters-row-v-md-2 gutters-row-v-2 style-45 style-local-14-h16 position-relative">
+                                <!---->
+                                <div class="h-row justify-content-lg-center justify-content-md-center justify-content-center align-items-lg-stretch align-items-md-stretch align-items-stretch gutters-col-lg-2 gutters-col-md-2 gutters-col-0 gutters-col-v-lg-2 gutters-col-v-md-2 gutters-col-v-2">
+                                  <!---->
+                                  <div class="h-column h-column-container d-flex h-col-lg-6 h-col-md-6 h-col-12 style-46-outer style-local-14-h17-outer">
+                                    <div data-colibri-id="14-h17" class="d-flex h-flex-basis h-column__inner h-ui-empty-state-container h-px-lg-2 h-px-md-2 h-px-2 v-inner-lg-2 v-inner-md-2 v-inner-2 style-46 style-local-14-h17 position-relative">
+                                      <!---->
+                                      <!---->
+                                      <div class="w-100 h-y-container h-column__content h-column__v-align flex-basis-100">
+                                        <!---->
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div id="offcanvas-overlay-14-h10" class="offscreen-overlay style-40-offscreenOverlay style-local-14-h10-offscreenOverlay"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div data-nav-sticky="" style="display: none;"></div>
+      </div>
+    </div>
+  </div>
+  <div data-colibri-id="14-h24" id="hero" class="h-section h-hero d-flex align-items-lg-start align-items-md-start align-items-start style-54 style-local-14-h24 position-relative">
+    <div class="background-wrapper">
+      <div class="background-layer background-layer-media-container-lg">
+        <div data-slide-duration="1500" data-slide-speed="500" data-colibri-component="slideshow" class="background-layer colibri-slideshow" model-id="14-h24" media="desktop">
+          <div class="slideshow-image" style="background-image: url(https://blog.processtune.com/2022/04/30/design-of-solution-with-grpc-communication/&quot;/wp-content/themes/colibri-wp/resources/images/beach-landscape-sea-water-nature-sand-1061655-pxhere.com.jpg&quot;); visibility: visible; z-index: 3; opacity: 0; transition: opacity 500ms ease calc(1000ms);"></div>
+          <div class="slideshow-image" style="background-image: url(https://blog.processtune.com/2022/04/30/design-of-solution-with-grpc-communication/&quot;/wp-content/themes/colibri-wp/resources/images/landscape-tree-water-nature-grass-outdoor-1327743-pxhere.com.jpg&quot;); z-index: 2;"></div>
+          <div class="slideshow-image" style="background-image: url(https://blog.processtune.com/2022/04/30/design-of-solution-with-grpc-communication/&quot;/wp-content/themes/colibri-wp/resources/images/leaf-nature-water-green-freshness-dew-1440543-pxhere.com.jpg&quot;);"></div>
+        </div>
+        <div class="overlay-layer">
+          <div class="overlay-image-layer" style="background-color: rgba(0, 0, 0, 0.7); opacity: 70;"></div>
+        </div>
+      </div>
+      <div class="background-layer background-layer-media-container-md">
+        <div data-slide-duration="1500" data-slide-speed="500" data-colibri-component="slideshow" class="background-layer colibri-slideshow" model-id="14-h24" media="tablet">
+          <div class="slideshow-image" style="background-image: url(https://blog.processtune.com/2022/04/30/design-of-solution-with-grpc-communication/&quot;/wp-content/themes/colibri-wp/resources/images/beach-landscape-sea-water-nature-sand-1061655-pxhere.com.jpg&quot;); visibility: visible; z-index: 3; opacity: 0; transition: opacity 500ms ease calc(1000ms);"></div>
+          <div class="slideshow-image" style="background-image: url(https://blog.processtune.com/2022/04/30/design-of-solution-with-grpc-communication/&quot;/wp-content/themes/colibri-wp/resources/images/landscape-tree-water-nature-grass-outdoor-1327743-pxhere.com.jpg&quot;); z-index: 2;"></div>
+          <div class="slideshow-image" style="background-image: url(https://blog.processtune.com/2022/04/30/design-of-solution-with-grpc-communication/&quot;/wp-content/themes/colibri-wp/resources/images/leaf-nature-water-green-freshness-dew-1440543-pxhere.com.jpg&quot;);"></div>
+        </div>
+        <div class="overlay-layer">
+          <div class="overlay-image-layer" style="background-color: rgba(0, 0, 0, 0.7); opacity: 70;"></div>
+        </div>
+      </div>
+      <div class="background-layer background-layer-media-container">
+        <div data-slide-duration="1500" data-slide-speed="500" data-colibri-component="slideshow" class="background-layer colibri-slideshow" model-id="14-h24" media="mobile">
+          <div class="slideshow-image" style="background-image: url(https://blog.processtune.com/2022/04/30/design-of-solution-with-grpc-communication/&quot;/wp-content/themes/colibri-wp/resources/images/beach-landscape-sea-water-nature-sand-1061655-pxhere.com.jpg&quot;); visibility: visible; z-index: 3; opacity: 0; transition: opacity 500ms ease calc(1000ms);"></div>
+          <div class="slideshow-image" style="background-image: url(https://blog.processtune.com/2022/04/30/design-of-solution-with-grpc-communication/&quot;/wp-content/themes/colibri-wp/resources/images/landscape-tree-water-nature-grass-outdoor-1327743-pxhere.com.jpg&quot;); z-index: 2;"></div>
+          <div class="slideshow-image" style="background-image: url(https://blog.processtune.com/2022/04/30/design-of-solution-with-grpc-communication/&quot;/wp-content/themes/colibri-wp/resources/images/leaf-nature-water-green-freshness-dew-1440543-pxhere.com.jpg&quot;);"></div>
+        </div>
+        <div class="overlay-layer">
+          <div class="overlay-image-layer" style="background-color: rgba(0, 0, 0, 0.7); opacity: 70;"></div>
+        </div>
+      </div>
+    </div>
+    <!---->
+    <div class="h-section-grid-container h-navigation-padding h-section-boxed-container">
+      <!---->
+      <div data-colibri-id="14-h25" class="h-row-container gutters-row-lg-2 gutters-row-md-2 gutters-row-0 gutters-row-v-lg-2 gutters-row-v-md-2 gutters-row-v-2 style-55 style-local-14-h25 position-relative">
+        <!---->
+        <div class="h-row justify-content-lg-center justify-content-md-center justify-content-center align-items-lg-stretch align-items-md-stretch align-items-stretch gutters-col-lg-2 gutters-col-md-2 gutters-col-0 gutters-col-v-lg-2 gutters-col-v-md-2 gutters-col-v-2">
+          <!---->
+          <div class="h-column h-column-container d-flex h-col-lg-auto h-col-md-auto h-col-auto style-56-outer style-local-14-h26-outer">
+            <div data-colibri-id="14-h26" class="d-flex h-flex-basis h-column__inner h-px-lg-2 h-px-md-2 h-px-2 v-inner-lg-2 v-inner-md-2 v-inner-2 style-56 style-local-14-h26 position-relative">
+              <!---->
+              <!---->
+              <div class="w-100 h-y-container h-column__content h-column__v-align flex-basis-100 align-self-lg-start align-self-md-start align-self-start">
+                <!---->
+                <div data-colibri-id="14-h27" class="page-title style-57 style-local-14-h27 position-relative h-element">
+                  <!---->
+                  <div class="h-page-title__outer style-57-outer style-local-14-h27-outer">
+                    <div class="h-global-transition-all"><span><h1 style="margin-bottom:0">Design of solution with gRPC communication</h1></span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!---->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>		<script type='text/javascript'>
+          (function () {
+            function setHeaderTopSpacing() {
+
+                // forEach polyfill
+                if(!NodeList.prototype.forEach){
+                    NodeList.prototype.forEach = function (callback) {
+                        for(var i=0;i<this.length;i++){
+                            callback.call(this,this.item(i));
+                        }
+                    }
+                }
+
+              // '[data-colibri-component="navigation"][data-overlap="true"]' selector is backward compatibility
+              var navigation = document.querySelector('[data-colibri-navigation-overlap="true"], [data-colibri-component="navigation"][data-overlap="true"]')
+              if (navigation) {
+                var els = document
+                .querySelectorAll('.h-navigation-padding');
+                if (els.length) {
+                  els.forEach(function (item) {
+                    item.style.paddingTop = navigation.offsetHeight + "px";
+                  });
+                }
+              }
+            }
+            setHeaderTopSpacing();
+          })();
+		</script>
+		<!-- dynamic header end -->
+<!-- Content:start -->
+<div class="content  position-relative colibri-main-content-single" id="content"><!-- Section:start -->
+<div class="d-flex h-section h-section-global-spacing position-relative main-section"><div class="h-section-grid-container h-section-boxed-container main-section-inner"><!-- Row:start -->
+<div class="h-row-container main-row"><div class="h-row main-row-inner"><!-- Column:start -->
+<div class="h-col"><!-- dynamic main start --><div data-colibri-id="25-m1" class="style-64 style-local-25-m1 h-overflow-hidden position-relative">
+  
+  <div data-colibri-component="section" data-colibri-id="25-m2" id="blog-post" class="h-section h-section-global-spacing d-flex align-items-lg-center align-items-md-center align-items-center style-65 style-local-25-m2 position-relative">
+    
+    
+    <div class="h-section-grid-container h-section-boxed-container">
+      
+      <div data-colibri-id="25-m3" class="h-row-container gutters-row-lg-0 gutters-row-md-0 gutters-row-0 gutters-row-v-lg-0 gutters-row-v-md-0 gutters-row-v-0 colibri-dynamic-list colibri-single-post-loop style-70 style-local-25-m3 position-relative">
+        
+        <div data-colibri-component="" class="h-row justify-content-lg-center justify-content-md-center justify-content-center align-items-lg-stretch align-items-md-stretch align-items-stretch gutters-col-lg-0 gutters-col-md-0 gutters-col-0 gutters-col-v-lg-0 gutters-col-v-md-0 gutters-col-v-0">
+          
+          
+        <div class="h-column h-column-container d-flex h-col-lg-12 h-col-md-12 h-col-12 post-6651 post type-post status-publish format-standard has-post-thumbnail hentry category-asp-net-core category-c category-grpc category-service category-slide-show category-technical-memo masonry-item style-71-outer style-local-25-m4-outer"><div data-colibri-id="14-m4" class="d-flex h-flex-basis h-column__inner h-px-lg-0 h-px-md-0 h-px-0 v-inner-lg-0 v-inner-md-0 v-inner-0 style-71 style-local-25-m4 position-relative"><!----><!----> <div class="w-100 h-y-container h-column__content h-column__v-align flex-basis-100 align-self-lg-start align-self-md-start align-self-start"><!----> <div data-colibri-id="14-m5" class="colibri-post-thumbnail colibri-post-has-thumbnail colibri-post-thumbnail-has-placeholder style-72 style-local-25-m5 h-overflow-hidden position-relative h-element"><!----><div class="h-global-transition-all colibri-post-thumbnail-shortcode style-dynamic-25-m5-height"><img width="1161" height="285" src="https://blog.processtune.com/wp-content/uploads/2023/03/SeriesTitle.png" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="" decoding="async" fetchpriority="high" srcset="https://blog.processtune.com/wp-content/uploads/2023/03/SeriesTitle.png 1161w, https://blog.processtune.com/wp-content/uploads/2023/03/SeriesTitle-300x74.png 300w, https://blog.processtune.com/wp-content/uploads/2023/03/SeriesTitle-1024x251.png 1024w, https://blog.processtune.com/wp-content/uploads/2023/03/SeriesTitle-768x189.png 768w" sizes="(max-width: 1161px) 100vw, 1161px"></div> <div class="colibri-post-thumbnail-content align-items-lg-center align-items-md-center align-items-center flex-basis-100"><div class="w-100 h-y-container"><!----> </div></div></div><div data-colibri-id="14-m6" class="h-row-container gutters-row-lg-0 gutters-row-md-0 gutters-row-0 gutters-row-v-lg-0 gutters-row-v-md-0 gutters-row-v-0 style-73 style-local-25-m6 position-relative"><!----><div class="h-row justify-content-lg-center justify-content-md-center justify-content-center align-items-lg-stretch align-items-md-stretch align-items-stretch gutters-col-lg-0 gutters-col-md-0 gutters-col-0 gutters-col-v-lg-0 gutters-col-v-md-0 gutters-col-v-0"><!----> <div class="h-column h-column-container d-flex h-col-lg-auto h-col-md-auto h-col-auto style-74-outer style-local-25-m7-outer"><div data-colibri-id="14-m7" class="d-flex h-flex-basis h-column__inner h-px-lg-3 h-px-md-3 h-px-3 v-inner-lg-3 v-inner-md-3 v-inner-3 style-74 style-local-25-m7 position-relative"><!----><!----> <div class="w-100 h-y-container h-column__content h-column__v-align flex-basis-100 align-self-lg-start align-self-md-start align-self-start"><!----> <div data-colibri-id="14-m8" class="h-blog-meta style-75 style-local-25-m8 position-relative h-element"><!----><div name="1" class="metadata-item"><span class="metadata-prefix">by </span> <a href="https://blog.processtune.com/author/tetsuro-takao/"><!---->tetsuro.takao</a> <span class="meta-separator"></span></div><div name="2" class="metadata-item"><span class="metadata-prefix">on </span> <a href="https://blog.processtune.com/2022/04/30/"><!---->April 30, 2022</a></div><!----><!----></div><div data-colibri-id="14-m9" class="style-76 style-local-25-m9 position-relative h-element"><!----><div class="h-global-transition-all colibri-post-content"><p style="margin:0px 0px 0px 0px;color:#000044;font-size:0.9rem;font-family:" segoe="" ui><a href="https://github.com/grpc" target="_new" style="font-weight:bold;" rel="noopener">The gRPC</a> is one of the <a href="https://en.wikipedia.org/wiki/Remote_procedure_call" target="_new" style="font-weight:bold;" rel="noopener">Remote Procedure Call (RPC)</a>, It was developed by Google. They needed a messaging protocol that can respond on the distributed computing environment in real-time when users operate <a href="https://www.cloudflare.com/learning/network-layer/what-is-the-control-plane/" target="_new" style="font-weight:bold;" rel="noopener">the Data plane</a> of the Google Cloud. And it was leveraged for maintaining of the Control plane of Google Cloud also, to keep high quality cloud services.<br>
+The gRPC uses <a href="https://cloud.google.com/blog/products/gcp/grpc-a-true-internet-scale-rpc-framework-is-now-1-and-ready-for-production-deployments?hl=en" target="_new" style="font-weight:bold;" rel="noopener">the Stubby</a> they created: a framework of one of the RPC. Then the gRPC become to open source, and it has be the incubating project of <a href="https://www.cncf.io/" target="_new" style="font-weight:bold;" rel="noopener">CNCF</a> since 2017.<br>
+Microsoft supports many development environments for an application using the gRPC-Web and the gRPC-over-HTTP/2 (see Microsoft official document &lsquo;<a href="https://docs.microsoft.com/ja-jp/aspnet/core/grpc/supported-platforms?view=aspnetcore-6.0&amp;WT.mc_id=DT-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">gRPC on .NET supported platforms</a>&lsquo;).<br>
+This article describe mechanism of .NET application using the gRPC architecture and an application that uses the gRPC works as the Message Oriented Middleware.<br>
+The article &lsquo;<a href="https://blog.processtune.com/?p=6649" target="_new" style="font-weight:bold;" rel="noopener">ASP.NET Core gRPC &amp; gRPCurl tool</a>&lsquo; describes how to implement gRPC application service from Azure App Service.</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">&bull;&nbsp;gRPC-dotnet</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The gRPC-dotnet is implementation of .NET that is to use the <a href="https://grpc.io/blog/grpc-stacks/" target="_new" style="font-weight:bold;" rel="noopener">gRPC Core Stack</a>. It&rsquo;s structed with namespaces of <a href="https://www.nuget.org/packages/Grpc.AspNetCore" target="_new" style="font-weight:bold;" rel="noopener">Grpc.AspNetCore</a> and <a href="https://www.nuget.org/packages/Grpc.AspNetCore.Server.Reflection" target="_new" style="font-weight:bold;" rel="noopener">Grpc.AspNetCore.Server.Reflection</a>. For creation of these stub, namespaces <a href="https://www.nuget.org/packages/Grpc.Net.Client" target="_new" style="font-weight:bold;" rel="noopener">Grpc.Net.Client</a>, <a href="https://www.nuget.org/packages/Grpc.Tools/2.51.0" target="_new" style="font-weight:bold;" rel="noopener">Grpc.Tools</a>, and <a href="https://www.nuget.org/packages/Google.Protobuf" target="_new" style="font-weight:bold;" rel="noopener">Google.Protobuf</a> architecture are used.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The Grpc.AspNetCore namespace is the gRPC service itself, and the Grpc.AspNetCore.Server.Reflection namespace works for providing a description of the gRPC service to client apps just like the <a href="https://swagger.io/" target="_new" style="font-weight:bold;" rel="noopener">Swagger</a>.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">On the other hand, the Grpc.Tools namespace is auto generate a stub of client side that uses <a href="https://protobuf.dev/" target="_new" style="font-weight:bold;" rel="noopener">the Protobuf of the gRPC</a>. The Grpc.Tools namespace generates a stub with the Google.Protobuf architecture, The Google.Protobuf called from the Grpc.Tools namespace is pure C# implementation that does not use native component of the gRPC core stack.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">There was no HTTP/2 library of C# until gRPC-dotnet is developed, so gRPC apps of C# were developed with gRPC.Core that includes HTTP/2 library. The gRPC.Core namespace moved to the state of the Maintenance Only at May 2021, then at May 2022, it was in the state of the Deprecated (Please refer to the great article &lsquo;<a href="https://grpc.io/blog/grpc-csharp-future/" target="_new" style="font-weight:bold;" rel="noopener">The future of gRPC in C# belongs to grpc-dotnet</a>&lsquo;).</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="https://blog.processtune.com/wp-content/uploads/2023/02/gRPC-dotnet.png" alt="" style="width:900px;"></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">&bull;&nbsp;The gRPC is a protocol for the Message Oriented Middleware.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The gRPC extends the Remote Procedure Call (RPC). <a href="https://grpc.io/" target="_new" style="font-weight:bold;" rel="noopener">The official website</a> says, &lsquo;A high performance, open-source universal RPC framework&rsquo;.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The first description is an aspect of universal RPC framework, it can be used in multiple languages and can enforce service contracts on multiple first- and third-party services using HTTP/2. It means that the gRPC can generate clients and servers in multiple languages, generated code is able to run on each language environment (C++, Java, Go, Node, Ruby, Python and C# across Linux, Windows and Mac). The gRPC as a framework is universal because it supports also development on many environment. For instance, mobile apps development of iOS and Android is supported with Objective-C and Android Java libraries, it can execute single-line installation in most languages.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The RPC calls any functions on destination that are an object, in other words, service contracts have to describe the objects, so gRPC use the Protocol Buffers for run on universal environment. The Protocol Buffers are a language-neutral, platform-neutral extensible mechanism for serializing structured data (quote from <a href="https://protobuf.dev/" target="_new" style="font-weight:bold;" rel="noopener">the official website</a>). It can describe objects of services side and edge side both.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The second description is an aspect of high performance of the gRPC, availability of object description affects streaming or unary flow control from each side of service and edge. In the case of using the forward error correction (FEC) mechanism for error handling, it is better that an object error is supported at communication level same as a connection error instead of at an application level. An access control of authentication &amp; authorization typically uses JSON as a container of a security token, object description of the Protocol Buffers is useful for transfer of a security token too, also useful for serialization/deserialization. The RPC extends of the gRPC are also useful at other aspects such as distributed tracing, binding as synchronization/asynchronization, response of cancel/timeout, health checking, load balancing, logging and monitoring and tracing etc..</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The gRPC was developed for distributed computing. Distributed computing has the Message-Oriented Middleware, the Distributed Directory, the Service Discovery, the Stateful Middle Tier, the Stateless Actor Activator and so on. There are many types in the Message Oriented Middleware such as the Pub-Sub, the Message Queue, the Fan-out, the Request/Response, the Point to Point, the Remote Procedure Call and so forth. The Remote Procedure Call run on several type protocols like the HTTP, the HTTP/2, the TCP/IP, the Internet InterORB protocol. The gRPC is extends HTTP/2 with the Protocol Buffers. Thus, the gRPC has to be used in correct situation, in other words, what kind of a solution architecture, what part of the system or which direction of procedures call.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="https://blog.processtune.com/wp-content/uploads/2023/02/gRPCInDistributedComputing.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The gRPC is like as the WCF or the DCOM that uses the Distributed Object in synchronize communication although, it can communicate asynchronously, and also can bidirectional communication between service and client because it transfer objects with the HTT/2 protocol.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The Distributed Object of unary RPC makes a stub of a service side object on a client side, then a client executes a client-side object. In other hand, the gRPC transfers a description of service side object, then a client side calls service side procedure.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="https://blog.processtune.com/wp-content/uploads/2023/02/gRPCommunicationDirection.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">If you familiar with synchronize communication on the DCOM or the WCF architecture, aware consistency of a state of services on the gRPC communication. In the case of a unary RPC, a client-side application uses same object of service side as stub, thus typically the application care about consistency of only service side state although, in contrast a state of client side or service side is not guaranteed on the gRPC communication because the gRPC communication uses remotely individual object of service side or client side and usually communicate with asynchronously. Though the gRPC can communicate as synchronously for waiting remote procedure response like unary RPC, if use the Backend for Frontends pattern for design of cloud native solution, it needs design as distributed computing like Microservices. Please refer to the website of Sam Newman (&lsquo;<a href="https://samnewman.io/patterns/architectural/bff/" target="_new" style="font-weight:bold;" rel="noopener">Pattern: Backends For Frontends</a>&lsquo;), and Microsoft official document (&lsquo;<a href="https://learn.microsoft.com/en-us/azure/architecture/patterns/backends-for-frontends?WT.mc_id=AZ-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">Backends for Frontends pattern: Microsoft learn</a>&lsquo;).</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="https://blog.processtune.com/wp-content/uploads/2023/02/BackendForFrontends.png" alt="" style="width:900px;"></p>
+<div style="background-color:#cccccc;border:1px solid #00000; padding: 10px 10px 0px 10px;margin-top:20px;">
+<div style="margin:-20px 0px 0px 5px;text-indent:1em;font-weight:bold;background-color:#444;border:1px solid #ccc;color:#fff;">&#9432; Recomended reference</div>
+<p><a href="https://blog.processtune.com/?p=6649" target="_new" style="font-weight:bold;display:inline-block;margin-left:1rem;margin-top:1rem;margin-bottom:1rem;" rel="noopener">&rarr;ASP.NET Core gRPC &amp; gRPCurl tool</a></p>
+</div>
+</div></div><div data-colibri-id="14-m10" class="h-row-container gutters-row-lg-0 gutters-row-md-0 gutters-row-0 gutters-row-v-lg-0 gutters-row-v-md-0 gutters-row-v-0 style-77 style-local-25-m10 position-relative"><!----><div class="h-row justify-content-lg-center justify-content-md-center justify-content-center align-items-lg-stretch align-items-md-stretch align-items-stretch gutters-col-lg-0 gutters-col-md-0 gutters-col-0 gutters-col-v-lg-0 gutters-col-v-md-0 gutters-col-v-0"><!----> <div class="h-column h-column-container d-flex h-col-lg-auto h-col-md-auto h-col-auto style-78-outer style-local-25-m11-outer"><div data-colibri-id="14-m11" class="d-flex h-flex-basis h-column__inner h-px-lg-0 h-px-md-0 h-px-0 v-inner-lg-0 v-inner-md-0 v-inner-0 style-78 style-local-25-m11 position-relative"><!----><!----> <div class="w-100 h-y-container h-column__content h-column__v-align flex-basis-auto align-self-lg-center align-self-md-center align-self-center"><!----> <div data-colibri-id="14-m12" class="h-text h-text-component style-79 style-local-25-m12 position-relative h-element"><!----><!----> <div class=""><p>Categories:</p></div></div></div></div></div><div class="h-column h-column-container d-flex h-col-lg h-col-md h-col style-80-outer style-local-25-m13-outer"><div data-colibri-id="14-m13" class="d-flex h-flex-basis h-column__inner h-px-lg-0 h-px-md-0 h-px-0 v-inner-lg-0 v-inner-md-0 v-inner-0 style-80 style-local-25-m13 position-relative"><!----><!----> <div class="w-100 h-y-container h-column__content h-column__v-align flex-basis-100 align-self-lg-center align-self-md-center align-self-center"><!----> <div data-colibri-id="14-m14" class="h-blog-categories style-81 style-local-25-m14 position-relative h-element"><!----><div class="h-global-transition-all"><a class="d-inline-block colibri-post-category" href="https://blog.processtune.com/category/asp-net-core/">ASP.NET Core</a><a class="d-inline-block colibri-post-category" href="https://blog.processtune.com/category/c/">C#</a><a class="d-inline-block colibri-post-category" href="https://blog.processtune.com/category/microsoft-azure/grpc/">gRPC</a><a class="d-inline-block colibri-post-category" href="https://blog.processtune.com/category/asp-net-core/service/">Service</a><a class="d-inline-block colibri-post-category" href="https://blog.processtune.com/category/slide-show/">SlideShow</a><a class="d-inline-block colibri-post-category" href="https://blog.processtune.com/category/technical-memo/">Technical Memo</a></div></div></div></div></div></div></div><div data-colibri-id="14-m15" class="h-row-container gutters-row-lg-0 gutters-row-md-0 gutters-row-0 gutters-row-v-lg-0 gutters-row-v-md-0 gutters-row-v-0 style-82 style-local-25-m15 position-relative"><!----><div class="h-row justify-content-lg-center justify-content-md-center justify-content-center align-items-lg-center align-items-md-center align-items-center gutters-col-lg-0 gutters-col-md-0 gutters-col-0 gutters-col-v-lg-0 gutters-col-v-md-0 gutters-col-v-0"><!----> <div class="h-column h-column-container d-flex h-col-lg-auto h-col-md-auto h-col-auto align-self-lg-center align-self-md-center align-self-center style-83-outer style-local-25-m16-outer"><div data-colibri-id="14-m16" class="d-flex h-flex-basis h-column__inner h-px-lg-0 h-px-md-0 h-px-0 v-inner-lg-0 v-inner-md-0 v-inner-0 style-83 style-local-25-m16 position-relative"><!----><!----> <div class="w-100 h-y-container h-column__content h-column__v-align flex-basis-auto align-self-lg-center align-self-md-center align-self-center"><!----> <div data-colibri-id="14-m17" class="h-text h-text-component style-84 style-local-25-m17 position-relative h-element"><!----><!----> <div class=""><p>Tags:</p></div></div></div></div></div><div class="h-column h-column-container d-flex h-col-lg h-col-md h-col align-self-lg-center align-self-md-center align-self-center style-85-outer style-local-25-m18-outer"><div data-colibri-id="14-m18" class="d-flex h-flex-basis h-column__inner h-px-lg-0 h-px-md-0 h-px-0 v-inner-lg-0 v-inner-md-0 v-inner-0 style-85 style-local-25-m18 position-relative"><!----><!----> <div class="w-100 h-y-container h-column__content h-column__v-align flex-basis-100 align-self-lg-center align-self-md-center align-self-center"><!----> <div data-colibri-id="14-m19" class="h-blog-tags empty-preview style-86 style-local-25-m19 position-relative h-element"><!----><div class="h-global-transition-all"><span class="d-inline-block colibri-post-tag">No Tag</span></div></div></div></div></div></div></div></div></div></div></div></div><div data-colibri-id="14-m20" class="h-row-container gutters-row-lg-0 gutters-row-md-0 gutters-row-0 gutters-row-v-lg-0 gutters-row-v-md-0 gutters-row-v-0 style-87 style-local-25-m20 position-relative"><!----><div class="h-row justify-content-lg-center justify-content-md-center justify-content-center align-items-lg-stretch align-items-md-stretch align-items-stretch gutters-col-lg-0 gutters-col-md-0 gutters-col-0 gutters-col-v-lg-0 gutters-col-v-md-0 gutters-col-v-0"><!----> <div class="h-column h-column-container d-flex h-col-lg-auto h-col-md-auto h-col-auto style-88-outer style-local-25-m21-outer"><div data-colibri-id="14-m21" class="d-flex h-flex-basis h-column__inner h-px-lg-0 h-px-md-0 h-px-0 v-inner-lg-2 v-inner-md-2 v-inner-2 style-88 style-local-25-m21 position-relative"><!----><!----> <div class="w-100 h-y-container h-column__content h-column__v-align flex-basis-100 align-self-lg-start align-self-md-start align-self-start"><!----> <div data-colibri-id="14-m22" class="post-nav-button hide-title style-89 style-local-25-m22 position-relative h-element"><!----><div class="h-global-transition-all">
+	<nav class="navigation post-navigation" aria-label="Post navigation">
+		<h2 class="screen-reader-text">Post navigation</h2>
+		<div class="nav-links"><div class="nav-previous"><a href="https://blog.processtune.com/2022/02/01/node-mongodb-container-for-azure-static-web-apps/" rel="prev"><span class="meta-nav" aria-hidden="true">Previous&nbsp;post</span> <span class="post-title" title="Node + MongoDB container for Azure Functions">Node + MongoDB container for Azure Functions</span></a></div></div>
+	</nav></div></div></div></div></div><div class="h-column h-column-container d-flex h-col-lg-auto h-col-md-auto h-col-auto style-90-outer style-local-25-m23-outer"><div data-colibri-id="14-m23" class="d-flex h-flex-basis h-column__inner h-px-lg-0 h-px-md-0 h-px-0 v-inner-lg-2 v-inner-md-2 v-inner-2 style-90 style-local-25-m23 position-relative"><!----><!----> <div class="w-100 h-y-container h-column__content h-column__v-align flex-basis-100 align-self-lg-start align-self-md-start align-self-start"><!----> <div data-colibri-id="14-m24" class="post-nav-button hide-title style-91 style-local-25-m24 position-relative h-element"><!----><div class="h-global-transition-all">
+	<nav class="navigation post-navigation" aria-label="Post navigation">
+		<h2 class="screen-reader-text">Post navigation</h2>
+		<div class="nav-links"><div class="nav-next"><a href="https://blog.processtune.com/2022/05/30/asp-net-core-grpc-grpc-communication-tools/" rel="next"><span class="meta-nav" aria-hidden="true">Next&nbsp;post</span> <span class="post-title" title="ASP.NET Core gRPC &amp; gRPC communication tools">ASP.NET Core gRPC &amp; gRPC communication tools</span></a></div></div>
+	</nav></div></div></div></div></div></div></div></div></div></div>
+      
+      
+          </div>
+      </div>
+    </div>
+  </div>
+  <div data-colibri-component="section" data-colibri-id="25-m29" id="comments" class="h-section h-section-global-spacing d-flex align-items-lg-center align-items-md-center align-items-center style-92 style-local-25-m29 position-relative">
+    
+    
+    <div class="h-section-grid-container h-section-boxed-container">
+      
+      <div data-colibri-id="25-m30" class="h-row-container gutters-row-lg-0 gutters-row-md-0 gutters-row-0 gutters-row-v-lg-0 gutters-row-v-md-0 gutters-row-v-0 style-97 style-local-25-m30 position-relative">
+        
+        <div class="h-row justify-content-lg-center justify-content-md-center justify-content-center align-items-lg-stretch align-items-md-stretch align-items-stretch gutters-col-lg-0 gutters-col-md-0 gutters-col-0 gutters-col-v-lg-0 gutters-col-v-md-0 gutters-col-v-0">
+          
+          <div class="h-column h-column-container d-flex h-col-lg-auto h-col-md-auto h-col-auto style-98-outer style-local-25-m31-outer">
+            <div data-colibri-id="25-m31" class="d-flex h-flex-basis h-column__inner h-px-lg-3 h-px-md-3 h-px-3 v-inner-lg-3 v-inner-md-3 v-inner-3 style-98 style-local-25-m31 position-relative">
+              
+              
+              <div class="w-100 h-y-container h-column__content h-column__v-align flex-basis-100 align-self-lg-start align-self-md-start align-self-start">
+                
+                <div data-colibri-id="25-m32" class="style-99 style-local-25-m32 position-relative">
+                  
+                  <div class="h-global-transition-all blog-post-comments">
+<div id="comments" class="post-comments">
+    <h4 class="comments-title">
+    	<span class="comments-number">
+            No responses yet    	</span>
+    </h4>
+
+    <ol class="comment-list">
+		    </ol>
+
+	
+	
+</div>
+</div>
+                </div>
+                <div data-colibri-id="25-m33" class="position-relative">
+                  
+                  <div class="h-global-transition-all">		<div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title">Leave a Reply <small><a rel="nofollow" id="cancel-comment-reply-link" href="https://blog.processtune.com/2022/04/30/design-of-solution-with-grpc-communication/#respond" style="display:none;">Cancel reply</a></small></h3><form action="https://blog.processtune.com/wp-comments-post.php" method="post" id="commentform" class="comment-form"><p class="comment-notes"><span id="email-notes">Your email address will not be published.</span> <span class="required-field-message">Required fields are marked <span class="required">*</span></span></p><p class="comment-form-comment"><label for="comment">Comment <span class="required">*</span></label> <textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" required="required"></textarea></p><p class="comment-form-author"><label for="author">Name <span class="required">*</span></label> <input id="author" name="author" type="text" value="" size="30" maxlength="245" autocomplete="name" required="required"></p>
+<p class="comment-form-email"><label for="email">Email <span class="required">*</span></label> <input id="email" name="email" type="text" value="" size="30" maxlength="100" aria-describedby="email-notes" autocomplete="email" required="required"></p>
+<p class="comment-form-url"><label for="url">Website</label> <input id="url" name="url" type="text" value="" size="30" maxlength="200" autocomplete="url"></p>
+<p class="comment-form-cookies-consent"><input id="wp-comment-cookies-consent" name="wp-comment-cookies-consent" type="checkbox" value="yes"> <label for="wp-comment-cookies-consent">Save my name, email, and website in this browser for the next time I comment.</label></p>
+<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="Post Comment"> <input type="hidden" name="comment_post_ID" value="6651" id="comment_post_ID">
+<input type="hidden" name="comment_parent" id="comment_parent" value="0">
+</p></form>	</div><!-- #respond -->
+		</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div><!-- dynamic main end --></div>
+<!-- Column:end --></div></div>
+<!-- Row:end --></div></div>
+<!-- Section:end --></div>
+<!-- Content:end --><!-- dynamic footer start --><div data-enabled="true" data-colibri-component="footer-parallax" data-colibri-id="21-f1" class="page-footer style-59 style-local-21-f1 position-relative">
+  <!---->
+  <div data-colibri-component="section" data-colibri-id="21-f2" id="copyright" class="h-section h-section-global-spacing d-flex align-items-lg-center align-items-md-center align-items-center style-60 style-local-21-f2 position-relative">
+    <!---->
+    <!---->
+    <div class="h-section-grid-container h-section-boxed-container">
+      <!---->
+      <div data-colibri-id="21-f3" class="h-row-container gutters-row-lg-1 gutters-row-md-1 gutters-row-2 gutters-row-v-lg-1 gutters-row-v-md-1 gutters-row-v-2 style-61 style-local-21-f3 position-relative">
+        <!---->
+        <div class="h-row justify-content-lg-center justify-content-md-center justify-content-center align-items-lg-stretch align-items-md-stretch align-items-stretch gutters-col-lg-1 gutters-col-md-1 gutters-col-2 gutters-col-v-lg-1 gutters-col-v-md-1 gutters-col-v-2">
+          <!---->
+          <div class="h-column h-column-container d-flex h-col-lg-auto h-col-md-auto h-col-auto style-62-outer style-local-21-f4-outer">
+            <div data-colibri-id="21-f4" class="d-flex h-flex-basis h-column__inner h-px-lg-1 h-px-md-1 h-px-2 v-inner-lg-1 v-inner-md-1 v-inner-2 style-62 style-local-21-f4 position-relative">
+              <!---->
+              <!---->
+              <div class="w-100 h-y-container h-column__content h-column__v-align flex-basis-100 align-self-lg-start align-self-md-start align-self-start">
+                <!---->
+                <div data-colibri-id="21-f5" class="style-63 style-local-21-f5 position-relative h-element">
+                  <!---->
+                  <div class="h-global-transition-all">&copy; 2025 Processtune Blog. Created for free using WordPress and
+                    <a target="_blank" href="https://colibriwp.com/" rel="noopener">Colibri</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div><!-- dynamic footer end --></div><!-- #page -->
+        <script data-name="colibri-frontend-data">window.colibriFrontendData = [];</script>
+        <script type="speculationrules">
+{"prefetch":[{"source":"document","where":{"and":[{"href_matches":"\/*"},{"not":{"href_matches":["\/wp-*.php","\/wp-admin\/*","\/wp-content\/uploads\/*","\/wp-content\/*","\/wp-content\/plugins\/*","\/wp-content\/themes\/calliope\/*","\/wp-content\/themes\/colibri-wp\/*","\/*\\?(.+)"]}},{"not":{"selector_matches":"a[rel~=\"nofollow\"]"}},{"not":{"selector_matches":".no-prefetch, .no-prefetch a"}}]},"eagerness":"conservative"}]}
+</script>
+<script type="text/javascript" src="https://blog.processtune.com/wp-includes/js/comment-reply.min.js?ver=6.8.2" id="comment-reply-js" async="async" data-wp-strategy="async"></script>
+</body>
+</html>

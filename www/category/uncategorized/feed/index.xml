@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Uncategorized &#8211; Processtune Blog</title>
+	<atom:link href="https://blog.processtune.com/category/uncategorized/feed/" rel="self" type="application/rss+xml" />
+	<link>https://blog.processtune.com/</link>
+	<description>Articles offered from Microsoft MVP</description>
+	<lastBuildDate>Tue, 15 Apr 2025 06:40:53 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.8.2</generator>
+
+<image>
+	<url>/wp-content/uploads/2023/03/cropped-Presentation-32x32.png</url>
+	<title>Uncategorized &#8211; Processtune Blog</title>
+	<link>https://blog.processtune.com/</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>Mind map creation with markdown notation on visual studio code</title>
+		<link>https://blog.processtune.com/2024/04/28/mind-map-creation-with-markdown-notation-on-visual-studio-code/</link>
+					<comments>https://blog.processtune.com/2024/04/28/mind-map-creation-with-markdown-notation-on-visual-studio-code/#respond</comments>
+		
+		<dc:creator><![CDATA[TETSURO TAKAO]]></dc:creator>
+		<pubDate>Sun, 28 Apr 2024 06:57:00 +0000</pubDate>
+				<category><![CDATA[Markdown]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Uncategorized]]></category>
+		<category><![CDATA[markdown]]></category>
+		<category><![CDATA[Mind map]]></category>
+		<category><![CDATA[Visual studio code]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=7862</guid>
+
+					<description><![CDATA[Though there are many extensions to show mindmap on Visual Studio Code, it is better that the feature can use as possible as with common notation, and as simple installation for using it. The PlantUML can define various visuals of UML and mindmap from plane markdown, JSON data or YAML data and so on, these [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin: 0px 0px 0px 0px; color: #000044; font-size: 1.1rem;">Though there are many extensions to show <a style="font-weight: bold;" href="https://en.wikipedia.org/wiki/Mind_map" target="_new" rel="noopener">mindmap</a> on Visual Studio Code, it is better that the feature can use as possible as with common notation, and as simple installation for using it. <a style="font-weight: bold;" href="https://plantuml.com/" target="_new" rel="noopener">The PlantUML</a> can define various visuals of UML and mindmap from plane markdown, JSON data or YAML data and so on, these visual includes a legend, a title or a footer.</p>
+<p style="margin: 0px 0px 0px 0px; color: #000044; font-size: 1.1rem;">And it&#8217;s my opinion that the <a style="font-weight: bold;" href="https://marketplace.visualstudio.com/items?itemName=shd101wyy.markdown-preview-enhanced" target="_new" rel="noopener">Markdown Preview Enhanced</a> extension of Visual Studio Code is one of good extension, because it has features of easy installing and operation to represent various diagrams including mindmap.</p>
+<p style="margin: 0px 0px 0px 0px; color: #000044; font-size: 1.1rem;">Normally, to run preview of PlantUML needs the Java runtime although, the Markdown Preview Enhanced can define server URL for rendering. So it is not need complicate installing or settings that if it would have negative impact to existing development environment.</p>
+<p style="margin: 0px 0px 0px 0px; color: #000044; font-size: 1.1rem;">This article describes how to use the Markdown Preview Enhanced extension and how to create several views using PlantUML.</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 1.1rem;">•  Install Markdown Preview Enhanced and setting PlantUML rendering server URL</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">Launch Visual Studio Code and select [Extension] icon from [Activate bar], then type &#8216;markdown&#8217; in [Search box] and select Markdown Preview Enhanced for installing. After installing the extension, select [File] menu and drilled down to [Settings] sub menu using right arrow.</p>
+<p style="display: inline-block; margin: 0px 0px 10px 0px; text-align: center; white-space: nowrap; width: 100%;"><img decoding="async" style="width: 440px;" src="/wp-content/uploads/2024/10/MarkdownPreviewEnhancedExtension.png" alt="" /><img decoding="async" style="width: 440px;" src="/wp-content/uploads/2024/10/VSCodeSettings.png" alt="" /></p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">Type &#8216;markdownenhanced&#8217; at search box of [Settings] window, and put &#8216;https://www.plantuml.com/plantuml&#8217; into [Markdown-preview-enhanced: Plantuml Server].</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">At following section, create new file and save as markdown file on Visual Studio Code, and define PlantUML then modify it actually.</p>
+<p style="display: inline-block; margin: 0px 0px 10px 0px; text-align: center; white-space: nowrap; width: 100%;"><img decoding="async" style="width: 900px;" src="/wp-content/uploads/2024/10/savemdfile.png" alt="" /></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 1.1rem;">• Write markdown first then it would be defined to PlantUML I recommend.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">Mindmap is useful for ordering items of meeting such as individual speech of minutes or actions until next meeting and so on. In these days, recording or creating transcription using AI is very helpful although, writing mindmap has helping organize thought of my own thinking for me. Same as memo that individual member wrote, generated summary of the meeting is only one of the memos wrote by one of attendees. Thus, I always write the memo as the Markdown file.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px;"># Agenda: AI Education contents for e-learning program
+
+## 1) Assembling AI terms is for readers to be able to refer it always
+
+### Models
+
+#### 1. Closed models
+
+*Please fulfil this level contents at **next meeting**.*
+  
+#### 2. Open-source models
+
+#### 3. Open weight models
+
+#### 4. Mixture of Experts
+
+#### 5. Optimized model for hardware
+
+### Training and Size
+
+#### 1. Parameters, Languages, Input window size and Specs of LLMs, SLMs
+
+#### 2. Quantization
+
+#### 3. Distillation(knowledge or Concept)
+
+#### 4. Low Rank Adaptation, RAGBench
+
+### Runtime, Pipeline(Embeddings: tokenize + vectorize)
+
+#### 1. Ollama, LlamaIndex, Redis Vector Store, RedisVL, LangChain, Milvus, Postgres Vector Store, TensorFlow, Transformers
+
+#### 2. Llama Hub, Hugging Face Hub, Model Zoo, PyTorch Hub
+
+#### 3. OpenAI, AI managed services(AWS,  Azure, Google Cloud, IBM, Oracle Cloud)
+
+#### 4. GGML, GGUF, GPTQ, ONNX
+
+#### 5. Byte pair encoding, Dimentions
+
+### AI Agent, AI Orchestration, Multi-modal
+
+#### 1. Prompting and Zero-shot
+
+#### 2. Task specific of business flow
+
+#### 3. Thought and select appropriate models
+
+#### 4. Image and voice
+
+#### 5. Video
+
+#### 6. RAG (Dictionary of bilingual: prefix and suffix, misspell and typo, task-specific word)
+
+### Micro-services, Observability, Sidecar pattern and Service Mesh
+
+#### 1. Combine several AI services
+
+#### 2. Distributed tracing
+
+#### 3. Proxy, Service discovery, Logging, Distributed hash table, Connectors, Queue
+
+#### 4. Containers
+
+---
+
+## 2) Solutions structure sample of AI
+
+### Deploy with AI agent services
+
+#### 1. AWS
+
+#### 2. Azure
+
+#### 3. Google cloud
+
+### Development on-premise
+
+#### 0. Development containers
+
+#### 1. Python
+
+#### 2. C\#
+
+#### 3. Rust
+
+### Data persistence and in-memory cache
+
+#### 1. BERT
+
+#### 2. Llama
+
+#### 3. Data store services (Microsoft 365, BigQuery, Elastic, Databricks, OneLake, Snowflake, AWS Lake Formation)
+
+#### 4. Cache(Redis: Google Cloud Memorystore, AWS ElastiCache, Azure Cache for Redis, Azure Managed Redis)
+
+#### 5. Perquit and Delta
+
+#### 6. Vector stores
+
+#### 7. Graph stores
+
+</pre>
+<p style="display: inline-block; margin: 0px 0px 10px 0px; text-align: center; white-space: nowrap; width: 100%;"><img decoding="async" style="width: 900px;" src="/wp-content/uploads/2024/12/PreviewMarkdown.png" alt="" /></p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">The memo of meeting as sample above says outline of &#8216;AI Education contents for e-learning program&#8217;. And must review this outline with considering order or classification individual items before fulfilling the contents until next meeting. So would modify to a the Mindmap from this markdown at first.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px;">``` plantuml
+@startmindmap
+
+# Agenda: AI Education contents for e-learning program
+
+## 1) Assembling AI terms are for readers to be able to refer it always
+
+### Models
+
+#### 1. Closed models
+
+' *Please fulfil this level contents at **next meeting**.*
+  
+#### 2. Open-source models
+
+' --------------omit below------------------
+@endmindmap
+```
+</pre>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">It&#8217;s easy to convert plane mark down notation to PlantUML, type &#8216;&#8220;` plantuml&#8217; at the first line and &#8216;@startmindmap&#8217; at the second line then type &#8216;@endmindmap&#8217; at the last of contents then type &#8216;&#8220;`&#8217; at the last line. In the contents, comment out with &#8216; &#8216;(single quate)&#8217; at all lines excludes the lines of sharp character starting. At last, adjust levels use sharp symbol if it needs and type [Ctrl] + [Shift] + [V] for show preview window.</p>
+<p style="display: inline-block; margin: 0px 0px 10px 0px; text-align: center; white-space: nowrap; width: 100%;"><img decoding="async" style="width: 900px;" src="/wp-content/uploads/2024/12/PreviewMindmap.png" alt="" /></p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1 rem;">This convert working is easy if become to familiar, even If feel toroublesome, say &#8216;Please convert the following text written in markdown into a mindmap in Plantuml.&#8217; to Microsoft Copilot.</p>
+<p style="display: inline-block; margin: 0px 0px 10px 0px; text-align: center; white-space: nowrap; width: 100%;"><img decoding="async" style="width: 450px;" src="/wp-content/uploads/2025/03/AskCreatingMindmapToCopilot.png" alt="" /><img decoding="async" style="width: 450px;" src="/wp-content/uploads/2025/03/GenerateMaindmapByCopilot.png" alt="" /></p>
+<p style="display: inline-block; margin: 0px 0px 10px 0px; text-align: center; white-space: nowrap; width: 100%;"><img decoding="async" style="width: 900px;" src="/wp-content/uploads/2025/03/PreviewGeneratedMindmap.png" alt="" /></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 1.1rem;">• Define Header/Footer elements, and change the agenda to title</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">Header and footer elements needs &#8216;endheader&#8217; or &#8216;endfooter&#8217; when includes word wrapped contents. Define word wrap of other elements with &#8216;\n&#8217;.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">Font tag and center statement also enable to use for visual adjustment.<br />
+And more, if change symbols of sub tree at root nodes, same symbol marked tree elements are rendered as trees at both sides of root node. Sample below using &#8216;#&#8217; and &#8216;-&#8216; symbol for rendering at both sides of root node. The &#8216;+&#8217; or &#8216;*&#8217; symbol can also use although, it rendered at same side of &#8216;#&#8217;.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px;">``` plantuml
+@startmindmap
+title &lt;font:Segoe UI&gt;AI e-learning structure&lt;/font&gt;
+header
+    create [Tetsuro Takao] [first Apr. 2024]
+    modify [name] [date]
+endheader
+
+# AI Education contents
+
+## 1) Assembling AI terms is for \n readers to be able to refer it always
+
+### Models
+
+#### 1. Closed models \n //Please fullfil this level contents at **next meeting**.//
+
+#### 2. Open-source models
+
+#### 3. Open weight models
+
+#### 4. Mixture of Experts
+
+#### 5. Optimized model for hardware
+
++++ Training and Size
+
+++++ 1. Parameters, Languages, Input window size and Specs of LLMs, SLMs
+
+++++ 2. Quantization
+
+++++ 3. Distillation(Knowridge or Concept)
+
+++++ 4. Low Rank Adaptation, RAGBench
+
+*** Runtime, Pipeline(Embeddings: tokenize + vectorize)
+
+**** 1. Ollama, LlamaIndex, Redis Vector Store, RedisVL, \n Langchain, Milvus, Postgres Vector Store, TensorFlow, Transformers
+
+**** 2. Llama Hub, Hugging Face Hub, Model Zoo, PyTorch Hub
+
+**** 3. OpenAI, AI managed services(AWS,  Azure, Google Cloud, IBM, Oracle Cloud)
+
+**** 4. GGML, GGUF, GPTQ, ONNX
+
+**** 5. Byte pair encording, Dimentions
+
+' --------------omit below------------------
+
+-- 2) Solutions structure sample of AI
+
+--- Deploy with AI agent services
+
+---- 1. Amazon Bedrock
+
+---- 2. Azure AI Services, Azure Open AI Services
+
+---- 3. Google cloud Vertex AI
+
+' --------------omit below------------------
+center footer &lt;font:Segoe UI&gt;Page - 1 -&lt;/font&gt;
+@endmindmap
+```
+</pre>
+<p style="display: inline-block; margin: 0px 0px 10px 0px; text-align: center; white-space: nowrap; width: 100%;"><img decoding="async" style="width: 900px;" src="/wp-content/uploads/2024/12/PreviewMindmapBothSides.png" alt="" /></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2024/04/28/mind-map-creation-with-markdown-notation-on-visual-studio-code/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

@@ -1,0 +1,470 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Silverlight &#8211; Processtune Blog</title>
+	<atom:link href="https://blog.processtune.com/category/technical-memo/silverlight/feed/" rel="self" type="application/rss+xml" />
+	<link>https://blog.processtune.com/</link>
+	<description>Articles offered from Microsoft MVP</description>
+	<lastBuildDate>Sat, 07 Jul 2012 07:14:34 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.8.2</generator>
+
+<image>
+	<url>/wp-content/uploads/2023/03/cropped-Presentation-32x32.png</url>
+	<title>Silverlight &#8211; Processtune Blog</title>
+	<link>https://blog.processtune.com/</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>Silverlightを囲む会東京7回の資料</title>
+		<link>https://blog.processtune.com/2012/07/07/silverlight%e3%82%92%e5%9b%b2%e3%82%80%e4%bc%9a%e6%9d%b1%e4%ba%ac7%e5%9b%9e%e3%81%ae%e8%b3%87%e6%96%99/</link>
+					<comments>https://blog.processtune.com/2012/07/07/silverlight%e3%82%92%e5%9b%b2%e3%82%80%e4%bc%9a%e6%9d%b1%e4%ba%ac7%e5%9b%9e%e3%81%ae%e8%b3%87%e6%96%99/#comments</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Sat, 07 Jul 2012 07:14:34 +0000</pubDate>
+				<category><![CDATA[Silverlight]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[未分類]]></category>
+		<guid isPermaLink="false">http://www.processtune.com/blog/?p=429</guid>
+
+					<description><![CDATA[Silverlightを囲む会東京7回の資料「画面の更新を考える」を公開しました。 資料はこちら]]></description>
+										<content:encoded><![CDATA[<p>Silverlightを囲む会東京7回の資料「画面の更新を考える」を公開しました。</p>
+<p><a href="http://processtuneblog.azurewebsites.net/wp-content/uploads/2012/07/UpdateDisplay.zip">資料はこちら</a></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2012/07/07/silverlight%e3%82%92%e5%9b%b2%e3%82%80%e4%bc%9a%e6%9d%b1%e4%ba%ac7%e5%9b%9e%e3%81%ae%e8%b3%87%e6%96%99/feed/</wfw:commentRss>
+			<slash:comments>2</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>.NETラボ4月の勉強会資料公開しました</title>
+		<link>https://blog.processtune.com/2012/04/28/net%e3%83%a9%e3%83%9c4%e6%9c%88%e3%81%ae%e5%8b%89%e5%bc%b7%e4%bc%9a%e8%b3%87%e6%96%99%e5%85%ac%e9%96%8b%e3%81%97%e3%81%be%e3%81%97%e3%81%9f/</link>
+					<comments>https://blog.processtune.com/2012/04/28/net%e3%83%a9%e3%83%9c4%e6%9c%88%e3%81%ae%e5%8b%89%e5%bc%b7%e4%bc%9a%e8%b3%87%e6%96%99%e5%85%ac%e9%96%8b%e3%81%97%e3%81%be%e3%81%97%e3%81%9f/#comments</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Sat, 28 Apr 2012 06:46:18 +0000</pubDate>
+				<category><![CDATA[Silverlight]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<guid isPermaLink="false">http://www.processtune.com/blog/?p=404</guid>
+
+					<description><![CDATA[資料はこちらになります。 Sample solution file]]></description>
+										<content:encoded><![CDATA[<p><a href="http://processtuneblog.azurewebsites.net/wp-content/uploads/2012/04/Modeling.net20120428.zip">資料はこちらになります。</a></p>
+<p><a href="http://sdrv.ms/16Gz8ph" target="new" rel="noopener">Sample solution file</a></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2012/04/28/net%e3%83%a9%e3%83%9c4%e6%9c%88%e3%81%ae%e5%8b%89%e5%bc%b7%e4%bc%9a%e8%b3%87%e6%96%99%e5%85%ac%e9%96%8b%e3%81%97%e3%81%be%e3%81%97%e3%81%9f/feed/</wfw:commentRss>
+			<slash:comments>2</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Silverlightを囲む会東京第6回の資料公開しました</title>
+		<link>https://blog.processtune.com/2012/04/18/silverlight%e3%82%92%e5%9b%b2%e3%82%80%e4%bc%9a%e6%9d%b1%e4%ba%ac%e7%ac%ac6%e5%9b%9e%e3%81%ae%e8%b3%87%e6%96%99%e5%85%ac%e9%96%8b%e3%81%97%e3%81%be%e3%81%97%e3%81%9f/</link>
+					<comments>https://blog.processtune.com/2012/04/18/silverlight%e3%82%92%e5%9b%b2%e3%82%80%e4%bc%9a%e6%9d%b1%e4%ba%ac%e7%ac%ac6%e5%9b%9e%e3%81%ae%e8%b3%87%e6%96%99%e5%85%ac%e9%96%8b%e3%81%97%e3%81%be%e3%81%97%e3%81%9f/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Wed, 18 Apr 2012 11:28:09 +0000</pubDate>
+				<category><![CDATA[Silverlight]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<guid isPermaLink="false">http://www.processtune.com/blog/?p=396</guid>
+
+					<description><![CDATA[Silverlightを囲む会東京第6回の資料公開しました。 Silverlight5でPInvokeを利用してIn Browser、Out Of BrowserでのDllImportを行っています。 資料はこちらです]]></description>
+										<content:encoded><![CDATA[<p>Silverlightを囲む会東京第6回の資料公開しました。<br />
+Silverlight5でPInvokeを利用してIn Browser、Out Of BrowserでのDllImportを行っています。</p>
+<p><a href="http://processtuneblog.azurewebsites.net/wp-content/uploads/2012/04/TheSekihyo6.zip">資料はこちらです</a></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2012/04/18/silverlight%e3%82%92%e5%9b%b2%e3%82%80%e4%bc%9a%e6%9d%b1%e4%ba%ac%e7%ac%ac6%e5%9b%9e%e3%81%ae%e8%b3%87%e6%96%99%e5%85%ac%e9%96%8b%e3%81%97%e3%81%be%e3%81%97%e3%81%9f/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>偉大なDeveloperの思考回路</title>
+		<link>https://blog.processtune.com/2012/01/23/%e5%81%89%e5%a4%a7%e3%81%aadeveloper%e3%81%ae%e6%80%9d%e8%80%83%e5%9b%9e%e8%b7%af/</link>
+					<comments>https://blog.processtune.com/2012/01/23/%e5%81%89%e5%a4%a7%e3%81%aadeveloper%e3%81%ae%e6%80%9d%e8%80%83%e5%9b%9e%e8%b7%af/#comments</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Sun, 22 Jan 2012 21:15:18 +0000</pubDate>
+				<category><![CDATA[Silverlight]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[未分類]]></category>
+		<guid isPermaLink="false">http://www.processtune.com/blog/?p=382</guid>
+
+					<description><![CDATA[サンプルコードから、作成したの人の考え方などを拾えたらいいなと思いました。 資料はこちらです。]]></description>
+										<content:encoded><![CDATA[<p>サンプルコードから、作成したの人の考え方などを拾えたらいいなと思いました。</p>
+<p><a href="http://processtuneblog.azurewebsites.net/wp-content/uploads/2012/01/GreatDevelopersThinking.pdf">資料はこちらです。</a></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2012/01/23/%e5%81%89%e5%a4%a7%e3%81%aadeveloper%e3%81%ae%e6%80%9d%e8%80%83%e5%9b%9e%e8%b7%af/feed/</wfw:commentRss>
+			<slash:comments>2</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>座席表作ってます</title>
+		<link>https://blog.processtune.com/2011/12/26/%e5%ba%a7%e5%b8%ad%e8%a1%a8%e4%bd%9c%e3%81%a3%e3%81%a6%e3%81%be%e3%81%99/</link>
+					<comments>https://blog.processtune.com/2011/12/26/%e5%ba%a7%e5%b8%ad%e8%a1%a8%e4%bd%9c%e3%81%a3%e3%81%a6%e3%81%be%e3%81%99/#comments</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Mon, 26 Dec 2011 14:14:52 +0000</pubDate>
+				<category><![CDATA[Silverlight]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<guid isPermaLink="false">http://www.processtune.com/blog/?p=347</guid>
+
+					<description><![CDATA[Silverlightを囲む会東京第5回でお話しした「Silverlightを囲む会の座席表作ります」の続編となります。 今回は、上図のSilverlightアプリケーションのうち、Windows Phone版でないPC版の方を作成します。まず、シンプルなSilverlightアプリケーションを作成し、ASP.NET開発サーバーを使ってWCFサービスの値を受け取るクライアントアプリケーションを作ります。 次回からの後続の記事は以下のように続きます。 ・作成したWCFサービスを双方向通信に改造して、クライアントの名前等をサービスに通知、送った情報を双方向で受け取るという部分を作成します。 ・管理画面を作って、座席表の形態（セミナータイプとか会議室タイプなど）をASP.NET開発サーバー側に送り、XMLファイルとしてASP.NET開発サーバー側に保存します。 ・今回作成するユーザー画面を改良して、ユーザーが自分の座席の位置を登録できるようにします。この際、IIJの会場以外の場所からオンラインでセミナーに参加している方々の登録も想定し、Azureでのサービスに切り替えます。 ・Windows Phone版のアプリケーションを追加で作成します。 では、さっそく以下の手順でSilverlightアプリケーションを作成してみましょう。 手順1：テンプレート Visual Studio で空のソリューション「TheSekihyo」を作成し、プロジェクト「TheSekihyoSilverlight」をVisual Studioのテンプレート「Silverlightアプリケーション」で追加します。新しいWebプロジェクトでホストするASP.NET Webアプリケーション プロジェクトとしてSilverlight4で作成します。名前は、Webの方は「TheSekihyoDuplex」としておきます。 後にWindows Phoneアプリケーション「TheSekihyo」を追加しますので、ソリューション構成は以下のようになります。 手順2：ページの作成（MainPage.xaml） &#60;Grid x:Name=&#8221;LayoutRoot&#8221; Background=&#8221;White&#8221;&#62; &#60;TextBlock Height=&#8221;20&#8243; HorizontalAlignment=&#8221;Left&#8221; Margin=&#8221;20,12,0,0&#8243; Name=&#8221;textBlock1&#8243; Text=&#8221;TheSekihyo&#8221; VerticalAlignment=&#8221;Top&#8221; Width=&#8221;215&#8243; /&#62; &#60;Border BorderBrush=&#8221;Silver&#8221; BorderThickness=&#8221;1&#8243; Margin=&#8221;12,33,160,12&#8243; Name=&#8221;border2&#8243;&#62; &#60;Grid Name=&#8221;Sekihyo&#8221; Height=&#8221;Auto&#8221; Width=&#8221;Auto&#8221;&#62; &#60;Grid.ColumnDefinitions&#62; &#60;ColumnDefinition Width=&#8221;*&#8221; /&#62; &#60;/Grid.ColumnDefinitions&#62; &#60;Grid.RowDefinitions&#62; &#60;RowDefinition Height=&#8221;40&#8243; /&#62; &#60;RowDefinition Height=&#8221;Auto&#8221; /&#62; &#60;/Grid.RowDefinitions&#62; &#60;Rectangle [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p>Silverlightを囲む会東京第5回でお話しした「Silverlightを囲む会の座席表作ります」の続編となります。<br />
+ <img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2011/12/image001.png" alt="" width="600"/><br />
+今回は、上図のSilverlightアプリケーションのうち、Windows Phone版でないPC版の方を作成します。まず、シンプルなSilverlightアプリケーションを作成し、ASP.NET開発サーバーを使ってWCFサービスの値を受け取るクライアントアプリケーションを作ります。<br />
+次回からの後続の記事は以下のように続きます。<br />
+・作成したWCFサービスを双方向通信に改造して、クライアントの名前等をサービスに通知、送った情報を双方向で受け取るという部分を作成します。<br />
+・管理画面を作って、座席表の形態（セミナータイプとか会議室タイプなど）をASP.NET開発サーバー側に送り、XMLファイルとしてASP.NET開発サーバー側に保存します。<br />
+・今回作成するユーザー画面を改良して、ユーザーが自分の座席の位置を登録できるようにします。この際、IIJの会場以外の場所からオンラインでセミナーに参加している方々の登録も想定し、Azureでのサービスに切り替えます。<br />
+・Windows Phone版のアプリケーションを追加で作成します。<br />
+では、さっそく以下の手順でSilverlightアプリケーションを作成してみましょう。</p>
+<p>手順1：テンプレート<br />
+Visual Studio で空のソリューション「TheSekihyo」を作成し、プロジェクト「TheSekihyoSilverlight」をVisual Studioのテンプレート「Silverlightアプリケーション」で追加します。新しいWebプロジェクトでホストするASP.NET Webアプリケーション プロジェクトとしてSilverlight4で作成します。名前は、Webの方は「TheSekihyoDuplex」としておきます。<br />
+ <img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2011/12/image002.png" alt="" /><br />
+後にWindows Phoneアプリケーション「TheSekihyo」を追加しますので、ソリューション構成は以下のようになります。<br />
+ <img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2011/12/image003.png" alt="" width="600"/><br />
+手順2：ページの作成（MainPage.xaml）</p>
+<div style="border:solid 1px #000000;background-color:#cccccc;">
+&lt;Grid x:Name=&#8221;LayoutRoot&#8221; Background=&#8221;White&#8221;&gt;<br />
+    &lt;TextBlock Height=&#8221;20&#8243; HorizontalAlignment=&#8221;Left&#8221; Margin=&#8221;20,12,0,0&#8243; Name=&#8221;textBlock1&#8243; Text=&#8221;TheSekihyo&#8221; VerticalAlignment=&#8221;Top&#8221; Width=&#8221;215&#8243; /&gt;<br />
+    &lt;Border BorderBrush=&#8221;Silver&#8221; BorderThickness=&#8221;1&#8243; Margin=&#8221;12,33,160,12&#8243; Name=&#8221;border2&#8243;&gt;<br />
+        &lt;Grid Name=&#8221;Sekihyo&#8221; Height=&#8221;Auto&#8221; Width=&#8221;Auto&#8221;&gt;<br />
+            &lt;Grid.ColumnDefinitions&gt;<br />
+                &lt;ColumnDefinition Width=&#8221;*&#8221; /&gt;<br />
+            &lt;/Grid.ColumnDefinitions&gt;<br />
+            &lt;Grid.RowDefinitions&gt;<br />
+                &lt;RowDefinition Height=&#8221;40&#8243; /&gt;<br />
+                &lt;RowDefinition Height=&#8221;Auto&#8221; /&gt;<br />
+            &lt;/Grid.RowDefinitions&gt;<br />
+            &lt;Rectangle Grid.Row=&#8221;1&#8243; Height=&#8221;20&#8243; Margin=&#8221;6,10,6,0&#8243; Name=&#8221;DeskImage&#8221; Stroke=&#8221;Black&#8221; StrokeThickness=&#8221;1&#8243; VerticalAlignment=&#8221;Top&#8221; /&gt;<br />
+            &lt;Ellipse Grid.Row=&#8221;1&#8243; Height=&#8221;15&#8243; HorizontalAlignment=&#8221;Left&#8221; Margin=&#8221;14,36,0,0&#8243; Name=&#8221;HumanImage&#8221; Stroke=&#8221;Black&#8221; StrokeThickness=&#8221;1&#8243; VerticalAlignment=&#8221;Top&#8221; Width=&#8221;15&#8243; /&gt;<br />
+            &lt;Rectangle Height=&#8221;25&#8243; Margin=&#8221;66,6,80,0&#8243; Name=&#8221;BoardImage&#8221; Stroke=&#8221;Black&#8221; StrokeThickness=&#8221;1&#8243; VerticalAlignment=&#8221;Top&#8221; HorizontalAlignment=&#8221;Center&#8221; Width=&#8221;70&#8243; /&gt;<br />
+        &lt;/Grid&gt;<br />
+    &lt;/Border&gt;<br />
+&lt;/Grid&gt;
+</div>
+<p>上記のようなXAMLを作成します。「LayoutRoot」Grid内にタイトル「TheSekihyo」と「Sekihyo」Gridがあり、「Sekihyo」Gridが1列2行で構成されている。「Sekihyo」Gridの1列1行には「BoardImage」Rectangle、1列2行目に四角で表現した机「DeskImage」Rectangleと丸で表現した人「HumanImage」Ellipseを配置するといったことをやっています。<br />
+ <img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2011/12/image004.png" alt="" width="600"/><br />
+手順3：「HumanImage」Ellipseのクリック<br />
+自分の座席の位置を表現する「HumanImage」Ellipseはクリックすると自分の名前を入力できるようにします。この名前が表示名となり、このアプリケーションを使っている人（オンサイトで会場にいる人、オンラインでセミナー参加の人など）に共有されます。<br />
+イベントは、MouseLeftButtonDownで反応し、MouseLeftButtonUpで入力ボックスが開くようにします。<br />
+以下の2つの注意点に従って「MainPage.xaml.cs」にイベントプロシージャを作成します。<br />
+まず、StrokeとStrokeThicknessのみが設定されているEllipseはFillが無いので線だけがイベントに反応します。Fillを指定しておき、MouseEnterで適切にユーザー操作に反応するようにします。</p>
+<div style="border:solid 1px #000000;background-color:#cccccc;">
+private void HumanImage_MouseEnter(object sender, MouseEventArgs e)<br />
+{<br />
+    (sender as Ellipse).Fill = new SolidColorBrush(Colors.Yellow);<br />
+}<br />
+private void HumanImage_MouseLeave(object sender, MouseEventArgs e)<br />
+{<br />
+    (sender as Ellipse).Fill = new SolidColorBrush(Colors.White);<br />
+}
+</div>
+<p>次にMouseLeftButtonUpは、Ellipseの外側でMouseLeftButtonDown、内側でMouseLeftButtonUpが発生したとき（別のEllipseをダウン、そのままマウスを押しっぱなしの状態で別のEllipseでアップした場合）の対処として、ユーザーが選択したEllipseがMouseLeaveで解除されるようにしておきます。</p>
+<div style="border:solid 1px #000000;background-color:#cccccc;">
+private void HumanImage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)<br />
+{<br />
+    (sender as Ellipse).Effect = new System.Windows.Media.Effects.BlurEffect();<br />
+    targetEllipse = sender as Ellipse;<br />
+}<br />
+private Ellipse targetEllipse = null;<br />
+private void HumanImage_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)<br />
+{<br />
+    if (Equals(targetEllipse, sender))<br />
+    {<br />
+        (sender as Ellipse).Fill = new SolidColorBrush(Colors.Red);<br />
+        (sender as Ellipse).Effect = null;<br />
+        (sender as Ellipse).MouseEnter -= HumanImage_MouseEnter;<br />
+        (sender as Ellipse).MouseLeave -= HumanImage_MouseLeave;<br />
+    }<br />
+}<br />
+private void HumanImage_MouseEnter(object sender, MouseEventArgs e)<br />
+{<br />
+    (sender as Ellipse).Fill = new SolidColorBrush(Colors.Yellow);<br />
+}<br />
+private void HumanImage_MouseLeave(object sender, MouseEventArgs e)<br />
+{<br />
+    (sender as Ellipse).Fill = new SolidColorBrush(Colors.White);<br />
+    (sender as Ellipse).Effect = null;<br />
+}
+</div>
+<p><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2011/12/image004.png" alt="" width="200"/>MouseEnter<br />
+<img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2011/12/image005.png" alt=""  width="200"/>MouseLeftButtonDown<br />
+<img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2011/12/image006.png" alt=""  width="200"/>MouseLeftButtonUp<br />
+手順4：入力ボックス<br />
+プロジェクト「TheSekihyoSilverlight」にSilverlight子ウィンドウテンプレートを使って、「DisplayNameInput.xaml」という名前の子ウィンドウを追加します。<br />
+表示名と表示するラベルとテキストボックスをひとつずつ作成し、DisplayNameInput.xaml.cs側は、OKボタンとCncelボタンに「this.Close();」のみ追加します。</p>
+<div style="border:solid 1px #000000;background-color:#cccccc;">
+private void OKButton_Click(object sender, RoutedEventArgs e)<br />
+{<br />
+    this.DialogResult = true;<br />
+    this.Close();<br />
+}<br />
+private void CancelButton_Click(object sender, RoutedEventArgs e)<br />
+{<br />
+    this.DialogResult = false;<br />
+    this.Close();<br />
+}
+</div>
+<p>子ウィンドウの呼び出しは、ユーザーがクリックしたとき（MouseLeftButtonUp）です。<br />
+子ウィンドウの結果（ユーザーが設定した表示名）は、子ウィンドウのClosedイベントハンドラ内で、子ウィンドウの作成したテキストボックスのTextプロパティで取得できます。<br />
+子ウィンドウのDialogResultで、ユーザーがクリックしたボタンがOKボタンかCancelボタンかを取得できますので、OKボタンの場合のみ該当のEllipseのツールチップをユーザーが設定した表示名にします。</p>
+<div style="border:solid 1px #000000;background-color:#cccccc;">
+DisplayNameInput input = new DisplayNameInput();<br />
+private void HumanImage_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)<br />
+{<br />
+    if (Equals(targetEllipse, sender))<br />
+    {<br />
+        (sender as Ellipse).Fill = new SolidColorBrush(Colors.Red);<br />
+        (sender as Ellipse).Effect = null;<br />
+        (sender as Ellipse).MouseEnter -= HumanImage_MouseEnter;<br />
+        (sender as Ellipse).MouseLeave -= HumanImage_MouseLeave;<br />
+        input.Closed += new EventHandler(input_Closed);<br />
+        input.Show();<br />
+    }<br />
+}<br />
+void input_Closed(object sender, EventArgs e)<br />
+{<br />
+    input.Closed -= input_Closed;<br />
+    if ((bool)input.DialogResult)<br />
+    {<br />
+        ToolTipService.SetToolTip(targetEllipse, input.textBox1.GetValue(TextBox.TextProperty));<br />
+    }<br />
+}
+</div>
+<p><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2011/12/image007.png" alt=""  width="300"/><br />
+<img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2011/12/image008.png" alt=""  width="300"/><br />
+手順5：WCFサービスの作成<br />
+「TheSekihyoDuplex」WebサイトにWCFサービスを追加します。<br />
+WCFサービスで双方向を行うためのバインディングであるPollingDuplexHttpBindingは、一方向（クライアントからサーバーにリクエストを出し、サーバーからレスポンスを受け取るという一方向）のWCFサービスでも使えますので、双方向のWCFサービスを作成する前に、一方向のWCFサービスをこのバインディングで作成し、双方向のサービスに改造します。<br />
+サービスが受け取るのはグループ名（Wi-Fiルーターの名前）とユーザー名（表示名）と会場内の位置です。今回は、これを文字列で受け取り、サーバー側でXMLに保存し、そのまま文字列で返すというサービスを作成します。<br />
+Visual StudioのテンプレートからWCFサービスを使って「TheSekihyoService.svc」という名前のサービスを作成します。<br />
+Silverlight SDK（3.5または4.0）からSystem.ServiceModel.PollingDuplex.dllを参照設定します（4.0の場合「%Program Files%Microsoft SDKsSilverlightv4.0Libraries」の「Server」「Client」）。<br />
+Web.configに以下の内容を追加します。</p>
+<div style="border:solid 1px #000000;background-color:#cccccc;">
+&lt;?xml version=&#8221;1.0&#8243; encoding=&#8221;utf-8&#8243;?&gt;<br />
+&lt;configuration&gt;<br />
+…<br />
+  &lt;system.serviceModel&gt;<br />
+&lt;!&#8211; serviceModel 内にextensions を追加し、bindingExtensions のpollingDuplexHttpBinding を追加します。3.5も4.0もPublicKeyToken は同じです&#8211;&gt;<br />
+    &lt;extensions&gt;<br />
+      &lt;bindingExtensions&gt;<br />
+        &lt;add name=&#8221;pollingDuplexHttpBinding&#8221; type=&#8221;System.ServiceModel.Configuration.PollingDuplexHttpBindingCollectionElement,System.ServiceModel.PollingDuplex, Version=4.0.0.0, Culture=neutral,PublicKeyToken=31bf3856ad364e35&#8243; /&gt;<br />
+      &lt;/bindingExtensions&gt;<br />
+    &lt;/extensions&gt;<br />
+&lt;!&#8211; serviceModel 内にbindingsを追加し、pollingDuplexHttpBindingを追加します。name が後続のendpoint のbindingConfiguration と同じになります&#8211;&gt;<br />
+    &lt;bindings&gt;<br />
+      &lt;pollingDuplexHttpBinding&gt;<br />
+        &lt;binding name=&#8221;TheSekihyoDuplex.TheSekihyoServicePollingDuplexBinding&#8221; duplexMode=&#8221;MultipleMessagesPerPoll&#8221; maxOutputDelay=&#8221;00:00:07&#8243; inactivityTimeout=&#8221;02:00:00&#8243; serverPollTimeout=&#8221;00:05:00&#8243; /&gt;<br />
+      &lt;/pollingDuplexHttpBinding&gt;<br />
+    &lt;/bindings&gt;<br />
+&lt;!&#8211; serviceModel 内にservicesを追加し、endpointを追加します。contractは名前空間+インターフェイス名となります。&#8211;&gt;<br />
+    &lt;services&gt;<br />
+      &lt;service name=&#8221;TheSekihyoDuplex.TheSekihyoService&#8221;&gt;<br />
+        &lt;endpoint<br />
+           address=&#8221;&#8221;<br />
+           binding=&#8221;pollingDuplexHttpBinding&#8221;<br />
+           bindingConfiguration=&#8221;TheSekihyoDuplex.TheSekihyoServicePollingDuplexBinding&#8221;<br />
+           contract=&#8221;TheSekihyoDuplex.ITheSekihyoService&#8221;&gt;<br />
+        &lt;/endpoint&gt;<br />
+&lt;!—カスタムでバインディングを作成する際は、Visual Studio用にmexHttpBinding を追加しておきます&#8211;&gt;<br />
+        &lt;endpoint address=&#8221;mex&#8221; binding=&#8221;mexHttpBinding&#8221; contract=&#8221;IMetadataExchange&#8221;/&gt;<br />
+      &lt;/service&gt;<br />
+    &lt;/services&gt;<br />
+…<br />
+  &lt;/system.serviceModel&gt;<br />
+&lt;/configuration&gt;
+</div>
+<p>サービスのインターフェイスを以下のように作成して、「TheSekihyoService.svc.cs」側にRegisterメソッドを作成します。</p>
+<div style="border:solid 1px #000000;background-color:#cccccc;">
+[ServiceContract]<br />
+public interface ITheSekihyoService<br />
+{<br />
+[OperationContract]<br />
+ IEnumerable<plotState> Register(string displayName, string plotPosition, string groupName);<br />
+}</p>
+<p>[DataContract(Name = &#8220;PlotState&#8221;)]<br />
+public class PlotState<br />
+{<br />
+[DataMember(Name = &#8220;DisplayName&#8221;)]<br />
+public string DisplayName { get; set; }<br />
+[DataMember(Name = &#8220;PlotPosition&#8221;)]<br />
+public string PlotPosition { get; set; }<br />
+}<br />
+TheSekihyoService.svc.cs<br />
+public IEnumerable<plotState> Register(string displayName, string plotPosition, string groupName)<br />
+{<br />
+PlotState plotState = new PlotState();<br />
+plotState.DisplayName = displayName;<br />
+plotState.PlotPosition = plotPosition;<br />
+List<plotState> testResult = new List<plotState>();<br />
+testResult.Add(plotState);<br />
+return testResult;<br />
+}
+</div>
+<p>手順6：MainPage.xaml.csにWCFクライアントコードを作成<br />
+TheSekihyoSilverlightプロジェクトを右クリックし、サービス参照の追加を行います。<br />
+探索ボタンでサービスを探し、移動ボタンで移動して操作であるRegisterまで表示できることを確認して、TheSekihyoProxyとして参照を作成します。<br />
+<img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2011/12/image009.png" alt="" /><br />
+クライアントに簡易なスタブを作って導通を確認します。</p>
+<div style="border:solid 1px #000000;background-color:#cccccc;">
+using System.ServiceModel.Channels;//usingを追加します。</p>
+<p>namespace TheSekihyoSilverlight<br />
+{<br />
+public partial class MainPage : UserControl<br />
+{<br />
+    //開発環境のポートに合わせてアドレスを作ります。<br />
+        static EndpointAddress address = new EndpointAddress(&#8220;http://localhost:51607/TheSekihyoService.svc&#8221;);<br />
+        //Web.configと同じ設定でエンドポイントを作ります。<br />
+        static PollingDuplexHttpBinding binding = new PollingDuplexHttpBinding(PollingDuplexMode.MultipleMessagesPerPoll);<br />
+//作成したアドレスとエンドポイントを使ってクライアント側のプロキシを作成します。<br />
+        TheSekihyoProxy.TheSekihyoServiceClient proxy = new TheSekihyoProxy.TheSekihyoServiceClient(binding, address);<br />
+        public MainPage()<br />
+        {<br />
+            InitializeComponent();<br />
+            proxy.RegisterCompleted += new EventHandler<theSekihyoProxy.RegisterCompletedEventArgs>(proxy_RegisterCompleted);<br />
+            proxy.RegisterAsync(&#8220;somename&#8221;,&#8221;a1&#8243;,&#8221;group1&#8243;);<br />
+proxy.RegisterCompleted +=new EventHandler<theSekihyoProxy.RegisterCompletedEventArgs>(proxy_RegisterCompleted);<br />
+        }</p>
+<p>        void proxy_RegisterCompleted(object sender, TheSekihyoProxy.RegisterCompletedEventArgs e)<br />
+        {<br />
+            IEnumerable<theSekihyoProxy.PlotState> results = e.Result as IEnumerable<theSekihyoProxy.PlotState>;<br />
+            string name = results.First().DisplayName;<br />
+            string plot = results.First().PlotPosition;<br />
+            this.textBlock1.Text = name + &#8220;:&#8221; + plot;<br />
+        }
+</div>
+<p><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2011/12/image010.png" alt="" /></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2011/12/26/%e5%ba%a7%e5%b8%ad%e8%a1%a8%e4%bd%9c%e3%81%a3%e3%81%a6%e3%81%be%e3%81%99/feed/</wfw:commentRss>
+			<slash:comments>31</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Silverlightを囲む会東京5の資料公開しました</title>
+		<link>https://blog.processtune.com/2011/12/03/silverlight%e3%82%92%e5%9b%b2%e3%82%80%e4%bc%9a%e6%9d%b1%e4%ba%ac5%e3%81%ae%e8%b3%87%e6%96%99%e5%85%ac%e9%96%8b%e3%81%97%e3%81%be%e3%81%97%e3%81%9f/</link>
+					<comments>https://blog.processtune.com/2011/12/03/silverlight%e3%82%92%e5%9b%b2%e3%82%80%e4%bc%9a%e6%9d%b1%e4%ba%ac5%e3%81%ae%e8%b3%87%e6%96%99%e5%85%ac%e9%96%8b%e3%81%97%e3%81%be%e3%81%97%e3%81%9f/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Sat, 03 Dec 2011 09:00:12 +0000</pubDate>
+				<category><![CDATA[Silverlight]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<guid isPermaLink="false">http://www.processtune.com/blog/?p=340</guid>
+
+					<description><![CDATA[Silverlightを囲む会　東京　第5回の資料公開しました。 資料のリンク]]></description>
+										<content:encoded><![CDATA[<p>Silverlightを囲む会　東京　第5回の資料公開しました。</p>
+<p><a href="http://processtuneblog.azurewebsites.net/wp-content/uploads/2011/12/TheSekihyo.zip">資料のリンク</a></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2011/12/03/silverlight%e3%82%92%e5%9b%b2%e3%82%80%e4%bc%9a%e6%9d%b1%e4%ba%ac5%e3%81%ae%e8%b3%87%e6%96%99%e5%85%ac%e9%96%8b%e3%81%97%e3%81%be%e3%81%97%e3%81%9f/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>.NETラボ11月の資料</title>
+		<link>https://blog.processtune.com/2011/11/26/net%e3%83%a9%e3%83%9c11%e6%9c%88%e3%81%ae%e8%b3%87%e6%96%99/</link>
+					<comments>https://blog.processtune.com/2011/11/26/net%e3%83%a9%e3%83%9c11%e6%9c%88%e3%81%ae%e8%b3%87%e6%96%99/#comments</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Sat, 26 Nov 2011 07:11:44 +0000</pubDate>
+				<category><![CDATA[Silverlight]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<guid isPermaLink="false">http://www.processtune.com/blog/?p=335</guid>
+
+					<description><![CDATA[資料公開しました。 ソースコードは来月の後編と合わせて配布します。 資料はこちら]]></description>
+										<content:encoded><![CDATA[<p>資料公開しました。<br />
+ソースコードは来月の後編と合わせて配布します。</p>
+<p><a href="http://processtuneblog.azurewebsites.net/wp-content/uploads/2011/11/Thread1.zip">資料はこちら</a></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2011/11/26/net%e3%83%a9%e3%83%9c11%e6%9c%88%e3%81%ae%e8%b3%87%e6%96%99/feed/</wfw:commentRss>
+			<slash:comments>1</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>HOKURIKU.NET 2011年11月の資料公開しました</title>
+		<link>https://blog.processtune.com/2011/11/23/hokuriku-net-2011%e5%b9%b411%e6%9c%88%e3%81%ae%e8%b3%87%e6%96%99%e5%85%ac%e9%96%8b%e3%81%97%e3%81%be%e3%81%97%e3%81%9f/</link>
+					<comments>https://blog.processtune.com/2011/11/23/hokuriku-net-2011%e5%b9%b411%e6%9c%88%e3%81%ae%e8%b3%87%e6%96%99%e5%85%ac%e9%96%8b%e3%81%97%e3%81%be%e3%81%97%e3%81%9f/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Wed, 23 Nov 2011 02:48:30 +0000</pubDate>
+				<category><![CDATA[Silverlight]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<guid isPermaLink="false">http://www.processtune.com/blog/?p=328</guid>
+
+					<description><![CDATA[ライトニングトーク「Windows Phone JSONクライアント開発環境」の資料です。 →資料へのリンク]]></description>
+										<content:encoded><![CDATA[<p>ライトニングトーク「Windows Phone JSONクライアント開発環境」の資料です。</p>
+<p><a href="http://processtuneblog.azurewebsites.net/wp-content/uploads/2011/11/WindowsPhoneJSONClientDevEnvironment.zip">→資料へのリンク</a></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2011/11/23/hokuriku-net-2011%e5%b9%b411%e6%9c%88%e3%81%ae%e8%b3%87%e6%96%99%e5%85%ac%e9%96%8b%e3%81%97%e3%81%be%e3%81%97%e3%81%9f/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Silverlightを囲む会東京#4の資料です</title>
+		<link>https://blog.processtune.com/2011/10/08/silverlight%e3%82%92%e5%9b%b2%e3%82%80%e4%bc%9a%e6%9d%b1%e4%ba%ac4%e3%81%ae%e8%b3%87%e6%96%99%e3%81%a7%e3%81%99/</link>
+					<comments>https://blog.processtune.com/2011/10/08/silverlight%e3%82%92%e5%9b%b2%e3%82%80%e4%bc%9a%e6%9d%b1%e4%ba%ac4%e3%81%ae%e8%b3%87%e6%96%99%e3%81%a7%e3%81%99/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Sat, 08 Oct 2011 05:48:15 +0000</pubDate>
+				<category><![CDATA[Silverlight]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<guid isPermaLink="false">http://www.processtune.com/blog/?p=314</guid>
+
+					<description><![CDATA[パワーポイントファイルとソリューションファイルを配信します。 パワーポイントファイル ソリューションファイル]]></description>
+										<content:encoded><![CDATA[<p>パワーポイントファイルとソリューションファイルを配信します。</p>
+<p><a href="http://processtuneblog.azurewebsites.net/wp-content/uploads/2011/10/WindowsPhoneMediaAppUX.zip">パワーポイントファイル</a></p>
+<p><a href="http://processtuneblog.azurewebsites.net/wp-content/uploads/2011/10/MediaApplicationUX.zip">ソリューションファイル</a></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2011/10/08/silverlight%e3%82%92%e5%9b%b2%e3%82%80%e4%bc%9a%e6%9d%b1%e4%ba%ac4%e3%81%ae%e8%b3%87%e6%96%99%e3%81%a7%e3%81%99/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>.NETラボ8月LT資料です。</title>
+		<link>https://blog.processtune.com/2011/09/24/net%e3%83%a9%e3%83%9c8%e6%9c%88lt%e8%b3%87%e6%96%99%e3%81%a7%e3%81%99%e3%80%82/</link>
+					<comments>https://blog.processtune.com/2011/09/24/net%e3%83%a9%e3%83%9c8%e6%9c%88lt%e8%b3%87%e6%96%99%e3%81%a7%e3%81%99%e3%80%82/#comments</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Sat, 24 Sep 2011 07:30:52 +0000</pubDate>
+				<category><![CDATA[Silverlight]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<guid isPermaLink="false">http://www.processtune.com/blog/?p=301</guid>
+
+					<description><![CDATA[Silverlightを囲む会でのWeb Profileについて、更新情報がありましたので.NETラボのライトニングトークスで更新情報をフォローしています。 資料はこちら]]></description>
+										<content:encoded><![CDATA[<p>Silverlightを囲む会でのWeb Profileについて、更新情報がありましたので.NETラボのライトニングトークスで更新情報をフォローしています。</p>
+<p><a href="http://processtuneblog.azurewebsites.net/wp-content/uploads/2011/09/DotNetLabWebProfile.pptx">資料はこちら</a></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2011/09/24/net%e3%83%a9%e3%83%9c8%e6%9c%88lt%e8%b3%87%e6%96%99%e3%81%a7%e3%81%99%e3%80%82/feed/</wfw:commentRss>
+			<slash:comments>1</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

@@ -1,0 +1,911 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Windows Phone App &#8211; Processtune Blog</title>
+	<atom:link href="https://blog.processtune.com/category/winui/universal-apps/windows-store-app/windows-phone-app/feed/" rel="self" type="application/rss+xml" />
+	<link>https://blog.processtune.com/</link>
+	<description>Articles offered from Microsoft MVP</description>
+	<lastBuildDate>Sat, 23 May 2015 08:00:32 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.8.2</generator>
+
+<image>
+	<url>/wp-content/uploads/2023/03/cropped-Presentation-32x32.png</url>
+	<title>Windows Phone App &#8211; Processtune Blog</title>
+	<link>https://blog.processtune.com/</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>MVVM : Creating Reusable Flyout Control Composite</title>
+		<link>https://blog.processtune.com/2015/05/23/mvvm-creating-reusable-flyout-control-composite/</link>
+					<comments>https://blog.processtune.com/2015/05/23/mvvm-creating-reusable-flyout-control-composite/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Sat, 23 May 2015 08:00:32 +0000</pubDate>
+				<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Universal Apps]]></category>
+		<category><![CDATA[Windows 8.1 App]]></category>
+		<category><![CDATA[Windows Phone App]]></category>
+		<category><![CDATA[Windows Store App]]></category>
+		<category><![CDATA[未分類]]></category>
+		<guid isPermaLink="false">http://www.processtune.com/blog/?p=1780</guid>
+
+					<description><![CDATA[In previous article, I described that a Flyout control composed by a TextBox control and a Button control is able to relay a value to a DataContext of a ListView control. It is a useful mechanism as substitute a ComboBox control. Because some processings are able to run before an item is added to a [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin: 0px 0px 0px 0px;">In <span style="font-weight: bold;"><a href="http://www.processtune.com/blog/?p=1661" target="_new" rel="noopener">previous article</a></span>, I described that a Flyout control composed by a TextBox control and a Button control is able to relay a value to a DataContext of a ListView control. It is a useful mechanism as substitute a ComboBox control. Because some processings are able to run before an item is added to a ListView control.</p>
+<p style="margin: 0px 0px 0px 0px;">
+I want to use it many times, so make the mechanism to generic reusable composite. This article describe how to create reusable Flyout control composite.
+</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;text-align:right;"><a href="http://1drv.ms/1BhSxwH">Sample solution</a></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Outline</p>
+<p style="margin: 0px 0px 0px 5px; text-indent: 1em;">Basic mechanism is same as the sample code of <span style="font-weight: bold;"><a href="http://www.processtune.com/blog/?p=1661" target="_new" rel="noopener">previous article</a></span>. A difference about XAML is a Name property of the controls set nothing for it would be reused many times.</p>
+<p style="display:inline">
+<img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2015/05/XAMLArtistList.png" alt="" style="width:300px;"/><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2015/05/XAMLGenreList.png" alt="" style="width:300px;margin-left:10px;"/>
+</p>
+<p style="margin-top:10px;text-align:center;">
+<img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2015/05/XAMLSongList.png" alt="" style="width:600px;align:center"/></p>
+<p style="margin: 0px 0px 0px 5px; text-indent: 1em;">The side of a view model, a Flyout control is showed from a FlyoutBase in order to divide from individual XAML controls. though a button control in the Flyout control should close the Flyout that includes self.
+</p>
+<p style="margin-top:10px;text-align:center;">
+<img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2015/05/OverView.png" alt="" style="width:600px;"/></p>
+<p style="margin: 0px 0px 0px 5px; text-indent: 1em;">
+To do it, use a Command property and a CommandParameter property of a Button control. The value bind to the Command property of a Button control should extend by the ICommand interface. An Execute method of it take an argument represented by the CommandParameter property of the Button control. When the CommandParameter is set a RelativeSource with the &#8220;Mode=Self&#8221; condition, it transfer the button itself as the argument of the method.</p>
+<p style="margin: 0px 0px 0px 5px; text-indent: 1em;">
+Two ways following is how to close a Flyout control from a button which the Flyout control includes.
+</p>
+<p style="margin: 0px 0px 0px 30px; text-indent: -1em;">
+1. When a Button control show a Flyout control, the Button control set itself to the private variable of a view model. When the Button control close the Flyout control, the Button control use the variable to determines the Flyout control.</p>
+<p style="margin: 0px 0px 0px 30px; text-indent: -1em;">
+2. The button close the flyout aquire the flyout from the VisualTreeHelper class.</p>
+<p></p>
+<p style="margin: 0px 0px 0px 5px; text-indent: 1em;">
+The sample code of this article is includes the first way.</p>
+<p style="margin: 0px 0px 0px 5px; text-indent: 1em;">
+<img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2015/05/MechanismOfViewModel.png" alt="" style="width:600px;"/></p>
+<p></p>
+<p style="margin: 0px 0px 0px 5px; text-indent: 1em;">
+These two method are below.<br />
+1. The sample solution includes.
+</p>
+<p style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">
+XAML<span style="color:#0000ff;"><br />
+&lt;<span style="color:#a11515;">StackPanel</span> <span style="color:#ff0000;">DataContext</span>=&#8221;{<span style="color:#a11515;">Binding</span> <span style="color:#ff0000;">GenreDataContext</span>}&#8221; <span style="color:#ff0000;">Grid.Row</span>=&#8221;1&#8243; <span style="color:#ff0000;">Grid.Column</span>=&#8221;1&#8243; <span style="color:#ff0000;">Margin</span>=&#8221;10,10,0,0&#8243; &gt;<br />
+　　&lt;<span style="color:#a11515;">ListView</span> <span style="color:#ff0000;">BorderBrush</span>=&#8221;White&#8221; <span style="color:#ff0000;">BorderThickness</span>=&#8221;1&#8243; <span style="color:#ff0000;">Header</span>=&#8221;Genre List&#8221; <span style="color:#ff0000;">ItemsSource</span>=&#8221;{<span style="color:#a11515;">Binding</span> <span style="color:#ff0000;">GenericListViewItemsSource</span>}&#8221; <span style="color:#ff0000;">Height</span>=&#8221;600&#8243;&gt;<br />
+　　　　&lt;<span style="color:#a11515;">ListView.ItemTemplate</span>&gt;<br />
+　　　　　　&lt;<span style="color:#a11515;">DataTemplate</span>&gt;<br />
+　　　　　　　　&lt;<span style="color:#a11515;">StackPanel</span> <span style="color:#ff0000;">Orientation</span>=&#8221;Horizontal&#8221;&gt;<br />
+　　　　　　　　　　&lt;<span style="color:#a11515;">TextBlock</span> <span style="color:#ff0000;">Text</span>=&#8221;{<span style="color:#a11515;">Binding</span> <span style="color:#ff0000;">FirstItemText</span>}&#8221;/&gt;<br />
+　　　　　　　　&lt;/<span style="color:#a11515;">StackPanel</span>&gt;<br />
+　　　　　　&lt;/<span style="color:#a11515;">DataTemplate</span>&gt;<br />
+　　　　&lt;/<span style="color:#a11515;">ListView.ItemTemplate</span>&gt;<br />
+　　&lt;/<span style="color:#a11515;">ListView</span>&gt;<br />
+　　&lt;<span style="color:#a11515;">Button</span> <span style="color:#ff0000;">Content</span>=&#8221;Enter if it is not in the list&#8221; <span style="color:#ff0000;">HorizontalAlignment</span>=&#8221;Center&#8221; <span style="color:#ff0000;">Command</span>=&#8221;{<span style="color:#a11515;">Binding</span> ShowFlyoutButtonCommand}&#8221; <span style="color:#ff0000;">CommandParameter</span>=&#8221;{<span style="color:#a11515;">Binding</span> <span style="color:#ff0000;">RelativeSource</span>={<span style="color:#a11515;">RelativeSource</span> <span style="color:#ff0000;">Mode</span>=Self}}&#8221; <span style="color:#ff0000;">Margin</span>=&#8221;0,10,0,0&#8243;&gt;<br />
+　　　　&lt;<span style="color:#a11515;">FlyoutBase.AttachedFlyout</span>&gt;<br />
+　　　　　　&lt;<span style="color:#a11515;">Flyout</span>&gt;<br />
+　　　　　　　　&lt;<span style="color:#a11515;">StackPanel</span>&gt;<br />
+　　　　　　　　　　&lt;<span style="color:#a11515;">StackPanel</span> Orientation=&#8221;Horizontal&#8221;&gt;<br />
+　　　　　　　　　　　　&lt;<span style="color:#a11515;">TextBox</span> <span style="color:#ff0000;">Header</span>=&#8221;{<span style="color:#a11515;">Binding</span> <span style="color:#ff0000;">FirstTextBoxHeader</span>}&#8221; <span style="color:#ff0000;">Text</span>=&#8221;{<span style="color:#a11515;">Binding</span> <span style="color:#ff0000;">FirstTextBoxText</span>, <span style="color:#ff0000;">Mode</span>=TwoWay, <span style="color:#ff0000;">UpdateSourceTrigger</span>=PropertyChanged}&#8221; <span style="color:#ff0000;">Width</span>=&#8221;300&#8243;/&gt;<br />
+　　　　　　　　　　&lt;/<span style="color:#a11515;">StackPanel</span>&gt;<br />
+　　　　　　　　　　&lt;<span style="color:#a11515;">Button</span> <span style="color:#ff0000;">Content</span>=&#8221;O K&#8221; <span style="color:#ff0000;">HorizontalAlignment</span>=&#8221;Right&#8221; <span style="color:#ff0000;">Margin</span>=&#8221;0,10,0,0&#8243; <span style="color:#ff0000;">Command</span>=&#8221;{<span style="color:#a11515;">Binding</span> <span style="color:#ff0000;">CloseFlyoutButtonCommand</span>}&#8221;/&gt;<br />
+　　　　　　　　&lt;/<span style="color:#a11515;">StackPanel</span>&gt;<br />
+　　　　　　&lt;/<span style="color:#a11515;">Flyout</span>&gt;<br />
+　　　　&lt;/<span style="color:#a11515;">FlyoutBase.AttachedFlyout</span>&gt;<br />
+　　&lt;/<span style="color:#a11515;">Button</span>&gt;<br />
+&lt;/<span style="color:#a11515;">StackPanel</span>&gt;<br />
+</span><br />
+View model( This code is a part of the view model that binds to the Command property of the Button control.)<br />
+<span style="color:#2B91AF;">Button</span> currentButton { <span style="color:#0000ff;">get</span>; <span style="color:#0000ff;">set</span>; }<br />
+<span style="color:#0000ff;">class</span> <span style="color:#2B91AF;">executeFlyoutCommand : ICommand</span><br />
+{<br />
+　　<span style="color:#0000ff;">public</span> <span style="color:#2B91AF;">Action</span>&lt;<span style="color:#0000ff;">object</span>&gt; ExecuteAction { <span style="color:#0000ff;">get</span>; <span style="color:#0000ff;">set</span>; }<br />
+　　<span style="color:#0000ff;">public</span> <span style="color:#0000ff;">bool</span> CanExecute(<span style="color:#0000ff;">object</span> parameter) { <span style="color:#0000ff;">return</span> <span style="color:#0000ff;">true</span>; }<br />
+　　<span style="color:#0000ff;">public</span> <span style="color:#0000ff;">event</span> <span style="color:#2B91AF;">EventHandler</span> CanExecuteChanged;<br />
+　　<span style="color:#0000ff;">public</span> <span style="color:#0000ff;">void</span> OnCanExecuteChanged()<br />
+　　{<br />
+　　　　<span style="color:#0000ff;">if</span> (CanExecuteChanged != <span style="color:#0000ff;">null</span>) CanExecuteChanged(<span style="color:#0000ff;">this</span>, <span style="color:#0000ff;">null</span>);<br />
+　　}<br />
+　　<span style="color:#0000ff;">public</span> <span style="color:#0000ff;">void</span> Execute(<span style="color:#0000ff;">object</span> parameter) { ExecuteAction(parameter); }<br />
+}<br />
+<span style="color:#2B91AF;">executeFlyoutCommand</span> showFlyoutButtonCommand { <span style="color:#0000ff;">get</span>; <span style="color:#0000ff;">set</span>; }<br />
+<span style="color:#0000ff;">public</span> <span style="color:#2B91AF;">ICommand</span> ShowFlyoutButtonCommand<br />
+{<br />
+　　<span style="color:#0000ff;">get</span><br />
+　　{<br />
+　　　　<span style="color:#0000ff;">if</span> (showFlyoutButtonCommand == <span style="color:#0000ff;">null</span>)<br />
+　　　　{<br />
+　　　　　　showFlyoutButtonCommand = <span style="color:#0000ff;">new</span> <span style="color:#2B91AF;">executeFlyoutCommand</span>();<br />
+　　　　　　showFlyoutButtonCommand.ExecuteAction = (p) =&gt;<br />
+　　　　　　{<br />
+　　　　　　　　currentButton = p <span style="color:#0000ff;">as</span> <span style="color:#2B91AF;">Button</span>;<br />
+　　　　　　　　<span style="color:#0000ff;">if</span> (currentButton != <span style="color:#0000ff;">null</span>) <span style="color:#2B91AF;">FlyoutBase</span>.ShowAttachedFlyout(currentButton);<br />
+　　　　　　};<br />
+　　　　}<br />
+　　　　<span style="color:#0000ff;">return</span> showFlyoutButtonCommand;<br />
+　　}<br />
+}<br />
+<span style="color:#2B91AF;">executeFlyoutCommand</span> closeFlyoutButtonCommand { <span style="color:#0000ff;">get</span>; <span style="color:#0000ff;">set</span>; }<br />
+<span style="color:#0000ff;">public</span> <span style="color:#2B91AF;">ICommand</span> CloseFlyoutButtonCommand<br />
+{<br />
+　　<span style="color:#0000ff;">get</span><br />
+　　{<br />
+　　　　<span style="color:#0000ff;">if</span> (closeFlyoutButtonCommand == <span style="color:#0000ff;">null</span>)<br />
+　　　　{<br />
+　　　　　　closeFlyoutButtonCommand = <span style="color:#0000ff;">new</span> <span style="color:#2B91AF;">executeFlyoutCommand</span>();<br />
+　　　　　　closeFlyoutButtonCommand.ExecuteAction = (b) =&gt;<br />
+　　　　　　{<br />
+　　　　　　　　<span style="color:#2B91AF;">Flyout</span> f = <span style="color:#2B91AF;">FlyoutBase</span>.GetAttachedFlyout(currentButton) <span style="color:#0000ff;">as</span> <span style="color:#2B91AF;">Flyout</span>;<br />
+　　　　　　　　<span style="color:#0000ff;">if</span> (f != <span style="color:#0000ff;">null</span>) f.Hide();<br />
+　　　　　　　　<span style="color:#0000ff;">if</span> (<span style="font-style:italic;">%insertValue%</span> != <span style="color:#0000ff;">null</span>)<br />
+　　　　　　　　{<br />
+　　　　　　　　　　GenericListViewItemsSource.Add(<span style="font-style:italic;">%insertValue%</span>);<br />
+　　　　　　　　　　RaisePropertyChanged(<span style="color:#a11515;">&#8220;GenericListViewItemsSource&#8221;</span>);<br />
+　　　　　　　　}<br />
+　　　　　　};<br />
+　　　　}<br />
+　　　　<span style="color:#0000ff;">return</span> closeFlyoutButtonCommand;<br />
+　　}<br />
+}</p>
+<p></p>
+<p style="margin: 0px 0px 0px 5px; text-indent: 1em;">
+2. Using the VisualTreeHelper class.</p>
+<p style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">
+XAML is same as above code with exclude a part below.<span style="color:#0000ff;"><br />
+&lt;<span style="color:#a11515;">StackPanel</span> <span style="color:#ff0000;">DataContext</span>=&#8221;{<span style="color:#a11515;">Binding</span> <span style="color:#ff0000;">GenreDataContext</span>}&#8221; <span style="color:#ff0000;">Grid.Row</span>=&#8221;1&#8243; <span style="color:#ff0000;">Grid.Column</span>=&#8221;1&#8243; <span style="color:#ff0000;">Margin</span>=&#8221;10,10,0,0&#8243; &gt;<br />
+　　&lt;<span style="color:#a11515;">ListView</span> <span style="color:#ff0000;">BorderBrush</span>=&#8221;White&#8221; <span style="color:#ff0000;">BorderThickness</span>=&#8221;1&#8243; <span style="color:#ff0000;">Header</span>=&#8221;Genre List&#8221; <span style="color:#ff0000;">ItemsSource</span>=&#8221;{<span style="color:#a11515;">Binding</span> <span style="color:#ff0000;">GenericListViewItemsSource</span>}&#8221; <span style="color:#ff0000;">Height</span>=&#8221;600&#8243;&gt;<br />
+　　　　&lt;<span style="color:#a11515;">ListView.ItemTemplate</span>&gt;<br />
+　　　　&#8230;<br />
+　　　　　　　　　　&lt;<span style="color:#a11515;">Button</span> <span style="color:#ff0000;">Content</span>=&#8221;O K&#8221; <span style="color:#ff0000;">HorizontalAlignment</span>=&#8221;Right&#8221; <span style="color:#ff0000;">Margin</span>=&#8221;0,10,0,0&#8243; <span style="color:#ff0000;">Command</span>=&#8221;{<span style="color:#a11515;">Binding</span> <span style="color:#ff0000;">CloseFlyoutButtonCommand</span>}&#8221;/&gt;<br />
+　　　　　　　　　　&lt;<span style="color:#a11515;">Button</span> <span style="color:#ff0000;">Content</span>=&#8221;Using VisualTreeHelper&#8221; <span style="color:#ff0000;">HorizontalAlignment</span>=&#8221;Right&#8221; <span style="color:#ff0000;">Margin</span>=&#8221;0,10,0,0&#8243; <span style="color:#ff0000;">Command</span>=&#8221;{<span style="color:#a11515;">Binding</span> <span style="color:#ff0000;">CloseUsingVisualTreeFlyoutButtonCommand</span>}&#8221;/&gt;<br />
+　　　　&#8230;<br />
+&lt;/<span style="color:#a11515;">StackPanel</span>&gt;<br />
+</span><br />
+View model( Add the Command property of the Button control, like below.)<br />
+<span style="color:#2B91AF;">executeFlyoutCommand</span> closeUsingVisualTreeFlyoutButtonCommand { <span style="color:#0000ff;">get</span>; <span style="color:#0000ff;">set</span>; }<br />
+<span style="color:#0000ff;">public</span> <span style="color:#2B91AF;">ICommand</span> CloseUsingVisualTreeFlyoutButtonCommand<br />
+{<br />
+　　<span style="color:#0000ff;">get</span><br />
+　　{<br />
+　　　　<span style="color:#0000ff;">if</span> (closeUsingVisualTreeFlyoutButtonCommand == <span style="color:#0000ff;">null</span>)<br />
+　　　　{<br />
+　　　　　　closeUsingVisualTreeFlyoutButtonCommand = <span style="color:#0000ff;">new</span> <span style="color:#2B91AF;">executeFlyoutCommand</span>();<br />
+　　　　　　closeUsingVisualTreeFlyoutButtonCommand.ExecuteAction = (b) =&gt;<br />
+　　　　　　{<br />
+　　　　　　　　<span style="color:#2B91AF;">IReadOnlyList&lt;Popup&gt;</span> popups = <span style="color:#2B91AF;">VisualTreeHelper</span>.GetOpenPopups(<span style="color:#2B91AF;">Window</span>.Current);<br />
+　　　　　　　　<span style="color:#0000ff;">foreach</span> (<span style="color:#2B91AF;">Popup</span> p <span style="color:#0000ff;">in</span> popups) p.IsOpen = <span style="color:#0000ff;">false</span>;<br />
+　　　　　　　　<span style="color:#0000ff;">if</span> (<span style="font-style:italic;">%insertValue%</span> != <span style="color:#0000ff;">null</span>)<br />
+　　　　　　　　{<br />
+　　　　　　　　　　GenericListViewItemsSource.Add(<span style="font-style:italic;">%insertValue%</span>);<br />
+　　　　　　　　　　RaisePropertyChanged(<span style="color:#a11515;">&#8220;GenericListViewItemsSource&#8221;</span>);<br />
+　　　　　　　　}<br />
+　　　　　　};<br />
+　　　　}<br />
+　　　　<span style="color:#0000ff;">return</span> closeUsingVisualTreeFlyoutButtonCommand;<br />
+　　}<br />
+}
+</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・View model</p>
+<p style="margin: 0px 0px 0px 5px; text-indent: 1em;">
+Reusable Flyout composite is provided by the DataContext property of a portion of XAML intent to bind to individual area of the contents semantically. It is like such as a contents of Song, Genre or Artist. These information can build by words of from one to three roughly. Therefore I prepare generic type for &#8220;<span style="font-style:italic;">%insertValue%</span>&#8221; of above code such as following.</p>
+<p style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">
+<span style="color:#0000ff;">public</span> <span style="color:#0000ff;">class</span> <span style="color:#2B91AF;">GenericListItem</span><br />
+{<br />
+　　<span style="color:#0000ff;">public</span> <span style="color:#0000ff;">string</span> FirstItemText { <span style="color:#0000ff;">get</span>; <span style="color:#0000ff;">set</span>; }<br />
+　　<span style="color:#0000ff;">public</span> <span style="color:#0000ff;">string</span> SecondItemText { <span style="color:#0000ff;">get</span>; <span style="color:#0000ff;">set</span>; }<br />
+　　<span style="color:#0000ff;">public</span> <span style="color:#0000ff;">string</span> LastItemText { <span style="color:#0000ff;">get</span>; <span style="color:#0000ff;">set</span>; }<br />
+}<br />
+<span style="color:#2B91AF;">GenericListItem</span> insertValue { <span style="color:#0000ff;">get</span>; <span style="color:#0000ff;">set</span>; }<br />
+<span style="color:#0000ff;">public</span> <span style="color:#2B91AF;">ObservableCollection</span>&lt;<span style="color:#2B91AF;">GenericListItem</span>&gt; GenericListViewItemsSource{ <span style="color:#0000ff;">get</span>; <span style="color:#0000ff;">set</span>; }
+</p>
+<p style="margin: 0px 0px 0px 5px; text-indent: 1em;">
+The DataContext of reusable Flyout composite is structured with command set ( above), generic type ( above), and properties of TextBox controls( below).
+</p>
+<p style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">
+<span style="color:#0000ff;">public</span> <span style="color:#0000ff;">class</span> <span style="color:#2B91AF;">GenericDataContext : INotifyPropertyChanged</span><br />
+{<br />
+　　<span style="color:#009900;">// This is generic type explained at above</span><br />
+　　<span style="color:#0000ff;">public</span> <span style="color:#0000ff;">class</span> <span style="color:#2B91AF;">GenericListItem</span>&#8230;<br />
+　　<span style="color:#2B91AF;">GenericListItem</span> insertValue { <span style="color:#0000ff;">get</span>; <span style="color:#0000ff;">set</span>; }<br />
+　　<span style="color:#0000ff;">public</span> <span style="color:#2B91AF;">ObservableCollection</span>&lt;<span style="color:#2B91AF;">GenericListItem</span>&gt; GenericListViewItemsSource{ <span style="color:#0000ff;">get</span>; <span style="color:#0000ff;">set</span>; }<br />
+　　<span style="color:#009900;">// this is properties of TextBox controls.</span><br />
+　　<span style="color:#0000ff;">public</span> <span style="color:#0000ff;">string</span> FirstTextBoxHeader { <span style="color:#0000ff;">get</span>; <span style="color:#0000ff;">set;</span> }<br />
+　　<span style="color:#0000ff;">string</span> firstTextBoxText { <span style="color:#0000ff;">get</span>; <span style="color:#0000ff;">set;</span> }<br />
+　　<span style="color:#0000ff;">public</span> <span style="color:#0000ff;">string</span> FirstTextBoxText<br />
+　　{<br />
+　　　　<span style="color:#0000ff;">get</span><br />
+　　　　{<br />
+　　　　　　<span style="color:#0000ff;">return</span> firstTextBoxText;<br />
+　　　　}<br />
+　　　　<span style="color:#0000ff;">set</span><br />
+　　　　{ <br />
+　　　　　　firstTextBoxText = <span style="color:#0000ff;">value</span>;<br />
+　　　　　　insertValue = insertValue ?? <span style="color:#0000ff;">new</span> <span style="color:#2B91AF;">GenericListItem</span>();<br />
+　　　　　　insertValue.FirstItemText = firstTextBoxText;<br />
+　　　　}<br />
+　　}<br />
+　　<span style="color:#0000ff;">public</span> <span style="color:#0000ff;">string</span> SecondTextBoxHeader { <span style="color:#0000ff;">get</span>; <span style="color:#0000ff;">set;</span> }<br />
+　　string secondTextBoxText { <span style="color:#0000ff;">get</span>; <span style="color:#0000ff;">set;</span> }<br />
+　　<span style="color:#0000ff;">public</span> <span style="color:#0000ff;">string</span> SecondTextBoxText<br />
+　　{<br />
+　　　　<span style="color:#0000ff;">get</span><br />
+　　　　{<br />
+　　　　　　<span style="color:#0000ff;">return</span> secondTextBoxText;<br />
+　　　　}<br />
+　　　　<span style="color:#0000ff;">set</span><br />
+　　　　{<br />
+　　　　　　secondTextBoxText = <span style="color:#0000ff;">value</span>;<br />
+　　　　　　insertValue = insertValue ?? <span style="color:#0000ff;">new</span> <span style="color:#2B91AF;">GenericListItem</span>();<br />
+　　　　　　insertValue.SecondItemText = secondTextBoxText;<br />
+　　　　}<br />
+　　}<br />
+　　<span style="color:#0000ff;">public</span> <span style="color:#0000ff;">string</span> LastTextBoxHeader { <span style="color:#0000ff;">get</span>; <span style="color:#0000ff;">set;</span> }<br />
+　　string lastTextBoxText { <span style="color:#0000ff;">get</span>; <span style="color:#0000ff;">set;</span> }<br />
+　　<span style="color:#0000ff;">public</span> <span style="color:#0000ff;">string</span> LastTextBoxText<br />
+　　{<br />
+　　　　<span style="color:#0000ff;">get</span><br />
+　　　　{<br />
+　　　　　　<span style="color:#0000ff;">return</span> lastTextBoxText;<br />
+　　　　}<br />
+　　　　<span style="color:#0000ff;">set</span><br />
+　　　　{<br />
+　　　　　　lastTextBoxText = <span style="color:#0000ff;">value</span>;<br />
+　　　　　　insertValue = insertValue ?? <span style="color:#0000ff;">new</span> <span style="color:#2B91AF;">GenericListItem</span>();<br />
+　　　　　　insertValue.LastItemText = lastTextBoxText;<br />
+　　　　}<br />
+　　}<br />
+　　<span style="color:#009900;">// This is command set explained at above</span><br />
+　　<span style="color:#2B91AF;">Button</span> currentButton { <span style="color:#0000ff;">get</span>; <span style="color:#0000ff;">set</span>; }<br />
+　　<span style="color:#0000ff;">class</span> <span style="color:#2B91AF;">executeFlyoutCommand : ICommand</span>&#8230;<br />
+　　<span style="color:#2B91AF;">executeFlyoutCommand</span> showFlyoutButtonCommand { <span style="color:#0000ff;">get</span>; <span style="color:#0000ff;">set</span>; }<br />
+　　<span style="color:#0000ff;">public</span> <span style="color:#2B91AF;">ICommand</span> ShowFlyoutButtonCommand&#8230;<br />
+　　<span style="color:#2B91AF;">executeFlyoutCommand</span> closeFlyoutButtonCommand { <span style="color:#0000ff;">get</span>; <span style="color:#0000ff;">set</span>; }<br />
+　　<span style="color:#0000ff;">public</span> <span style="color:#2B91AF;">ICommand</span> CloseFlyoutButtonCommand&#8230;<br />
+　　<span style="color:#2B91AF;">executeFlyoutCommand</span> closeUsingVisualTreeFlyoutButtonCommand { <span style="color:#0000ff;">get</span>; <span style="color:#0000ff;">set</span>; }<br />
+　　<span style="color:#0000ff;">public</span> <span style="color:#2B91AF;">ICommand</span> CloseUsingVisualTreeFlyoutButtonCommand&#8230;<br />
+　　<span style="color:#009900;">// Implement the PropertyChanged interface.</span><br />
+　　<span style="color:#0000ff;">public</span> event PropertyChangedEventHandler PropertyChanged;<br />
+　　<span style="color:#0000ff;">protected void</span> RaisePropertyChanged(<span style="color:#0000ff;">string</span> name)<br />
+　　{<br />
+　　　　<span style="color:#0000ff;">if</span>(PropertyChanged != <span style="color:#0000ff;">null</span>) PropertyChanged(<span style="color:#0000ff;">this</span>, <span style="color:#0000ff;">new</span> PropertyChangedEventArgs(name));<br />
+　　}<br />
+}
+</p>
+<p style="margin: 0px 0px 0px 5px; text-indent: 1em;">
+Same such as the Genre XAML area of above code, this generic class can reuse for the DataContext bind to individual an Artist XAML area. See below</p>
+<p style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">
+<span style="color:#0000ff;">public</span> <span style="color:#0000ff;">class</span> <span style="color:#2B91AF;">MainPageViewModel</span>:<span style="color:#2B91AF;">INotifyPropertyChanged</span><br />
+{<br />
+　　<span style="color:#0000ff;">public</span> <span style="color:#0000ff;">class</span> <span style="color:#2B91AF;">GenericDataContext</span> : <span style="color:#2B91AF;">INotifyPropertyChanged</span>&#8230;<br />
+　　<span style="color:#0000ff;">public</span> <span style="color:#0000ff;">class</span> <span style="color:#2B91AF;">ArtistViewModel</span> : <span style="color:#2B91AF;">GenericDataContext</span><br />
+　　{<br />
+　　　　<span style="color:#2B91AF;">ObservableCollection</span><<span style="color:#2B91AF;">ArtistModel</span>> artists { <span style="color:#0000ff;">get; set;</span> }<br />
+　　　　<span style="color:#0000ff;">public</span> <span style="color:#2B91AF;">ObservableCollection</span>&lt;<span style="color:#2B91AF;">ArtistModel</span>&gt; Artists<br />
+　　　　{<br />
+　　　　　　<span style="color:#0000ff;">get</span><br />
+　　　　　　{<br />
+　　　　　　　　<span style="color:#0000ff;">return</span> artists;<br />
+　　　　　　}<br />
+　　　　　　<span style="color:#0000ff;">set</span><br />
+　　　　　　{<br />
+　　　　　　　　GenericListViewItemsSource = GenericListViewItemsSource ?? <span style="color:#0000ff;">new</span> <span style="color:#2B91AF;">ObservableCollection</span>&lt;<span style="color:#2B91AF;">GenericListItem</span>&gt;();<br />
+　　　　　　　　<span style="color:#2B91AF;">GenericListItem</span> g;<br />
+　　　　　　　　artists = <span style="color:#0000ff;">value</span>;<br />
+　　　　　　　　<span style="color:#0000ff;">foreach</span>(<span style="color:#2B91AF;">ArtistModel</span> a <span style="color:#0000ff;">in</span> artists)<br />
+　　　　　　　　{<br />
+　　　　　　　　　　g = <span style="color:#0000ff;">new</span> <span style="color:#2B91AF;">GenericListItem</span>();<br />
+　　　　　　　　　　g.FirstItemText = a.FirstName;<br />
+　　　　　　　　　　g.LastItemText = a.LastName;<br />
+　　　　　　　　　　GenericListViewItemsSource.Add(g);<br />
+　　　　　　　　}<br />
+　　　　　　}<br />
+　　　　}<br />
+　　　　<span style="color:#0000ff;">public</span> <span style="color:#2B91AF;">ArtistViewModel</span>()<br />
+　　　　{<br />
+　　　　　　FirstTextBoxHeader = <span style="color:#a11515;">&#8220;First Name: &#8220;</span>;<span style="color:#009900;">// Maybe this is got from the resource for globalize.</span><br />　　　　　　LastTextBoxHeader = <span style="color:#a11515;">&#8220;Last Name: &#8220;</span>;<span style="color:#009900;">// Maybe this is got from the resource for globalize.</span><br />
+　　　　}<br />
+　　}<br />
+　　<span style="color:#0000ff;">public</span> <span style="color:#2B91AF;">ArtistViewModel</span> ArtistDataContext { <span style="color:#0000ff;">get; set;</span> }<br />
+　　<span style="color:#0000ff;">public</span> <span style="color:#0000ff;">class</span> <span style="color:#2B91AF;">SongViewModel</span> : <span style="color:#2B91AF;">GenericDataContext</span>&#8230;<br />
+　　<span style="color:#0000ff;">public</span> <span style="color:#2B91AF;">SongViewModel</span> SongDataContext { <span style="color:#0000ff;">get; set;</span> }<br />
+　　<span style="color:#0000ff;">public</span> <span style="color:#0000ff;">class</span> <span style="color:#2B91AF;">GenreViewModel</span> : <span style="color:#2B91AF;">GenericDataContext</span>&#8230;<br />
+　　<span style="color:#0000ff;">public</span> <span style="color:#2B91AF;">GenreViewModel</span> GenreDataContext { <span style="color:#0000ff;">get; set;</span> }<br />
+　　<span style="color:#0000ff;">public</span> MainPageViewModel()&#8230;<br />
+　　<span style="color:#0000ff;">public</span> event <span style="color:#2B91AF;">PropertyChangedEventHandler</span> PropertyChanged;<br />　　<span style="color:#0000ff;">protected</span> void RaisePropertyChanged(string name)&#8230;<br />
+}
+</p>
+<p style="margin: 0px 0px 0px 5px; text-indent: 1em;">
+And in the constructor of the DataContext property of the Page, create an instance of the DataContext for individual XAML area.
+</p>
+<p style="margin: 0px 0px 0px 5px; text-indent: 1em;">
+Please reference sample code about the part of following code that obtain the data of stub or local data.</p>
+<p style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">
+<span style="color:#0000ff;">public</span> MainPageViewModel()<br />
+{<br />
+　　<span style="color:#2B91AF;">DataAccessLayer</span>  dal = <span style="color:#0000ff;">new</span> <span style="color:#2B91AF;">DataAccessLayer</span> ();<br />
+　　<span style="color:#2B91AF;">ObservableCollection</span>&lt;<span style="color:#2B91AF;">ArtistModel</span> &gt; artists = <span style="color:#0000ff;">new</span> <span style="color:#2B91AF;">ObservableCollection</span>&lt;<span style="color:#2B91AF;"> ArtistModel</span>&gt; artists = dal.GetLocalData&lt;<span style="color:#2B91AF;">ObservableCollection</span>&lt;<span style="color:#2B91AF;">ArtistModel</span>&gt;&gt;().Result;<br />
+　　<span style="color:#0000ff;">if</span> (artists.Count == 0) artists = dal.GetStubArtistData();<br />
+　　ArtistDataContext = <span style="color:#0000ff;">new</span> <span style="color:#2B91AF;">ArtistViewModel</span>() { Artists = artists };<br />
+}
+</p>
+<p style="margin-top:10px;text-align:center;">
+<img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2015/05/ReusableFlyoutApp.png" alt="" style="width:600px;align:center"/></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2015/05/23/mvvm-creating-reusable-flyout-control-composite/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>タイルとバッジのライフサイクル運用（Microsoft Azure Mobile Service）編</title>
+		<link>https://blog.processtune.com/2015/02/10/%e3%82%bf%e3%82%a4%e3%83%ab%e3%81%a8%e3%83%90%e3%83%83%e3%82%b8%e3%81%ae%e3%83%a9%e3%82%a4%e3%83%95%e3%82%b5%e3%82%a4%e3%82%af%e3%83%ab%e9%81%8b%e7%94%a8%ef%bc%88microsoft-azure-mobile-service/</link>
+					<comments>https://blog.processtune.com/2015/02/10/%e3%82%bf%e3%82%a4%e3%83%ab%e3%81%a8%e3%83%90%e3%83%83%e3%82%b8%e3%81%ae%e3%83%a9%e3%82%a4%e3%83%95%e3%82%b5%e3%82%a4%e3%82%af%e3%83%ab%e9%81%8b%e7%94%a8%ef%bc%88microsoft-azure-mobile-service/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Mon, 09 Feb 2015 21:03:34 +0000</pubDate>
+				<category><![CDATA[Microsoft Azure]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Universal Apps]]></category>
+		<category><![CDATA[Windows 8.1 App]]></category>
+		<category><![CDATA[Windows Phone App]]></category>
+		<category><![CDATA[Windows Store App]]></category>
+		<guid isPermaLink="false">http://www.processtune.com/blog/?p=1428</guid>
+
+					<description><![CDATA[「タイルとバッジのライフサイクル実装（Azure）編」で、Microsoft Azure Notifications Hubの通知を受けとる方法を解説しました。ここでは、Microsoft Azure Mobile Serviceを使って認証を行う方法を解説します。この認証により、クライアントがタグを登録してチャンネルを開いた後、タグをMicrosoft Azure Mobile Service側で管理することができます。タグをMicrosoft Azure Notifications Hubでチャンネル単位で管理するのでなく、Microsoft Azure Mobile Serviceでユーザー単位で管理するための準備です。Microsoft Azure Mobile Serviceで管理する方法を含めたタグの継続的サポート、Microsoft Azure Mobile Serviceのバックエンド・プログラムのメンテナンス、バッジの送信、遠隔監視などの解説は「タイルとバッジのライフサイクル運用（タグの管理）編」で行っています。 サンプル・ソリューション ・Microsoft Azure Mobile Serviceを使う Microsoft Azure Service Busを直接操作する方法の他に、Microsoft Azure Mobile Serviceの機能を使ってMicrosoft Azure Notifications Hubとの通知の受送信を行う方法があります。Microsoft Azure Service Busに直接通知を送信する方法は以下のような感じです。 NotificationHubClient hub = NotificationHubClient .CreateClientFromConnectionString ("DefaultFullSharedAccessSignatureコード", "通知ハブ名"); string toastTemplate = @"&#60;toast&#62;&#60;visual&#62;&#60;binding template='ToastText01'&#62; &#60;text id='1'&#62;{0}&#60;/text&#62; &#60;/binding&#62;&#60;/visual&#62;&#60;/toast&#62;"; [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin: 0px 0px 0px 0px;"><span style="font-weight: bold;"><a href="http://www.processtune.com/blog/?p=1155" target="_new" rel="noopener">「タイルとバッジのライフサイクル実装（Azure）編」</a></span>で、Microsoft Azure Notifications Hubの通知を受けとる方法を解説しました。ここでは、Microsoft Azure Mobile Serviceを使って認証を行う方法を解説します。この認証により、クライアントがタグを登録してチャンネルを開いた後、タグをMicrosoft Azure Mobile Service側で管理することができます。タグをMicrosoft Azure Notifications Hubでチャンネル単位で管理するのでなく、Microsoft Azure Mobile Serviceでユーザー単位で管理するための準備です。Microsoft Azure Mobile Serviceで管理する方法を含めたタグの継続的サポート、Microsoft Azure Mobile Serviceのバックエンド・プログラムのメンテナンス、バッジの送信、遠隔監視などの解説は<span style="font-weight: bold;"><a href="http://www.processtune.com/blog/?p=1155" target="_new" rel="noopener">「タイルとバッジのライフサイクル運用（タグの管理）編」</a></span>で行っています。</p>
+<p></p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;text-align:right;"><a href="http://1drv.ms/1aODcND">サンプル・ソリューション</a></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Microsoft Azure Mobile Serviceを使う</p>
+<p style="margin: 0px 0px 0px 5px; text-indent: 1em;">Microsoft Azure Service Busを直接操作する方法の他に、Microsoft Azure Mobile Serviceの機能を使ってMicrosoft Azure Notifications Hubとの通知の受送信を行う方法があります。Microsoft Azure Service Busに直接通知を送信する方法は以下のような感じです。</p>
+<pre style="background-color:#cccccc;border:1px solid #00000">
+    NotificationHubClient hub = NotificationHubClient
+        .CreateClientFromConnectionString
+            ("DefaultFullSharedAccessSignatureコード", "通知ハブ名");
+    string toastTemplate =
+        @"&lt;toast&gt;&lt;visual&gt;&lt;binding template='ToastText01'&gt;
+                &lt;text id='1'&gt;{0}&lt;/text&gt;
+            &lt;/binding&gt;&lt;/visual&gt;&lt;/toast&gt;";
+    var message = string.Format(toastTemplate,"Lady Gaga updates photos at Instagram");
+    //タグ「Lady_Gaga」を登録しているチャンネル（端末）にプッシュ
+    await hub.SendWindowsNativeNotificationAsync(message,"Lady_Gaga");
+    //全チャンネル（端末）にプッシュ
+    await hub.SendWindowsNativeNotificationAsync(message);
+</pre>
+<p style="margin: 0px 0px 0px 5px; text-indent: 1em;">これは、コンソールアプリケーションとして実装できる最もシンプルな通知発行の処理ですので、Service Bus Explorerを使うまでも無いようなケースでは、このコンソールアプリケーションを使ってください。<span style="font-weight: bold;"><a href="http://www.processtune.com/blog/?p=1155" target="_new" rel="noopener">サンプルアプリケーション</a></span>のPushNotificationConsoleプロジェクトにあります。</p>
+<p style="margin: 0px 0px 0px 5px; text-indent: 1em;">Microsoft Azure Mobile Serviceを使うと、認証済みの通知発行、受信を容易に構築することができます。Microsoft Azure Mobile Serviceのバックエンド・プログラムに認証を要求するオプションを設定することで、チャンネルの登録時にMicrosoft Azure Mobile Serviceの認証機能を通してユーザーを管理することができます。タグを管理する際、端末（チャンネル）ごとにタグを管理するのでなく、ユーザーごとに管理することができ保守性が向上します。また、ユーザーにとっても複数のIdentity Providerを利用できることから利便性が向上します。その他、多くの通知を配信するシステムを構築する際に考慮することですが、SilverlightやWindows Phone 8が利用するMicrosoft Push Notification Serviceに通知を発行する場合、認証済みのWebサービスでないと500/日に制限されますので、それを回避するという意味もあります。</p>
+<p style="text-align:center; font-weight: bold; font-size: 10px;"><iframe width="560" height="315" src="https://www.youtube.com/embed/w-tFdreZB94" frameborder="0" allowfullscreen></iframe><br />※出典：Microsoft Productivity Future Vision &#8211; 将来のデバイス数を考慮するとユーザー単位のタグ管理は必須</p>
+<p style="margin: 0px 0px 0px 5px; text-indent: 1em;">Microsoft Azure Service Busでの通知発行をMicrosoft Azure Mobile Serviceでの通知発行へ変更する方法はいくつかあります。最も簡単な方法は、Visual Studio 2013 Update 2以降でプロジェクトのコンテキストメニューから[追加]-[プッシュ通知]を選択する方法を使います。その後少し変更を加え、通知を発行するプログラムをMicrosoft Azure Mobile Serviceからダウンロードしてソリューションに組み込み、それを認証を使うように変更し、Microsoft Azure Mobile Serviceに発行して運用に使うという流れが適しています。</p>
+<p style="margin: 0px 0px 0px 5px; text-indent: 1em;">導通試験にService Bus Explorerを使ってストアアプリを作成し、運用時の通知発行のバックエンド・プログラムを分離したスキームで構築したいケースは、多くの開発現場で必要な作業分割と考えます。そのようなケースに向いている構築の流れが、AzureポータルからMicrosoft Azure Mobile Serviceを作成し、ダッシュボードからバックエンド・プログラムのみをダウンロードしてローカルWebサーバーで開発、Azureへ発行して実運用という流れです。</p>
+<p style="margin: 0px 0px 0px 5px; text-indent: 1em;">以下に既存のMicrosoft Azure Mobile Serviceを使う手順を解説してあります。新規にMicrosoft Azure Mobile Serviceを作成する手順は、その下の「・認証を設定する」に解説してあります。</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Microsoft Azure Mobile Serviceによる通知の受信</p>
+<p style="margin: 0px 0px 0px 30px; text-indent: -1em;">1.Visual Studioでストアアプリを開きます。ユニバーサル・アプリの空のプロジェクトを新規に作成しても良いですし、<span style="font-weight: bold;"><a href="http://www.processtune.com/blog/?p=1155" target="_new" rel="noopener">前回のサンプル</a></span>を使って手順を進めていくのも良いかと思います。ただし、サンプル・ソリューションはappxmanifestでトーストなどを許可しています。新規に作成する場合は、「<span style="font-weight: bold;"><a href="http://azure.microsoft.com/ja-jp/documentation/articles/notification-hubs-windows-store-dotnet-get-started/" target="_new" rel="noopener">Notification Hubs の使用</a></span>」を参照して、パッケージの設定を行っておいてください。Windows側のプロジェクトのコンテキストメニューから[追加]-[プッシュ通知]を選択しウィザードを開始します。</p>
+<p style="display:inline">
+<img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2015/04/MobileService0.png" alt="" style="width:300px;"/><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2015/04/MobileService1.png" alt="" style="width:300px;margin-left:10px;"/></p>
+<p></p>
+<p style="margin: 0px 0px 0px 30px; text-indent: -1em;">2.ストアにサインインし、アカウント保護などひと通りの手順を行って対象のアプリケーションを選択します。</p>
+<p style="display:inline">
+<img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2015/04/MobileService2.png" alt="" style="width:300px;"/><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2015/04/MobileService3.png" alt="" style="width:300px;margin-left:10px;"/></p>
+<p>
+<img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2015/04/MobileService4.png" alt="" style="width:300px;"/><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2015/04/MobileService5.png" alt="" style="width:300px;margin-left:10px;"/></p>
+<p>
+<img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2015/04/MobileService6.png" alt="" style="width:300px;"/><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2015/04/MobileService7.png" alt="" style="width:300px;margin-left:10px;"/></p>
+<p></p>
+<p style="margin: 0px 0px 0px 30px; text-indent: -1em;">3.Microsoft Azureにサインインし、Mobile Serviceを選択して組み込みは終了です。</p>
+<p style="display:inline">
+<img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2015/04/MobileService8.png" alt="" style="width:300px;"/><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2015/04/MobileService9.png" alt="" style="width:300px;margin-left:10px;"/></p>
+<p></p>
+<p style="display:inline">
+<img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2015/04/MobileService9.png" alt="" style="width:600px;margin-left:10px;"/>
+</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Phone側も設定する</p>
+<p style="margin: 0px 0px 0px 5px; text-indent: 1em;">同じ作業をPhone側のプロジェクトに対して行うのも良いのですが、無駄なディレクティブがApp.xaml.csに挿入されてしまうので、手作業でソリューションを整理していきます。</p>
+<p style="margin: 0px 0px 0px 5px; text-indent: 1em;">まず、SharedのApp.xaml.csを編集します。Windowsディレクティブで囲まれている部分を削除し、Phone側にも適用します。</p>
+<pre style="background-color:#cccccc;border:1px solid #00000">
+    public sealed partial class App : Application
+    {
+//コメントアウトし、Phone側にも適用
+//#if WINDOWS_APP
+        public static MobileServiceClient LinkingSongsClient
+            = new MobileServiceClient("https://linkingsongs.azure-mobile.net/",
+                "OCvDSyYXuMNyTZIDghRshUpuSDLznl61");
+//#endif
+	...
+        public App()
+        {
+            ...
+        }
+	...
+        protected override void OnLaunched(LaunchActivatedEventArgs e)
+        {
+            ...
+            Window.Current.Activate();
+            //サンプル・ソリューションを使っている場合、InitNotificationsAsyncをコメントアウト
+            //InitNotificationsAsync();
+            //ディレクティブを外し、以下を追加
+            //自動挿入されたMobileサービス・プロキシのUploadChannelを
+            //自作のAuthAsyncの後に実行するように定義する。
+            AuthAsync().GetAwaiter().OnCompleted(() =>
+            {
+                LinkingSongsPush.UploadChannel();
+            });
+        }
+        //AuthAsyncを自作する
+        private static async Task<mobileServiceUser> AuthAsync()
+        {
+            return await LinkingSongsClient
+                .LoginAsync(MobileServiceAuthenticationProvider.Facebook);
+        }
+	...
+        //サンプル・ソリューションを使っている場合、
+        //InitNotificationsAsyncは使わないので削除しても良い
+        private async void InitNotificationsAsync()
+        {
+        ...
+        }
+        ...
+    }
+</pre>
+<p></p>
+<p style="margin: 0px 0px 0px 5px; text-indent: 1em;">サービス・フォルダにあるpush.register.csをShared（ルートでよい）に移動してサービス・フォルダを削除します。また、以下のように編集します。</p>
+<pre style="background-color:#cccccc;border:1px solid #00000">
+    internal class LinkingSongsPush
+    {
+        static PushNotificationChannel channel { get; set; }
+        public async static void UploadChannel()
+        {
+            try
+            {
+                if (channel == null)
+                {
+                    channel = await PushNotificationChannelManager
+                        .CreatePushNotificationChannelForApplicationAsync();
+                }
+                await App.LinkingSongsClient.GetPush()
+                    .RegisterNativeAsync(channel.Uri);
+                var dialog = new MessageDialog("Registration success, expire at : "
+                    + channel.ExpirationTime.ToString());
+                dialog.Commands.Add(new UICommand("OK"));
+                await dialog.ShowAsync();
+            }
+            catch (Exception exception)
+            {
+                HandleRegisterException(exception);
+            }
+        }
+        private static async void HandleRegisterException(Exception exception)
+        {
+            var dialog =
+                new MessageDialog("Registration fault: " + exception.ToString());
+            dialog.Commands.Add(new UICommand("OK"));
+            await dialog.ShowAsync();
+        }
+    }
+</pre>
+<p style="margin: 0px 0px 0px 5px; text-indent: 1em;">「<span style="font-weight: bold;"><a href="http://azure.microsoft.com/ja-jp/documentation/articles/mobile-services-how-to-register-facebook-authentication/" target="_new" rel="noopener">モバイル サービスでの Facebook 認証用のアプリケーションの登録</a></span>」を参考にFacebookのアプリケーションを設定し、Microsoft Azure Mobile ServiceのIDを構成したら、Windows側をスタートアップ・プロジェクトにしてF5で実行します。</p>
+<p style="display:inline">
+<img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2015/04/FacebookSettings0.png" alt="" style="width:300px;"/><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2015/04/FacebookSettings1.png" alt="" style="width:300px;margin-left:10px;"/></p>
+<p></p>
+<p style="display:inline">
+<img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2015/04/WindowsAzureMobileServicesFacebookLogin0.png" alt="" style="width:300px;"/><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2015/04/WindowsAzureMobileServicesFacebookLogin1.png" alt="" style="width:300px;margin-left:10px;"/></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・認証を設定する</p>
+<p style="margin: 0px 0px 0px 5px; text-indent: 1em;">Microsoft Azure Mobile Serviceに認証を設定する最もシンプルな方法は、Microsoft Azure Mobile Serviceを作成して、ダッシュボードからコードをダウンロード、認証の編集を行ってMicrosoft Azure Mobile Serviceへ発行という手順です。</p>
+<p style="margin: 0px 0px 0px 30px; text-indent: -1em;">1.Microsoft AzureポータルからMobile Serviceを選択し、新規作成を行います。モバイルサービス名、データベース、通知ハブを設定します。既存の通知ハブを選択する場合は、他のストアアプリと紐づけられていないものを選ぶか、新規に作成してください。通知ハブはストアアプリのパッケージSIDとストアアプリに紐づけられたLiveサービスのクライアント・シークレットを設定してストアアプリ固有のものになります。</p>
+<p style="display:inline">
+<img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2015/04/MicrosoftAzureMobileServiceDashboard0.png" alt="" style="width:300px;"/><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2015/04/MicrosoftAzureMobileServiceDashboard1.png" alt="" style="width:300px;margin-left:10px;"/></p>
+<p></p>
+<p style="display:inline">
+<img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2015/04/MicrosoftAzureMobileServiceDashboard2.png" alt="" style="width:300px;"/><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2015/04/MicrosoftAzureMobileServiceDashboard3.png" alt="" style="width:300px;margin-left:10px;"/></p>
+<p></p>
+<p style="margin: 0px 0px 0px 30px; text-indent: -1em;">2.[ダッシュボード]の左のクイックスタートアイコン（雲に雷のマーク）を選択し、[既存の Windows アプリまたは Windows Phone アプリに接続する]から[ダウンロード]を選択してダウンロードします。</p>
+<p style="display:inline">
+<img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2015/04/MicrosoftAzureMobileServiceDashboard4.png" alt="" style="width:300px;"/><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2015/04/MicrosoftAzureMobileServiceDashboard5.png" alt="" style="width:300px;margin-left:10px;"/></p>
+<p></p>
+<p style="margin: 0px 0px 0px 30px; text-indent: -1em;">3.解凍してサービス・フォルダ（例では「LinkingSongsService」フォルダ）を既存のソリューションのフォルダにコピーし、Visual Studioのソリューション・エクスプローラーで、ソリューションのコンテキストメニューから[追加]-[既存のプロジェクト]を選択してソリューションに追加します。App_StartフォルダのWebApiConfig.csのRegisterメソッドに以下の1行を追加します。</p>
+<pre style="background-color:#cccccc;border:1px solid #00000">
+options.PushAuthorization =
+    Microsoft.WindowsAzure.Mobile.Service.Security.AuthorizationLevel.User;
+</pre>
+<p></p>
+<p style="display:inline">
+<img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2015/04/WindowsAzureMobileServicesAuth0.png" alt="" style="width:600px;margin-left:10px;"/></p>
+<p></p>
+<p style="margin: 0px 0px 0px 30px; text-indent: -1em;">4.App.xaml.csのAuthAsyncをコメントアウトして、F5でエラーなく実行できることを確認してください。</p>
+<pre style="background-color:#cccccc;border:1px solid #00000">
+    //AuthAsync().GetAwaiter().OnCompleted(() =>
+    //{
+    //    LinkingSongsPush.UploadChannel();
+    //});
+    LinkingSongsPush.UploadChannel();
+</pre>
+<p></p>
+<p style="display:inline">
+<img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2015/04/WindowsAzureMobileServicesFacebookLogin1.png" alt="" style="width:600px;margin-left:10px;"/></p>
+<p></p>
+<p style="margin: 0px 0px 0px 30px; text-indent: -1em;">5.サービスを発行してエラーが発生することを確認します。先ほど組み込んだサービスのプロジェクト（例では「LinkingSongsService」プロジェクト）のコンテキストメニューから発行を選択してウィザードを開始します。</p>
+<p style="display:inline">
+<img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2015/04/WindowsAzureMobileServicesPublish0.png" alt="" style="width:300px;"/><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2015/04/WindowsAzureMobileServicesPublish1.png" alt="" style="width:300px;margin-left:10px;"/></p>
+<p></p>
+<p style="margin: 0px 0px 0px 30px; text-indent: -1em;">6.通知ハブを選択し、接続を検証したら既定のまま進み発行のプレビューを選択します。</p>
+<p style="display:inline">
+<img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2015/04/WindowsAzureMobileServicesPublish2.png" alt="" style="width:300px;"/><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2015/04/WindowsAzureMobileServicesPublish3.png" alt="" style="width:300px;margin-left:10px;"/></p>
+<p></p>
+<p style="display:inline">
+<img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2015/04/WindowsAzureMobileServicesPublish4.png" alt="" style="width:300px;"/><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2015/04/WindowsAzureMobileServicesPublish5.png" alt="" style="width:300px;margin-left:10px;"/></p>
+<p></p>
+<p style="display:inline">
+<img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2015/04/WindowsAzureMobileServicesPublish6.png" alt="" style="width:300px;"/><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2015/04/WindowsAzureMobileServicesPublish7.png" alt="" style="width:300px;margin-left:10px;"/></p>
+<p></p>
+<p style="margin: 0px 0px 0px 30px; text-indent: -1em;">7.発行を行い、サービスが正常に動いていることを確認したら、F5でエラーが発生することを確認します。</p>
+<p style="display:inline">
+<img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2015/04/WindowsAzureMobileServicesPublish8.png" alt="" style="width:300px;"/><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2015/04/WindowsAzureMobileServicesPublish9.png" alt="" style="width:300px;margin-left:10px;"/></p>
+<p></p>
+<p style="display:inline">
+<img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2015/04/WindowsAzureMobileServicesPublish10.png" alt="" style="width:300px;"/><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2015/04/WindowsAzureMobileServicesPublish11.png" alt="" style="width:300px;margin-left:10px;"/></p>
+<p></p>
+<p style="margin: 0px 0px 0px 30px; text-indent: -1em;">8.App.xaml.csのAuthAsyncを元に戻して、F5でエラーなく実行できることを確認してください。</p>
+<pre style="background-color:#cccccc;border:1px solid #00000">
+    AuthAsync().GetAwaiter().OnCompleted(() =>
+    {
+        LinkingSongsPush.UploadChannel();
+    });
+    //LinkingSongsPush.UploadChannel();
+</pre>
+<p></p>
+<p style="display:inline">
+<img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2015/04/WindowsAzureMobileServicesFacebookLogin0.png" alt="" style="width:300px;"/><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2015/04/WindowsAzureMobileServicesFacebookLogin1.png" alt="" style="width:300px;margin-left:10px;"/></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2015/02/10/%e3%82%bf%e3%82%a4%e3%83%ab%e3%81%a8%e3%83%90%e3%83%83%e3%82%b8%e3%81%ae%e3%83%a9%e3%82%a4%e3%83%95%e3%82%b5%e3%82%a4%e3%82%af%e3%83%ab%e9%81%8b%e7%94%a8%ef%bc%88microsoft-azure-mobile-service/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>タイルとバッジのライフサイクル設計編</title>
+		<link>https://blog.processtune.com/2015/02/02/%e3%82%bf%e3%82%a4%e3%83%ab%e3%81%a8%e3%83%90%e3%83%83%e3%82%b8%e3%81%ae%e3%83%a9%e3%82%a4%e3%83%95%e3%82%b5%e3%82%a4%e3%82%af%e3%83%ab%e8%a8%ad%e8%a8%88%e7%b7%a8/</link>
+					<comments>https://blog.processtune.com/2015/02/02/%e3%82%bf%e3%82%a4%e3%83%ab%e3%81%a8%e3%83%90%e3%83%83%e3%82%b8%e3%81%ae%e3%83%a9%e3%82%a4%e3%83%95%e3%82%b5%e3%82%a4%e3%82%af%e3%83%ab%e8%a8%ad%e8%a8%88%e7%b7%a8/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Mon, 02 Feb 2015 07:29:19 +0000</pubDate>
+				<category><![CDATA[Microsoft Azure]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Universal Apps]]></category>
+		<category><![CDATA[Windows 8.1 App]]></category>
+		<category><![CDATA[Windows Phone App]]></category>
+		<category><![CDATA[Windows Store App]]></category>
+		<guid isPermaLink="false">http://www.processtune.com/blog/?p=1116</guid>
+
+					<description><![CDATA[Windows 8.1からタイルの種類も増え、アプリケーションの独自性や機能などを表現しやすくなったので、ユーザー環境のスクリーンサイズやタイルサイズを考慮したデザインの自由度が向上しました。しかしながら、タイルやバッジの設置は、アプリケーション作成時に1度しか作業しない為おろそかになりがちな作業です。バッジとタイルのこれらの設定は、工数やフローの複雑さに大きく関係するため、開発者はMicrosoft Azure Notification Hubsを含めた設計に関わる必要があります。 ・通知内容と通知先アプリケーションの目的や機能と通知内容、通知先、ライフサイクルの関係 バッジを含むタイルのUIデザインを設計する際は、通知のライフサイクルを考慮することが重要です。さまざまな検討要素が依存関係を持つからです。 検討要素はいくつかありますが、「ロゴとアプリケーション名のタイルへの配置」「ライブ・タイル、セカンダリ・タイル、サイズ」「バッジの必要性」「 通知内容と通知先、ライフサイクル」「アプリケーションの目的と機能」は依存関係にあることに注意してください。 そのため、まず「アプリケーションの目的と機能」が明確化されている必要があります。業務アプリケーションであっても要求仕様が明確化されていないケースが多々あり、要件定義が機能の羅列になっているケースすらあります。要求仕様は、要求仕様書のような大げさなものである必要はありません。まずは「バッジが必要かどうか」を検討できる範囲の要求仕様が明確化されていればいいわけです。要求が明確化されていてれば、続いて「セカンダリ・タイルが必要かどうか」を検討できますし、「ライブ・タイルを使うべきかどうか」「どのタイル・サイズが適切か」が明確化されていきます。そうすることで「バッジ・タイルの設計、ロゴの配置」ができるようになるので、検討の順番が重要だということを理解してください。 通知の必要性：そのアプリケーションには個別通知や全体通知が必要ですか？ アプリケーションに認証機能がある&#038;パーソナライズが目的である → 個別通知が必要 アプリケーションの機能拡張やデータの追加・更新など → 全体通知が必要 特定地域や特定のグループ（ある範囲のデータを利用など） → グループ通知が必要 バッジの必要性：そのアプリケーションでは情報の数が重要ですか？ コンテンツ数、情報数に意味を持つアプリケーションの場合 → 要約通知※を使う コンテンツ数、情報数よりもその有無や多さに意味がある場合 → システム・グリフを使う 数値から複数の意味を想像でき、通知の意味を失う場合 → システム・グリフを使う ※ひとつのバッジイメージとひとつの数値の組合せ タイルの機能の検討：そのアプリケーションでは情報が多様であることが重要ですか？ 異なるコンテンツ・スコープのコンテンツ提供・更新をウリにしている → セカンダリ・タイルを使う 機能提供のアプリではなく、コンテンツ提供を目的としている → ライブ・タイルを使える 複数の情報や詳細情報の通知がユーザーにとって有益である → ワイド/大・タイルを使う 最後にライフサイクルを検討することになります。 配信方法の検討：そのアプリケーションでは情報がどのように更新されますか？ 即時性が重要な通知がある → プッシュ/スケジュール ユーザーがアプリから離れる可能性がある → ローカル 時間が通知の重要なファクターである → スケジュール 固定的な定期的通知がユーザーに有用である → 定期的ポーリング [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin:0px 0px 0px 0px;">Windows 8.1からタイルの種類も増え、アプリケーションの独自性や機能などを表現しやすくなったので、ユーザー環境のスクリーンサイズやタイルサイズを考慮したデザインの自由度が向上しました。しかしながら、タイルやバッジの設置は、アプリケーション作成時に1度しか作業しない為おろそかになりがちな作業です。バッジとタイルのこれらの設定は、工数やフローの複雑さに大きく関係するため、開発者はMicrosoft Azure Notification Hubsを含めた設計に関わる必要があります。</p>
+<p style="margin:10px 0px 0px 0px;Font-weight:bold;Font-size:14px;">・通知内容と通知先<br />アプリケーションの目的や機能と通知内容、通知先、ライフサイクルの関係</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">バッジを含むタイルのUIデザインを設計する際は、通知のライフサイクルを考慮することが重要です。さまざまな検討要素が依存関係を持つからです。<br />
+検討要素はいくつかありますが、「ロゴとアプリケーション名のタイルへの配置」「ライブ・タイル、セカンダリ・タイル、サイズ」「バッジの必要性」「	通知内容と通知先、ライフサイクル」「アプリケーションの目的と機能」は依存関係にあることに注意してください。</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">そのため、まず「アプリケーションの目的と機能」が明確化されている必要があります。業務アプリケーションであっても要求仕様が明確化されていないケースが多々あり、要件定義が機能の羅列になっているケースすらあります。<br />要求仕様は、要求仕様書のような大げさなものである必要はありません。まずは「バッジが必要かどうか」を検討できる範囲の要求仕様が明確化されていればいいわけです。要求が明確化されていてれば、続いて「セカンダリ・タイルが必要かどうか」を検討できますし、「ライブ・タイルを使うべきかどうか」「どのタイル・サイズが適切か」が明確化されていきます。<br />そうすることで「バッジ・タイルの設計、ロゴの配置」ができるようになるので、検討の順番が重要だということを理解してください。</p>
+<p></p>
+<p style="margin:0px 0px 0px 5px;Font-weight:bold;Font-size:10px;">通知の必要性：そのアプリケーションには個別通知や全体通知が必要ですか？</p>
+<table>
+<tr>
+<td>アプリケーションに認証機能がある&#038;パーソナライズが目的である</td>
+<td>→</td>
+<td>個別通知が必要</td>
+</tr>
+<tr>
+<td>アプリケーションの機能拡張やデータの追加・更新など</td>
+<td>→</td>
+<td>全体通知が必要</td>
+</tr>
+<tr>
+<td>特定地域や特定のグループ（ある範囲のデータを利用など）</td>
+<td>→</td>
+<td>グループ通知が必要</td>
+</tr>
+</table>
+<p></p>
+<p style="margin:0px 0px 0px 5px;Font-weight:bold;Font-size:10px;">バッジの必要性：そのアプリケーションでは情報の数が重要ですか？</p>
+<table>
+<tr>
+<td>コンテンツ数、情報数に意味を持つアプリケーションの場合</td>
+<td>→</td>
+<td>要約通知※を使う</td>
+</tr>
+<tr>
+<td>コンテンツ数、情報数よりもその有無や多さに意味がある場合</td>
+<td>→</td>
+<td>システム・グリフを使う</td>
+</tr>
+<tr>
+<td>数値から複数の意味を想像でき、通知の意味を失う場合</td>
+<td>→</td>
+<td>システム・グリフを使う</td>
+</tr>
+</table>
+<p style="margin:0px 0px 0px 5px;Font-weight:bold;Font-size:10px;">※ひとつのバッジイメージとひとつの数値の組合せ</p>
+<p></p>
+<p style="margin:0px 0px 0px 5px;Font-weight:bold;Font-size:10px;">タイルの機能の検討：そのアプリケーションでは情報が多様であることが重要ですか？</p>
+<table>
+<tr>
+<td>異なるコンテンツ・スコープのコンテンツ提供・更新をウリにしている</td>
+<td>→</td>
+<td>セカンダリ・タイルを使う</td>
+</tr>
+<tr>
+<td>機能提供のアプリではなく、コンテンツ提供を目的としている</td>
+<td>→</td>
+<td>ライブ・タイルを使える</td>
+</tr>
+<tr>
+<td>複数の情報や詳細情報の通知がユーザーにとって有益である</td>
+<td>→</td>
+<td>ワイド/大・タイルを使う</td>
+</tr>
+</table>
+<p></p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">最後にライフサイクルを検討することになります。</p>
+<p></p>
+<p style="margin:0px 0px 0px 5px;Font-weight:bold;Font-size:10px;">配信方法の検討：そのアプリケーションでは情報がどのように更新されますか？</p>
+<table>
+<tr>
+<td>即時性が重要な通知がある</td>
+<td>→</td>
+<td>プッシュ/スケジュール</td>
+</tr>
+<tr>
+<td>ユーザーがアプリから離れる可能性がある</td>
+<td>→</td>
+<td>ローカル</td>
+</tr>
+<tr>
+<td>時間が通知の重要なファクターである</td>
+<td>→</td>
+<td>スケジュール</td>
+</tr>
+<tr>
+<td>固定的な定期的通知がユーザーに有用である</td>
+<td>→</td>
+<td>定期的ポーリング</td>
+</tr>
+<tr>
+<td>ユーザーは情報の更新を予測できない</td>
+<td>→</td>
+<td>プッシュ</td>
+</tr>
+</table>
+<p style="margin:0px 0px 0px 5px;Font-weight:bold;Font-size:10px;">併せてmsdnも参照してください（<a href="http://msdn.microsoft.com/ja-jp/library/windows/apps/hh779721.aspx" target="_new" rel="noopener">通知配信方法の選択 (Windows ランタイム アプリ)</a>）。</p>
+<p></p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">このように「アプリケーションの目的と機能」、「通知内容と通知先、ライフサイクル」、「ライブ・タイル、セカンダリ・タイル、サイズ」「バッジの必要性」が検討できたら、実際に<span style="Font-weight:bold"><a href="http://www.processtune.com/blog/?p=1150" target="_new" rel="noopener">「ロゴとアプリケーション名のタイルへの配置」</a></span>を行っていきます。</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2015/02/02/%e3%82%bf%e3%82%a4%e3%83%ab%e3%81%a8%e3%83%90%e3%83%83%e3%82%b8%e3%81%ae%e3%83%a9%e3%82%a4%e3%83%95%e3%82%b5%e3%82%a4%e3%82%af%e3%83%ab%e8%a8%ad%e8%a8%88%e7%b7%a8/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>タイルとバッジのライフサイクル実装（クライアント）編</title>
+		<link>https://blog.processtune.com/2014/12/05/%e3%82%bf%e3%82%a4%e3%83%ab%e3%81%a8%e3%83%90%e3%83%83%e3%82%b8%e3%81%ae%e3%83%a9%e3%82%a4%e3%83%95%e3%82%b5%e3%82%a4%e3%82%af%e3%83%ab%e5%ae%9f%e8%a3%85%ef%bc%88%e3%82%af%e3%83%a9%e3%82%a4%e3%82%a2/</link>
+					<comments>https://blog.processtune.com/2014/12/05/%e3%82%bf%e3%82%a4%e3%83%ab%e3%81%a8%e3%83%90%e3%83%83%e3%82%b8%e3%81%ae%e3%83%a9%e3%82%a4%e3%83%95%e3%82%b5%e3%82%a4%e3%82%af%e3%83%ab%e5%ae%9f%e8%a3%85%ef%bc%88%e3%82%af%e3%83%a9%e3%82%a4%e3%82%a2/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Thu, 04 Dec 2014 18:21:51 +0000</pubDate>
+				<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Universal Apps]]></category>
+		<category><![CDATA[Windows 8.1 App]]></category>
+		<category><![CDATA[Windows Phone App]]></category>
+		<category><![CDATA[Windows Store App]]></category>
+		<guid isPermaLink="false">http://www.processtune.com/blog/?p=1150</guid>
+
+					<description><![CDATA[タイルとバッジのライフサイクル設計編での設計に従って、アプリケーションにセカンダリ・タイルやバッジが必要と判断された場合は、それらのガイドラインに則って「ロゴとアプリケーション名のタイルへの配置」を実装していきます。バッジの実装についてはタイルとバッジのライフサイクル運用（タグの管理）編で解説しています。 サンプル・ソリューション ・タイルとバッジのガイドライン バッジが必要なアプリケーションは、ライブタイルが必要なアプリケーションである可能性があります。バッジのみで更新情報を伝えられる場合はライブタイルを使用する必要はありませんが、情報の更新頻度が高くユーザーがひとつひとつの通知を確認する可能性よりも、一定の間隔の複数の通知を確認する可能性が高いような場合などは、MSDNのタイルとバッジのガイドラインに則って、ライブタイルの使用を検討します。 ◆ライブ・タイルのアンチパターン ×コンテンツ提供が目的でない機能提供中心のアプリ（電卓など） ×最新の状態以外の通知が無いアプリ ×広告やスパムを通知する ×ブランド名やロゴをアニメーションのアイテムのひとつに指定する ライブ・タイルは、複数の通知を連続して表示します。たとえば、ユーザーがYoutubeの複数のチャンネルの更新情報に関心がある場合は、それぞれのチャンネルの更新情報を連続して表示します。このケースで、特定のチャンネルを別途スタートメニューに表示したい場合はセカンダリ・タイルを使います。前述のタイルとバッジのライフサイクル設計編での設計がしっかりなされている場合、ライブ・タイルのサイズ設計は、セカンダリ・タイルのサイズ設計と同じになります。セカンダリ・タイルのガイドラインのサイズ設計をチェックしてください。 ◆ワイドまたは大サイズのタイルやロゴを使う場合の目安 ✔通知を使う ✔要約通知のみではない ✔詳細情報をタイルに表示する ✔週に1回以上の通知が見込まれる ✔タイルの通知表示が複数ある ✔タイルに一覧や大きな画像を表示 ✔タイルの既定イメージとしてロゴを使用する セカンダリ・タイル、ライブ・タイル、バッジの使用やサイズの検討が終わったらサイズを指定して実装していきます。ここでは、ユーザーがセカンダリタイルを設定する際に、複数のサイズ選択を提示するシナリオの実装例を記載します。必要でないサイズは省略してください。アプリケーションの具体例は後述しますが、まずはセカンダリ・タイルの実装の手順を解説します。この中で既定のタイルの設定やロゴの画像の準備なども行います。 ライブ・タイル、バッジはMicrosoft Azure Notification Hubsを経由して更新しますので、タイルとバッジのライフサイクル実装（Azure）編にて解説します。 ◆セカンダリ・タイルの実装の手順 1.コンテンツがピン止めされているかどうかを判別するプロパティを用意する → アプリバー操作を実装 2.システムグリフ（57665/57750）を使う※1 → AppBarButton Icon=&#8221;Pin/UnPin&#8221;を操作する 3.コンテンツは静的に決定づけられている※2 → ×次のコンテンツ〇特定アーティストの情報画面 ※1：Windows.UI.Xaml.Controls.Symbol列挙型のEnumeration値※2：親アプリとの対話によって決定づけられるコンテンツであってはいけない ここでは、音楽を再生するアプリ内である特定のアーティストのYoutubeチャンネルなどのアーティストの情報画面のピン止め機能をアプリバーに設置する例を解説します。このアプリ例は、セカンダリ・タイルを利用する際の指針となる「異なるコンテンツ・スコープのコンテンツ提供・更新をウリにしている」を満たすように「アーティストごとの情報画面」というコンテンツ・スコープや「ユーザーのプレイリストの曲を再生する」というコンテンツ・スコープを持つアプリケーションを想定しています。 ピン止めをする画面は、&#8221;特定のアーティスト&#8221;の情報を表示するという「静的に決定づけられているコンテンツ」を提供することに注意が必要です。セカンダリ・タイルのアンチパターン「親アプリとの対話によって決定づけられるコンテンツ」とは、この例では「情報画面がアプリケーションの何かの属性によって対象のアーティストが変わってしまうこと」です（ユーザーのプレイリストの3番目のアーティストの情報画面をピン止めするなど）。 画面をピン止めをする操作は、下部のアプリケーションバーを表示し、ピン止めボタンをクリックするという操作が一般的です。セカンダリ・タイルはユーザーの操作によってのみ作成できます。この画面のアプリケーションバーに[ピン止め]や[ピン止めを外す]ボタンを設置します。この機能をシステムグリフによってアプリケーションバーに設置する例は以下の通りです。 &#60;Page.BottomAppBar&#62; &#60;CommandBar&#62; &#60;AppBarButton x:Name="PinUnPinButton" Icon="{Binding PinUnPinButtonIcon}" Label="{Binding PinUnPinButtonLabel}" Click="PinUnPinButton_Click" /&#62; &#60;CommandBar.SecondaryCommands&#62; 　　　　　　　 ... &#60;/CommandBar.SecondaryCommands&#62; &#60;/CommandBar&#62; &#60;/Page.BottomAppBar&#62; これがクリックされたときに実行する処理は [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin:0px 0px 0px 0px;"><span style="font-weight:bold;"><a href="http://www.processtune.com/blog/?p=1116" target="_new" rel="noopener">タイルとバッジのライフサイクル設計編</a></span>での設計に従って、アプリケーションにセカンダリ・タイルやバッジが必要と判断された場合は、それらのガイドラインに則って「ロゴとアプリケーション名のタイルへの配置」を実装していきます。バッジの実装については<span style="font-weight:bold;"><a href="http://www.processtune.com/blog/?p=1553" target="_new" rel="noopener">タイルとバッジのライフサイクル運用（タグの管理）編</a></span>で解説しています。</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;text-align:right;"><a href="http://1drv.ms/1J65QFh">サンプル・ソリューション</a></p>
+<p style="margin:10px 0px 0px 0px;Font-weight:bold;Font-size:14px;">・タイルとバッジのガイドライン</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">バッジが必要なアプリケーションは、ライブタイルが必要なアプリケーションである可能性があります。バッジのみで更新情報を伝えられる場合はライブタイルを使用する必要はありませんが、情報の更新頻度が高くユーザーがひとつひとつの通知を確認する可能性よりも、一定の間隔の複数の通知を確認する可能性が高いような場合などは、MSDNの<span style="font-weight:bold;"><a href="https://msdn.microsoft.com/ja-jp/library/windows/apps/hh465403.aspx" target="_new" rel="noopener">タイルとバッジのガイドライン</a></span>に則って、ライブタイルの使用を検討します。</p>
+<p></p>
+<p style="margin:0px 0px 0px 5px;Font-weight:bold;Font-size:10px;">◆ライブ・タイルのアンチパターン</p>
+<table>
+<tr>
+<td>×コンテンツ提供が目的でない機能提供中心のアプリ（電卓など）</td>
+</tr>
+<tr>
+<td>×最新の状態以外の通知が無いアプリ</td>
+</tr>
+<tr>
+<td>×広告やスパムを通知する</td>
+</tr>
+<tr>
+<td>×ブランド名やロゴをアニメーションのアイテムのひとつに指定する</td>
+</tr>
+</table>
+<p></p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">ライブ・タイルは、複数の通知を連続して表示します。たとえば、ユーザーがYoutubeの複数のチャンネルの更新情報に関心がある場合は、それぞれのチャンネルの更新情報を連続して表示します。このケースで、特定のチャンネルを別途スタートメニューに表示したい場合はセカンダリ・タイルを使います。前述の<span style="font-weight:bold;"><a href="http://www.processtune.com/blog/?p=1116" target="_new" rel="noopener">タイルとバッジのライフサイクル設計編</a></span>での設計がしっかりなされている場合、ライブ・タイルのサイズ設計は、セカンダリ・タイルのサイズ設計と同じになります。<span style="font-weight:bold;"><a href="http://msdn.microsoft.com/ja-jp/library/windows/apps/hh465398.aspx" target="_new" rel="noopener">セカンダリ・タイルのガイドライン</a></span>のサイズ設計をチェックしてください。</p>
+<p></p>
+<p style="margin:0px 0px 0px 5px;Font-weight:bold;Font-size:10px;">◆ワイドまたは大サイズのタイルやロゴを使う場合の目安</p>
+<table>
+<tr>
+<td><img src="https://s.w.org/images/core/emoji/16.0.1/72x72/2714.png" alt="✔" class="wp-smiley" style="height: 1em; max-height: 1em;" />通知を使う</td>
+<td><img src="https://s.w.org/images/core/emoji/16.0.1/72x72/2714.png" alt="✔" class="wp-smiley" style="height: 1em; max-height: 1em;" />要約通知のみではない</td>
+<td><img src="https://s.w.org/images/core/emoji/16.0.1/72x72/2714.png" alt="✔" class="wp-smiley" style="height: 1em; max-height: 1em;" />詳細情報をタイルに表示する</td>
+</tr>
+<tr>
+<td colspan="2"><img src="https://s.w.org/images/core/emoji/16.0.1/72x72/2714.png" alt="✔" class="wp-smiley" style="height: 1em; max-height: 1em;" />週に1回以上の通知が見込まれる</td>
+<td><img src="https://s.w.org/images/core/emoji/16.0.1/72x72/2714.png" alt="✔" class="wp-smiley" style="height: 1em; max-height: 1em;" />タイルの通知表示が複数ある</td>
+</tr>
+<tr>
+<td colspan="2"><img src="https://s.w.org/images/core/emoji/16.0.1/72x72/2714.png" alt="✔" class="wp-smiley" style="height: 1em; max-height: 1em;" />タイルに一覧や大きな画像を表示</td>
+<td><img src="https://s.w.org/images/core/emoji/16.0.1/72x72/2714.png" alt="✔" class="wp-smiley" style="height: 1em; max-height: 1em;" />タイルの既定イメージとしてロゴを使用する</td>
+</tr>
+</table>
+<p></p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">セカンダリ・タイル、ライブ・タイル、バッジの使用やサイズの検討が終わったらサイズを指定して実装していきます。ここでは、ユーザーがセカンダリタイルを設定する際に、複数のサイズ選択を提示するシナリオの実装例を記載します。必要でないサイズは省略してください。アプリケーションの具体例は後述しますが、まずはセカンダリ・タイルの実装の手順を解説します。この中で既定のタイルの設定やロゴの画像の準備なども行います。<br />
+ライブ・タイル、バッジはMicrosoft Azure Notification Hubsを経由して更新しますので、<span style="font-weight:bold;"><a href="http://msdn.microsoft.com/ja-jp/library/windows/apps/hh465398.aspx" target="_new" rel="noopener">タイルとバッジのライフサイクル実装（Azure）編</a></span>にて解説します。</p>
+<p></p>
+<p style="margin:0px 0px 0px 5px;Font-weight:bold;Font-size:10px;">◆セカンダリ・タイルの実装の手順</p>
+<table>
+<tr>
+<td>1.コンテンツがピン止めされているかどうかを判別するプロパティを用意する</td>
+<td>→</td>
+<td>アプリバー操作を実装</td>
+</tr>
+<tr>
+<td>2.システムグリフ（57665/57750）を使う<substring>※1</substring></td>
+<td>→</td>
+<td>AppBarButton Icon=&#8221;Pin/UnPin&#8221;を操作する</td>
+</tr>
+<tr>
+<td>3.コンテンツは静的に決定づけられている<substring>※2</substring></td>
+<td>→</td>
+<td>×次のコンテンツ<br />〇特定アーティストの情報画面</td>
+</tr>
+</table>
+<p style="margin:0px 0px 0px 5px;Font-weight:bold;Font-size:10px;">※1：Windows.UI.Xaml.Controls.Symbol列挙型のEnumeration値<br />※2：親アプリとの対話によって決定づけられるコンテンツであってはいけない</p>
+<p></p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">ここでは、音楽を再生するアプリ内である特定のアーティストのYoutubeチャンネルなどのアーティストの情報画面のピン止め機能をアプリバーに設置する例を解説します。このアプリ例は、セカンダリ・タイルを利用する際の指針となる「異なるコンテンツ・スコープのコンテンツ提供・更新をウリにしている」を満たすように「アーティストごとの情報画面」というコンテンツ・スコープや「ユーザーのプレイリストの曲を再生する」というコンテンツ・スコープを持つアプリケーションを想定しています。</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">ピン止めをする画面は、&#8221;特定のアーティスト&#8221;の情報を表示するという「静的に決定づけられているコンテンツ」を提供することに注意が必要です。セカンダリ・タイルのアンチパターン「親アプリとの対話によって決定づけられるコンテンツ」とは、この例では「情報画面がアプリケーションの何かの属性によって対象のアーティストが変わってしまうこと」です（ユーザーのプレイリストの3番目のアーティストの情報画面をピン止めするなど）。</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">画面をピン止めをする操作は、下部のアプリケーションバーを表示し、ピン止めボタンをクリックするという操作が一般的です。セカンダリ・タイルはユーザーの操作によってのみ作成できます。この画面のアプリケーションバーに[ピン止め]や[ピン止めを外す]ボタンを設置します。この機能をシステムグリフによってアプリケーションバーに設置する例は以下の通りです。</p>
+<pre style="background-color:#cccccc;border:1px solid #000000">
+    &lt;Page.BottomAppBar&gt;
+        &lt;CommandBar&gt;
+            &lt;AppBarButton x:Name="PinUnPinButton" Icon="{Binding PinUnPinButtonIcon}"
+                Label="{Binding PinUnPinButtonLabel}" Click="PinUnPinButton_Click" /&gt;
+            &lt;CommandBar.SecondaryCommands&gt;
+　　　　　　　   ...
+            &lt;/CommandBar.SecondaryCommands&gt;
+        &lt;/CommandBar&gt;
+    &lt;/Page.BottomAppBar&gt;
+</pre>
+<p><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2015/04/LinkingSongsAppBar.png" alt="" style="width:600px;text-align:center;margin-left:10px;"/></p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">これがクリックされたときに実行する処理は</p>
+<p style="margin:0px 0px 0px 10px;text-indent:1em;">1.アイコンとラベルをPinからUnPinに変更する</p>
+<p style="margin:0px 0px 0px 10px;text-indent:1em;">2.スタート画面にPin止めする</p>
+<p style="margin:0px 0px 0px 10px;text-indent:1em;">3.Pin止めを外す場合は、「1.」「2.」の逆を行う</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">となります。「1.」はView Modelにバインディングされている値として実装します。またテキストはリソースから取得するようにしておきます。View Modelの初期処理では</p>
+<p style="margin:0px 0px 0px 10px;text-indent:1em;">1.セカンダリ・タイルを表すApp Singletonを使って、スタート画面にPin止めされているかどうか判別する</p>
+<p style="margin:0px 0px 0px 10px;text-indent:1em;">2.アイコンとラベルの状態をPinまたはUnPinに変更する</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">という処理で、以下のようになります。</p>
+<pre style="background-color:#cccccc;border:1px solid #000000">
+    //Code behind
+    public const string TileID = "MainPageTile";
+    SecondaryTile _secondaryTile { get; set; }
+    SecondaryTile secondaryTile
+    {
+        get
+        {
+            if (_secondaryTile == null)
+            {
+                //セカンダリ・タイルを生成
+            }
+            return _secondaryTile;
+        }
+    }
+    public MainPage()
+    {
+        this.InitializeComponent();
+        this.DataContext = new MainPageVM();
+            if (!SecondaryTile.Exists(TileID))
+            {
+                (DataContext as MainPageVM).SetPinUnPinButtonState(Symbol.Pin);
+            }
+            else
+            {
+                (DataContext as MainPageVM).SetPinUnPinButtonState(Symbol.UnPin);
+            }
+    }
+    //View model (MainPageVM)
+    public string PinUnPinButtonLabel { get; set; }
+    public IconElement PinUnPinButtonIcon { get; set; }
+    public void SetPinUnPinButtonState(Symbol state)
+    {
+        PinUnPinButtonIcon = state == Symbol.Pin ?
+            new SymbolIcon(Symbol.Pin) : new SymbolIcon(Symbol.UnPin);
+        PinUnPinButtonLabel
+            = ResourceUtilities.GetResourceString(
+                    Enum.GetName(typeof(Symbol), state) + "ButtonLabel");
+        RaisePropertyChanged(string.Empty);
+    }
+    //ResourceUtilities
+    public class ResourceUtilities
+    {
+        private static ResourceLoader resourceLoader
+            = ResourceLoader.GetForCurrentView("Resources");
+        public static string GetResourceString(string key)
+        {
+            return resourceLoader.GetString(key);
+        }
+    }
+</pre>
+<p><span style="margin:0px 0px 0px 10px;Font-weight:bold;Font-size:10px;">※IconElement、SymbolIconはWindows.UI.Xaml.Controls</span><br />
+<span style="margin:0px 0px 0px 10px;Font-weight:bold;Font-size:10px;">※SecondaryTileはWindows.UI.StartScreen</span><br />
+<span style="margin:0px 0px 0px 10px;Font-weight:bold;Font-size:10px;">※SymbolはWindows.UI.Xaml.Controls.Symbol</span><br />
+<span style="margin:0px 0px 0px 10px;Font-weight:bold;Font-size:10px;">※ResourceLoaderはWindows.ApplicationModel.Resources</span><br />
+</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">この例では、MainPageのTileIDが存在しているか？を確認しています。このように各画面（シーン）のIDを使ってセカンダリ・タイルを管理しますので、複数のコンテンツを提供するアーティストの情報画面のようなXAMLでピン止めを行う場合は、この例のようなXAML固有の名前（&#8221;MainPageTile&#8221;）ではなく、アーティストの名前などのコンテンツ名にします。</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">ボタンのタップ時のPin/UnPinの判別は、アプリケーションバーに表示しているアイコンをView Modelのプロパティで取得し、そのアイコンの種類によって「ピン止めする」処理を行うか、または「ピン止めを外す」処理を行うようにしています。セカンダリ・タイルのVisualElementsを設定することで、ボタンのタップ時にセカンダリ・タイルの候補を選べるフライアウトをボタンの上部に表示することができます。Code behindへのユースケースのシナリオ実装とView Modelへのビジネスモデルの実装を混同しないようにしてください。</p>
+<pre style="background-color:#cccccc;border:1px solid #000000">
+    SecondaryTile secondaryTile
+    {
+        get
+        {
+            if (_secondaryTile == null)
+            {
+                Uri square150x150Logo = new Uri("ms-appx:///Assets/Logo.png");
+                Uri wide310x150Logo = new Uri("ms-appx:///Assets/Wide310x150Logo.png");
+                _secondaryTile = new SecondaryTile(
+                    TileID, DateTime.Now.ToLocalTime().ToString(), TileID
+                    , square150x150Logo, TileSize.Wide310x150);
+                _secondaryTile.VisualElements.Square150x150Logo = square150x150Logo;
+                _secondaryTile.VisualElements.Wide310x150Logo = wide310x150Logo;
+                _secondaryTile.VisualElements.BackgroundColor = Colors.White;
+                _secondaryTile.VisualElements.ForegroundText = ForegroundText.Dark;
+                _secondaryTile.VisualElements.ShowNameOnSquare150x150Logo = true;
+                _secondaryTile.VisualElements.ShowNameOnWide310x150Logo = true;
+            }
+            return _secondaryTile;
+        }
+    }
+    private void PinUnPinButton_Click(object sender, RoutedEventArgs e)
+    {
+        SetPin(sender).GetAwaiter();
+    }
+    private async Task SetPin(object sender)
+    {
+        var symbol
+            = ((DataContext as MainPageVM).PinUnPinButtonIcon as SymbolIcon).Symbol;
+        if (symbol == Symbol.Pin)
+        {
+            bool isPinned = await secondaryTile.RequestCreateAsync();
+            if (isPinned)
+            {
+                (this.DataContext as MainPageVM).SetPinUnPinButtonState(Symbol.Pin);
+            }
+        }
+        else
+        {
+            bool unPinned = await secondaryTile.RequestDeleteAsync();
+            if (unPinned)
+            {
+                (this.DataContext as MainPageVM).SetPinUnPinButtonState(Symbol.UnPin);
+            }
+        }
+    }
+</pre>
+<p><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2015/04/LinkingSongsSecondalyTile.png" alt="" style="width:600px;text-align:center;margin-left:10px;"/></p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">ロゴとアプリケーション名を配置する際は、ロゴにアプリケーション名を入れるかどうかを計画してください。この例のようにロゴにアプリケーション名が入っている場合、MSDNの<span style="font-weight:bold;"><a href="https://msdn.microsoft.com/ja-jp/library/windows/apps/hh465403.aspx" target="_new" rel="noopener">タイルとバッジのガイドライン</a></span>に則って、ShowNameOnWide310x150Logoをtrueに設定したら、「ピン止めした日時を表示する」などの変更が必要です（または、falseに設定する）。</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">また、これらはすべてCode behindで定義されていることが重要です。特にユニバーサル・アプリでは、このようなプラットフォームの都合によるロジック（システム・ロジック）をCode behindに定義し、ユースケースのシナリオを完結させます。そのようにすることで、ビジネスを解決するロジックをSharedのView Modelに分離することが可能です。ユニバーサル・アプリでなくとも、MVVMデザイン・パターンにおいてはView Modelにプラットフォームのシステム・ロジックを混在させることで、MVCにおけるFat Controllerと同じような保守性の低下を招きます。</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2014/12/05/%e3%82%bf%e3%82%a4%e3%83%ab%e3%81%a8%e3%83%90%e3%83%83%e3%82%b8%e3%81%ae%e3%83%a9%e3%82%a4%e3%83%95%e3%82%b5%e3%82%a4%e3%82%af%e3%83%ab%e5%ae%9f%e8%a3%85%ef%bc%88%e3%82%af%e3%83%a9%e3%82%a4%e3%82%a2/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

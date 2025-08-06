@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>JavaScript &#8211; Processtune Blog</title>
+	<atom:link href="https://blog.processtune.com/category/asp-net-core/javascript/feed/" rel="self" type="application/rss+xml" />
+	<link>https://blog.processtune.com/</link>
+	<description>Articles offered from Microsoft MVP</description>
+	<lastBuildDate>Tue, 28 Mar 2023 02:29:03 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.8.2</generator>
+
+<image>
+	<url>/wp-content/uploads/2023/03/cropped-Presentation-32x32.png</url>
+	<title>JavaScript &#8211; Processtune Blog</title>
+	<link>https://blog.processtune.com/</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>JavaScript colors SVG images that are acquired by Blazor WebAssembly</title>
+		<link>https://blog.processtune.com/2021/11/01/javascript-colors-svg-images-that-are-acquired-by-blazor-webassembly/</link>
+					<comments>https://blog.processtune.com/2021/11/01/javascript-colors-svg-images-that-are-acquired-by-blazor-webassembly/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Mon, 01 Nov 2021 08:21:12 +0000</pubDate>
+				<category><![CDATA[ASP.NET Core]]></category>
+		<category><![CDATA[Blazor]]></category>
+		<category><![CDATA[JavaScript]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Visual Studio Code]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=6189</guid>
+
+					<description><![CDATA[This article is continuous my previous article [Blazor WASM aquires SVG images that will be colored by JavaScript later]. Modify the sample project of previous article and add a feature that user can coloring SVG file select from a list. Interoperability of Blazor WASM and JavaScript is described in the previous article, so this article [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin: 0px 0px 0px 0px; color: #000044; font-size: 0.9rem;">This article is continuous my previous article [<a style="font-weight: bold;" href="https://blog.processtune.com/?p=6162" target="_new" rel="noopener">Blazor WASM aquires SVG images that will be colored by JavaScript later</a>]. Modify <a style="font-weight: bold;" href="https://github.com/TetsuroTakao/SVGIconColoring_en_1" target="_new" rel="noopener">the sample project of previous article</a> and add a feature that user can coloring SVG file select from a list.<br />
+<a style="font-weight: bold;" href="https://docs.microsoft.com/en-us/aspnet/core/blazor/javascript-interoperability/?view=aspnetcore-6.0?WT.mc_id=DT-MVP-4029060" target="_new" rel="noopener">Interoperability</a> of Blazor WASM and JavaScript is described in <a style="font-weight: bold;" href="https://blog.processtune.com/?p=6162" target="_new" rel="noopener">the previous article</a>, so this article only describes how to modify SVG file with JavaScript, although it&#8217;s important that Blazor WASM can reuse JavaScript ecosystem.<br />
+It is good that a feature that JavaScript creates not well will create using Blazor. And use JavaScript to control shadow DOM if it does not need send state to service, for exsample simulation or tempolary calculate that is before final decision of user.</p>
+<p style="margin: 10px 0px 0px 5px; text-indent: 1em; text-align: right; font-weight: bold;">&gt;&gt;<a style="font-weight: bold;" href="https://github.com/TetsuroTakao/QRCodeCreation" target="_new" rel="noopener">Sample project of the previous article</a></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Display user selected image</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">In <a style="font-weight: bold;" href="https://blog.processtune.com/?p=6162" target="_new" rel="noopener">the previous article</a>, Blazor creates HTML content in the [Pages/index.razor] file, this content lists SVG files that are acqired from <a style="font-weight: bold;" href="http://www.onlinewebfonts.com/icon" target="_new" rel="noopener">free icon web site</a>. And already are defined the [selectImg] JavaScript function in <a style="font-weight: bold;" href="https://blog.processtune.com/?p=6162" target="_new" rel="noopener">the previous article</a>. So create the [selectImg] JavaScript function and add to the [wwwroot/index.html] file. The feature clones selected SVG image and put into cloned image into a playgrounds for simulation that a user may color selected SVG image to prefered color. Then add several controls for coloring to the playgrounds same as clone of selected SVG image.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px;">[In the previous article, Blazor create HTML content in the [Pages/index.razor] file as below]
+        &lt;div style="display:inline-block;"&gt;
+            &lt;img id="@svg.URL" src='@svg.imgSrc' style="width:100px;" onclick="selectImg(this)"&gt;
+        &lt;/div&gt;
+
+[So, Add below code to the [Pages/Index.razor] file, and ...]
+&lt;div id="selectedImage" style="width:100%;text-align:center;border:4px dotted #0000ff;border-radius:10px; margin-top:2rem;"&gt;&lt;/div&gt;
+
+[this function add to the [wwwroot/index.html] file. So the function runs when the SVG file is clicked then it recieves IMG tag DOM object.]
+        function selectImg(img){
+            var placeholder = document.getElementById("selectedImage");
+            while(placeholder.children.length &gt; 0){
+                placeholder.removeChild(placeholder.firstChild);
+            }
+            var container = document.createElement("div");
+            container.style.display = "inline-block";
+            var ctl = document.createElement("div");
+            var paintbrush = 128396;
+            ctl.innerHTML = `&amp;#${paintbrush};`;
+            container.appendChild(ctl.cloneNode(true));
+            container.lastChild.style="color:#ff0000;font-size:5rem;cursor:pointer;";
+            container.lastChild.setAttribute('onclick','setColor(this);');
+            container.appendChild(ctl.cloneNode(true));
+            container.lastChild.style="color:#00ff00;font-size:5rem;cursor:pointer;";
+            container.lastChild.setAttribute('onclick','setColor(this);');
+            container.appendChild(ctl.cloneNode(true));
+            container.lastChild.style="color:#0000ff;font-size:5rem;cursor:pointer;";
+            container.lastChild.setAttribute('onclick','setColor(this);');
+            placeholder.appendChild(container);
+            placeholder.appendChild(img.cloneNode(true));
+            placeholder.lastChild.id="currentImg";
+            placeholder.lastChild.style="width:200px;vertical-align:top;margin-top:3rem;margin-left:3rem;";
+        }
+
+[describe]
+HTML div tag that has id attribute [selectedImage] is the place holder that is an operating place for coloring selected SVG file, so if something in it,
+remove to have nothing.
+Create a container that is a playgrounds for coloring selected SVG file. The container includes three coloring selectors and selected SVG image.
+The coloring selectors are using HTML symbol defined the Template literals, and are equipped onclick handler (describes later). The selected image needs
+id attribute for colorting because it is cloned. These elements are defined several styles because they are dynamic injected as shadow DOM.
+</pre>
+<p style="margin: 10px 0px 0px 5px; text-indent: 1em; text-align: right; font-weight: bold;">&gt;&gt;<a style="font-weight: bold;" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals" target="_new" rel="noopener">Template literals</a></p>
+<p style="display: inline-block; margin-bottom: 10px; text-align: center; width: 100%;"><img decoding="async" style="width: 900px;" src="/wp-content/uploads/2022/03/ContainerOfSelectedSVG.png" alt=""></p>
+<p style="display: inline-block; margin-bottom: 10px; text-align: center; width: 100%;"><img decoding="async" style="width: 900px;" src="/wp-content/uploads/2022/03/SVGImageSelectFeatureImplement.png" alt=""></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Change color of selected image by user operation</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">A user can select SVG images of the list, so change the cursol to a pointer.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px;">            &lt;img id="@svg.URL" src='@svg.imgSrc' style="width:100px;" onclick="selectImg(this)"&gt;
+to
+            &lt;img id="@svg.URL" src='@svg.imgSrc' style="width:100px;cursor:pointer;" onclick="selectImg(this)"&gt;
+</pre>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">The [setColor] JavaScript function accept argument coloring control (brush) as DOM object (the paintbrush). It is called when a user select any one of these paintbrushes.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">The style property of the control that accepted as an argument has a color property, so change the color of the clone of selected SVG image using it.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">On the other hand, the src attribute of the clone of selected SVG image has meta information and acctual SVG xml, thus to modify SVG xml of the clone of selected SVG image, remove meta information from value of the src attribute of selected SVG image.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">The [setColor] JavaScript function can find target DOM, because the clone of selected SVG image has the value [currentImg] of the [id] attribute that already defined when create it. Change SVG xml of the clone of selected SVG image to new color using <a style="font-weight: bold;" href="https://developer.mozilla.org/en-US/docs/Web/API/DOMParser" target="_new" rel="noopener">the DOMParser</a>. At last set the src attribute of the the clone of selected SVG image to new colored SVG xml with meta information.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px;">        function setColor(brush){
+            var dataType = "data:image/svg+xml;utf8,";
+            var imgXML = document.getElementById("currentImg").getAttribute("src").replace(dataType,"");
+            var dom_parser = new DOMParser();
+            var document_obj = dom_parser.parseFromString(imgXML, "text/xml");
+            document_obj.rootElement.getElementsByTagName("g")[0].setAttribute('style','fill:' + brush.style.color);
+            document.getElementById("currentImg").setAttribute("src",dataType + document_obj.rootElement.outerHTML);
+        }
+</pre>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">The following figures are scenes of selecting image then selecting brush.</p>
+<p style="display: inline-block; margin-bottom: 10px; text-align: center; width: 100%;"><img decoding="async" style="width: 900px;" src="/wp-content/uploads/2022/03/SVGImageColoringFeatureImplement.png" alt=""></p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">The following figures are scenes of selecting image then selecting brush.</p>
+<p style="margin: 10px 0px 0px 5px; text-indent: 1em; text-align: right; font-weight: bold;">&gt;&gt;<a style="font-weight: bold;" href="https://github.com/TetsuroTakao/SVGIconColoring_en_2" target="_new" rel="noopener">Sample project of this article</a></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2021/11/01/javascript-colors-svg-images-that-are-acquired-by-blazor-webassembly/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Blazor WASM aquires SVG images that will be colored by JavaScript later</title>
+		<link>https://blog.processtune.com/2021/10/01/blazor-wasm-aquires-svg-images-that-will-be-colored-by-javascript-later/</link>
+					<comments>https://blog.processtune.com/2021/10/01/blazor-wasm-aquires-svg-images-that-will-be-colored-by-javascript-later/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Fri, 01 Oct 2021 09:33:03 +0000</pubDate>
+				<category><![CDATA[.NET Core]]></category>
+		<category><![CDATA[ASP.NET Core]]></category>
+		<category><![CDATA[JavaScript]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Visual Studio]]></category>
+		<category><![CDATA[Visual Studio Code]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=6162</guid>
+
+					<description><![CDATA[Blazor WebAssembly provides JavaScript glue code for WebAssembly that is common web architecture. Blazor aims to provide almost of all features of .NET Core to modern web browser, So JavaScript glue code of Blazor webassembly can interoperate with JavaScript ecosystem that is used in exsisting usage. This article describes the Blazor provides WebAssembly and Blazor [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin: 0px 0px 0px 0px; color: #000044; font-size: 0.9rem;">Blazor WebAssembly provides JavaScript glue code for WebAssembly that is <a style="font-weight: bold;" href="https://caniuse.com/wasm" target="_new" rel="noopener">common web architecture</a>.<br />
+Blazor aims to provide almost of all features of .NET Core to modern web browser, So JavaScript glue code of Blazor webassembly can interoperate with JavaScript ecosystem that is used in exsisting usage.<br />
+This article describes the Blazor provides WebAssembly and Blazor WebAssembly calls JavaScript method, it is sample as leverage <a style="font-weight: bold;" href="https://docs.microsoft.com/en-us/aspnet/core/blazor/?view=aspnetcore-6.0?WT.mc_id=DT-MVP-4029060" target="_new" rel="noopener">the Razor syntax template</a> writing that provides high productivity, and reusing JavaScript ecosystem. As addition, the Blazor webassembly acquires some icons from external web app by browser of local.<br />
+In next article [<a style="font-weight: bold;" href="https://blog.processtune.com/?p=6189" target="_new" rel="noopener">JavaScript colors SVG images that are acquired by Blazor WebAssembly</a>], these icons rendered by the Razor template then JavaScript colors them.</p>
+<p style="margin: 10px 0px 0px 5px; text-indent: 1em; text-align: right; font-weight: bold;">&gt;&gt;<a style="font-weight: bold;" href="https://github.com/TetsuroTakao/SVGIconColoring_en_1" target="_new" rel="noopener">Blazor webassembly sample project of this article</a></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Create Blazor Webassembly project</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">.NET framework provides many templates variety for creation of apps, there are several kind of web apps, native apps and so on. it is also provided for Blazor WebAssembly and it has host type and stand alone type (as default).</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">The [dotnet new &#8211;list] command shows all of templates and the [dotnet new blazorwasm -h] shows parameters of Blazor WebAssembly. So put the command [dotnet new blazorwasm] create base files of Blazor WebAssembly project that is not hosted by Blazor server. Blazor server provides progressive web apps feature.</p>
+<p style="display: inline-block; margin-bottom: 10px; text-align: center; width: 100%;"><img decoding="async" style="width: 900px;" src="/wp-content/uploads/2022/03/dotnetNewList.png" alt="" /></p>
+<p style="display: inline-block; margin-bottom: 10px; text-align: center; width: 100%;"><img decoding="async" style="width: 900px;" src="/wp-content/uploads/2022/03/dotnetnewblazorwasmhost.png" alt="" /></p>
+<p style="display: inline-block; margin-bottom: 10px; text-align: center; width: 100%;"><img decoding="async" style="width: 900px;" src="/wp-content/uploads/2022/03/dotnetnewblazorwasm.png" alt="" /></p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">The directory of created project includes many files. There is the [Program.cs] file as application entrypoint, and the [App.razor] file as routing deefinition.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">HTTP request is tranfer from the [App.razor] file to the [Shared\MainLayout.razor] file then the [Shared\MainLayout.razor] makes output that combines the [Shared\NavMenu.razor] file with requested ([/] : as root) page of the [Pages] folder.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">The page files of the [Pages] folder has <a style="font-weight: bold;" href="https://docs.microsoft.com/en-us/aspnet/core/blazor/components/prerendering-and-integration?view=aspnetcore-6.0&amp;pivots=server#use-routable-components-in-a-razor-pages-app?WT.mc_id=DT-MVP-4029060" target="_new" rel="noopener">the [@page] directive</a>. It is routing mechanizm of Razor syntax.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px;">@page "/"
+
+&lt;PageTitle&gt;Index&lt;/PageTitle&gt;
+
+&lt;h1&gt;Hello, world!&lt;/h1&gt;
+
+Welcome to your new app.
+
+&lt;SurveyPrompt Title="How is Blazor working for you?" /&gt;
+</pre>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">At first as one fifths, put command [dotnet run] in the [Integrated terminal] (put the [ctrl] key + the [@] key for show the [Integrated terminal] : to confirm shortcut key on your keybord type, show shortcut key list using the [ctrl] key + the [k] key + the [s] key) . When the result output after compile, put the [ctrl] key + click the link (http://localhost:5078/ for below figure) to launch browser with display index page content.</p>
+<p style="display: inline-block; margin-bottom: 10px; text-align: center; width: 100%;"><img decoding="async" style="width: 450px;" src="/wp-content/uploads/2022/03/dotnetrun.png" alt="" /><img decoding="async" style="width: 450px;" src="/wp-content/uploads/2022/03/helloworld.png" alt="" /></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Acquiring SVG images from external web</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">As next : two fifths step, create temporaly contents as whole structure at the [Index.razor] file. Create some content in case of that some value is null ([&lt;p&gt;&lt;em&gt;Loading&#8230;&lt;/em&gt;&lt;/p&gt;] for below figure), and create some content when some value is not null.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">Prepare the [SVGIcon] object for SVG image. Use the [MarkupString] type to a property that is used for output string for HTML. The [image] tag of HTML has the [src] attribute that is able to accept inline SVG.</p>
+<p style="display: inline-block; margin-bottom: 10px; text-align: center; width: 100%;"><img decoding="async" style="width: 450px;" src="/wp-content/uploads/2022/03/structuresource.png" alt="" /><img decoding="async" style="width: 450px;" src="/wp-content/uploads/2022/03/structureview.png" alt="" /></p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">Three fifths step, acquire one svg file from external web site [Icon Fonts], and display it. Modify only in the [@code] statements.</p>
+<p style="display: inline-block; margin-bottom: 10px; text-align: center; width: 100%;"><img decoding="async" style="width: 450px;" src="/wp-content/uploads/2022/03/OneSVGSource.png" alt="" /><img decoding="async" style="width: 450px;" src="/wp-content/uploads/2022/03/OneSVGView.png" alt="" /></p>
+<div style="background-color: #cccccc; border: 1px solid #00000; padding: 10px 10px 0px 10px; margin-top: 20px;">
+<div style="margin: -20px 0px 0px 5px; text-indent: 1em; font-weight: bold; background-color: #444; border: 1px solid #ccc; color: #fff;"><img src="https://s.w.org/images/core/emoji/16.0.1/72x72/269c.png" alt="⚜" class="wp-smiley" style="height: 1em; max-height: 1em;" /> Code</div>
+<p><span style="font-weight: bold;">for HTML</span> (same as temporaly contents as whole structure above)</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px;">&lt;h1&gt;List of the [Icon Fonts]&lt;/h1&gt;
+&lt;div&gt;Icon made from &lt;a href="http://www.onlinewebfonts.com/icon"  target="new"&gt;Icon Fonts&lt;/a&gt; is licensed by CC BY 3.0&lt;/div&gt;
+@if (SVGs.URL == null)
+{
+    &lt;p&gt;&lt;em&gt;Loading...&lt;/em&gt;&lt;/p&gt;
+}
+else
+{
+    &lt;div style="display:inline-block;"&gt;
+        &lt;img id="@SVGs.URL" src='@SVGs.imgSrc' style="width:100px;" onclick="selectImg(this)"&gt;
+    &lt;/div&gt;
+}
+</pre>
+<p><span style="font-weight: bold;">for Code</span></p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px;">    private SVGIcon SVGs = new SVGIcon();
+    protected override async Task OnInitializedAsync()
+    {
+        HttpClient httpClient = new HttpClient();
+        Uri requestURL = new Uri("http://cdn.onlinewebfonts.com/svg/download_155117.svg");
+        var res = await httpClient.GetStringAsync(requestURL);
+        if (string.IsNullOrEmpty(res))
+        {
+            @* some code *@
+        }
+        else
+        {
+            var xml = new System.Xml.XmlDocument();
+            xml.LoadXml(res);
+            var content = "";
+            if(xml.LastChild != null){
+                content = xml.LastChild.OuterXml;
+            }
+            SVGs = new SVGIcon()
+            {
+                URL="http://cdn.onlinewebfonts.com/svg/download_155117.svg",
+                XML= new MarkupString(content)
+            };
+        }
+    }
+</pre>
+<p>[describe]<br />
+Use the [<span style="font-weight: bold;">OnInitializedAsync</span>] task to run code when HTML on loading.</p>
+</div>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">The step of four fifths, modify the [OnInitializedAsync] that is task to run code when HTML on loading. Change feature that acquires one SVG file to acquire ten SVG files as sampling. So change the [SVGs] variable from single object to the List objects.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px;">    private SVGIcon SVGs = new SVGIcon();
+
+    to
+
+    private List SVGs = new List();
+</pre>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">Since change the [SVGs] variable to the List objects, HTML part also change to render List objects.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px;">@if (SVGs.URL == null)
+{
+    &lt;p&gt;&lt;em&gt;Loading...&lt;/em&gt;&lt;/p&gt;
+}
+else
+{
+    &lt;div style="display:inline-block;"&gt;
+        &lt;img id="@SVGs.URL" src='@SVGs.imgSrc' style="width:100px;" onclick="selectImg(this)"&gt;
+    &lt;/div&gt;
+}
+
+    to
+
+@if (SVGs.FirstOrDefault() == null)
+{
+    &lt;p&gt;&lt;em&gt;Loading...&lt;/em&gt;&lt;/p&gt;
+}
+else
+{
+    @foreach (var svg in SVGs)
+    {
+        &lt;div style="display:inline-block;"&gt;
+            &lt;img id="@svg.URL" src='@svg.imgSrc' style="width:100px;" onclick="selectImg(this)"&gt;
+        &lt;/div&gt;
+    }
+}
+
+[describe]
+The [SVGs.FirstOrDefault()] statement is return null when the [SVGs] variable items count is zero, on otherhand the [SVGs.First()] statement
+return the [InvalidOperationException] type exception.
+If create exception handler that corresponds all exceptions, it is better use this [System.Linq.Enumerable.First Method].
+</pre>
+<p style="margin: 10px 0px 0px 5px; text-indent: 1em; text-align: right; font-weight: bold;">&gt;&gt;<a style="font-weight: bold;" href="https://docs.microsoft.com/en-us/dotnet/api/system.linq.enumerable.first?view=net-6.0?WT.mc_id=DT-MVP-4029060" target="_new" rel="noopener">System.Linq.Enumerable.First Method</a></p>
+<p style="display: inline-block; margin-bottom: 10px; text-align: center; width: 100%;"><img decoding="async" style="width: 450px;" src="/wp-content/uploads/2022/03/ListingSVGsCode.png" alt="" /><img decoding="async" style="width: 450px;" src="/wp-content/uploads/2022/03/ListingSVGsView.png" alt="" /></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Call JavaScript from Blazor WebAssembly</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">Five fifths step is modifing the [wwwroot/index.html] file because JavaScript has to define in HTML file. However, this contents is vavigated by the [Shared/MainLayout.razor] file and includes the [Pages/Index.razor] component. So add the [SignIn] part on the [Shared/MainLayout.razor] file as simple procedures of calling JavaScript from Blazor. The Blazor method [SignIn()] is called use injected razor syntax of HTML [A] tag (&lt;a href=&#8221;#&#8221; @onclick=&#8221;SignIn&#8221;&gt;@SignedText&lt;/a&gt;), then the Blazor method [SignIn()] calls the JavaSript method [SetSignInText] as implimentation of the [<a style="font-weight: bold;" href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.jsinterop.ijsruntime?view=aspnetcore-6.0?WT.mc_id=DT-MVP-4029060" target="_new" rel="noopener">IJSRuntime</a>] Interface.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">The below code is whole of the [Shared/MainLayout.razor] file.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px;">@inherits LayoutComponentBase
+@inject IJSRuntime JS
+
+&lt;div class="page"&gt;
+    &lt;div class="sidebar"&gt;
+        &lt;NavMenu /&gt;
+    &lt;/div&gt;
+
+    &lt;main&gt;
+        &lt;div class="top-row px-4"&gt;
+            &lt;a href="#" @onclick="SignIn"&gt;@SignedText&lt;/a&gt;
+            &lt;span&gt;　| &lt;/span&gt;
+            &lt;a href="https://docs.microsoft.com/aspnet/" target="_blank"&gt;About&lt;/a&gt;
+        &lt;/div&gt;
+
+        &lt;article class="content px-4"&gt;
+            @Body
+        &lt;/article&gt;
+    &lt;/main&gt;
+&lt;/div&gt;
+
+@code{
+    public MarkupString SignedText { get; set; } = (MarkupString)"&lt;span style='color:#ff0000'&gt;SignIn&lt;/span&gt;";
+    public async Task SignIn()
+    {
+        SignedText = new (await JS.InvokeAsync("SetSignInText"));
+    }
+}
+
+[describe]
+It's important that define the [@inject IJSRuntime JS] statement at head part of the [Shared/MainLayout.razor] file.
+As addition, implementation of the [IJSRuntime] interface is asyncronise, so the task define as async and await calling the [SetSignInText] JavaScript
+method. The [IJSRuntime] interface has also the [InvokeVoidAsync] method, thus if JavaSctipt returns some value, use the [InvokeAsync] method.
+These methods create an instance of ValueTask value type that is able to convert to Task reference type. So it is good that await a method returns value
+type, then construct new the MarkupString using it.
+</pre>
+<div style="background-color: #cccccc; border: 1px solid #00000; padding: 10px 10px 0px 10px; margin-top: 20px;">
+<div style="margin: -20px 0px 0px 5px; text-indent: 1em; font-weight: bold; background-color: #444; border: 1px solid #ccc; color: #fff;">ⓘ As additional information</div>
+<p>If the <a style="font-weight: bold;" href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.valuetask-1?view=net-6.0?WT.mc_id=DT-MVP-4029060" target="_new" rel="noopener">ValueTask</a> value type is awaited, the instanse of Task reference type is executed, it is onetime. This mechanism effects to decleasing number of instance allocating times.<br />
+A reference type needs explicit instancing, and await end of instancing, furthermore, await end of processing that throw value of the processing to Blazor object. Long time and external processting of reference type task as await ansyncronously needs instancing a struct that has multiple fields.</p>
+</div>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">The [SetSignInText] JavaScript has to defines as HTML, so it is good which on the [Shared/MainLayout.razor] file or on the [wwwroot/index.html] file (excludes the [Pages/Index.razor] file). If the reason is that it is share function for all pages, so define on the [Shared/MainLayout.razor] file. Or the reason is that want to bunch JavaScript functions at head of HTML file, define on the [Pages/Index.razor] file.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">In this article, JavaScript functions are defined on the [wwwroot/index.html] file.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px;">    &lt;script&gt;
+        window.SetSignInText = () =&gt;{
+            var res = prompt("Please put login name.");
+            if(res == null){
+                res="&lt;span style='color:#ff0000'&gt;SignIn&lt;/span&gt;";
+            }
+            return res;
+        }
+    &lt;/script&gt;
+
+[describe]
+Though this code sample is dummy code of JavaScript that it does not login really, it is able to confirm that Blazor calls JavaScript method real.
+And can confirm that Blazor can await JavaScript method and acquire string that JavaScript object take and transfer.
+</pre>
+<p style="display: inline-block; margin-bottom: 10px; text-align: center; width: 100%;"><img decoding="async" style="width: 450px;" src="/wp-content/uploads/2022/03/SigninCode.png" alt="" /><img decoding="async" style="width: 450px;" src="/wp-content/uploads/2022/03/SigninView.png" alt="" /></p>
+<div style="background-color: #cccccc; border: 1px solid #00000; padding: 10px 10px 0px 10px; margin-top: 20px;">
+<div style="margin: -20px 0px 0px 5px; text-indent: 1em; font-weight: bold; background-color: #444; border: 1px solid #ccc; color: #fff;">ⓘ As additional information</div>
+<p>If want to save the project until so far of this article to GitHub temporarily, create gitignore file use .NET template, and initialise git repository use the [Integrated terminal] of Visual Studio Code.<br />
+Put [dotnet new gitignore] command in the [Integrated terminal] to create gitignore file, and Put [git init] command to initialise git repository.</p>
+<p style="display: inline-block; margin-bottom: 10px; text-align: center; width: 100%;"><img decoding="async" style="width: 450px;" src="/wp-content/uploads/2022/03/dotnetgitignore.png" alt="" /></p>
+</div>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2021/10/01/blazor-wasm-aquires-svg-images-that-will-be-colored-by-javascript-later/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

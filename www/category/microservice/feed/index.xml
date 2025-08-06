@@ -1,0 +1,945 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Microservice &#8211; Processtune Blog</title>
+	<atom:link href="https://blog.processtune.com/category/microservice/feed/" rel="self" type="application/rss+xml" />
+	<link>https://blog.processtune.com/</link>
+	<description>Articles offered from Microsoft MVP</description>
+	<lastBuildDate>Tue, 28 Mar 2023 05:01:49 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.8.2</generator>
+
+<image>
+	<url>/wp-content/uploads/2023/03/cropped-Presentation-32x32.png</url>
+	<title>Microservice &#8211; Processtune Blog</title>
+	<link>https://blog.processtune.com/</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>Node + MongoDB container for Azure Functions</title>
+		<link>https://blog.processtune.com/2022/02/01/node-mongodb-container-for-azure-static-web-apps/</link>
+					<comments>https://blog.processtune.com/2022/02/01/node-mongodb-container-for-azure-static-web-apps/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Tue, 01 Feb 2022 11:33:12 +0000</pubDate>
+				<category><![CDATA[Alpine Linux]]></category>
+		<category><![CDATA[Azure Functions]]></category>
+		<category><![CDATA[Docker]]></category>
+		<category><![CDATA[Express]]></category>
+		<category><![CDATA[Microservice]]></category>
+		<category><![CDATA[MongoDB]]></category>
+		<category><![CDATA[Node]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Ubuntu]]></category>
+		<category><![CDATA[Visual Studio Code]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=6245</guid>
+
+					<description><![CDATA[The article [Nginx run on Windows Subsystem for Linux 2] described mechanism of reverse proxy for development environment. This sample server has not features of logging, service discovery, load balancing, encryption, observability, traceability, authentication &#38; authorization, and the circuit breaker pattern, if create service mesh endpoint that can provide these features, individual service delegates these [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin:0px 0px 0px 0px;color:#000044;font-size:0.9rem;font-family:" segoe="" ui";"="">The article [<a href="https://blog.processtune.com/?p=6177" target="_new" style="font-weight:bold;" rel="noopener">Nginx run on Windows Subsystem for Linux 2</a>] described mechanism of reverse proxy for development environment. This sample server has not features of logging, service discovery, load balancing, encryption, observability, traceability, authentication &amp; authorization, and the circuit breaker pattern, if create service mesh endpoint that can provide these features, individual service delegates these feature to the endpoint. This article describes mecanism of such service that only provides business logic.<br />
+Also the service this article discribes has persistence layer, its data storage type is deferent against other services provides. So this article helps you to get outline of <a href="https://docs.microsoft.com/en-us/azure/architecture/guide/technology-choices/data-store-overview?WT.mc_id=DT-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">polyglot persistence</a>.<br />
+The sample container of this article uses Node for application runtime, Express web app framework, and MongoDB as persistence layer.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/04/OverViewNode_mongoDBContainer.png" alt="" style="width:900px;"></p>
+<p style="margin:10px 0px 0px 5px;text-indent:1em;text-align:right;font-weight:bold;">&gt;&gt;<a href="https://github.com/TetsuroTakao/SVGFreeIconListingApp" target="_new" style="font-weight:bold;" rel="noopener">Sample project of this article that created with Node and Express</a></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・MongoDB Docker official image</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">First step of the sample project creation is same as the sample project of the article [<a href="https://blog.processtune.com/?p=6177" target="_new" style="font-weight:bold;" rel="noopener">Nginx run on Windows Subsystem for Linux 2</a>], download Docker official image then modify Alpine Linux, with some apps or liblary, framework and so on install to it.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">In this article, this sample container use MongoDB as persistence layer, so using MongoDB Docker official image. It is different procedure that using Nginx Docker official image as creation of HTTP listener and web contents response service. It are made from the Express libraly this time.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">It is easy way using the Docker Desktop than following steps that using the Windows Subsystem for Linux 2 to create a container, although reccomend using WSL 2 to create some container for understanding mechanism of inside of a container.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">If following prepare are not complete yet, refer the article [<a href="https://blog.processtune.com/?p=6177" target="_new" style="font-weight:bold;" rel="noopener">Nginx run on Windows Subsystem for Linux 2</a>] to prepare doing follow code such as making WSL 2 usable, set Ubuntu on WSL 2 or how to install Docker.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The command follows means that the port number [3000] is default port number of the Express framework, and the port number [27017] is default port number of the MongoDB. The directory path [/home/node] is application root (in the case of this example). The command [apt update &amp;&amp; apt upgrade -y] is make an installed package or app,  library and so on to be latest. Description of the Express framework is continues after figure.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">-- WSL 2
+$ docker pull mongo
+$ docker run -d -p 8082:3000 -p 27017:27017 --init --name svgfreeicondb mongo:latest
+$ docker exec -it svgfreeicondb /bin/bash
+--Into the container and install the curl, the Node, the Node Package Manager (npm)
+# apt install -y curl
+# curl -fsSL https://deb.nodesource.com/setup_17.x | bash
+# apt install -y nodejs
+# npm install -g npm
+# apt update &amp;&amp; upgrade -y
+# mkdir /home/node
+# chmod 777 /home/node
+# cd /home/node
+--Install the Express
+# apt update &amp;&amp; apt upgrade -y
+# npm init
+-- Type the [package name] or the [description] and so on after the [npm init] command here.
+# npm install –g express-generator
+# express
+# npm i --package-lock-only
+# npm audit fix --force
+# DEBUG=node:* npm start
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">For maintainance of node application, execute initialization of Node Package Manager using the command [npm init], so input [package name] or [description] and so on if it needs. And if use the [-g] option while install the Express framework, usable any directory path as application install target path. The command [express] is creation default web application to the current directory path. It is able to define web application type as arguments, it is described later. The command [npm i –package-lock-only] and [npm audit fix –force] is described at the article [].</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">To confirm running at web browser, use the command [DEBUG=node:* npm start] to run application.</p>
+<p style="display:inline-block;margin-bottom:0px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/04/RunExpress.png" alt="" style="width:900px;"></p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;"> * The image name [svgfreeicondb:v0.1] of the figure above means the image name [mongo:latest] of the command [docker run -d -p 8082:3000 -p 27017:27017
+   –init –name svgfreeicondb mongo:latest].
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Here is able to confirm the port number [8082] is transfer to the port number [3000] at web browser. In next step, confirm the port number [27017] exposes MongoDB default port. This port number is not exposed to outside of the service. The service of api communicates to the port number [27017] to aquire the state of this service self from persistence layer of specific this srevice.</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Access to the document of MongoDB</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">It is easy to development application that uses MongoDB with Visual Studio Code MongoDB Extention.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/04/MongoDBExtention.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">While browsing of contents provided from the port number [8082] is confirmed, Visual Studio Code MongoDB extention can connect to the MongoDB from the port number [27017].</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">There is showing MongoDB extention icon after install Visual Studio Code MongoDB extention form the Extentions. Select the MongoDB extention icon of the [Activity Bar] to launch Visual Studio Code MongoDB extention.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Type the address URL and port number after select Add MongoDB Connection, then MongoDB extention shows default databases of MongoDB Docker official image. The [Add Database&#8230;] icon is showed when mouse over the connected connection tree, same as it, the [Add Collection&#8230;] icon is showed when mouse over the database tree.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The MongoDB Playground is showed when select the [Add Collection&#8230;] icon to add new collection.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/04/MongoDBPlayground.png" alt="" style="width:900px;"></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Create persistence layer of the service using MongoDB Playground</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">This service are assuming to provide several icons that are aquired from free icons web site, there are two patterns use case that the case an identity calling this service already has specific icon because this service called before, and an identity does not have an icon. Return specific icon from data store (MongoDB) if it has icon, and return 10 icons acquire from free icons web site if it has not icon.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">So this service have to store only specific icon that is related an identity and the identity as key. The icon type is SVG image has properties, [Original URL], [SVG XML], [Releted Identity] and so on.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The icon for adding collection to the [local] of figure above is used to create the collection of the [local] database, the [Create New Playground] button of figure above is used to create the collection, the database or the connection settings, the MongoDB Playground is able to control all settings of MongoDB.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">A database schema may be saved as models of project for continuous integration. So about how to modify the Node-Express application of above on Windows, if use <a href="https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker" target="_new" style="font-weight:bold;" rel="noopener">Visual Studio Code Docker extension</a>, save mongodb file using Visual Studio Code on Windows. If not, the Node-Express application in the Docker container that was created from MongoDB Docker official image is able to download from GitHub as <a href="https://github.com/TetsuroTakao/SVGFreeIconListingApp" target="_new" style="font-weight:bold;" rel="noopener">sample project</a>. After it, save mongodb file to the project root.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">As additional way, this sample project was uploaded using <a href="https://cli.github.com/" target="_new" style="font-weight:bold;" rel="noopener">GitHub CLI</a> from inside of the container. The article [<a href="https://blog.processtune.com/?p=6177" target="_new" style="font-weight:bold;" rel="noopener">Nginx run on Windows Subsystem for Linux 2</a>] describes how to use <a href="https://cli.github.com/" target="_new" style="font-weight:bold;" rel="noopener">GitHub CLI</a>. Uploading the Node-Express application of above using <a href="https://cli.github.com/" target="_new" style="font-weight:bold;" rel="noopener">GitHub CLI</a> from inside of the container and sharing to GitHub for modifying on Windows side.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Using any ways, prepare of that the Node-Express application project is able to modify with Visual Studio Code on Windows. Create schema then save it at project root of the sample project.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/04/CreateNewPlayground.png" alt="" style="width:450px;"><img decoding="async" src="/wp-content/uploads/2022/04/DefineSchema.png" alt="" style="width:450px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Selection of the [Create New Playground] button creates sample database definition (figure left above). And defines database and collection same as follows figure (figure right above), then select the [MongoDB : Run All or Selection from Playground] button to create.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">const database = 'SVGFreeIconsDB';
+const collection = 'IDRelatedIcons';
+// The current database to use.
+use(database);
+// The prototype form to create a regular collection:
+db.createCollection(collection);
+// Query insert for creating default schema,
+// because a schema of document DB is dynamic type.
+db.collection.insertOne(
+    {
+        _id:0,
+        Releted_Identity:"0",
+        Original_URL:"0",
+        SVG_XML:"0",
+        Errors:[
+            {
+                Occurs:new Date("0000-00-00T00:00:00.000Z"),
+                Source:"sample",
+                Code:0,
+                Additional:"sample"
+            }
+        ]
+    }
+);
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Select [yes] button of showed dialog box after select the [MongoDB : Run All or Selection from Playground] button. Then confirm created schema with open the [SVGFreeIconsDB] tree.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/04/SavingDialogBox.png" alt="" style="width:450px;vertical-align:top;"><img decoding="async" src="/wp-content/uploads/2022/04/CreatedSchema.png" alt="" style="width:450px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Save the [SCGFreeIconsDB.mongodb] file at project root of the sample project.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/04/SaveDIalogMongoDBFile.png" alt="" style="width:450px;vertical-align:top;"><img decoding="async" src="/wp-content/uploads/2022/04/SaveMongoDBFile.png" alt="" style="width:450px;"></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Use persistence layer of the service</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">At first of modify application, confirm the Node-Express application project is runable on Windows. the Node-Express application project is defined as using the port number [80], or any port number if use the [port] argument. Type the [npm start] command on the Windows terminal, then launch the web browser and type [localhost] in the address box of the web browser.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/04/RunAsDefault.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Structure of routing is processed by order from above of the code that listened a request, so [/][/users][/freeIcons][/setIcon] are processed distinguishably then continues to the follows process if it does not prepared routing path for the request. This error creation function is provided by the Express framework, and this [404] error creation process that means [Not Found] has to set at first.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">So other calls of errors creation function has to set at a routing path for the request respectively. For transfer the processing to the function of error message creation at the bottom of the code, define return code for exit it at an error handling block of the routing path.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Detail of the error creation function provided by the Express framework is able to refer <a href="https://www.npmjs.com/package/http-errors" target="_new" style="font-weight:bold;" rel="noopener">the npm documentation</a> that is a base of the feature.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">So most important task is API caller send information of id and svg xml, then acquire a result as success or falt of saving svg to the data storage. It is better that the response has id information as an evidence for sent id, also it is better that the response has svg information as an evidence for sent svg.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">On the other hand, the request have to include id information, if does not include sent svg, it is OK save empty to the storage as specific svg for the id. If includes original url of svg, it is better that is able to save it to the storage. As result, exchange models are follows.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">If an error occured which a URL of the request is not define routing or an error occurs at individual routing path, the processing is transfered to the function of an error response creation at the bottom of the code. In the case of an error does not created by Express framework before this function is processing, create a response of an error contents with HTTP status [500] in this function.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/04/StructureOfRouting.png" alt="" style="width:450px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">For implementing of the routing path [/setIcon], design an exchange model with an API caller.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">There is simple model that in MongoDB, it has the [Releted_Identity], the [Original_URL] and the [SVG_XML] properties. API caller does not have interesting to the [Original_URL] property, this aspect is important for designing models. Addition, more one point is important for designing models, it is the [Releted_Identity] is not API caller side context but service side context. API caller side context is [Identity] or [ID], so API interface name has to be same as API caller side. This exchange is called [Object-Relational mapping for impedance mismatch]. A lot of a describes on web contents of [Object-Relational mapping for impedance mismatch] says propaties of models excess or deficiency although, follows are also important for designing models,<br />
+<span style="margin-left:10px;">*an interest at inside of the [Boundary Context] for attributes respectively of the [Subdomain].</span><br />
+<span style="margin-left:10px;">*an attribute meanings in the [Boundary Context].</span><br />
+<span style="margin-left:20px;">(above are names as Domain Driven Design, so assume other names of design pattern familiar).</span></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">So most important task is API caller send information of id and SVG XML, then acquire a result as success or falt of saving SVG XML to the data storage. It is better that the response has id information as an evidence for sent id, also it is better that the response has SVG information as an evidence for sent SVG XML.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">On the other hand, the request have to include id information, if does not include sent svg, it is OK save empty to the storage as specific svg for the id. If includes original url of svg, it is better that is able to save it to the storage. As result, exchange models are follows.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">// API caller set the [id] property and the [xml] property of POST body to acquire saved result (responseMessage).
+// Optional request the [url] property of POST body for original url of free icon website as memo.
+// Optional results (id: as an evidence for sent id, svg[n]: as an evidence for is sent SVG information). The SVG information is saved one so far.
+var result = {id: "", svg: [{url: "", xml: ""}], responseMessage: ""};
+// Object-Relational mapping to save SVG XML to the persistence layer.
+var updata = {Releted_Identity:req.body.id,Original_URL:req.body.svg[0].url,SVG_XML:req.body.svg[0].xml};
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Use the <a href="https://www.npmjs.com/package/body-parser" target="_new" style="font-weight:bold;" rel="noopener">body-parser middleware</a> to acquire the HTTP POST request body and use the <a href="https://www.npmjs.com/package/mongodb" target="_new" style="font-weight:bold;" rel="noopener">MongoDB NodeJS Driver</a> to access to MongoDB. The [var app = express();] statement creates an instance of the Express framework, then the [app.use(bodyParser.json());] statement sets a middleware for parse and serialize.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The instance of the Express framework is able to listen HTTP request, aim to create POST method service against a HTTP request this time, so at first, verify HTTP POST request body to store requested SVG XML as requested identity specific.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">var bodyParser = require("body-parser");
+var result = {id: "", svg: [{url: "", xml: ""}], responseMessage};
+var mongoClient = require('mongodb').MongoClient;
+var mongoDbUrl = "mongodb://localhost:27017/";
+var app = express();
+// view engine setup
+app.use(bodyParser.json());
+// APIs
+app.post('/setIcon',(req, res, next) =&gt; {
+  //Verify HTTP POST request
+  if(!req.body.id){
+    next(createError(400,"The [id] attribute of post request body is requirement"));
+    result.responseMessage += format("[BadRequest] : %s");
+    return;
+  }
+  var updata = {Releted_Identity:req.body.id,Original_URL:"",SVG_XML:""};
+  if(req.body.svg.length &gt; 0){
+    if(req.body.svg[0].xml){
+      updata.SVG_XML = req.body.svg[0].xml;
+    }
+    if(req.body.svg[0].url){
+      updata.Original_URL = req.body.svg[0].url;
+    }
+  }
+  //Save to MongoDB ...
+  res.writeHead(200,{'Content-Type' : 'text/plain'});
+  res.write(format('SetIcon service result : \n %s', JSON.stringify(result)));
+  res.end(format('SVG icon for %s saved', req.body.id));
+});
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Creating a feature of save to MongoDB, then create an error handlings. If already the identity specific SVG XML is existing, update data of MongoDB, or insert when there is not the identity specific SVG XML.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">  //Save to MongoDB
+  mongoClient.connect(mongoDbUrl, function(err, db) {
+    var dbo = db.db("SVGFreeIconsDB");
+    dbo.collection("IDRelatedIcons").find({ Releted_Identity: req.body.id }).toArray(function(err, result) {
+      if(result.length &gt; 0){
+        dbo.collection("IDRelatedIcons").updateOne({_id:result._id},{$set : updata}, function(err, res) {
+          result.responseMessage = "[Update MongoID]:" + res._id;
+        });
+      }
+      else {
+        dbo.collection("IDRelatedIcons").insertOne(updata, function(err, res) {
+          result.responseMessage = "[Insert MongoID]:" + res._id;
+        });
+      }
+      result.id = result[0]._id;
+    });
+    db.close();
+  });
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">An error handling will be set at the top of inside the connection function, the finding function, the update function and the insert function respectivery.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">if (err) {
+  next(createError(err.status));
+  err.message = "[Connection Error]: " + err.message;
+    or
+  err.message = "[Finding execution Error]: " + err.message;
+    or
+  err.message = "[Updating execution Error]: " + err.message;
+    or
+  err.message = "[Inserting execution Error]: " + err.message;
+  return;
+}
+</pre>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Deploy to Azure Functions</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Confirm excution of the routing path [/setIcon] after create it. Run container of the MongoDB and the Node-Express app same as description above and send HTTP POST request with body to the service using Visual Studio Code [Thunder Client] extension.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">For confirm error handling actually, select [POST] at the select list of HTTP request method and type [localhost/setIcon] into input box for address then type [{&#8220;svg&#8221;:[{&#8220;url&#8221;:&#8221;https://blog.processtune.com&/#8221;,&#8221;xml&#8221;:&#8221;sample xml&#8221;}]}] into input box for JSON body and select the [Send] button. Confirm the error contents of [400] that create at the code.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/04/ThunderClient.png" alt="" style="width:450px;"><img decoding="async" src="/wp-content/uploads/2022/04/Error400.png" alt="" style="width:450px;"></p>
+<p>Azure Functions provides Functions App feature that is able to host the Docker container and serverless program code of C# or Java, Python or several scripting and so on. And more, there are test feature, monitorring feature and so on. The execution control features etc. such as run/stop/refresh.</p>
+<p>https://blogsamplefunctions.azurewebsites.net/QRCodePOSTMethod?source=microsoft.com</p>
+<p>additional information</p>
+<div style="background-color:#cccccc;border:1px solid #00000; padding: 10px 10px 0px 10px;margin-top:20px;">
+<div style="margin:-20px 0px 0px 5px;text-indent:1em;font-weight:bold;background-color:#444;border:1px solid #ccc;color:#fff;">ⓘ As additional information (8th Feb. 2022)</div>
+<p><a href="https://docs.microsoft.com/ja-jp/azure/azure-functions/functions-bindings-register#extension-bundles?WT.mc_id=AZ-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">The &#8216;extensionBundle&#8217; values of [%Project root%\host.json] file</a> makes Azure Function project enable runable the project of other language that .NET runtime does not support.</p>
+</div>
+<p>table</p>
+<div style="margin: 0px 0px 0px 20px;display:table;">
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;padding-right:10px;">Work local directory</div>
+<div style="display:table-cell;">QRCodeGeneratorOnAzureFunctions(default : Opened folder from Visual Studio Code.)</div>
+</div>
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;">Language</div>
+<div style="display:table-cell;">Custom Handler(default : Last used, If first Azure Functions function creation, select it.)</div>
+</div>
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;">Project template</div>
+<div style="display:table-cell;">Http trigger(default : Last used, If first Azure Functions function creation, select it.)</div>
+</div>
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;">Function name</div>
+<div style="display:table-cell;">qrcode_generator(Rust project name has to be snake format, and Function name has to be same as project name if aim to be enable Http Method call.)</div>
+</div>
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;">Authorization</div>
+<div style="display:table-cell;">Anonymous(default : )</div>
+</div>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2022/02/01/node-mongodb-container-for-azure-static-web-apps/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Create reverse proxy using dotnet minimal</title>
+		<link>https://blog.processtune.com/2022/01/15/create-reverse-proxy-using-dotnet-minimal/</link>
+					<comments>https://blog.processtune.com/2022/01/15/create-reverse-proxy-using-dotnet-minimal/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Sat, 15 Jan 2022 05:04:33 +0000</pubDate>
+				<category><![CDATA[Docker]]></category>
+		<category><![CDATA[Microservice]]></category>
+		<category><![CDATA[Microsoft Azure]]></category>
+		<category><![CDATA[Nginx]]></category>
+		<category><![CDATA[Reverce Proxy]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Static web Apps]]></category>
+		<category><![CDATA[vim]]></category>
+		<category><![CDATA[WSL2]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=5864</guid>
+
+					<description><![CDATA[If you develop some api that is used from external applications, you have to create caller side dummy app for develop your api. Or if already API caller side app exists, for decleasing cost to create development environment, or needs various result patterns as simulate for real functions, there are efficient for development that inbound [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin: 0px 0px 0px 0px; color: #000044; font-size: 0.9rem;">If you develop some api that is used from external applications, you have to create caller side dummy app for develop your api. Or if already API caller side app exists, for decleasing cost to create development environment, or needs various result patterns as simulate for real functions, there are efficient for development that inbound connection create tool such as ngrok or Localtunnel and so on.<br />
+Even if in the case of impossible that use these tools for aspect of security or policies, there is able to create kind of similer feature use ASP.NET Core Web API minimal option template to accept requests of various test patterns from its external applications.<br />
+This article describes how to create reverse proxy as inbound connection creator.</p>
+<p style="margin: 10px 0px 0px 5px; text-indent: 1em; text-align: right; font-weight: bold;">&gt;&gt;<a style="font-weight: bold;" href="https://github.com/TetsuroTakao/svgiconcoloringweb" target="_new" rel="noopener">Sample project of reverse proxy using ASP.NET Core Web API minimal option template</a></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Swagger feature of minimal option</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">ASP.NET Core Web API minimal option template has already swagger service feature. It is great impact for productivity of development team. <a style="font-weight: bold;" href="https://docs.microsoft.com/en-us/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-6.0&amp;tabs=visual-studio?WT.mc_id=DT-MVP-4029060" target="_new" rel="noopener">This swagger service feature alone is able to install to development environment</a>, althogh it is very fast creation that using ASP.NET Core Web API minimal option template if want to create a develoment server.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px;">[Only swagger service feature]
+Install-Package Swashbuckle.AspNetCore -Version 6.2.3
+[Only swagger json generator feature]
+Install-Package Swashbuckle.AspNetCore.SwaggerGen -Version 6.3.0
+[Only swagger UI feature]
+Install-Package Swashbuckle.AspNetCore.SwaggerUI -Version 6.3.0
+
+[ASP.NET Core Web API minimal option]
+dotnet new webapi -minimal
+</pre>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">The command [dotnet new webapi -minimal] generate code of Swagger below. So if install these components respectively, can build Swagger feature to Blazor Server App template or ASP.NET Core Web App template, ASP.NET Core gRPC Service template and so on with same procedure.</p>
+<p style="display: inline-block; margin-bottom: 10px; text-align: center; width: 100%;"><img decoding="async" style="width: 450px;" src="/wp-content/uploads/2022/03/seagger.png" alt=""><img decoding="async" style="width: 450px;" src="/wp-content/uploads/2022/03/swaggerCode.png" alt=""></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Reverse proxy</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">Though this article describes very simple reverse proxy, this sample project is base of development server for developer team, and for API development, it is able to use as development log server or team members authentication/management server, load test server. <a style="font-weight: bold;" href="https://azure.microsoft.com/en-us/updates/azure-service-fabric-mesh-preview-retirement/" target="_new" rel="noopener">Azure Service Fabric Mesh service is already ended</a> although, the service had these team development support features includes swagger service and was very useful for team development. These features are important for team development, so have to create development server for team development.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">It is super easy to create reverse proxy use ASP.NET Core Web API minimal option template. Modify the [MapGet] method of the [Program.cs] file to redirect a request to another URL. HTTP Get request to the Route URL redirect to the port number [5080] in the case of the code below.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px;">app.MapGet("/", context =&gt;
+{
+    context.Response.Redirect("http://localhost:5080/",permanent:true);
+    return Task.FromResult(0);
+});
+</pre>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">Default port of the template is the port number [5078], so use the port number [5080] as redirect port.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">Menbers of the development team does not know infromation involving redirect, so create information as Swagger. When access this server with browser, since the request redirect to the port number [5080] temporalily, then type manually the address [localhost:5078/settingsInfo] into the address box of the browser. swagger can show information because create the feature below.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px;">var hosts = app.Configuration.GetSection("ServiceHosts");
+app.MapGet("/settingsInfo", () =&gt;
+{
+    var result = string.Empty;
+    foreach(var i in hosts.AsEnumerable()){
+        result += string.Format("{0}={1}",i.Key,i.Value) + Environment.NewLine;
+    }
+    return result;
+});
+</pre>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">This code use the [appsettings.json] file to define a settings for host services address of microservices as example.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px;">{
+  "ServiceHosts":{
+    "/":"localhost:5080",
+    "8080":"localhost:8080",
+    "8081":"localhost:8081",
+    "8082":"localhost:8082",
+    "8083":"localhost:8083"
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*"
+}
+</pre>
+<p style="display: inline-block; margin-bottom: 10px; text-align: center; width: 100%;"><img decoding="async" style="width: 900px;" src="/wp-content/uploads/2022/03/settingsinfo.png" alt=""></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2022/01/15/create-reverse-proxy-using-dotnet-minimal/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Nginx run on Windows Subsystem for Linux 2</title>
+		<link>https://blog.processtune.com/2021/12/01/nginx-run-on-windows-subsystem-for-linux-2/</link>
+					<comments>https://blog.processtune.com/2021/12/01/nginx-run-on-windows-subsystem-for-linux-2/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Wed, 01 Dec 2021 06:32:36 +0000</pubDate>
+				<category><![CDATA[ASP.NET Core]]></category>
+		<category><![CDATA[Blazor]]></category>
+		<category><![CDATA[Docker]]></category>
+		<category><![CDATA[Microservice]]></category>
+		<category><![CDATA[Nginx]]></category>
+		<category><![CDATA[Reverce Proxy]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[vim]]></category>
+		<category><![CDATA[Visual Studio Code]]></category>
+		<category><![CDATA[WSL2]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=6177</guid>
+
+					<description><![CDATA[On design fase of a microservices, several experts of various knowledge designs stateful middleware, containerisation or entities implimentation of Domain-driven design and so on. As detail, define data flow from some usecases that structs user story when designing stateful middleware, because individual service of common microservices may map to a single usecase of the user [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin:0px 0px 0px 0px;color:#000044;font-size:0.9rem;font-family:" segoe="" ui";"="">On design fase of <a href="https://docs.microsoft.com/en-us/azure/architecture/guide/architecture-styles/microservices?WT.mc_id=DT-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">a microservices</a>, several experts of various knowledge designs <a href="https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-reliable-services-communication-aspnetcore?WT.mc_id=AZ-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">stateful middleware</a>, <a href="https://docs.microsoft.com/en-us/dotnet/architecture/microservices/container-docker-introduction/?WT.mc_id=DT-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">containerisation</a> or entities implimentation of <a href="https://docs.microsoft.com/en-us/dotnet/architecture/microservices/microservice-ddd-cqrs-patterns/ddd-oriented-microservice?WT.mc_id=DT-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">Domain-driven design</a> and so on.<br />
+As detail,  define data flow from some usecases that structs user story when designing stateful middleware, because individual service of common microservices may map to a single usecase of the user story and they have specific persistence layer. And they acquire a state from their specific persistence layer for marge with some states that keeped by other services, or save a state to their specific persistence layer until it will be used.<br />
+This article describes mechanism and creating processes of typically microservices, using reverse proxy that developed with <a href="https://www.nginx.com/" target="_new" style="font-weight:bold;" rel="noopener">Nginx</a> as the sample of microservices endpoint. This reverse proxy server is primitive prototype of <a href="https://docs.microsoft.com/en-us/dotnet/architecture/microservices/architect-microservice-container-applications/direct-client-to-microservice-communication-versus-the-api-gateway-pattern?WT.mc_id=DT-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">service mesh endpoint</a> of microservices. The sample is structed with reverse proxy service that create on here as service mesh endpoint, and SVG coloring service that created in before article as sample of individual service.</p>
+<p style="margin:10px 0px 0px 5px;text-indent:1em;text-align:right;font-weight:bold;">&gt;&gt;<a href="https://github.com/TetsuroTakao/QRCodeCreation" target="_new" style="font-weight:bold;" rel="noopener">Rust sample project to create QR Code, Base program of implantation to Azure Functions</a></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Objective</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Service mesh endpoint provides an entrance of service mesh, service mesh is structured with several individual service of microservices.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">One of reason why Service mesh design pattern was born is for assembling a bunch of sidecar feature of individual services (the endpoint have to provides service discovery, load balancing, encryption, observability, traceability, authentication and authorization, and the circuit breaker pattern).</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">This entrance is able to provide using also Azure Application Gateway although, it is able to create manually. Microsoft official document [<a href="https://docs.microsoft.com/en-us/dotnet/architecture/microservices/architect-microservice-container-applications/direct-client-to-microservice-communication-versus-the-api-gateway-pattern?WT.mc_id=DT-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">The API gateway pattern versus the Direct client-to-microservice communication</a>] describes to consider processes of development real enterprise solution. Its article describes creating only one gateway of enterprise microservices is not good for performance, user experience, maintenance or security and so on.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Before creation of vast of service mesh as microservices solution, creating service mesh endpoint manually once is useful for design skill of microservices.</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Download sample application.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Typically endpoint of service mesh is inner of cloud and communicate to load balancer of HTTP gateway. This pattern is for service mesh endpoints redundancy. Notice the sample of this article aims to expose directly single endpoint for development. In the word, it is sample of one mesh endpoint of several meshes. This endpont have to provide http host feature.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">This article only describes developing reverse proxy for development environment. Logging, service discovery, load balancing, encryption, observability, traceability, authentication &amp; authorization, and the circuit breaker pattern are ommitted in this article, because the sample of this article assumes to provide these features on control plane of a cloud.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/04/sampleoverview.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">This sample use the port number [8080] as outside port of development environment, and pass through to the port number [8081] for inside. This [<a href="https://github.com/TetsuroTakao/SVGIconColoring_en_2" target="_new" style="font-weight:bold;" rel="noopener">SVG icon coloring app</a>] application container in the figure has to accept request from the port number [8081] and has to response to the port number [8081]. The source of the application is on GitHub and can <a href="https://github.com/TetsuroTakao/SVGIconColoring_en_2" target="_new" style="font-weight:bold;" rel="noopener">download it</a> although, it is not containerise yet, thus containerise it from now. As details, read the article [<a href="https://docs.docker.com/samples/dotnetcore/" target="_new" style="font-weight:bold;" rel="noopener">Dockerize an ASP.NET Core application</a>].</p>
+<div style="background-color:#cccccc;border:1px solid #00000; padding: 10px 10px 0px 10px;margin-top:20px;">
+<div style="margin:-20px 0px 0px 5px;text-indent:1em;font-weight:bold;background-color:#444;border:1px solid #ccc;color:#fff;">ⓘ As additional information</div>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Each persistence layer of individual service may create using <a href="https://docs.microsoft.com/en-us/azure/architecture/guide/technology-choices/data-store-overview?WT.mc_id=DT-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">polyglot persistence</a> design pattern mixed several types of data store such as MongoDB or Azure Blob storage and so on that excludes file storage (for example, Azure Files, Azure NetApp Files). this design pattern represents usage of a data store types of purposes of the table below.</p>
+<div style="margin: 0px 0px 0px 20px;display:table;">
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;padding-right:10px;background-color:#ccc;padding:0.5rem;border:thin solid #444;">Assumed information type</div>
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;background-color:#ccc;padding:0.5rem;border:thin solid #444;border-left-width:0px;">Example</div>
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;background-color:#ccc;padding:0.5rem;border:thin solid #444;border-left-width:0px;">Store type</div>
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;background-color:#ccc;padding:0.5rem;border:thin solid #444;border-left-width:0px;">Implementations</div>
+</div>
+<div style="display:table-row;background-color:#fff;">
+<div style="display:table-cell;table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">Unstructured, Semistructured</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">Product catalog, Invoice, License</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;white-space: nowrap;background-color:#fff;">Document-oriented database</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">MongoDB, Azure Blob storage, Amazon DocumentDB</div>
+</div>
+<div style="display:table-row;background-color:#fff;">
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">Structured</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">Investor Relations, Customer master,<br />
+Merchantise master</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">Relational database</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">MySQL, Azure SQL database, Oracle databese</div>
+</div>
+<div style="display:table-row;background-color:#fff;">
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">Dynamic growing</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;white-space: nowrap;background-color:#fff;">Intarest graph<br />
+(Entertainment, Social network, E-commerce),<br />
+Cyber-security threats analysis</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;white-space: nowrap;background-color:#fff;">Graph structures data store</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">OrientDB, Azure Cosmos DB, Amazon Neptune</div>
+</div>
+<div style="display:table-row;background-color:#fff;">
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;white-space: nowrap;background-color:#fff;">Pair type<br />
+(includes shallow tier tree type)</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">Task list, Address list,<br />
+Recording (Transcript etc.) of meeting</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;">Key/Value data store</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">Apache Ignite, Azure Table Storage,<br />
+Google Cloud Datastore, AWS DynamoDB</div>
+</div>
+</div>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Only if some use case (in other words, the term [boundary context] in Domain-driven design) is mapped individual service and the case needs various data models can choose the <a href="https://docs.microsoft.com/en-us/azure/azure-sql/multi-model-features?WT.mc_id=DT-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">multi-model database</a> as persistence layer.</p>
+</div>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">To launch the sample project downloaded at the port number [8081], modify the value of the [applicationUri] property that is set at the [%project name%] ([SVGIconColoring_en] in this sample) settings of the [profiles] section of the [launchSettings.json] file, it is under the [Properties] folder of the Project root.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">The [Properties\launchSettings.json] file
+Define port value [8081] of the [profiles/SVGIconColoring_en/applicationUrl]
+
+{
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:48877/",
+      "sslPort": 44388
+    }
+  },
+  "profiles": {
+    "SVGIconColoring_en": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "inspectUri": "{wsProtocol}://{url.hostname}:{url.port}/_framework/debug/ws-proxy?browser={browserInspectUri}",
+      "applicationUrl": "https://localhost:7270;http://localhost:8081",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "inspectUri": "{wsProtocol}://{url.hostname}:{url.port}/_framework/debug/ws-proxy?browser={browserInspectUri}",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Though launch from Visual Studio Code in this article, it will be modify to use Azure Functions Core Tools later. This article describes containerization with docker with follow.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/03/LaunchSample.png" alt="" style="width:900px;"></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Preparation of development on Windows subsystem for Linux 2.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Reverse proxy is created with Nginx, Nginx is provided as <a href="https://hub.docker.com/_/nginx" target="_new" style="font-weight:bold;" rel="noopener">Docker official image</a> from Docker Hub. This image run on <a href="https://www.docker.com/get-started" target="_new" style="font-weight:bold;" rel="noopener">Docker Desktop for Windows</a> or <a href="https://hub.docker.com/search?offering=community&amp;operating_system=linux&amp;q=&amp;type=edition" target="_new" style="font-weight:bold;" rel="noopener">Docker Engine for Linux distributions</a>, Docker Desktop for Windows is not support ARM 64 Windows (Surface ProX), so only ARM 64 Windows use <a href="https://hub.docker.com/search?offering=community&amp;operating_system=linux&amp;q=&amp;type=edition" target="_new" style="font-weight:bold;" rel="noopener">Docker Engine for Linux distributions</a> with Windows Subsystem for Linux 2 (WSL2). Other user are able to use Docker Desktop, it operation is ommit in this article because it&#8217;s very easy.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">ARM 64 Windows user can use WSL2 after download and setting <a href="https://www.microsoft.com/en-id/p/ubuntu-20044-lts/9mttcl66cpxj?cid=msft_web_appsforwindows_chart#activetab=pivot:overviewtab" target="_new" style="font-weight:bold;" rel="noopener">Ubuntu</a> (choose any distribution, although this article describes procedure in case of Ubuntu) from Microsoft store.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Launch WSL2 from Windows terminal after setting.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/03/ubuntu.png" alt="" style="width:450px;"><img decoding="async" src="/wp-content/uploads/2022/03/WindowsTerminal.png" alt="" style="width:450px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">ARM 64 Windows user can use WSL2 after download and setting <a href="https://www.microsoft.com/en-id/p/ubuntu-20044-lts/9mttcl66cpxj?cid=msft_web_appsforwindows_chart#activetab=pivot:overviewtab" target="_new" style="font-weight:bold;" rel="noopener">Ubuntu</a> (choose any distribution, although this article describes procedure in case of Ubuntu) from Microsoft store.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">If use WSL2 first time, install tools to Ubuntu use Linux terminal.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">$ sudo apt install apt-transport-https ca-certificates curl gnupg lsb-release
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">These tools is capables feature in table below.</p>
+<div style="margin: 0px 0px 0px 20px;display:table;">
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;padding-right:10px;background-color:#ccc;padding:0.5rem;border:thin solid #444;">Tool</div>
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;background-color:#ccc;padding:0.5rem;border:thin solid #444;border-left-width:0px;">Feature</div>
+</div>
+<div style="display:table-row;background-color:#fff;">
+<div style="display:table-cell;table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">[https]</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">Establish HTTPS connection</div>
+</div>
+<div style="display:table-row;background-color:#fff;">
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">[ca-certificates]</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">Establish SSL connection</div>
+</div>
+<div style="display:table-row;background-color:#fff;">
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">[gnupgp]</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;white-space: nowrap;background-color:#fff;">encrypting and decrypting key enable and signeture</div>
+</div>
+<div style="display:table-row;background-color:#fff;">
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;white-space: nowrap;background-color:#fff;">[lsb-release]</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">Comform version information of Ubuntu</div>
+</div>
+<div style="display:table-row;background-color:#fff;">
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;white-space: nowrap;background-color:#fff;">[curl]</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">Execute HTTP communication as client</div>
+</div>
+</div>
+<p style="margin: 10px 0px 0px 0px;text-indent:1em;">If Docker CE (community edition) does not installed, acquire GNU Privacy Guard (GnuPG, GPG) key of Docker engine and deploy it.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+echo "deb [arch=arm64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] \
+https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list &gt; /dev/null
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Comform image enable install.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">$ sudo apt update
+$ sudo apt install docker-ce docker-ce-cli containerd.io
+$ apt-cache madison docker-ce
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Then install Docker engine.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">$ sudo apt install docker-ce=5:20.10.8~3-0~ubuntu-focal docker-ce-cli=5:20.10.8~3-0~ubuntu-focal containerd.io
+</pre>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Create reverse proxy.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Create reverse proxy with Nginx that is provided as the <a href="https://hub.docker.com/_/nginx" target="_new" style="font-weight:bold;" rel="noopener">Docker official image</a> from the Docker Hub. This image run on the <a href="https://www.docker.com/get-started" target="_new" style="font-weight:bold;" rel="noopener">Docker Desktop for Windows</a> or the <a href="https://hub.docker.com/search?offering=community&amp;operating_system=linux&amp;q=&amp;type=edition" target="_new" style="font-weight:bold;" rel="noopener">Docker Engine for Linux distributions</a>, the Docker Desktop for Windows is not support ARM 64 Windows (Surface Pro X), so only ARM 64 Windows users have to use the Docker Engine for Linux distributions with WSL2. Other users are able to use the Docker Desktop, its operation is ommit in this article because it’s very easy.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">In the case of using WSL2 to mount a Docker image, start a Docker service use the [sudo] super user mode.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">$ sudo service docker start
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">After enables a Docker service, pull a Nginx image from the Docker Hub, then launch the container of the image. There is needs that default port number [80] of Nginx is changed to the port number [8080] for listening http request for development environment. So install the vim editor using bash in the container, it&#8217;s important before it, update and upgrade the Advanced Package Tool (the [apt] command).</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">$ docker pull nginx
+$ docker run -dit -p 8080:8080 --init --name rproxy nginx
+$ docker exec -it rproxy /bin/bash
+# apt update &amp;&amp; upgrade -y
+# apt install vim
+# vim /etc/nginx/nginx.conf
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Modify to add the [server] settings to the [http] section of the [/etc/nginx/nginx.conf] file. the [server] settings defines the [listen] attribute, the [server_name] attribute and the [location] settings.</p>
+<p><script src="https://gist.github.com/TetsuroTakao/7297db447b45a4b32daf9ba834fb6f54.js"></script></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">After modify the [/etc/nginx/nginx.conf] file of the container, put the [exit] command to exit container. then put the [docker kill rproxy] command to terminate the container process of the reverse proxy on WSL2.</p>
+<div style="background-color:#cccccc;border:1px solid #00000; padding: 10px 10px 10px 10px;margin-top:20px;">
+<div style="margin:-20px 0px 0px 5px;text-indent:1em;font-weight:bold;background-color:#444;border:1px solid #ccc;color:#fff;">ⓘ As additional information</div>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Kill process when WSL2 stackes. Right click on the [Windows Start] icon to open the [Task Manager], then select the [Task Manager] and right click on the [Virtual Machine Worker Process] of the [Task Manager]. Then select the [End task] menu of the context menu.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align-last:justify;width:100%;"> <img decoding="async" src="/wp-content/uploads/2022/03/contextmenu.png" alt="" style="height:485px;"> <img decoding="async" src="/wp-content/uploads/2022/03/EndWSL2Task.png" alt="" style="width:450px;"> <img decoding="async" src="/wp-content/uploads/2022/03/EndWSL2TaskZoom.png" alt="" style="width:286px;vertical-align:top;margin-top:100px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">If you want to know details of process Information, you are able to get the [<a href="https://docs.microsoft.com/en-us/sysinternals/downloads/sysinternals-suite?WT.mc_id=DT-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">Sysinternals Suite</a>] from the <a href="https://www.microsoft.com/store/apps/9p7knl5rwt25" target="_new" style="font-weight:bold;" rel="noopener">Microsoft Store</a>.</p>
+</div>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">This reverse proxy is just only use on development environment, so it is able to ommit firewall settings. Several attributes such as the [ufw enable], [ufw allow] or  [ufw default deny] can set if it needs although, for example providing this container to developers of development team, for portability, it is not good that set firewall features.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">At last, confirm request to the port number [8080] is forwarding to the port number [8081].</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Launch the container of the reverse proxy image with the command below this time. If added the [&#8211;rm] option when the [docker run] command used, the [docker container rm rproxy] command below is not needs. The [&#8211;net host] option is used to access network of container host from container inside.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">$ docker container rm rproxy
+$ docker run -dit --init --name rproxy --net host nginx
+</pre>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Test action of reverse proxy.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The way of the article [<a href="https://docs.docker.com/samples/dotnetcore/" target="_new" style="font-weight:bold;" rel="noopener">Dockerize an ASP.NET Core application</a>] to containerise uses the Docker Desktop, so ARM x64 Windows user is not able to use the procedure. Though Microsoft official document [<a href="https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/docker/building-net-docker-images?view=aspnetcore-6.0&amp;WT.mc_id=DT-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">Docker images for ASP.NET Core</a>] uses the Docker Desktop also, but the article describes how to [Run in a Linux container], so in this article, choose the way that deploy Windows project into a Linux container. Users excepting Windows x64 ARM users build the sample using Microsoft official document to containerise. The follow description is for Windows x64 ARM users.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">At first, prepare a sample web app to confirm that HTTP request is transferred to the port a proxy server throws.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Open Ubuntu on the [Windows terminal] to pull Docker official image of the [<a href="https://hub.docker.com/_/microsoft-dotnet-sdk" target="_new" style="font-weight:bold;" rel="noopener">.NET SDK</a>].</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">$ docker pull mcr.microsoft.com/dotnet/sdk:6.0
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Launch the container using image of the [<a href="https://hub.docker.com/_/microsoft-dotnet-sdk" target="_new" style="font-weight:bold;" rel="noopener">.NET SDK</a>], then pull the [<a href="https://github.com/cli/cli/blob/trunk/docs/install_linux.md" target="_new" style="font-weight:bold;" rel="noopener">GitHub CLI</a>] into the container from github web site [<a href="https://github.com/cli/cli/blob/trunk/docs/install_linux.md" target="_new" style="font-weight:bold;" rel="noopener">GitHub CLI</a>]. The container of Docker official image of the [<a href="https://hub.docker.com/_/microsoft-dotnet-sdk" target="_new" style="font-weight:bold;" rel="noopener">.NET SDK</a>] launches with the host networking same as the container of reverse proxy, The sample project is defined as the port number [5078] for now.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">$ docker run -dit --rm --net host --init --name svgiconcoloring mcr.microsoft.com/dotnet/sdk:latest
+$ docker exec -it svgiconcoloring /bin/bash
+# curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
+# echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main"
+ | tee /etc/apt/sources.list.d/github-cli.list &gt; /dev/null
+# sudo apt update &amp;&amp; upgrade -y
+# sudo apt install gh
+# md /home/svgiconcoloring
+# cd /home/svgiconcoloring
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Authorise your git account using the [<a href="https://github.com/cli/cli/blob/trunk/docs/install_linux.md" target="_new" style="font-weight:bold;" rel="noopener">GitHub CLI</a>], then clone the sample project at your work folder (uses the [/home/svgiconcoloring] folder, in the case of the command above). Authorise steps includes authentication flow in your browser. A browser authentication flow is called with the process below.</p>
+<div style="margin: 0px 0px 10px 20px;display:table;">
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;padding-right:10px;background-color:#ccc;padding:0.5rem;border:thin solid #444;">Process</div>
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;background-color:#ccc;padding:0.5rem;border:thin solid #444;border-left-width:0px;">Selection</div>
+</div>
+<div style="display:table-row;background-color:#fff;">
+<div style="display:table-cell;table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">Distination of login</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">GitHub.com</div>
+</div>
+<div style="display:table-row;background-color:#fff;">
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">Protocol</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">HTTPS</div>
+</div>
+<div style="display:table-row;background-color:#fff;">
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">Get credentials</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;white-space: nowrap;background-color:#fff;">Yes</div>
+</div>
+<div style="display:table-row;background-color:#fff;">
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;white-space: nowrap;background-color:#fff;">Authenticate</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">Login with a web browser</div>
+</div>
+</div>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/03/authSteps.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Move to the sample project folder(uses the [cd SVGIconColoring_en_2] command, in the case of fegure below), and put [dotnet certs https] command in the [Windows terminal] to install development certification. Then put [dotnet run] command in the [Windows terminal] to run sample application.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/03/dotnetRun5078.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">After confirmation of running sample project, use vim as Nginx image above, modify the [Properties/launchSettings.json] file to change the port of sample application to [8081]. Yes, this sample web application is same as run on Windows above. This sample run on Alpine Linux now. The article [<a href="https://blog.processtune.com/?p=5925" target="_new" style="font-weight:bold;" rel="noopener">QR code create with Rust language runnable on Azure Functions</a>] describes how to create an application for runnable on Azure Functions use this mechanism.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/03/dotnetRun8081.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Confirm the container of reverse proxy and svg icon coloring app are running, then put [localhost:8080] into the address box of a browser, and the sample app is able to execute.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/03/dotnetRun8080.png" alt="" style="width:450px;"></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2021/12/01/nginx-run-on-windows-subsystem-for-linux-2/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>How to set attributes of Azure Active Directory application for an app using JavaScript to authenticate users</title>
+		<link>https://blog.processtune.com/2020/09/01/how-to-set-attributes-of-azure-active-directory-application-for-an-app-using-javascript-to-authenticate-users/</link>
+					<comments>https://blog.processtune.com/2020/09/01/how-to-set-attributes-of-azure-active-directory-application-for-an-app-using-javascript-to-authenticate-users/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Tue, 01 Sep 2020 08:48:48 +0000</pubDate>
+				<category><![CDATA[.NET Core]]></category>
+		<category><![CDATA[Azure Active Directory]]></category>
+		<category><![CDATA[Microservice]]></category>
+		<category><![CDATA[Microsoft Azure]]></category>
+		<category><![CDATA[Microsoft Graph]]></category>
+		<category><![CDATA[ReactJS.NET]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Visual Studio]]></category>
+		<category><![CDATA[未分類]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=5101</guid>
+
+					<description><![CDATA[The &#8216;implicit grant type&#8217; is one of the several grant types of &#8216;The OAuth 2.0 Authorization Framework&#8216; which Azure Active Directory endpoint supports. An application requests an access token to Azure Active Directory endpoint using any grant type of the four types. The article &#8216;Create Azure Active Directory application&#8217; described the differences between the types. [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin:0px 0px 0px 0px;color:#000044;font-size:0.9rem;font-family:" segoe="" ui";"="">The &#8216;implicit grant type&#8217; is one of the several grant types of &#8216;<a href="https://tools.ietf.org/html/rfc6749" target="_new" style="font-weight:bold;" rel="noopener">The OAuth 2.0 Authorization Framework</a>&#8216; which Azure Active Directory endpoint supports.<br />
+An application requests an access token to Azure Active Directory endpoint using any grant type of the four types. The article &#8216;Create Azure Active Directory application&#8217; described the differences between the types.<br />
+The ‘implicit grant type’ omits a broker credentials such as an authorization code, because it is designed for accessing from JavaScript such as single page application(Henceforth called SPA).<br />
+This article describes how to set attributes of the Azure Active Directory application for using &#8216;implicit grant type&#8217; to acquire token from JavaScript of a client application. Then describes how to create an application using Microsoft Authentication Library (Hereinafter referred to as &#8216;MSAL&#8217;).</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Set Azure Active Directory application to allow implicit grant flow</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The article &#8216;<a href="https://blog.processtune.com/?p=5085" target="_new" style="font-weight:bold;" rel="noopener">Create Azure Active Directory application</a>&#8216; described how to create Azure Active Directory application. And the article &#8216;<a href="https://blog.processtune.com/?p=5435" target="_new" style="font-weight:bold;" rel="noopener">Preparing to create the app using programmable authentication flow</a>&#8216; describes how to set attributes of the Azure Active Directory application for several permissions. Please refer to these articles if you need them.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">To be available implicit grant flow of Azure Active Directory application, open the Microsoft Azure portal, then select [Azure Active Directory] – [App registrations] – (select target application) – [Authentication] – &#8216;Implicit grant&#8217; section, and check [Access tokens] and [ID tokens] to on. Press [Save] button at last.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;">
+<img decoding="async" src="/wp-content/uploads/2020/09/AADAppAuthenticationImplicitSettings.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">ID Token is provided by the Open ID Connect identity layer above the OAuth 2.0 protocol of authentication flow of Azure Active Directory endpoint. It is able to use to verify destination of authenticating identity if you want.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Azure Active Directory endpoint responds it as the JWT format, so you can use the following code to check.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Text;
+using System.Text.Json;
+using System.Linq;
+
+public string ReadJwt(string jwt, string payloadKey = "")
+{
+    var result = string.Empty;
+    if (jwt.Split('.').Count() != 3) return result;
+    var tokenType = Base64UrlEncoder.Decode(jwt.Split('.').FirstOrDefault());
+    var typeElement = new JsonElement();
+    if(JsonDocument.Parse(tokenType).RootElement.TryGetProperty("typ",out typeElement))
+    {
+        if (typeElement.GetString() == "JWT")
+        {
+            var token = new JwtSecurityTokenHandler().ReadJwtToken(jwt);
+            if (string.IsNullOrEmpty(payloadKey))
+            {
+                if (token.Payload.Iss.Contains("sts.windows.net"))
+                {
+                    result = "microsoft";
+                }
+            }
+            else
+            {
+                result = token.Payload[payloadKey].ToString();
+            }
+        }
+    }
+    return result;
+}
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">This code checks an issuer. If the value of the iss attribute is the security token service of Microsoft, it has provided by the destination that I request. It guarantees that the token is not forged, and it has attributes you expect as ID Token format Microsoft provides.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Access Token provided as JWT format that is same as ID Token. Access token( right figure below) and ID token( left figure below) is able to check a state of forgery by another process alternative of verifying JWT.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">If you set the state parameter at request timing of acquiring tokens, then check equivalent of it at timing of receive it.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;">
+<img decoding="async" src="/wp-content/uploads/2020/08/tokensJWT.png" alt="" style="width:900px;"></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Create SPA</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Please read quick start of SPA at Azure portal and try it. It is super easy to run because the downloaded SPA is already sat the settings for the Azure Active Directory app of the Azure portal.</p>
+<p style="margin:10px 0px 0px 5px;text-indent:1em;text-align:right;font-weight:bold;">&gt;&gt;<a href="https://docs.microsoft.com/ja-jp/azure/active-directory/develop/msal-js-initializing-client-applications?WT.mc_id=DT-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">Go to official document</a></p>
+<p style="display:inline-block;margin-bottom:10px;"><img decoding="async" src="/wp-content/uploads/2020/09/azurePortalQuickStart.png" alt="" style="width:300px;"><img decoding="async" src="/wp-content/uploads/2020/09/azurePortalQuickStartImplicit.png" alt="" style="width:300px;"><img decoding="async" src="/wp-content/uploads/2020/09/azurePortalQuickStartDownload.png" alt="" style="width:300px;"></p>
+<p style="display:inline-block;margin-bottom:10px;"><img decoding="async" src="/wp-content/uploads/2020/09/azurePortalQuickStartNpmInstallStart.png" alt="" style="width:300px;"><img decoding="async" src="/wp-content/uploads/2020/09/azurePortalQuickStartLogin.png" alt="" style="width:300px;"><img decoding="async" src="/wp-content/uploads/2020/09/azurePortalQuickStartAppRun.png" alt="" style="width:300px;"></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2020/09/01/how-to-set-attributes-of-azure-active-directory-application-for-an-app-using-javascript-to-authenticate-users/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Cognitive Services QnA Maker &#8211; Create knowledge base from online FAQ</title>
+		<link>https://blog.processtune.com/2019/04/30/cognitive-services-qna-maker-create-knowledge-base-from-online-faq/</link>
+					<comments>https://blog.processtune.com/2019/04/30/cognitive-services-qna-maker-create-knowledge-base-from-online-faq/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Tue, 30 Apr 2019 10:24:26 +0000</pubDate>
+				<category><![CDATA[Cognitive Service]]></category>
+		<category><![CDATA[Microservice]]></category>
+		<category><![CDATA[Microsoft Azure]]></category>
+		<category><![CDATA[Office App]]></category>
+		<category><![CDATA[Office Web App]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Visual Studio]]></category>
+		<category><![CDATA[未分類]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=4500</guid>
+
+					<description><![CDATA[I want to describe how to create chatbot client communicate with the QnA Maker API. Although, at this article have to describe preparation for creating chatbot client app. If already created Microsoft Azure Cognitive Services QnA Maker, please skip this article then check next. A chatbot responds using knowledge base when chatbot is asked some [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin: 0px 0px 0px 0px; color: #000044; font-size: 0.9rem;">I want to describe how to create chatbot client communicate with the QnA Maker API. Although, at this article have to describe preparation for creating chatbot client app. If already created Microsoft Azure Cognitive Services QnA Maker, please skip this article then check next.<br />
+A chatbot responds using knowledge base when chatbot is asked some question. QnA Maker makes creating first knowledge base easily.</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Solution idea</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">Microsoft provides great guidance to design a solution architecture for chatbot which using QnA Maker API at <a style="font-weight: bold;" href="https://docs.microsoft.com/en-us/azure/architecture/solution-ideas/articles/information-chatbot" target="_new" rel="noopener">this web site</a>.</p>
+<p style="display: inline;"><img decoding="async" style="width: 600px;" src="/wp-content/uploads/2020/03/Information-Chatbot.png" alt="" /></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Over view</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">A knowledge base creating feature of QnA Maker lead creating process as step by step.</p>
+<p style="display: inline;"><img decoding="async" style="width: 600px;" src="/wp-content/uploads/2020/03/Create-a-knowledge-base.png" alt="" /></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・The analyze feature for FAQ web page</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">I wanna show you a sample to describe that the analyze feature for FAQ web page provided by the QnA Maker is so smart.</p>
+<p style="margin: 10px 0px 0px 0px; text-indent: 1em;">Rolling Stone, LLC, a subsidiary of Penske Business Media, LLC publishes article &#8216;<a style="font-weight: bold;" href="https://www.rollingstone.com/music/music-news/qa-eddie-van-halen-177607/" target="_new" rel="noopener">Q&amp;A: Eddie Van Halen</a>&#8216; on the web site, I want to use this web site as sample to describe how useful the QnA Maker API is. This page is not create aim to work well online FAQ page analyze feature, because I chosen it as random one from search engine results. Nevertheless, the feature made very great results.</p>
+<p style="margin: 10px 0px 0px 0px; text-indent: 1em;">Below is a part of page source of the sample FAQ page.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px;">&lt;p&gt;
+&lt;strong&gt;Will old fans like this record?&lt;br /&gt;&lt;/strong&gt;
+A lot of people hate it. It’s the third incarnation of the band. It’s not a departure,
+but we’re branching out. I was listening to the radio yesterday and the DJ was just rambling over it,
+saying Gary sounds like a weak Sammy Hagar. Then they took phone calls and one guy was like,
+“Ah, I still like Dave.” So obviously he’s not gonna like it. What’s
+funny to me is that this isn’t international espionage  — we’re
+a fucking rock &amp; roll band. People, get a life, will ya? If you can’t,
+get on the Internet and join the club.
+&lt;/p&gt;
+</pre>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">There is no ID attribute or Name attribute in the sample FAQ page source, but has only style class definition.</p>
+<p style="margin: 10px 0px 0px 0px; text-indent: 1em;">The online FAQ page analyze feature of the QnA Maker can understand that the content is question text using “?”. And also can understand that another part is the answer of it, with structure of the contents.</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Step 1 Create Microsoft Azure QnA Service of Cognitive Service</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">I created QnA Maker as free, F0 cost level and F search lebel. Sorry for Japanese screen shot.</p>
+<p style="display: inline;"><img decoding="async" style="width: 600px;" src="/wp-content/uploads/2020/03/AzureQnAMaker.png" alt="" /></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Step 2 Select items of &#8216;Step 1&#8217;</p>
+<p style="display: inline;"><img decoding="async" style="width: 600px;" src="/wp-content/uploads/2020/03/Create-a-knowledge-base-Step-2.png" alt="" /></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Step 3 and 4 Define name and source</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">I defined used source as the name, this way is useful for maintenance such as relearning because correct answer ratio of chatbot is depended on knowledge base.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">I used default text to Default answer text of multi-turn extraction. If the chatbot is used in specific circumstanse, change this text such as &#8216;do you want to know one of below ?&#8217; because multi-turn extraction is used when chatbot selected multiple answers and needs to do continuous conversation.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">And set online FAQ page address to URL.</p>
+<p style="display: inline;"><img decoding="async" style="width: 600px;" src="/wp-content/uploads/2020/03/Create-a-knowledge-base-Step-34.png" alt="" /></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Chit-chat and Create</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">Using Chit-chat section to control atmosphere of conversation. This default set of Q and A helps establishing character of chatbot.(see &#8216;<a style="font-weight: bold;" href="https://docs.microsoft.com/en-us/azure/cognitive-services/qnamaker/how-to/chit-chat-knowledge-base" target="_new" rel="noopener">Add Chit-chat to a knowledge base</a>&#8216; of Microsoft Docs)</p>
+<p style="display: inline;"><img decoding="async" style="width: 600px;" src="/wp-content/uploads/2020/03/Create-a-knowledge-base-Step-5.png" alt="" /></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Test</p>
+<p style="display: inline;"><img decoding="async" style="width: 300px;" src="/wp-content/uploads/2020/03/Test-a-knowledge-base.png" alt="" /><img decoding="async" style="width: 300px;" src="/wp-content/uploads/2020/03/My-knowledge-base.png" alt="" /></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2019/04/30/cognitive-services-qna-maker-create-knowledge-base-from-online-faq/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>How to create the QnA Manker My service.</title>
+		<link>https://blog.processtune.com/2017/11/09/how-to-create-the-qna-manker-my-service/</link>
+					<comments>https://blog.processtune.com/2017/11/09/how-to-create-the-qna-manker-my-service/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Thu, 09 Nov 2017 11:58:00 +0000</pubDate>
+				<category><![CDATA[Microservice]]></category>
+		<category><![CDATA[Microsoft Azure]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[未分類]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=4484</guid>
+
+					<description><![CDATA[The QnA Manker Preview is super easy to launch my service for for developing a FAQ system. &#62;&#62;Create QnA Maker My service page ・Set source of knowledge base It need only service name to create FAQ API service, because knowledge base is able to create by manual later. But, this article use FAQ website as [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin: 0px 0px 0px 0px;">The QnA Manker Preview is super easy to launch my service for for developing a FAQ system.</p>
+<p style="display: inline;"><img decoding="async" style="width: 600px;" src="/wp-content/uploads/2018/03/QnAMakerCreateMyService.png" alt="" /></p>
+<p style="margin: 0px 0px 0px 5px; text-indent: 1em; text-align: right; font-weight: bold;"><a href="https://qnamaker.ai/Create" target="_new" rel="noopener">&gt;&gt;Create QnA Maker My service page</a></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Set source of knowledge base</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">It need only service name to create FAQ API service, because knowledge base is able to create by manual later. But, this article use FAQ website as knowledge base for describe.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">I wanna show you a sample to describe that the analyze feature for FAQ web page of the QnA Maker is so smart. <a style="font-weight: bold;" href="http://www.starnostar.com/Eddie-Van-Halen-Question-and-Answers-Edward-Lodewijk-van-Halen-Question-Answers/9683/FAQ/" target="_new" rel="noopener">The web page using as sample</a> is I don&#8217;t know who is creator, and I choosen random one from google search result. The result is very great, below is a part of page source code.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px;">&lt;div class="content-full-right-left-info-row"&gt;
+    &lt;div class="content-full-right-left-info-left"&gt;Where was Eddie Van Halen born?&lt;/div&gt;
+    &lt;div class="content-full-right-left-info-right"&gt;Nijmegen, Netherlands&lt;/div&gt;
+&lt;/div&gt;
+</pre>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">There is no the ID attribute or the Name attribute in the code, it has only style class specification. FAQ web page analize feature of the QnA Maker can understand that the content is question text using &#8220;?&#8221;. And can understand that othor one is answer from structure of contents.</p>
+<p style="display: inline;"><img decoding="async" style="width: 600px;" src="/wp-content/uploads/2018/03/QnAMakerTSVDownload.png" alt="" /></p>
+<p style="display: inline;"><img decoding="async" style="width: 600px;" src="/wp-content/uploads/2018/03/QnAMakerImportFromWebPage.png" alt="" /></p>
+<p style="display: inline;"><img decoding="async" style="width: 600px;" src="/wp-content/uploads/2018/03/QnAMakerChatTest.png" alt="" /></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2017/11/09/how-to-create-the-qna-manker-my-service/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>How to use the QnA Manker API well.</title>
+		<link>https://blog.processtune.com/2017/11/02/how-to-use-the-qna-manker-api-well/</link>
+					<comments>https://blog.processtune.com/2017/11/02/how-to-use-the-qna-manker-api-well/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Thu, 02 Nov 2017 09:08:27 +0000</pubDate>
+				<category><![CDATA[Microservice]]></category>
+		<category><![CDATA[Microsoft Azure]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[未分類]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=4470</guid>
+
+					<description><![CDATA[Microsoft provides the QnA Manker API service which is one of the Cognitive services. It&#8217;s very useful for developing a FAQ system. ・#1 Information architecture and limitation planning of information area Any FAQ system should be provided individual categories or locations, such as products, purposes of use, destinations and so on. it&#8217;s basis of information [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin: 0px 0px 0px 0px;">Microsoft provides the QnA Manker API service which is one of the Cognitive services. It&#8217;s very useful for developing a FAQ system.</p>
+<p style="display: inline;"><img decoding="async" style="width: 300px;" src="/wp-content/uploads/2018/03/QnAMakerWeb.png" alt="" /><img decoding="async" style="width: 300px;" src="/wp-content/uploads/2018/03/QnAMakerAPITop.png" alt="" /></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・#1 Information architecture and limitation planning of information area</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">Any FAQ system should be provided individual categories or locations, such as products, purposes of use, destinations and so on. it&#8217;s basis of <a style="font-weight: bold;" href="https://en.wikipedia.org/wiki/Information_architecture" target="_new" rel="noopener">information architecture</a> for users and for also the knowledge base of a system too.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">In the case of FAQ system for the Microsoft Office application, if a question involved with the Office 365 and a question of the Worksheet functions of the Excel application is separated respectively, it&#8217;s useful for users.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">It&#8217;s useful for AI too, AI does high performance when It&#8217;s used in limited information area. For example, there is very popular question pattern &#8220;How to output some data of Excel ?&#8221;, the pattern is not enough about &#8220;to something&#8221;. it&#8217;s paper or usb, monitor, CSV file and so on. In this case, AI can choose several answers but their hit score is low and similar. Although if the question throw to FAQ chat bot system of specific information area, one or two answers which hit high score is responced from AI.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">Information architecture is important for using QnA Maker API. And limitation planning of information area makes QnA Maker API more worthy. Because the QnA Maker API use the model specialized for Indexing and Ranking.</p>
+<p style="display: inline;"><img decoding="async" style="width: 600px;" src="/wp-content/uploads/2018/03/IndexingAndRanking.png" alt="" /></p>
+<p style="margin: 0px 0px 0px 5px; text-indent: 1em; text-align: right; font-weight: bold;"><a href="https://qnamaker.ai/Documentation" target="_new" rel="noopener">&gt;&gt;QnA Maker Overview</a></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・#2 Ready its data of Knowledge base</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">The QnA Maker API can import data from file of Word type, PDF type and text type, also import from FAQ website URL with analyse contents of page. So there is several pattern for manage knowledge base lifecycle.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">It is very simple, basic and naturally that the FAQ website use as master of knowledge base.</p>
+<p style="display: inline;"><img decoding="async" style="width: 600px;" src="/wp-content/uploads/2018/03/QnAMakerKBLifecycleFAQ.png" alt="" /></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・#3 Lifecycle of knowledge base</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">I recommend using Excel file for maintenance knowledge base lifecycle management.Because easy to set line break and hyperlink when create answer.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">The QnA Maker API send an answer text with line breaks, if the TSV file which is exported from knowledge base Excel includes cell&#8221;s text with line break.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">And the QnA Maker API send an answer text with hyperlink, if Excel cell is set hyper link.</p>
+<p style="display: inline;"><img decoding="async" style="width: 600px;" src="/wp-content/uploads/2018/03/KBLifecycle.png" alt="" /></p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">If want to set hyperlink to a part of text of cell, set below text.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px;">Edward Lodewijk van Halen
+[Source](http://www.starnostar.com/Eddie-Van-Halen-Question-and-Answers-Edward-Lodewijk-van-Halen-Question-Answers/9683/FAQ/)
+</pre>
+<p style="margin: 0px 0px 0px 5px; text-indent: 1em; text-align: right; font-weight: bold;"><a href="/wp-content/uploads/2018/03/Rock-Archist-QA-List.xlsx" target="_new" rel="noopener">&gt;&gt;Management knowledge base Sample by Excel</a></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2017/11/02/how-to-use-the-qna-manker-api-well/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>The microservices basis, Provide it from Microsoft Azure Service Fabric</title>
+		<link>https://blog.processtune.com/2017/03/13/the-microservices-basis-provide-it-from-microsoft-azure-service-fabric/</link>
+					<comments>https://blog.processtune.com/2017/03/13/the-microservices-basis-provide-it-from-microsoft-azure-service-fabric/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Sun, 12 Mar 2017 16:43:11 +0000</pubDate>
+				<category><![CDATA[Microservice]]></category>
+		<category><![CDATA[Microsoft Azure]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[未分類]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=2251</guid>
+
+					<description><![CDATA[・The microservices basis, Provide it from Microsoft Azure Service Fabric The agile development process is popularly adapted for software development. And the microservice design pattern is fit for the agile development process. This article describes concept of the microservice which has an aspect of the distributed system, and procedures of implement by concept of the [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・The microservices basis, Provide it from Microsoft Azure Service Fabric</p>
+<p style="margin: 0px 0px 0px 0px;">The agile development process is popularly adapted for software development. And the microservice design pattern is fit for the agile development process.</p>
+<p style="margin: 0px 0px 0px 0px;">This article describes concept of the microservice which has an aspect of the distributed system, and procedures of implement by concept of the actor model which reduces cost of developing it.</p>
+<p style="margin: 10px 0px 0px 10px;"><span style="font-weight: bold;"><a href="https://blog.processtune.com/?p=2051" target="_new" rel="noopener">&gt;&gt;The microservice design pattern</a></span></p>
+<p style="margin: 10px 0px 0px 10px;"><span style="font-weight: bold;"><a href="https://blog.processtune.com/?p=2101" target="_new" rel="noopener">&gt;&gt;Some patterns of state transferring of system</a></span></p>
+<p style="margin: 10px 0px 0px 10px;"><span style="font-weight: bold;"><a href="https://blog.processtune.com/?p=2161" target="_new" rel="noopener">&gt;&gt;A concept of the actor model, for a distributed system</a></span></p>
+<p style="margin: 10px 0px 0px 10px;"><span style="font-weight: bold;"><a href="https://blog.processtune.com/?p=2541" target="_new" rel="noopener">&gt;&gt;The Virtual Actor is the Actor model for cloud ready</a></span></p>
+<p style="margin: 10px 0px 0px 10px;"><span style="font-weight: bold;"><a href="https://blog.processtune.com/?p=2621" target="_new" rel="noopener">&gt;&gt;Microsoft Azure provides the Virtual Actor as Service Fabric Reliable Actor</a></span></p>
+<p style="margin: 10px 0px 0px 10px;"><span style="font-weight: bold;"><a href="https://blog.processtune.com/?p=2791" target="_new" rel="noopener">&gt;&gt;Create state full service web app</a></span></p>
+<p style="margin: 10px 0px 0px 10px;"><span style="font-weight: bold;"><a href="https://blog.processtune.com/?p=3001" target="_new" rel="noopener">&gt;&gt;Incorporate the Realiable Actor service to web app solution</a></span></p>
+<p style="margin: 10px 0px 0px 10px;"><span style="font-weight: bold;"><a href="https://blog.processtune.com/?p=3381" target="_new" rel="noopener">&gt;&gt;Invoke Reliable Actor from stateless Web API</a></span></p>
+<p style="margin: 10px 0px 0px 10px;"><span style=""><a href="" target="_new" rel="noopener">&gt;&gt;Deployment of the actor model solution to Microsoft Azure Service Fabric</a></span></p>
+<p style="margin: 10px 0px 0px 10px;"><span style=""><a href="" target="_new" rel="noopener">&gt;&gt;CAP for the Grain and the Reliable Actor</a></span></p>
+<p style="margin: 10px 0px 0px 10px;"><span style="font-weight: bold;"><a href="https://blog.processtune.com/?p=3191" target="_new" rel="noopener">&gt;&gt;Tips for using Service Fabric SDK #1</a></span></p>
+<p style="margin: 10px 0px 0px 10px;"><span style="font-weight: bold;"><a href="https://blog.processtune.com/?p=3301" target="_new" rel="noopener">&gt;&gt;Tips for using Service Fabric SDK #2</a></span></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2017/03/13/the-microservices-basis-provide-it-from-microsoft-azure-service-fabric/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Invoke Reliable Actor from stateless Web API</title>
+		<link>https://blog.processtune.com/2017/03/13/invoke-reliable-actor-from-stateless-web-api/</link>
+					<comments>https://blog.processtune.com/2017/03/13/invoke-reliable-actor-from-stateless-web-api/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Sun, 12 Mar 2017 16:21:59 +0000</pubDate>
+				<category><![CDATA[Microservice]]></category>
+		<category><![CDATA[Microsoft Azure]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[未分類]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=3381</guid>
+
+					<description><![CDATA[・Invoke Reliable Actor from stateless Web API In previous article, the Reliable Actor is incorporated to stateless web API. In this article, create a feature that invoke the Reliable Actor from stateless web API. And in this article, the Reliable Actor has only a function which return stub data. Sample solution First step to create [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Invoke Reliable Actor from stateless Web API</p>
+<p style="margin: 0px 0px 0px 0px;">In <span style="font-weight: bold;"><a href="https://blog.processtune.com/?p=3001" target="_new" rel="noopener">previous article</a></span>, the Reliable Actor is incorporated to stateless web API. In this article, create a feature that invoke the Reliable Actor from stateless web API. And in this article, the Reliable Actor has only a function which return stub data.</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;text-align:right;"><a href="https://1drv.ms/u/s!Amu7l9smpXSnopkgQnhEN913AUF3kQ">Sample solution</a></p>
+<p style="margin: 0px 0px 0px 0px;">First step to create communication between stateless web API and the Reliable Actor is put the Microsoft.ServiceFabric.Actors namespace into stateless web API project. Select stateless web API on the solution explorer of Visual Studio and show context menu then select [Manage NuGet package&#8230;]. Input text &#8216;servicefabric.actor&#8217; to inputbox of NuGet package manager and select [Microsoft.ServiceFabric.Actors] package then install it.</p>
+<p style="margin: 0px 0px 0px 0px;">Actor service project and its interface project incorporated to stateless web API project has been referred from Azure deploy package project. Then execute the solution.</p>
+<p style="display:inline">
+<img decoding="async" src="https://blog.processtune.com/wp-content/uploads/2017/03/01ManageNuGetPackage.png" alt="" style="width:300px;"><img decoding="async" src="https://blog.processtune.com/wp-content/uploads/2017/03/02NuGetActors.png" alt="" style="width:300px;margin-left:10px;"></p>
+<p style="margin: 10px 0px 0px 0px;">Actor service project and its interface project incorporated to stateless web API project has been referred from Azure deploy package project. Then execute the solution.</p>
+<p style="display:inline">
+<img decoding="async" src="https://blog.processtune.com/wp-content/uploads/2017/03/03agreementNuGetActors.png" alt="" style="width:300px;"><img decoding="async" src="https://blog.processtune.com/wp-content/uploads/2017/03/04installedActors.png" alt="" style="width:300px;margin-left:10px;"></p>
+<p style="margin: 10px 0px 0px 0px;">Next step is refer interface project of the Reliable Actor project. Select [Refer] and show context menu then select [Add reference], and select interface project of reference manager window.</p>
+<p style="margin: 0px 0px 0px 0px;">Actor service project and its interface project incorporated to stateless web API project has been referred from Azure deploy package project. Then execute the solution.</p>
+<p style="display:inline">
+<img decoding="async" src="https://blog.processtune.com/wp-content/uploads/2017/03/05ReferActorProject.png" alt="" style="width:300px;"><img decoding="async" src="https://blog.processtune.com/wp-content/uploads/2017/03/06referInterfaceProject.png" alt="" style="width:300px;margin-left:10px;"></p>
+<p style="margin-top: 10px; text-align: center;"><img decoding="async" style="width: 600px; align: center;" src="https://blog.processtune.com/wp-content/uploads/2017/03/07fabricUri.png" alt=""></p>
+<p style="margin: 10px 0px 0px 0px;">Then open the ValueController class in the Controllers folder of solution explorer. Put the below code at class root as global scope of the class. Add [using namespace] statements by refactoring. The Service Fabric Local Cluster Manager teachs the service Uri.</p>
+<p style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">
+<span style="color:#0000ff;">using</span> InquiryActor.Interfaces;<br />
+<span style="color:#0000ff;">using</span> Microsoft.ServiceFabric.Actors;<br />
+<span style="color:#0000ff;">using</span> Microsoft.ServiceFabric.Actors.Client;<br />
+<span style="color:#0000ff;">using</span> System;<br />
+<span style="color:#0000ff;">using</span> System.Collections.Generic;<br />
+<span style="color:#0000ff;">using</span> System.Web.Http;<br />
+<span style="color:#0000ff;">namespace</span> InquiryAsWebScrap.Controllers<br />
+{<br />
+[<span style="color:#2B91AF;">ServiceRequestActionFilter</span>]<br />
+<span style="color:#0000ff;">public class</span> <span style="color:#2B91AF;"> ValuesController : ApiController</span><br />
+{<br />
+<span style="color:#0000ff;">private static</span> <span style="color:#2B91AF;">Uri</span> serviceUri = <span style="color:#0000ff;">new</span> <span style="color:#2B91AF;">Uri</span>(<span style="color:#a11515;">&#8220;fabric:/DigUpSongs/InquiryActorService&#8221;</span>);<br />
+<span style="color:#0000ff;">private static</span> <span style="color:#2B91AF;">ActorId</span> actorId = <span style="color:#2B91AF;">ActorId</span>.CreateRandom();<br />
+<span style="color:#0000ff;">private static</span> <span style="color:#2B91AF;">IInquiryActor inquiryActor = <span style="color:#2B91AF;">ActorProxy</span>.Create&lt;<span style="color:#2B91AF;">IInquiryActor</span>&gt;(actorId, serviceUri);</span></p>
+<p style="margin: 10px 0px 0px 0px;">Last step is modify the Get method of the controller as below. Add [using namespace] statements by refactoring. And the &#8216;RunSynchronously&#8217; of below code will change at next article, because the Actor model should not be guaranteed synchronous execution.</p>
+<p style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">
+<span style="color:#0000ff;">using</span> System.Threading;<br />
+<span style="color:#0000ff;">using</span> System.Threading.Tasks;<br />
+&#8230;<br />
+<span style="color:#0000ff;">public</span> <span style="color:#2B91AF;">IEnumerable</span>&lt;<span style="color:#0000ff;">string</span>&gt; Get()<br />
+{<br />
+<span style="color:#0000ff;">int</span> result = 0;<br />
+<span style="color:#2B91AF;">CancellationToken</span> token = <span style="color:#0000ff;">new</span> <span style="color:#2B91AF;">CancellationToken</span>();<br />
+<span style="color:#0000ff;">new</span> <span style="color:#2B91AF;">Task</span>(<span style="color:#0000ff;">async</span> () =&gt; { result = <span style="color:#0000ff;">await</span> inquiryActor.GetCountAsync(token); }).RunSynchronously();<br />
+<span style="color:#0000ff;">return new string</span>[] { <span style="color:#a11515;">&#8220;result is&#8221;</span>, result.ToString() };<br />
+}</p>
+<p style="margin-top: 10px; text-align: center;"><img decoding="async" style="width: 600px; align: center;border:thin solid #444444;" src="https://blog.processtune.com/wp-content/uploads/2017/03/08APIresult.png" alt=""></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2017/03/13/invoke-reliable-actor-from-stateless-web-api/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Tips for using Service Fabric SDK #2</title>
+		<link>https://blog.processtune.com/2017/03/10/tips-for-using-service-fabric-sdk-2/</link>
+					<comments>https://blog.processtune.com/2017/03/10/tips-for-using-service-fabric-sdk-2/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Fri, 10 Mar 2017 13:11:31 +0000</pubDate>
+				<category><![CDATA[Microservice]]></category>
+		<category><![CDATA[Microsoft Azure]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[未分類]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=3301</guid>
+
+					<description><![CDATA[・If you encountered to the error that Visual Studio can&#8217;t open service fabric project. The error logged this message &#8216;The specified default content type (Default) is not defined in the project item schema&#8217;. This error occured when the Service Fabric SDK 2.4.164 with Visual Studio 2015. I recommend use Visual Studio 2017 with last released [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・If you encountered to the error that Visual Studio can&#8217;t open service fabric project.</p>
+<p style="margin: 0px 0px 0px 0px;">The error logged this message &#8216;The specified default content type (Default) is not defined in the project item schema&#8217;. This error occured when the Service Fabric SDK 2.4.164 with Visual Studio 2015. I recommend use Visual Studio 2017 with <span style="font-weight: bold;"><a href="https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-get-started" target="_new" rel="noopener">last released Service Fabric SDK</a></span>. The reason is that in present time we have not chance to get old version Service Fabric SDK.</p>
+<p style="margin-top: 10px; text-align: center;"><img decoding="async" style="width: 600px; align: center;" src="https://blog.processtune.com/wp-content/uploads/2017/03/DefaultContentTypeError.png" alt=""></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2017/03/10/tips-for-using-service-fabric-sdk-2/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

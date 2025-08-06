@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>HTML &#8211; Processtune Blog</title>
+	<atom:link href="https://blog.processtune.com/category/technical-memo/html/feed/" rel="self" type="application/rss+xml" />
+	<link>https://blog.processtune.com/</link>
+	<description>Articles offered from Microsoft MVP</description>
+	<lastBuildDate>Thu, 01 Oct 2020 01:24:38 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.8.2</generator>
+
+<image>
+	<url>/wp-content/uploads/2023/03/cropped-Presentation-32x32.png</url>
+	<title>HTML &#8211; Processtune Blog</title>
+	<link>https://blog.processtune.com/</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>You can share the devices profile of Chrome and Edge</title>
+		<link>https://blog.processtune.com/2020/10/01/you-can-share-the-devices-profile-of-chrome-and-edge/</link>
+					<comments>https://blog.processtune.com/2020/10/01/you-can-share-the-devices-profile-of-chrome-and-edge/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Thu, 01 Oct 2020 01:24:38 +0000</pubDate>
+				<category><![CDATA[Browser]]></category>
+		<category><![CDATA[CSS]]></category>
+		<category><![CDATA[HTML]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Technical Memo]]></category>
+		<category><![CDATA[未分類]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=5759</guid>
+
+					<description><![CDATA[Many devices will brows your web app. You may correspond to the situation with using media query or sometime using JavaScript. The devices profile used in the inspector feature of the Chrome browser is updated frequently, so we developers may not need modify it ( The profile for &#8216;Surface Duo&#8217; or &#8216;Galaxy Fold&#8217; are already [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin:0px 0px 0px 0px;color:#000044;font-size:0.9rem;font-family:"Segoe UI";">Many devices will brows your web app. You may correspond to the situation with using media query or sometime using JavaScript.<br />
+The devices profile used in the inspector feature of the Chrome browser is updated frequently, so we developers may not need modify it ( The profile for &#8216;Surface Duo&#8217; or &#8216;Galaxy Fold&#8217; are already included as default when I wrote this article on 1st Oct. 2020). Although, if you want to modify it since several reasons, such as that the main stream of device market of your country is not included in the emulators list, or you want to affect some visual impacts for your web app to target devices which is not included in the emulators list. You can modify and share the devices profile of the emulator launched from the inspector feature as the developer tool of Chrome and also Edge browser for team development more efficiently.<br />
+This article describes how to modify and share the profile.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2020/12/supportDevices.png" alt="" style="width:900px;"/></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Developer tools</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Modern browser such as the Chrome or the Edge and also the Safari and the Firefox provides the inspector feature for developers. It is useful to develop a web app especially when it runs, so web app developers use a emulator of the inspector feature of the developer tool to confirm how their app displayed in individual devices. Modern browser provides other features as the developer tool, this article focuses on the device emulator settings of the developer tool launch from the inspector feature of the browser.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">In the case of the Chrome browser (same as the Edge browser), right click at contents and select [Inspect] of the context menu. And then, select the icon of left top corner in the developer tool to show the device tool bar. The icon selecting means [Toggle device toolbar].</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2020/11/developerTool.png" alt="" style="width:450px;"/><img decoding="async" src="/wp-content/uploads/2020/11/deviceEmulation.png" alt="" style="width:450px;"/></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Since the browser shows contents in the [Responsive] mode, select prefer device name to confirm how the contents displayed on the device.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The developer tool keeps menu items of the emulators list, you can modify and delete the device profile which you added.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2020/11/iPhoneX.png" alt="" style="width:450px;"/><img decoding="async" src="/wp-content/uploads/2020/11/iPhoneXView.png" alt="" style="width:450px;"/></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Add a device profile</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Select the [Edit] menu item most below in the devices list of the [Responsive] menu of the tool bar, then the [Settings] page is shown, select the [Add custom device] button at the [Device] section of the [Settings] page.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Put a device name into the [Device Name] textbox, and put other settings, horizontal pixel size, vertical pixel size and user agent string. At last, confirm selected the [Mobile] item of the [User agent type] select list, and select the [Add] button to save it. This settings modifiable after saving. After figures bellow, detail of the [User agent type] select list and the [Device pixel ratio] textbox are described.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;">
+<img decoding="async" src="/wp-content/uploads/2020/11/motoGPro.png" alt="" style="width:450px;"/><img decoding="async" src="/wp-content/uploads/2020/11/motoGProView.png" alt="" style="width:450px;"/>
+</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Calculate of the Device pixel ratio (DPR)</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The DPR calculate is little bit complicate.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The ideal pixel density for distance from device to human eyes is 150 pixels per inch because if the distance from PC monitor to human eyes is 28 inch(71.12 cm) and the distance to smart phone display is 18 inch. This value is calculated from 96 pixel per inch for PC display.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">(28 divides 18) times 96 equals 149.33&#8230;.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The reason that the ideal pixel density is 96 pixel per inch for PC display is calculated from 133.33&#8230;% larger than 72 pixel per inch paper environment (one dot is similar to one pixel in legacy monitor). It was important for printing that a contents displayed in 72 pixel per inch to a monitor because the contents used to be out to144 dpi image printer in the early times of paper era.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The article of link below describes deferent distance between reading paper and display.</p>
+<p style="margin:10px 0px 0px 5px;text-indent:1em;text-align:right;font-weight:bold;">&gt;&gt;<a href="https://docs.microsoft.com/en-us/archive/blogs/fontblog/where-does-96-dpi-come-from-in-windows?WT.mc_id=DT-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">Where does 96 DPI come from in Windows?</a></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The device pixel density provided smart phone brands will be able to figure out from calculate which the physical pixel density of smart phone divides by the ideal pixel density above.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">This article use Moto G7 Power for example. At first, go to the website of the brand to confirm display specification.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">It explains</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">
+Resolution - HD+, 403 ppi
+</pre>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;">
+<img decoding="async" src="/wp-content/uploads/2020/12/motog7specifications.png" alt="" style="width:450px;"/>
+</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">so DPR is 403 divides 150 equals 2.6866&#8230;.</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Set DPR value, css width and css height</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Next step, calculate css width and css height value for settings of an emulation profile. The width of the device is 720 pixels divides 2.69 equals 268 pixels, set integer value to profile. The css height is that 1570 pixels divides 2.69 equals 584 pixels.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Last step is seeking the user agent string from internet. I could find out the user agent string of the Moto G7 Power. Then set it to the profile.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;"><img decoding="async" src="/wp-content/uploads/2020/12/motog7useragent.png" alt="" style="width:450px;"/><img decoding="async" src="/wp-content/uploads/2020/12/motog7profilesettings.png" alt="" style="width:450px;"/></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Share the settings of devices profile</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Even if you create the devices profile in the Chrome browser, it can share with Edge team members because it is defined with same structure in JSON format as the devices profile of the Edge browser inspector feature.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">
+{
+	"account_id_migration_state": 2,
+	"account_info": ...,
+	"account_tracker_service_last_update": ...,
+	"alternate_error_pages":...,
+	"autocomplete":...,
+	"autofill": ...,
+	"bookmark_bar": ...,
+	"browser":...,
+	"browser_content_container_height": 0,
+	"browser_content_container_width": 0,
+	"browser_content_container_x": 0,
+	"browser_content_container_y": 80,
+	"caretbrowsing":...,
+	"collections":...,
+	"countryid_at_install": 19024,
+	"custom_links":...,
+	"data_reduction":...,
+	"default_apps_install_state": 3,
+	"devtools": {
+		"adb_key":...,
+		"preferences": {
+			"Inspector.drawerSplitViewState": "{\"horizontal\":{\"size\":0,\"showMode\":\"OnlyMain\"}}",
+			"InspectorView.splitViewState": "{\"vertical\":{\"size\":0}}",
+			"closeableTabs": "{\"security\":true,\"heap_profiler\":true,\"resources\":true,\"lighthouse\":true}",
+			"currentDockState": "\"right\"",
+			"customEmulatedDeviceList": "[
+				{
+					\"title\": \"Motorola moto g7 power\",
+					\"type\": \"unknown\",
+					\"user-agent\": \"Mozilla/5.0 (Linux; Android 9; moto g(7) power) AppleWebKit
+									/537.36 (KHTML, like Gecko) Chrome/71.0.3578.99 Mobile Safari/537.36\",
+					\"capabilities\": [
+						\"mobile\",
+						\"touch\"
+					],
+					\"screen\": {
+						\"device-pixel-ratio\": 1.8,
+						\"vertical\": {
+							\"width\": 400,
+							\"height\": 844
+						},
+						\"horizontal\": {
+							\"width\": 844,
+							\"height\": 400
+						}
+					},
+					\"modes\": [
+						{
+							\"title\": \"\",
+							\"orientation\": \"vertical\",
+							\"insets": {
+								\"left\": 0,
+								\"top\": 0,
+								\"right\": 0,
+								\"bottom\": 0
+							}
+						},
+						{
+							\"title\": \"\",
+							\"orientation\": \"horizontal\",
+							\"insets\": {
+								\"left\": 0,
+								\"top\": 0,
+								\"right\": 0,
+								\"bottom\": 0
+							}
+						}
+					],
+					\"show-by-default\": true,
+					\"dual-screen\": false,
+					\"show\": \"Default\"
+				}
+			]",
+			"elements.styles.sidebar.width": "{\"vertical\":{\"size\":0,\"showMode\":\"OnlyMain\"}}",
+			"emulation.deviceModeValue": "{\"device\":\"\",\"orientation\":\"\",\"mode\":\"\"}",
+			"emulation.showDeviceMode": "true",
+			"emulation.showDeviceOutline": "false",
+			"inspectorVersion": "30",
+			"releaseNoteVersionSeen": "27",
+			"standardEmulatedDeviceList":...,
+			"undefined-tabOrder": ...
+		}
+	},
+	"domain_diversity":...,
+	"download": ...,
+	"dual_engine": ...,
+	"edge": ...,
+	"extensions":...,
+	"family_safety": ...,
+	"google":...,
+	"http_original_content_length": "3375462",
+	"http_received_content_length": "3375462",
+	"invalidation":...,
+	"language_model_counters":...,
+	"media":...,
+	"media_router": ...,
+	"ntp":...,
+	"open_save_as_awareness_ui":...,
+	"password_manager":...,
+	"plugins":...,
+	"previews": ...,
+	"profile":...,
+	"reset_prepopulated_engines": false,
+	"safebrowsing":...,
+	"settings":...,
+	"signin": ...,
+	"spellcheck":...,
+	"sync": ...,
+	"translate_accepted_count": ...,
+	"translate_blocked_languages": ...,
+	"translate_denied_count_for_language":...,
+	"translate_last_denied_time_for_language":...,
+	"translate_site_blacklist_with_time": {},
+	"translate_too_often_denied_for_language": ...,
+	"unified_consent":...,
+	"web_apps":...
+}
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">If Microsoft Edge browser team create the profile, the emulator profile is at &#8220;\%AppData%\Local\Microsoft\Edge\User Data\Default\Preferences&#8221; of the profile creator folder in the &#8220;C:\Users\&#8221; directory. So, share segment of &#8220;devtools-preferences-customEmulatedDeviceList&#8221; array JSON.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">In the case that Chrome team creates the profile, it is at &#8220;\%AppData%\Local\Google\Chrome\User Data\Default\Preferences&#8221;.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">One point I have to say, &#8220;devtools-preferences-customEmulatedDeviceList-type&#8221; property is not saved to the profile, I&#8217;ll ask product team of Microsoft.</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2020/10/01/you-can-share-the-devices-profile-of-chrome-and-edge/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

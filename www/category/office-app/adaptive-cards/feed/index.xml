@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Adaptive Cards &#8211; Processtune Blog</title>
+	<atom:link href="https://blog.processtune.com/category/office-app/adaptive-cards/feed/" rel="self" type="application/rss+xml" />
+	<link>https://blog.processtune.com/</link>
+	<description>Articles offered from Microsoft MVP</description>
+	<lastBuildDate>Fri, 22 May 2020 20:25:53 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.8.2</generator>
+
+<image>
+	<url>/wp-content/uploads/2023/03/cropped-Presentation-32x32.png</url>
+	<title>Adaptive Cards &#8211; Processtune Blog</title>
+	<link>https://blog.processtune.com/</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>Change JsonConvert to JsonSerializer</title>
+		<link>https://blog.processtune.com/2020/05/23/change-jsonconvert-to-jsonserializer/</link>
+					<comments>https://blog.processtune.com/2020/05/23/change-jsonconvert-to-jsonserializer/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Fri, 22 May 2020 20:25:53 +0000</pubDate>
+				<category><![CDATA[.NET Core]]></category>
+		<category><![CDATA[Adaptive Cards]]></category>
+		<category><![CDATA[Office App]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Visual Studio]]></category>
+		<category><![CDATA[WinUI]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=5620</guid>
+
+					<description><![CDATA[When using a web API, a program has to implement serialize and deserialize features in many cases. the &#8216;Newtonsoft.Json.JsonConvert.Deserialize(_json_)&#8217; and the &#8216;Newtonsoft.Json.JsonConvert.SerializeObject(_object_)&#8217; is useful so far, and if a program unknowns a json text as type, the &#8216;Newtonsoft.Json.JsonConvert.Deserialize(_json_)&#8217; and the &#8216;Newtonsoft.Json.Linq.JArray[&#8220;_propertyname_&#8221;]&#8217; is useful. Microsoft provides new docs &#8216;How to migrate from Newtonsoft.Json to System.Text.Json&#8216;. Here [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin:0px 0px 0px 0px;color:#000044;font-size:0.9rem;font-family:"Segoe UI";">When using a web API, a program has to implement serialize and deserialize features in many cases.<br />
+the &#8216;Newtonsoft.Json.JsonConvert.Deserialize<t>(_json_)&#8217; and the &#8216;Newtonsoft.Json.JsonConvert.SerializeObject(_object_)&#8217; is useful so far, and if a program unknowns a json text as type, the &#8216;Newtonsoft.Json.JsonConvert.Deserialize<newtonsoft.Json.Linq.JObject>(_json_)&#8217; and the &#8216;Newtonsoft.Json.Linq.JArray[&#8220;_propertyname_&#8221;]&#8217; is useful.<br />
+Microsoft provides new docs &#8216;<a href="https://docs.microsoft.com/en-us/dotnet/standard/serialization/system-text-json-migrate-from-newtonsoft-how-to" target="_new" style="font-weight:bold;" rel="noopener">How to migrate from Newtonsoft.Json to System.Text.Json</a>&#8216;.<br />
+Here this article describes how to deserialize JSON text with a type definition using System.Text.Json.JsonSerializer, and also how to deserialize unknown type JSON text. The &#8216;System.Text.Json.JsonSerializer.Serialize(_object_)&#8217; and the &#8216;System.Text.Json.JsonDocument.Parse(_json_).RootElement.GetProperty(&#8220;_propertyname_&#8221;).GetString()&#8217; are mentioned too.</p>
+<p style="display:inline-block;margin-bottom:10px;">
+<img decoding="async" src="/wp-content/uploads/2020/05/NewtonToSystem.png" alt="" style="width:600px;box-shadow: 5px 5px 5px rgba(0,0,0,0.4);border:thin solid #ccc;"/></p>
+<p style="margin:10px 0px 0px 5px;text-indent:1em;text-align:right;font-weight:bold;">&gt;&gt;<a href="https://github.com/TetsuroTakao/NewtonToSystem" target="_new" style="font-weight:bold;" rel="noopener">The code sample of this article</a></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Create WinUI App</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;"><a href="https://github.com/TetsuroTakao/NewtonToSystem" target="_new" style="font-weight:bold;" rel="noopener">The code sample of this article</a> is created as the Windows UI 3 application(Hereinafter referred to as WinUI). The WinUI 3 app is described at the Microsoft Docs article &#8216;<a href="https://docs.microsoft.com/en-us/windows/apps/winui/winui3/" target="_new" style="font-weight:bold;" rel="noopener">Windows UI Library 3.0 Preview 1 (May 2020)</a>&#8216; as setting the environment to create Windows UI app. And also the reference to the &#8216;<a href="https://github.com/microsoft/Xaml-Controls-Gallery/tree/winui3preview" target="_new" style="font-weight:bold;" rel="noopener">Xaml Controls Gallery (WinUI 3.0 Preview 1 branch)</a>&#8216; is mentioned.</p>
+<p style="display:inline-block;margin-bottom:10px;">
+<img decoding="async" src="/wp-content/uploads/2020/05/msdocs.png" alt="" style="width:600px;box-shadow: 5px 5px 5px rgba(0,0,0,0.4);border:thin solid #ccc;"/></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">I have decided to change the &#8216;NewtonSoft&#8217; namespace provides serialization features (that I had used a long time), to System namespace at this opportunity.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The WinUI app is created from a template at first.</p>
+<p style="display:inline-block;margin-bottom:10px;">
+<img decoding="async" src="/wp-content/uploads/2020/05/createproject.png" alt="" style="width:600px;box-shadow: 5px 5px 5px rgba(0,0,0,0.4);border:thin solid #ccc;"/>
+</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The below figure is the structure of the solution(left). And this article describes compared with the &#8216;Newtonsoft&#8217; namespace and the &#8216;System&#8217; namespace, thus the code sample defined a reference to the library through the NuGet(rihgt).</p>
+<p style="display:inline-block;margin-bottom:10px;">
+<p style="display:inline-block;margin-bottom:10px;">
+<img decoding="async" src="/wp-content/uploads/2020/05/solutionstructure.png" alt="" style="width:300px;box-shadow: 5px 5px 5px rgba(0,0,0,0.4);border:thin solid #ccc;"/> <img decoding="async" src="/wp-content/uploads/2020/05/nuget.png" alt="" style="width:300px;box-shadow: 5px 5px 5px rgba(0,0,0,0.4);border:thin solid #ccc;"/>
+</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Create View</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">At first, it is good to define simple title of the window and put one or two buttons at the view then run the application press F5 key, because the WinUI 3 app is still a preview that has not a design feature for Visual Studio. The figures below define the title of the window.</p>
+<p style="display:inline-block;margin-bottom:10px;">
+<img decoding="async" src="/wp-content/uploads/2020/05/appxaml.png" alt="" style="width:300px;box-shadow: 5px 5px 5px rgba(0,0,0,0.4);border:thin solid #ccc;"/> <img decoding="async" src="/wp-content/uploads/2020/05/appxamlcs.png" alt="" style="width:300px;box-shadow: 5px 5px 5px rgba(0,0,0,0.4);border:thin solid #ccc;"/>
+</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">If it is able to launch, continue to design complex layouts at the next.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The text box above will hold something JSON string, and the text box below will generate formatted text of the object that analyzed from JSON string above.</p>
+<p style="display:inline-block;margin-bottom:10px;">
+<img decoding="async" src="/wp-content/uploads/2020/05/mainwindowxaml.png" alt="" style="width:600px;box-shadow: 5px 5px 5px rgba(0,0,0,0.4);border:thin solid #ccc;"/>
+</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">This sample is omitted visual design, actually, the WinUI 3 can implement the Fluent Design using the Fluent Design system of Windows 10. For instance, can apply shadow to the controls, can use modern controls such as the hiding scroll bars(thin bar), and can use the dark mode theme(see Microsoft Build 2020 session &#8216;<a href="https://mybuild.microsoft.com/sessions/7d5b56db-d367-43ac-9163-44de4e3919e8?source=sessions" target="_new" style="font-weight:bold;" rel="noopener">Everything you need to know about WinUI</a> 11:43 -&#8216;).</p>
+<p style="display:inline-block;margin-bottom:10px;">
+<img decoding="async" src="/wp-content/uploads/2020/05/appexecute.png" alt="" style="width:600px;box-shadow: 5px 5px 5px rgba(0,0,0,0.4);border:thin solid #ccc;"/>
+</p>
+<p style="margin: 0px 10px 0px 0px;text-indent:1em;">In the code behind, when the button pressed, the app will acquire the JSON string from web API through the facade. This JSON string will be put into the public property of the facade as the &#8216;original JSON string&#8217;. then in this UI thread, put it to the text property of the text box that means the &#8216;original JSON string&#8217;. As the same, the web API URL also set to the public property of the facade at now, in the future it might be able to set from out of the facade.<br />
+The button sends the argument that means which namespaces will be used to deserialize the JSON string. Then acquire a formatted string as a result that will be put to the text property of the text box that means the &#8216;Formatted string&#8217;.
+</p>
+<p style="display:inline-block;margin-bottom:10px;">
+<img decoding="async" src="/wp-content/uploads/2020/05/mainwindowxamlcs.png" alt="" style="width:600px;box-shadow: 5px 5px 5px rgba(0,0,0,0.4);border:thin solid #ccc;"/>
+</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">On the original JSON string as a sample will acquire from the web API that is provided from an adaptive card template list. It is a good sample because it provides not a standard typed JSON string.</p>
+<p style="margin: 0px 10px 0px 0px;text-indent:1em;">This JSON string contains all templates of the adaptive card, so the first layer elements of the root element have not property name. This kind type of JSON string is impossible to deserialize through prepared types. So this web API provides search features of organization information. Please refer to the Microsoft document &#8216;<a href="https://docs.microsoft.com/en-us/adaptive-cards/templating/service" target="_new" style="font-weight:bold;" rel="noopener">Adaptive Cards Template Service</a>&#8216;.
+</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">
+{
+  "cdm": {
+    "templates": [
+      {
+        "file": "Categories.json",
+        "fullPath": "cdm/Categories.json"
+      }
+    ]
+  },
+  "finos.org": {
+    "templates": [
+      {
+        "file": "Bond.json",
+        "fullPath": "finos.org/Bond.json"
+      }
+    ]
+  },
+  "github.com": {
+    "templates": [
+      {
+        "file": "issue_webhook.data.json",
+        "fullPath": "github.com/issue_webhook.data.json"
+      },
+      {
+        "file": "issue_webhook.json",
+        "fullPath": "github.com/issue_webhook.json"
+      }
+    ]
+  },
+  ...
+}
+</pre>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Flow per conditions</p>
+<p style="margin: 0px 10px 0px 0px;text-indent:1em;">In the facade, if the argument means using the ‘Newtonsoft’ namespace, the method deserializes the JSON string using correct namespace(in the left figure). In the case of the ‘System’ namespace, the method throws the part that picked github.com of the JSON string to the method that parses the JSON(in the right figure). Not use the ‘Newtonsoft’ namespace from now, thus it divided from the method using the ‘System’ namespace.</p>
+<p style="margin: 0px 10px 0px 0px;text-indent:1em;">This type of JSON string can not deserialize through prepared type, because the property that wants to except is only one(organization name such as the &#8216;github.com&#8217; in above JSON string figure) and it can not use <a href="https://docs.microsoft.com/ja-jp/dotnet/api/system.text.json.serialization.jsonextensiondataattribute?view=netcore-3.1" target="_new" style="font-weight:bold;" rel="noopener">the &#8216;JsonExtensionData&#8217; attribute of the &#8216;System.Text.Json.Serialization.JsonExtensionDataAttribute&#8217; class</a>(see Microsoft document &#8216;<a href="https://docs.microsoft.com/en-us/dotnet/standard/serialization/system-text-json-how-to" target="_new" style="font-weight:bold;" rel="noopener">How to serialize and deserialize (marshal and unmarshal) JSON in .NET</a>&#8216;).
+</p>
+<p style="margin: 0px 10px 0px 0px;text-indent:1em;">In Case 3, It does not use the &#8216;CardModel&#8217; type but use the &#8216;templates&#8217; property of the &#8216;RootElement&#8217; that parse by the &#8216;JsonDocument&#8217;, because as aforementioned, a prepared type can not define using the &#8216;JsonExtensionData&#8217; attribute.
+</p>
+<p style="display:inline-block;margin-bottom:10px;">
+<img decoding="async" src="/wp-content/uploads/2020/05/facadenewton.png" alt="" style="width:300px;box-shadow: 5px 5px 5px rgba(0,0,0,0.4);border:thin solid #ccc;"/> <img decoding="async" src="/wp-content/uploads/2020/05/facadesystem.png" alt="" style="width:300px;box-shadow: 5px 5px 5px rgba(0,0,0,0.4);border:thin solid #ccc;"/></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Convert from the Newtonsoft namespace to the System namespace
+</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The comment &#8216;Case 1&#8217; of the &#8216;GetCard&#8217; method is converted to the comment &#8216;Case 3&#8217; of the &#8216;GetJsonString&#8217; method at the &#8216;TextController&#8217; class. These processes are sample code of using prepared type to deserialize an object.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">
+// Case 1. Using the Newtonsoft namespace to parse an object as deserializing through prepared type.
+var cardTemplates = JsonConvert.DeserializeObject&lt;CardModel&gt;(cards);
+results.Add("Result of the Case 1.");
+foreach (var t in cardTemplates.templates)
+{
+    results.Add(string.Format("file = [{0}], fullPath = [{1}]", t.file, t.fullPath));
+}
+result = string.Join(Environment.NewLine, results);
+
+to
+
+// Case 3. Using the System namespace to parse an object as deserializing through prepared type.
+var cards = JsonDocument.Parse(json).RootElement.GetProperty("templates");
+var templates = JsonSerializer.Deserialize&lt;List&lt;Template&gt;&gt;(cards.ToString());
+result.Add("Result of the Case 3.");
+foreach (var t in templates)
+{
+    result.Add(string.Format("file = [{0}], fullPath = [{1}]", t.file, t.fullPath));
+}
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The type &#8216;CardModel&#8217; has the &#8216;templates&#8217; property as a list of the &#8216;Template&#8217; type. The &#8216;Template&#8217; type has the &#8216;file&#8217; property and the &#8216;fullPath&#8217; property as string type. The name of these properties can define the camel-type because these properties have the &#8216;JsonPropertyName&#8217; attribute. These attributes have to coincident with the name of the property name of the JSON string.</p>
+<p style="display:inline-block;margin-bottom:10px;">
+<img decoding="async" src="/wp-content/uploads/2020/05/textcontroller.png" alt="" style="width:300px;box-shadow: 5px 5px 5px rgba(0,0,0,0.4);border:thin solid #ccc;"/> <img decoding="async" src="/wp-content/uploads/2020/05/cardmodel.png" alt="" style="width:300px;box-shadow: 5px 5px 5px rgba(0,0,0,0.4);border:thin solid #ccc;"/></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">In Case 3, It does not use the &#8216;CardModel&#8217; type but use the &#8216;templates&#8217; property of the &#8216;RootElement&#8217; that parse by the &#8216;JsonDocument&#8217;, because as aforementioned, a prepared type can not define using the &#8216;JsonExtensionData&#8217; attribute.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">On the other hand, instead of using a prepared type, using the &#8216;JsonElement&#8217; that created by the &#8216;EnumerateArray&#8217; method of the parsed object.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">
+// Case 2. To parse an object as deserializing that through the 'JObect' of the Newtonsoft namespace.
+// Use this process if you can't prepare the type of the JSON, or the type is not a complex structure.
+var templates = JsonConvert.DeserializeObject&lt;JObject&gt;(cards);
+var templatesArray = templates["templates"].ToArray();
+results.Add("Result of the Case 2.");
+foreach (var t in templatesArray)
+{
+    results.Add(string.Format("file = [{0}], fullPath = [{1}]", t["file"].ToString(), t["fullPath"].ToString()));
+}
+result = string.Join(Environment.NewLine, results);
+
+to
+
+// Case 4. To parse an object as deserializing that through the 'JsonDocument' of the System namespace.
+// Use this process if you can't prepare the type of the JSON, or the type is not a complex structure.
+result.Add("Result of the Case 4.");
+foreach (var t in cards.EnumerateArray().ToList())
+{
+    result.Add(string.Format("file = [{0}], fullPath = [{1}]", t.GetProperty("file").GetString(), t.GetProperty("fullPath").GetString()));
+}
+return string.Join(Environment.NewLine,result);
+</pre>
+<p style="display:inline-block;margin-bottom:10px;">
+<img decoding="async" src="/wp-content/uploads/2020/05/appexecuted.png" alt="" style="width:600px;box-shadow: 5px 5px 5px rgba(0,0,0,0.4);border:thin solid #ccc;"/></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2020/05/23/change-jsonconvert-to-jsonserializer/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

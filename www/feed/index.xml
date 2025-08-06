@@ -1,0 +1,1277 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Processtune Blog</title>
+	<atom:link href="https://blog.processtune.com/feed/" rel="self" type="application/rss+xml" />
+	<link>https://blog.processtune.com/</link>
+	<description>Articles offered from Microsoft MVP</description>
+	<lastBuildDate>Tue, 15 Apr 2025 06:40:53 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.8.2</generator>
+
+<image>
+	<url>/wp-content/uploads/2023/03/cropped-Presentation-32x32.png</url>
+	<title>Processtune Blog</title>
+	<link>https://blog.processtune.com/</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>Mind map creation with markdown notation on visual studio code</title>
+		<link>https://blog.processtune.com/2024/04/28/mind-map-creation-with-markdown-notation-on-visual-studio-code/</link>
+					<comments>https://blog.processtune.com/2024/04/28/mind-map-creation-with-markdown-notation-on-visual-studio-code/#respond</comments>
+		
+		<dc:creator><![CDATA[TETSURO TAKAO]]></dc:creator>
+		<pubDate>Sun, 28 Apr 2024 06:57:00 +0000</pubDate>
+				<category><![CDATA[Markdown]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Uncategorized]]></category>
+		<category><![CDATA[markdown]]></category>
+		<category><![CDATA[Mind map]]></category>
+		<category><![CDATA[Visual studio code]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=7862</guid>
+
+					<description><![CDATA[Though there are many extensions to show mindmap on Visual Studio Code, it is better that the feature can use as possible as with common notation, and as simple installation for using it. The PlantUML can define various visuals of UML and mindmap from plane markdown, JSON data or YAML data and so on, these [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin: 0px 0px 0px 0px; color: #000044; font-size: 1.1rem;">Though there are many extensions to show <a style="font-weight: bold;" href="https://en.wikipedia.org/wiki/Mind_map" target="_new" rel="noopener">mindmap</a> on Visual Studio Code, it is better that the feature can use as possible as with common notation, and as simple installation for using it. <a style="font-weight: bold;" href="https://plantuml.com/" target="_new" rel="noopener">The PlantUML</a> can define various visuals of UML and mindmap from plane markdown, JSON data or YAML data and so on, these visual includes a legend, a title or a footer.</p>
+<p style="margin: 0px 0px 0px 0px; color: #000044; font-size: 1.1rem;">And it&#8217;s my opinion that the <a style="font-weight: bold;" href="https://marketplace.visualstudio.com/items?itemName=shd101wyy.markdown-preview-enhanced" target="_new" rel="noopener">Markdown Preview Enhanced</a> extension of Visual Studio Code is one of good extension, because it has features of easy installing and operation to represent various diagrams including mindmap.</p>
+<p style="margin: 0px 0px 0px 0px; color: #000044; font-size: 1.1rem;">Normally, to run preview of PlantUML needs the Java runtime although, the Markdown Preview Enhanced can define server URL for rendering. So it is not need complicate installing or settings that if it would have negative impact to existing development environment.</p>
+<p style="margin: 0px 0px 0px 0px; color: #000044; font-size: 1.1rem;">This article describes how to use the Markdown Preview Enhanced extension and how to create several views using PlantUML.</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 1.1rem;">•  Install Markdown Preview Enhanced and setting PlantUML rendering server URL</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">Launch Visual Studio Code and select [Extension] icon from [Activate bar], then type &#8216;markdown&#8217; in [Search box] and select Markdown Preview Enhanced for installing. After installing the extension, select [File] menu and drilled down to [Settings] sub menu using right arrow.</p>
+<p style="display: inline-block; margin: 0px 0px 10px 0px; text-align: center; white-space: nowrap; width: 100%;"><img decoding="async" style="width: 440px;" src="/wp-content/uploads/2024/10/MarkdownPreviewEnhancedExtension.png" alt="" /><img decoding="async" style="width: 440px;" src="/wp-content/uploads/2024/10/VSCodeSettings.png" alt="" /></p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">Type &#8216;markdownenhanced&#8217; at search box of [Settings] window, and put &#8216;https://www.plantuml.com/plantuml&#8217; into [Markdown-preview-enhanced: Plantuml Server].</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">At following section, create new file and save as markdown file on Visual Studio Code, and define PlantUML then modify it actually.</p>
+<p style="display: inline-block; margin: 0px 0px 10px 0px; text-align: center; white-space: nowrap; width: 100%;"><img decoding="async" style="width: 900px;" src="/wp-content/uploads/2024/10/savemdfile.png" alt="" /></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 1.1rem;">• Write markdown first then it would be defined to PlantUML I recommend.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">Mindmap is useful for ordering items of meeting such as individual speech of minutes or actions until next meeting and so on. In these days, recording or creating transcription using AI is very helpful although, writing mindmap has helping organize thought of my own thinking for me. Same as memo that individual member wrote, generated summary of the meeting is only one of the memos wrote by one of attendees. Thus, I always write the memo as the Markdown file.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px;"># Agenda: AI Education contents for e-learning program
+
+## 1) Assembling AI terms is for readers to be able to refer it always
+
+### Models
+
+#### 1. Closed models
+
+*Please fulfil this level contents at **next meeting**.*
+  
+#### 2. Open-source models
+
+#### 3. Open weight models
+
+#### 4. Mixture of Experts
+
+#### 5. Optimized model for hardware
+
+### Training and Size
+
+#### 1. Parameters, Languages, Input window size and Specs of LLMs, SLMs
+
+#### 2. Quantization
+
+#### 3. Distillation(knowledge or Concept)
+
+#### 4. Low Rank Adaptation, RAGBench
+
+### Runtime, Pipeline(Embeddings: tokenize + vectorize)
+
+#### 1. Ollama, LlamaIndex, Redis Vector Store, RedisVL, LangChain, Milvus, Postgres Vector Store, TensorFlow, Transformers
+
+#### 2. Llama Hub, Hugging Face Hub, Model Zoo, PyTorch Hub
+
+#### 3. OpenAI, AI managed services(AWS,  Azure, Google Cloud, IBM, Oracle Cloud)
+
+#### 4. GGML, GGUF, GPTQ, ONNX
+
+#### 5. Byte pair encoding, Dimentions
+
+### AI Agent, AI Orchestration, Multi-modal
+
+#### 1. Prompting and Zero-shot
+
+#### 2. Task specific of business flow
+
+#### 3. Thought and select appropriate models
+
+#### 4. Image and voice
+
+#### 5. Video
+
+#### 6. RAG (Dictionary of bilingual: prefix and suffix, misspell and typo, task-specific word)
+
+### Micro-services, Observability, Sidecar pattern and Service Mesh
+
+#### 1. Combine several AI services
+
+#### 2. Distributed tracing
+
+#### 3. Proxy, Service discovery, Logging, Distributed hash table, Connectors, Queue
+
+#### 4. Containers
+
+---
+
+## 2) Solutions structure sample of AI
+
+### Deploy with AI agent services
+
+#### 1. AWS
+
+#### 2. Azure
+
+#### 3. Google cloud
+
+### Development on-premise
+
+#### 0. Development containers
+
+#### 1. Python
+
+#### 2. C\#
+
+#### 3. Rust
+
+### Data persistence and in-memory cache
+
+#### 1. BERT
+
+#### 2. Llama
+
+#### 3. Data store services (Microsoft 365, BigQuery, Elastic, Databricks, OneLake, Snowflake, AWS Lake Formation)
+
+#### 4. Cache(Redis: Google Cloud Memorystore, AWS ElastiCache, Azure Cache for Redis, Azure Managed Redis)
+
+#### 5. Perquit and Delta
+
+#### 6. Vector stores
+
+#### 7. Graph stores
+
+</pre>
+<p style="display: inline-block; margin: 0px 0px 10px 0px; text-align: center; white-space: nowrap; width: 100%;"><img decoding="async" style="width: 900px;" src="/wp-content/uploads/2024/12/PreviewMarkdown.png" alt="" /></p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">The memo of meeting as sample above says outline of &#8216;AI Education contents for e-learning program&#8217;. And must review this outline with considering order or classification individual items before fulfilling the contents until next meeting. So would modify to a the Mindmap from this markdown at first.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px;">``` plantuml
+@startmindmap
+
+# Agenda: AI Education contents for e-learning program
+
+## 1) Assembling AI terms are for readers to be able to refer it always
+
+### Models
+
+#### 1. Closed models
+
+' *Please fulfil this level contents at **next meeting**.*
+  
+#### 2. Open-source models
+
+' --------------omit below------------------
+@endmindmap
+```
+</pre>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">It&#8217;s easy to convert plane mark down notation to PlantUML, type &#8216;&#8220;` plantuml&#8217; at the first line and &#8216;@startmindmap&#8217; at the second line then type &#8216;@endmindmap&#8217; at the last of contents then type &#8216;&#8220;`&#8217; at the last line. In the contents, comment out with &#8216; &#8216;(single quate)&#8217; at all lines excludes the lines of sharp character starting. At last, adjust levels use sharp symbol if it needs and type [Ctrl] + [Shift] + [V] for show preview window.</p>
+<p style="display: inline-block; margin: 0px 0px 10px 0px; text-align: center; white-space: nowrap; width: 100%;"><img decoding="async" style="width: 900px;" src="/wp-content/uploads/2024/12/PreviewMindmap.png" alt="" /></p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1 rem;">This convert working is easy if become to familiar, even If feel toroublesome, say &#8216;Please convert the following text written in markdown into a mindmap in Plantuml.&#8217; to Microsoft Copilot.</p>
+<p style="display: inline-block; margin: 0px 0px 10px 0px; text-align: center; white-space: nowrap; width: 100%;"><img decoding="async" style="width: 450px;" src="/wp-content/uploads/2025/03/AskCreatingMindmapToCopilot.png" alt="" /><img decoding="async" style="width: 450px;" src="/wp-content/uploads/2025/03/GenerateMaindmapByCopilot.png" alt="" /></p>
+<p style="display: inline-block; margin: 0px 0px 10px 0px; text-align: center; white-space: nowrap; width: 100%;"><img decoding="async" style="width: 900px;" src="/wp-content/uploads/2025/03/PreviewGeneratedMindmap.png" alt="" /></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 1.1rem;">• Define Header/Footer elements, and change the agenda to title</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">Header and footer elements needs &#8216;endheader&#8217; or &#8216;endfooter&#8217; when includes word wrapped contents. Define word wrap of other elements with &#8216;\n&#8217;.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">Font tag and center statement also enable to use for visual adjustment.<br />
+And more, if change symbols of sub tree at root nodes, same symbol marked tree elements are rendered as trees at both sides of root node. Sample below using &#8216;#&#8217; and &#8216;-&#8216; symbol for rendering at both sides of root node. The &#8216;+&#8217; or &#8216;*&#8217; symbol can also use although, it rendered at same side of &#8216;#&#8217;.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px;">``` plantuml
+@startmindmap
+title &lt;font:Segoe UI&gt;AI e-learning structure&lt;/font&gt;
+header
+    create [Tetsuro Takao] [first Apr. 2024]
+    modify [name] [date]
+endheader
+
+# AI Education contents
+
+## 1) Assembling AI terms is for \n readers to be able to refer it always
+
+### Models
+
+#### 1. Closed models \n //Please fullfil this level contents at **next meeting**.//
+
+#### 2. Open-source models
+
+#### 3. Open weight models
+
+#### 4. Mixture of Experts
+
+#### 5. Optimized model for hardware
+
++++ Training and Size
+
+++++ 1. Parameters, Languages, Input window size and Specs of LLMs, SLMs
+
+++++ 2. Quantization
+
+++++ 3. Distillation(Knowridge or Concept)
+
+++++ 4. Low Rank Adaptation, RAGBench
+
+*** Runtime, Pipeline(Embeddings: tokenize + vectorize)
+
+**** 1. Ollama, LlamaIndex, Redis Vector Store, RedisVL, \n Langchain, Milvus, Postgres Vector Store, TensorFlow, Transformers
+
+**** 2. Llama Hub, Hugging Face Hub, Model Zoo, PyTorch Hub
+
+**** 3. OpenAI, AI managed services(AWS,  Azure, Google Cloud, IBM, Oracle Cloud)
+
+**** 4. GGML, GGUF, GPTQ, ONNX
+
+**** 5. Byte pair encording, Dimentions
+
+' --------------omit below------------------
+
+-- 2) Solutions structure sample of AI
+
+--- Deploy with AI agent services
+
+---- 1. Amazon Bedrock
+
+---- 2. Azure AI Services, Azure Open AI Services
+
+---- 3. Google cloud Vertex AI
+
+' --------------omit below------------------
+center footer &lt;font:Segoe UI&gt;Page - 1 -&lt;/font&gt;
+@endmindmap
+```
+</pre>
+<p style="display: inline-block; margin: 0px 0px 10px 0px; text-align: center; white-space: nowrap; width: 100%;"><img decoding="async" style="width: 900px;" src="/wp-content/uploads/2024/12/PreviewMindmapBothSides.png" alt="" /></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2024/04/28/mind-map-creation-with-markdown-notation-on-visual-studio-code/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Steps of Introducing AI to companies</title>
+		<link>https://blog.processtune.com/2024/03/26/steps-of-introducing-ai-to-companies/</link>
+					<comments>https://blog.processtune.com/2024/03/26/steps-of-introducing-ai-to-companies/#respond</comments>
+		
+		<dc:creator><![CDATA[TETSURO TAKAO]]></dc:creator>
+		<pubDate>Tue, 26 Mar 2024 09:01:59 +0000</pubDate>
+				<category><![CDATA[AI]]></category>
+		<category><![CDATA[Microsoft Azure]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=7686</guid>
+
+					<description><![CDATA[The previous article [Introducing Artificial Intelligence (AI) in Companies] describes &#8220;AI has objectives depending on its scale&#8221;, &#8220;AI in companies is effective through orchestration using small language models&#8221; and &#8220;Information sources confidentiality also needs to be protected in AI&#8221;. Additionally, it describes &#8220;In the case of Microsoft 365 data is information sources, the confidentiality is [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin: 0px 0px 10px 0px; color: #000044; font-size: 1.4rem; font-weight: normal; line-height: 1.6rem; padding: 10px 0px 10px 20px; border-radius: 60% 90% 90% 60%; font-family: Times, serif; background: linear-gradient(to right, #fff, #ccf, #fff);">The previous article [<a style="font-weight: bold;" href="https://blog.processtune.com/2024/02/07/introducing-artificial-intelligence-ai-in-companies/" target="_new" rel="noopener">Introducing Artificial Intelligence (AI) in Companies</a>] describes &#8220;AI has objectives depending on its scale&#8221;, &#8220;AI in companies is effective through orchestration using small language models&#8221; and &#8220;Information sources confidentiality also needs to be protected in AI&#8221;.<br />
+Additionally, it describes &#8220;In the case of Microsoft 365 data is information sources, the confidentiality is best on Microsoft 365 rather than moving to other storages&#8221; and &#8220;In the case of the information sources being non-Microsoft 365 data, Information sources should be stored in individual storages that match access permissions, and divided schemes of several AI on orchestration foundation when <a style="font-weight: bold;" href="https://en.wikipedia.org/wiki/Federated_identity" target="_new" rel="noopener">the identity federation</a> is not complete&#8221;.</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 1.1rem;">• In the case of the information sources being non-Microsoft 365 data and In the case of the identity federation is complete.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">If the identity federation is aggregated to the Entra ID account, it is good that information sources are stored as Azure resources. Even if information sources are non-Microsoft 365 data, it is super easy to control access to information sources of AI.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">Information sources can be prepared or real time. <a style="font-weight: bold;" href="https://learn.microsoft.com/en-us/azure/ai-services/openai/use-your-data-quickstart?wt.mc_id=DT-MVP-4029060" target="_new" rel="noopener">[Add your data] feature</a> of <a style="font-weight: bold;" href="https://azure.microsoft.com/en-us/products/ai-studio?wt.mc_id=DT-MVP-4029060" target="_new" rel="noopener">Azure AI Studio</a> supports various file types. Or using connector supports Azure AI Search, Azure Cosmos DB for MongoDB vCore, and URL/web address.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">If information sources could not be stored as Azure resources, Entra ID that aggregated as the identity federation should control access to AI.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">Azure provides various connection services such as provisioning or authorization delegation calls (if the service provider supports it) as the identity federation features.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">Thus in the case of AI that uses information sources outside of Azure, it is good that information sources are designed as single access permission.</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 1.1rem;">• Design steps for Introducing AI to companies</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">When introducing AI to the company, consideration of The state of the user account of the organization and the purpose of AI in the company is the first step of design.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">It&#8217;s an important decision point whether the purpose of using AI in the company is to leverage Microsoft 365 data or not. Whether the user account of the organization has already completed the identity federation or not is also important because Microsoft 365 data is protected by the Microsoft 365 identity foundation. <a style="font-weight: bold;" href="https://learn.microsoft.com/en-us/entra/identity/hybrid/connect/four-steps?wt.mc_id=DT-MVP-4029060" target="_new" rel="noopener">This official article provided by Microsoft</a> describes that the identity foundation of Microsoft&#8217;s tremendous robustness and flexibility can address enterprise compliance and governance.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">The next step is considering the need to customize for using the company’s data. Then programming or No/Low code development is necessary or not. These steps lead to how to implement AI in the company.</p>
+<p style="display: inline-block; margin-bottom: 10px; text-align: center; width: 100%;"><img decoding="async" style="width: 900px;" src="/wp-content/uploads/2024/02/DesignSteps.png" alt=""></p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">Most easiest way to introduce AI to the company is Microsoft 365 data leverage on the company. <a style="font-weight: bold;" href="https://learn.microsoft.com/en-us/microsoft-365/syntex/metadata-search?wt.mc_id=DT-MVP-4029060" target="_new" rel="noopener">Microsoft Syntex stores metadata</a> of files of SharePoint, it classifies files as various aspects and then shows them on the SharePoint site. Furthermore, <a style="font-weight: bold;" href="https://learn.microsoft.com/en-us/microsoft-365/syntex/automate-document-generation?wt.mc_id=DT-MVP-4029060" target="_new" rel="noopener">generates documents with Power Automate</a>. On creating UI, <a style="font-weight: bold;" href="https://learn.microsoft.com/en-us/microsoft-copilot-studio/advanced-connectors?wt.mc_id=DT-MVP-4029060" target="_new" rel="noopener">Copilot Studio also relays with Power Automate</a> for using Microsoft 365 data and other data, creating cloud flow. These services will be described in my other articles.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">It is complex in the case of the information sources being non-Microsoft 365 data.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">One way to divide sources is an aspect of access permissions, it said above, and another way is to divide by use case that does not matter accessed identities.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">It is important how data is divided by permission when information sources of AI such as access accounting data or human resource data although, it is not important to divide data with identity to access IoT data unmanaged by id. These data might be divided into use cases for efficiency or agility.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">Furthermore, it is important to consider whether the identity federation is complete or not. If <a style="font-weight: bold;" href="https://techcommunity.microsoft.com/t5/microsoft-mechanics-blog/manage-your-multi-cloud-identity-infrastructure-with-microsoft/ba-p/3709677?wt.mc_id=DT-MVP-4029060" target="_new" rel="noopener">the identity federation is complete with Entra ID</a> and stores the whole of the data as Azure resources, it needs only implement the orchestration of AI.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">So this article describes how to implement AI using Microsoft 365 data with additional data. My other articles describe content other than AI orchestration.</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 1.1rem;">• Story of the sample of this article</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">As a sample of AI using Microsoft 365 data with additional data, design levels of accessing information sources of AI that is like the following figure.</p>
+<p style="display: inline-block; margin-bottom: 10px; text-align: center; width: 100%;"><img decoding="async" style="width: 900px;" src="/wp-content/uploads/2024/02/LevelsOfAccessingInformationSourcesOfAI.png" alt=""></p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">The additional data in the figure above is used in AI. For example, the travel expense data is shared only with the accounting division using SharePoint or Teams. Though the additional data is not shared with the company&#8217;s colleagues explicitly, It is better that colleagues who are not engaged accounting division can search related to the travel expense data such as heuristic&nbsp;knowledge that is assembled by the employee who applied travel expenses. This article creates the AI that orchestrates with Microsoft 365 using such data.</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 1.1rem;">• Preparing a Small Language Model for the company&#8217;s data</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">There are several types of language models, types are such as foundation models, fine-tuned models, and quantization models. Now, the Trainer model such as <a style="font-weight: bold;" href="https://www.microsoft.com/en-us/research/project/orca/" target="_new" rel="noopener">Orca-2</a> exists and creates small language models, training, and creating datasets, for foundation models.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">It is better to use fine-tuned models than foundation models because they are already <a style="font-weight: bold;" href="https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/fine-tuning?tabs=turbo%2Cpython&amp;pivots=programming-language-studio&amp;wt.mc_id=DT-MVP-4029060" target="_new" rel="noopener">fine-tuned using a dataset for specific tasks</a> if the usage of the additional data of the company on AI matches the task of fine-tuning. <a style="font-weight: bold;" href="https://learn.microsoft.com/en-us/microsoft-365-copilot/microsoft-365-copilot-overview?wt.mc_id=DT-MVP-4029060" target="_new" rel="noopener">Copilot for Microsoft 365</a>, <a style="font-weight: bold;" href="https://www.bloomberg.com/company/press/bloomberggpt-50-billion-parameter-llm-tuned-finance/" target="_new" rel="noopener">BloombergGPT</a>, or <a style="font-weight: bold;" href="https://developer.amazon.com/en-US/alexa/alexa-skills-kit/asr" target="_new" rel="noopener">Automatic-Speech Recognition of Alexa</a> are representative.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">Additionally, if <a style="font-weight: bold;" href="https://arxiv.org/pdf/2210.17323.pdf" target="_new" rel="noopener">GPTQ (Quantization for Generative Pre-trained Transformers)</a> for fine-tuned models exists, it is better to use quantization models than fine-tuned models because quantization models are model compression using the one-shot weight quantization method, it can be used without GPU. Thus, the search for a model that aligns with the task at <a style="font-weight: bold;" href="https://huggingface.co/" target="_new" rel="noopener">Hugging Face</a>, <a style="font-weight: bold;" href="https://www.tensorflow.org/hub?hl=en" target="_new" rel="noopener">TensorFlow Hub</a>, or <a style="font-weight: bold;" href="https://pytorch.org/serve/model_zoo.html" target="_new" rel="noopener">PyTorch Zoo</a> at first. This article uses Hugging Face because using a model launcher distributed on Hugging Face. Model launcher is easy to search by typing &#8220;Ollama&#8221; at Hugging Face, Ollama is similar to LlamaIndex, LangChain, Semantic Kernel, Rust LLM, and Roboflow, they support many models.</p>
+<div style="margin: 20px 0px 20px 0px; display: table; border: solid thin #444;">
+<div style="display: table-row; padding: 5px 5px 5px 5px; background: #ccc;">
+<div style="display: table-cell; font-weight: bold; color: #444; white-space: nowrap; text-align: center;">Model tools</div>
+<div style="display: table-cell; font-weight: bold; color: #444; text-align: center;">Support models</div>
+</div>
+<div style="display: table-row; padding: 5px 5px 5px 5px;">
+<div style="display: table-cell; font-weight: bold; white-space: nowrap; padding: 5px 5px 5px 5px;">Ollama</div>
+<div style="display: table-cell; padding: 5px 5px 5px 5px;">Support models of more than <a style="font-weight: bold;" href="https://ollama.com/library" target="_new" rel="noopener">sixty</a>.</div>
+</div>
+<div style="display: table-row; background: #ffc;">
+<div style="display: table-cell; font-weight: bold; white-space: nowrap; padding: 5px 5px 5px 5px;">LlamaIndex</div>
+<div style="display: table-cell; padding: 5px 5px 5px 5px;">Several paid and open-source <a style="font-weight: bold;" href="https://docs.llamaindex.ai/en/stable/module_guides/models/llms.html" target="_new" rel="noopener">LLMs</a> are supported.</div>
+</div>
+<div style="display: table-row;">
+<div style="display: table-cell; font-weight: bold; white-space: nowrap; padding: 5px 5px 5px 5px;">LangChain</div>
+<div style="display: table-cell; padding: 5px 5px 5px 5px;">Does not serve its own LLMs, but rather provides a standard interface for interacting with many different <a style="font-weight: bold;" href="https://python.langchain.com/docs/modules/model_io/llms/quick_start" target="_new" rel="noopener">LLMs</a>.</div>
+</div>
+<div style="display: table-row; background: #ffc;">
+<div style="display: table-cell; font-weight: bold; white-space: nowrap; padding: 5px 5px 5px 5px;">Semantic Kernel</div>
+<div style="display: table-cell; padding: 5px 5px 5px 5px;">SDK that integrates Large Language Models (<a style="font-weight: bold;" href="https://github.com/microsoft/semantic-kernel" target="_new" rel="noopener">LLMs</a>) like OpenAI, Azure OpenAI, and Hugging Face.</div>
+</div>
+<div style="display: table-row;">
+<div style="display: table-cell; font-weight: bold; white-space: nowrap; padding: 5px 5px 5px 5px;">Rust LLM</div>
+<div style="display: table-cell; padding: 5px 5px 5px 5px;">Support several models as <a style="font-weight: bold;" href="https://github.com/rustformers/llm/blob/main/doc/known-good-models.md" target="_new" rel="noopener">Known-good models</a>.</div>
+</div>
+<div style="display: table-row; background: #ffc;">
+<div style="display: table-cell; font-weight: bold; white-space: nowrap; padding: 5px 5px 5px 5px;">Roboflow</div>
+<div style="display: table-cell; padding: 5px 5px 5px 5px;">Several <a style="font-weight: bold;" href="https://roboflow.com/models" target="_new" rel="noopener">computer vision models</a> are supported.</div>
+</div>
+</div>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">Ollama also has an eco-system as Ollama&#8217;s official image at the docker hub or can be installed on Linux using WSL2 as well. Models that are not Quantarizationed can be compressed using a GGUF file.<br />
+There are libraries to create a pipeline for C#, so it&#8217;s easy to implement local AI as figure below using Ollama.</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2024/03/26/steps-of-introducing-ai-to-companies/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Introducing Artificial Intelligence (AI) in Companies</title>
+		<link>https://blog.processtune.com/2024/02/07/introducing-artificial-intelligence-ai-in-companies/</link>
+					<comments>https://blog.processtune.com/2024/02/07/introducing-artificial-intelligence-ai-in-companies/#respond</comments>
+		
+		<dc:creator><![CDATA[TETSURO TAKAO]]></dc:creator>
+		<pubDate>Wed, 07 Feb 2024 10:06:48 +0000</pubDate>
+				<category><![CDATA[AI]]></category>
+		<category><![CDATA[Microsoft Graph]]></category>
+		<category><![CDATA[MongoDB]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=7519</guid>
+
+					<description><![CDATA[There is a lot of interest in introducing AI in companies, and many types of language models also are created by many organizations. AI has the size indicated by the parameters of a language model, and AI has purposes in a commensurate manner with its size. This article describes how to introduce AI in companies. [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin: 0px 0px 10px 0px; color: #000044; font-size: 1.4rem; font-weight: normal; line-height: 1.6rem; padding: 10px 0px 10px 20px; border-radius: 60% 90% 90% 60%; font-family: Times, serif; background: linear-gradient(to right, #fff, #ccf, #fff);">There is a lot of interest in introducing AI in companies, and many types of language models also are created by many organizations.<br />
+AI has the size indicated by the parameters of a language model, and AI has purposes in a commensurate manner with its size.<br />
+This article describes how to introduce AI in companies.</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 1.1rem;">• Large Language Model (LLM) and Small Language Model (SLM)</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">AI comes in different sizes and aims. LLM is aiming for AGI (Artificial General Intelligence). And I think SLM aims to solve specific tasks with AI orchestration. Therefore Multimodal AI, RAG (Retrieval-Augmented Generation), and so on are essential for SLM.</p>
+<p style="display: inline-block; margin-bottom: 10px; text-align: center; width: 100%;"><img decoding="async" style="width: 900px;" src="/wp-content/uploads/2024/01/AIOutlook.png" alt="" /></p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">What I would like you to note here is that Apple is not included in the figure above.<br />
+Apple&#8217;s Edge AI does not add to this article about the size and purpose of Edge AI, because it&#8217;s used in a different use-case than Cloud AI.<br />
+It is possible to introduce Edge AI into a company, but at this stage, I think it is difficult to introduce Edge AI into a company unless cloud AI has already been introduced.<br />
+This article will focus on cloud AI, rather than Edge AI, as an introduction to AI in companies.</p>
+<div style="background-color: #cccccc; border: 1px solid #00000; padding: 10px 10px 0px 10px; margin-top: 20px;">
+<div style="margin: -20px 0px 0px 5px; text-indent: 1em; font-weight: bold; background-color: #444; border: 1px solid #ccc; color: #fff;">ⓘ Edge AI</div>
+<p><img decoding="async" style="width: 450px; display: inline-block;" src="/wp-content/uploads/2024/01/MegaCapGreenLine20240129.png" alt="" align="right" /><br />
+The image on the right is a screen capture of https://companiesmarketcap.com/ on 29th Jan. 2024. During the last year, investors expected investment in cloud AI of Microsoft, Google (Alphabet), NVIDIA, and Amazon. The green line charts are its results.<br />
+However, while cloud AI has been attracting attention so far, this year we may be entering the era of Edge AI.<br />
+<img decoding="async" style="width: 900px;" src="/wp-content/uploads/2024/01/EdgeAIUsecase.png" alt="" /></p>
+</div>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 1.1rem;">• Utilization of accumulated data in the AI era</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">Size is one of the indicators for AI classification, and another indicator for AI classification is the &#8220;confidentiality of the information source.&#8221;　More precisely, it is the right to access information.</p>
+<p style="display: inline-block; margin-bottom: 10px; text-align: center; width: 100%;"><img decoding="async" style="width: 900px;" src="/wp-content/uploads/2024/02/SizeAndUsage.png" alt="" /></p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">Many companies find it useful to orchestrate using a small language model without the need for a large language model. At this time, it is possible to use RAG to generate a solution that incorporates information from outside the company, or it is also possible to generate a solution using confidential internal data. What is important is that companies utilize accumulated data in the same way that they have done in the past, and this will not change in the AI era.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">Oracle, one of the companies that specializes in data utilization, provides the foundation for corporate data utilization extending with AI (below left). This website describes an architecture for introducing AI with a product called VizSeek (below right) that provides secure access to data.</p>
+<p style="display: inline-block; margin-bottom: 10px; text-align: center; width: 100%;"><img decoding="async" style="width: 420px; display: inline-block;" src="/wp-content/uploads/2024/01/OracleDataScienceBlog.png" alt="" /><img decoding="async" style="width: 420px; display: inline-block;" src="/wp-content/uploads/2024/01/OracleVizSeek.png" alt="" /></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 1.1rem;">• If the organization already introduced Microsoft 365</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">Accumulated data with Microsoft 365 are already protected with Microsoft 365. In responding to <a style="font-weight: bold;" href="https://learn.microsoft.com/en-us/microsoft-365/community/microsoft365-maturity-model--governance-and-compliance" target="_new" rel="noopener">implementing organization maturity of security approach</a>(below right), there is secure access that is under compliance policy, and paradigm with the governance of the organization.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">Thus for introducing AI to organizations, it is not good that move their data to other storage bother, such as S3 of AWS or Google Drive, because it should re-struct IAM roles of AWS Control Tower of AWS Organizations IAM, or Google Cloud Project.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">Utilizing accumulated data of the company with AI is the same as leveraging SharePoint data or OneDrive data in Microsoft 365. The data can not be accessed in SharePoint is also can not be accessed using AI. On the other hand, when generating content with AI, it will be grounded with SharePoint data OneDrive data, and so on that can be accessed. Copilot for Microsoft 365 is the service, and Microsoft Copilot Studio (below left) is used to customize its service for specific companies.</p>
+<p style="display: inline-block; margin-bottom: 10px; text-align: center; width: 100%;"><img decoding="async" style="width: 420px; display: inline-block;" src="/wp-content/uploads/2024/02/CopilotStudioOverview.png" alt="" /><img decoding="async" style="width: 420px; display: inline-block;" src="/wp-content/uploads/2024/02/Microsoft365MaturityModel.png" alt="" /></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 1.1rem;">• AI in Companies without Microsoft 365 data</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">Accounting data or human resource data is divided from business data generally, so there are cases in which several workforces have an accounting system&#8217;s ID or human resource system&#8217;s ID. If the identity federation is not complete, Its permissions are held in these systems. In addition, there might be device management without Intune, asset management, and access to IoT data as unmanaged.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1rem;">These data should be stored in individual storage match access permission, then divided schemes of several AI on orchestration foundation. These cases can be implemented with Azure AI Studio or semantic kernel programming.</p>
+<p style="display: inline-block; margin-bottom: 10px; text-align: center; width: 100%;"><img decoding="async" style="width: 900px; display: inline-block;" src="/wp-content/uploads/2024/02/Prepare.png" alt="" /></p>
+<p style="margin: 10px 0px 0px 5px; text-indent: 1em; text-align: right; font-weight: bold;">&gt;&gt;<a style="font-weight: bold;" target="_new" rel="noopener">Next Model local launch(under construction)</a></p>
+<div style="background-color: #cccccc; border: 1px solid #00000; padding: 10px 10px 0px 10px; margin-top: 20px;">
+<div style="margin: -20px 0px 0px 5px; text-indent: 1em; font-weight: bold; background-color: #444; border: 1px solid #ccc; color: #fff;">ⓘ Navigation</div>
+<p><a href="https://blog.processtune.com/2024/03/26/steps-of-introducing-ai-to-companies/">Steps of Introducing AI to companies</a><br />
+Copilot Studio(under construction)<br />
+Azure AI Studio(under construction)<br />
+Prompt Injection(under construction)</p>
+</div>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2024/02/07/introducing-artificial-intelligence-ai-in-companies/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>HTTP/3 and the gRPC service in .NET framework</title>
+		<link>https://blog.processtune.com/2022/10/30/http-3-and-the-grpc-service-in-net-framework/</link>
+					<comments>https://blog.processtune.com/2022/10/30/http-3-and-the-grpc-service-in-net-framework/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Sun, 30 Oct 2022 07:50:59 +0000</pubDate>
+				<category><![CDATA[gRPC]]></category>
+		<category><![CDATA[未分類]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=6804</guid>
+
+					<description><![CDATA[The gRPC service can use on HTTP/3 connection. This article describes how the gRPC connection affects HTTP connection, additionally, history of HTTP connection is also described. &#62;&#62;Rust sample project to create QR Code, Base program of implantation to Azure Functions •&#160;History of HTTP connection Internet Engineering Task Force (IETF) has proceeding technical standardization of internet. [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin: 0px 0px 0px 0px; color: #000044; font-size: 0.9rem;"><a style="font-weight: bold;" href="https://github.com/grpc/proposal/blob/master/G2-http3-protocol.md" target="_new" rel="noopener">The gRPC service can use on HTTP/3 connection</a>. This article describes how the gRPC connection affects HTTP connection, additionally, history of HTTP connection is also described.</p>
+<p style="margin: 10px 0px 0px 5px; text-indent: 1em; text-align: right; font-weight: bold;">&gt;&gt;<a style="font-weight: bold;" href="https://github.com/TetsuroTakao/QRCodeCreation" target="_new" rel="noopener">Rust sample project to create QR Code, Base program of implantation to Azure Functions</a></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">•&nbsp;History of HTTP connection</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;"><a style="font-weight: bold;" href="https://docs.microsoft.com/ja-jp/azure/azure-functions/functions-bindings-register#extension-bundles?WT.mc_id=AZ-MVP-4029060" target="_new" rel="noopener">Internet Engineering Task Force (IETF)</a> has proceeding technical standardization of internet. HTTP working group of IETF treats HTTP semantics, caching, and HTTP messaging. HTTP messaging uses the same semantics of HTTP/1.1, HTTP/2 and HTTP/3.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">Therefor RFC 9113 (HTTP/2 bis), <a style="font-weight: bold;" href="https://datatracker.ietf.org/doc/rfc9114/" target="_new" rel="noopener">RFC 9114</a> (HTTP/3) and <a style="font-weight: bold;" href="https://datatracker.ietf.org/doc/rfc9204/" target="_new" rel="noopener">RFC9204 (QPACK)</a> affects to the gRPC connection although, Google and many technicians have contributing to the gRPC connection since April 2016 (when Google&#8217;s the Stubby was opened as the <a style="font-weight: bold;" href="https://cloud.google.com/blog/products/gcp/grpc-a-true-internet-scale-rpc-framework-is-now-1-and-ready-for-production-deployments" target="_new" rel="noopener">gRPC 1.0</a>). Afterwards the [<a style="font-weight: bold;" href="https://github.com/grpc/grpc/blob/master/doc/PROTOCOL-HTTP2.md" target="_new" rel="noopener">gRPC over HTTP2</a>] since 2015, and the [<a style="font-weight: bold;" href="https://github.com/grpc/proposal/blob/master/G2-http3-protocol.md" target="_new" rel="noopener">gRPC over HTTP/3</a>] since 2021 are opened on GitHub. There are standardised considering with the standard of IFTF.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">To simply say about only HTTP messaging, it has been improved as HTTP 0.9 (since 1990) &#8211; 1.0 (1996: POST etc.) &#8211; 1.1 (1997: Virtual host etc.) &#8211; 2.0 (2015: Stream) &#8211; 3.0 (2018: UDP communication).</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">Evolution of HTTP messaging can explain with an aspect of connection and an aspect of data.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">As an aspect of connection, a setting of connection is shared between edge-side and service-side on streaming communication of HTTP/2, as result, edge-side can start next request without waiting for the end of before request.</p>
+<p style="display: inline-block; margin-bottom: 10px; text-align: center; width: 100%;"><img decoding="async" style="width: 900px;" src="/wp-content/uploads/2023/03/HTTPStreaming.png" alt=""></p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">As an aspect of data, the headers of HTTP/2 are compressed, and a content is communicated as binary. Thus, reduces workload of adding new connections because one connection can handle many requests.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">HTTP/3 reduces the communication initiation cost and transport layer confirmation response cost. And using UDP connection, it performs high-speed data transmission and reception.</p>
+<p style="display: inline-block; margin-bottom: 10px; text-align: center; width: 100%;"><img decoding="async" style="width: 900px;" src="/wp-content/uploads/2023/03/HTTPDataEvolution.png" alt=""></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">•&nbsp;QUIC library for development of the gRPC connection</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">Microsoft provides <a style="font-weight: bold;" href="https://github.com/microsoft/msquic" target="_new" rel="noopener">MsQuic</a> that is implementation of IETF&#8217;s <a style="font-weight: bold;" href="https://datatracker.ietf.org/wg/quic/about/" target="_new" rel="noopener">QUIC</a> as library. This library is standard on Windows, thus provided API on over .NET 7.0. Though this library does TLS handshake, it is also provided Windows 11 build 22000 or later as Windows SChannel.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">Therefore does not use MsQuic explicitly on Windows 11 and .NET 7.0.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">There are other libraries for other languages for Quic connection such as below table.</p>
+<div style="margin: 0px 0px 0px 20px; display: table;">
+<div style="display: table-row;">
+<div style="display: table-cell; font-weight: bold; padding-right: 10px; width: 150px;">C++</div>
+<div style="display: table-cell; width: 100px;">QUICHE</div>
+<div style="display: table-cell; font-weight: bold; padding-right: 10px; width: 150px;">Rust</div>
+<div style="display: table-cell; width: 100px;">quinn</div>
+</div>
+<div style="display: table-row;">
+<div style="display: table-cell; font-weight: bold;">C, Rust</div>
+<div style="display: table-cell;">MsQuic</div>
+<div style="display: table-cell; font-weight: bold; padding-right: 10px;">C</div>
+<div style="display: table-cell;">LSQUIC</div>
+</div>
+<div style="display: table-row;">
+<div style="display: table-cell; font-weight: bold;">Python</div>
+<div style="display: table-cell;">aioquic</div>
+<div style="display: table-cell; font-weight: bold; padding-right: 10px;">Rust</div>
+<div style="display: table-cell;">s2n-quic</div>
+</div>
+<div style="display: table-row;">
+<div style="display: table-cell; font-weight: bold;">Go</div>
+<div style="display: table-cell;">quic-go</div>
+<div style="display: table-cell; font-weight: bold;">Rust</div>
+<div style="display: table-cell;">Neqo</div>
+</div>
+</div>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">Implementation of gRPC over HTTP/3 is easy as below code that modified from the &#8216;Program.cs&#8217; of the &#8216;GrpcGreeter&#8217; folder of <a style="font-weight: bold;" href="https://github.com/TetsuroTakao/gRPC" target="_new" rel="noopener">this sample</a>.</p>
+<pre style="background-color: #cccccc; border: 1px solid #00000; padding: 10px;">builder.WebHost.ConfigureKestrel(options =&gt;
+{
+    options.ListenAnyIP(5008);
+    options.ListenAnyIP(7116, listenOptions =&gt;
+    {
+        // listenOptions.Protocols = Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http2;
+        // listenOptions.Protocols = Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http1AndHttp2AndHttp3;
+        listenOptions.Protocols = Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http3;// add only this line
+        listenOptions.UseHttps(options =&gt;
+            {
+                options.ClientCertificateMode = ClientCertificateMode.RequireCertificate;
+                options.ClientCertificateValidation = (certificate, chain, errors) =&gt; {
+                    options.ServerCertificate = certificate;
+                    return true;
+                };
+            }
+        );
+    });
+});
+</pre>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2022/10/30/http-3-and-the-grpc-service-in-net-framework/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Deploy the gRPC service to the Azure App Service</title>
+		<link>https://blog.processtune.com/2022/09/30/deploy-the-grpc-service-to-the-azure-app-service/</link>
+					<comments>https://blog.processtune.com/2022/09/30/deploy-the-grpc-service-to-the-azure-app-service/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Fri, 30 Sep 2022 11:20:48 +0000</pubDate>
+				<category><![CDATA[gRPC]]></category>
+		<category><![CDATA[Microsoft Azure]]></category>
+		<category><![CDATA[未分類]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=6783</guid>
+
+					<description><![CDATA[Microsoft Azure provides hosting feature of the gRPC service as Azure App Service, Azure Container Apps and Azure Kubernetes Service. This article describes how to deploy the gRPC service that is created in the article [ASP.NET Core gRPC &#38; gRPC communication tools] to Azure App Service. &#62;&#62;Sample project to deploy to Azure App Service •&#160;Create [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin:0px 0px 0px 0px;color:#000044;font-size:0.9rem;font-family:" segoe="" ui";"="">Microsoft Azure provides hosting feature of the gRPC service as Azure App Service, Azure Container Apps and Azure Kubernetes Service.<br />
+This article describes how to deploy the gRPC service that is created in the article [<a href="https://blog.processtune.com/?p=6649" target="_new" style="font-weight:bold;" rel="noopener">ASP.NET Core gRPC &amp; gRPC communication tools</a>] to Azure App Service.</p>
+<p style="margin:10px 0px 0px 5px;text-indent:1em;text-align:right;font-weight:bold;">&gt;&gt;<a href="https://github.com/TetsuroTakao/gRPCAzureDeploySample" target="_new" style="font-weight:bold;" rel="noopener">Sample project to deploy to Azure App Service</a></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">•&nbsp;Create the Web App Service using Azure portal</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Open Azure portal and select the [Create a resource] then select the Web App [Create] link, and set values as figure below.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2023/03/AzureAppServiceCreation.png" alt="" style="width:450px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Set values of settings with select the [Configuration] of the [Settings] section of the left pane after selecting the Web App Service (or select the [Go to resource] when complete creating the service) created it.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Though there are application settings and general settings in the [Configuration], set value &#8220;2.0&#8221; to the [HTTP version] property and set value &#8220;On&#8221; to the [HTTP 2.0 Proxy] property in the [General settings] tab.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Select the [+ New application settings] link after the [Application settings] link, then the [Add/Edit application setting] blade displayed, set value &#8220;HTTP20_ONLY_PORT&#8221; to the [Name] property and set value &#8220;5243&#8221; to the [Value] property.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2023/03/AzureAppServiceSettings.png" alt="" style="width:900px;"></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">•&nbsp;Execute the gRPC service with HTTPS</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Created gRPC service uses TSL 1.2 (figure below left), therefore several modifying.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">There are two settings in the [launchsettings.json] file of the [Properties] folder of the sample project that was described in the article &#8216;ASP.NET Core gRPC &amp; gRPC communication tools&#8217;. Execute the project using the setting [https]. Please download the sample project from GitHub, or create the gRPC service with referring of the article.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The figure below right is type the [dotnet run &#8211;launch-profile https] command in the [Ternimal] of Visual Studio Code.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2023/03/TSLSettings.png" alt="" style="width:450px;"><img decoding="async" src="/wp-content/uploads/2023/03/ExecuteHTTPS.png" alt="" style="width:450px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The gRPC communication provided Azure Web App Service needs TSL communication. It needs certificate to communicate while TSL handshake. Therefor create certificate, in many cases, there is the certificate for development already in the PC. For confirming local certificates in development environment use the command [dotnet dev-certs https -v] in the [Terminal] pane of Visual Studio Code. Find the certificate that is in vailed term and copy the certificate id. The certificate is also able to create as self signed with Go language that install in previous article [<a href="https://blog.processtune.com/?p=6649" target="_new" style="font-weight:bold;" rel="noopener">ASP.NET Core gRPC &amp; gRPC communication tools</a>]. Put the command below in the [Terminal] pane of Visual Studio Code (at current directory that moved project root folder).</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">//In the case of self signed
+$Go installed path$\bin\go run $Go installed path$\src\crypto\tls\generate_cert.go --rsa-bits=2048 --host=localhost
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">In the case of certificate for development, check the [ASP.NET Core HTTPS development certificate] is trusted using the [certmgr.msc] command input to Windows [Run] menu item. If not, put the [dotnet dev-certs https &#8211;check &#8211;trust]  in the [Terminal] pane of Visual Studio Code.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2023/03/CheckCertTrusted.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">There is also able to check using the command [dotnet dev-certs https -v] in the [Terminal] pane of Visual Studio Code. And copy collect one certificate to use at C# code (refer to figure below). Select certificate that includes value [localhost] as the [CN] property and also has value of the [IsHttpsDevelopmentCertificate] property is [true] and valid period. If not, use the command [dotnet dev-certs https] to create the development certificate (detail is refer to the <a href="https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-dev-certs?WT.mc_id=DT-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">official document</a>).</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2023/03/devcert.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The code copied is used for the gRPC client app that is able to download from <a href="https://github.com/TetsuroTakao/gRPC/tree/main/GrpcGreeterClient" target="_new" style="font-weight:bold;" rel="noopener">GitHub</a>.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">using System.Security.Cryptography.X509Certificates;
+...
+X509Store store = new X509Store(StoreName.My, StoreLocation.CurrentUser);
+store.Open(OpenFlags.ReadOnly | OpenFlags.OpenExistingOnly);
+var cert = store.Certificates.Where(c =&gt; c.GetCertHashString() =="E73488EF2CD742DE44A31ECA660F9FD8AD3D46C6").FirstOrDefault();
+...
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">There is displayed error when execute the gRPC service use HTTPS and execute client-side app as simple [dotnet run] command with leave downloaded client-side app sample code.  Thus, open the [Program.cs] file of the client-side app project and modify an argument of the [ForAddress] method to [&#8220;http://localhost:5008&/#8221;].</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2023/03/gRPCServiceExecuteOnLocal.png" alt="" style="width:450px;"><img decoding="async" src="/wp-content/uploads/2023/03/gRPCClientExecuteOnLocal.png" alt="" style="width:450px;"></p>
+<p>Confirm certificate for development of localhost using the code above.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">using Grpc.Net.Client;
+// using GrpcGreeterClient;
+using System.Security.Cryptography.X509Certificates;
+
+//using var channel = GrpcChannel.ForAddress("https://localhost:8585/");
+using var channel = GrpcChannel.ForAddress("http://localhost:5008/");
+
+X509Store store = new X509Store(StoreName.My, StoreLocation.CurrentUser);
+store.Open(OpenFlags.ReadOnly | OpenFlags.OpenExistingOnly);
+var cert = store.Certificates.Where(c =&gt; c.GetCertHashString() =="E73488EF2CD742DE44A31ECA660F9FD8AD3D46C6").FirstOrDefault();
+
+// var client = new Greeter.GreeterClient(channel);
+// var reply = await client.SayHelloAsync(new HelloRequest { Name = "GreeterClient" });
+// Console.WriteLine("Greeting: " + reply.Message);
+Console.WriteLine(string.Format("{0}, Press any key to exit...",cert!.FriendlyName));
+Console.ReadKey();
+</pre>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">•&nbsp;Deploy the gRPC service to Azure Web App Service</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">It is able to use Visual Studio Code to deploy the gRPC service to Azure Web App service. Download the sample project that was described in the article &#8216;<a href="https://blog.processtune.com/?p=6649" target="_new" style="font-weight:bold;" rel="noopener">ASP.NET Core gRPC &amp; gRPC communication tools</a>&#8216; from <a href="https://github.com/TetsuroTakao/gRPC2" target="_new" style="font-weight:bold;" rel="noopener">GitHub</a>, or create the gRPC service refer to the article.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The gRPC service has to be able to listen on only port 5243 that set at Azure Web App Service with HTTP 2.0, so modify configuration of the Program.cs file as below. This code needs the <a href="https://www.nuget.org/packages/Microsoft.AspNetCore.Authentication.Certificate" target="_new" style="font-weight:bold;" rel="noopener">nuget package</a>.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">using Microsoft.AspNetCore.Server.Kestrel.Https;
+using Microsoft.AspNetCore.Authentication.Certificate;
+...
+var builder = WebApplication.CreateBuilder();
+builder.Services.AddAuthentication(
+        CertificateAuthenticationDefaults.AuthenticationScheme) // use Microsoft.AspNetCore.Authentication.Certificate
+    .AddCertificate(options =&gt;
+    {
+        options.AllowedCertificateTypes = CertificateTypes.All; // use Microsoft.AspNetCore.Authentication.Certificate
+    });
+builder.Services.AddAuthorization();
+builder.WebHost.ConfigureKestrel(options =&gt;
+{
+    options.ListenAnyIP(5008);
+    options.ListenAnyIP(7116, listenOptions =&gt;
+    {
+        listenOptions.Protocols = Microsoft.AspNetCore.Server.Kestrel.Core.HttpProtocols.Http2;
+        listenOptions.UseHttps(options =&gt;
+            {
+                options.ClientCertificateMode = ClientCertificateMode.RequireCertificate; // use Microsoft.AspNetCore.Server.Kestrel.Https
+                options.ClientCertificateValidation = (certificate, chain, errors) =&gt; {
+                    options.ServerCertificate = certificate;
+                    return true;
+                };
+            }
+        );
+    });
+});
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">This code adds the Authentication feature and the Authorization feature, also needs the Routing feature, the Authentication feature and the Authorization feature for Web application, thus add code below before the [app.MapGrpcService<greeterservice>();] statement.</greeterservice></p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">app.UseRouting();
+app.UseAuthentication();
+app.UseAuthorization();
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Figure below is all code of service and client, therefore can deploy the service part to Azure.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2023/03/gRPCAllCodeServiceAndClient.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Sign in Azure from Visual Studio Code before proceeding to the next step. Press the key [Ctrl] + [Shift] + [P] to open the [Command palette], and input &#8216;azure sign&#8217; and select the menu item [Azure Sign In] from the list of the palette. This operation needs the [Azure Tools] Visual Studio Code extension, thus install it if the extension is not installed (Figure left).</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Confirm sign in information at the [Azure Account Status] of the [Status bar] and select the [Azure Tools] extension at the [Activity Bar]. Then can select subscription of Azure when select the [RESOURCES] section of the [Azure Tools] extension (Figure right).</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2023/03/VisualStudioCodeAzureToolsExtension.png" alt="" style="width:450px;"><img decoding="async" src="/wp-content/uploads/2023/03/SelectSubscription.png" alt="" style="width:450px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Press the key [Ctrl] + [Shift] + [P] in Visual Studio Code to open the [Command palate], And input &#8216;Azure App Service&#8217; to the palate. Select the Subscription at the [Command palette] and select the Resource (Azure Web App Service) that created in the section above (&#8216;Create the Web App Service using Azure portal&#8217;) too. Select the [OK] button after shown the confirm dialog.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2023/03/DeployAzureAppService.png" alt="" style="width:900px;"></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2022/09/30/deploy-the-grpc-service-to-the-azure-app-service/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>.NET Core Options pattern</title>
+		<link>https://blog.processtune.com/2022/08/18/net-core-options-pattern/</link>
+					<comments>https://blog.processtune.com/2022/08/18/net-core-options-pattern/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Thu, 18 Aug 2022 10:44:28 +0000</pubDate>
+				<category><![CDATA[.NET Core]]></category>
+		<category><![CDATA[ASP.NET Core]]></category>
+		<category><![CDATA[C#]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Visual Studio Code]]></category>
+		<category><![CDATA[WPF App]]></category>
+		<category><![CDATA[未分類]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=6428</guid>
+
+					<description><![CDATA[The Options Pattern can build a hierarchical settings values structure. In the previous article [ASP .NET Core Options Pattern], a settings values of The .NET Generic Host that created by the host builder were registered to the host as a service as it is, and were used in the UI layer although, the Options Pattern [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin:0px 0px 0px 0px;color:#000044;font-size:0.9rem;font-family:" segoe="" ui";"="">The Options Pattern can build a hierarchical settings values structure. In the previous article [<a href="https://blog.processtune.com/?p=6364" target="_new" style="font-weight:bold;" rel="noopener">ASP .NET Core Options Pattern</a>], a settings values of The .NET Generic Host that created by the host builder were registered to the host as a service as it is, and were used in the UI layer although, the Options Pattern in .NET Core must be applied the Options Pattern as the configuration service before registered to the host.<br />
+In the WPF application, customizing startup flow at the App.xaml.cs can apply the Options pattern to the service before the MainWindow showed.</p>
+<p style="margin:10px 0px 0px 5px;text-indent:1em;text-align:right;font-weight:bold;">&gt;&gt;<a href="https://github.com/TetsuroTakao/GenericHostWPF" target="_new" style="font-weight:bold;" rel="noopener">.NET Core WPF application that uses the Options Pattern as configuration service registered in The .NET Generic Host.</a></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Development steps for .NET Core Options Pattern</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">[Step 1] The .NET Generic Host built with the host builder can be used for both web applications and desktop native applications, so settings values as configuration service that applies the Options Pattern is able to use on each screen with using the Generic Host that define in the constructor of the App class.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/08/developmentSteps.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">[Step 2] On each screen, the configuration service that the Options Pattern is applied is able to use in the constructor of the screen. This mechanism is the same as when passing the settings values as configuration service that is applied the Options Pattern to the constructor of the controller in the ASP.NET Core Options Pattern, so this article means also recap of the ASP.NET Core Options Pattern.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The App class has to service the configuration service with the Options Pattern applied before calling the MainWindow class, so stop calling the MainWindow.xaml in the App.xaml and call MainWindow after building the configuration service in the App.xaml.cs will do so.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">[Step 3] Define a startup method name to the Startup attribute in App.xaml, and create the Startup method in App.xaml.cs, then show the MainWindow screen in the Startup method. The MainWindow screen is registered as a service when the host is constructed, and the MainWindow service is displayed in the Startup method.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">This article explains this flow.</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・ASP.NET Core Options Pattern recap</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">In the case of Program.cs of ASP.NET Core, the settings values of the JSON file is able to specify as configurations of the host. So it can register to the Generic Host as the configuration service directly. In the case of WPF, this creation of host builder to read JSON file part is a little troublesome.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/08/asp.netCoreOptionsPatternRecap.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">First, for the JSON that was automatically loaded by the Generic Host in ASP.NET Core must be loaded explicitly, since files other than JSON can also be handled, please refer to the official document [<a href="https://docs.microsoft.com/en-us/dotnet/core/extensions/configuration-providers?WT.mc_id=DT-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">Configuration providers in .NET</a>] also.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Another thing is that the application startup flow is customized and insert the service registration process before show the MainWindow. Let&#8217;s go into a little more detail.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The Generic Host in ASP.NET Core was defined in Program.cs, on the other hand, in the case of the WFP application is defined in App.xaml.cs.<br />
+There are two steps to registering the Generic Host configuration as a service.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Use the &#8216;Microsoft.Extensions.Hosting&#8217; namespace, loading a JSON file into the Generic Host configuration using the &#8216;ConfigureAppConfiguration&#8217; method of the Generic Host is the one, and another, registering  the Generic Host configuration as a service using &#8216;ConfigureServices&#8217; method of the Generic Host.<br />
+As for the flow of processing, use the &#8216;Microsoft.Extensions.Hosting&#8217; namespace, clear the source of the configuration of the host obtained by the &#8216;ConfigureAppConfiguration&#8217; method of the Generic Host, and load the appsettings.json file.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">the &#8216;optional&#8217; argument is a flag for appsettings.json reading, and if &#8216;true&#8217; is specified, it will work even if there is no file.<br />
+the &#8216;reloadOnChange&#8217; argument is &#8216;true&#8217; and reloads appsettings.json when it changes.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The configuration constructed in this way can be obtained with the &#8216;Configuration&#8217; property of the &#8216;context&#8217; argument in the ConfigureServices&#8217; method of the host, so register it as a configuration service to the &#8216;services&#8217; argument that was also obtained.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Use the &#8216;Microsoft.Extensions.DependencyInjection&#8217; namespace, the Options Pattern is able to use while the type specification of the &#8216;Configure&#8217; method of the service of the host that can be received by the &#8216;ConfigureServices&#8217; method of the host. This mechanism is the &#8216;IOptions&#8217; interface of the &#8216;TOptions&#8217; type of the configuration service provides Dependency Injection feature to insert customised type into the configuration service. In the time, specifying the type of the ApplicationContext class that has the same structure as the JSON file.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">App.xaml.cs
+    public partial class App : Application
+    {
+        private IHost _host;
+        public App()
+        {
+            _host = Host.CreateDefaultBuilder()
+                .ConfigureAppConfiguration((hostingContext, configuration) =&gt;
+                {
+                    configuration.Sources.Clear();
+                    IHostEnvironment env = hostingContext.HostingEnvironment;
+                    configuration
+                        .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                        .AddJsonFile($"appsettings.{env.EnvironmentName}.json", true, true);
+                })
+                .ConfigureServices((context, services) =&gt;
+                {
+                    services.Configure&lt;ApplicationContext&gt;(context.Configuration);
+                    services.AddSingleton&lt;MainWindow&gt;();
+                    // services.AddTransient&lt;MainWindow&gt;();
+                })
+                .Build();
+        }
+</pre>
+<div style="background-color:#cccccc;border:1px solid #00000; padding: 10px 10px 0px 10px;margin-top:20px;">
+<div style="margin:-20px 0px 0px 5px;text-indent:1em;font-weight:bold;background-color:#444;border:1px solid #ccc;color:#fff;">ⓘ Application lyfecycle</div>
+<p>The &#8216;AddSingleton&#8217; method of services of the Generic Host and the &#8216;AddTransient&#8217; method( commented) controls lyfecycle of the service.<br />
+<a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection?WT.mc_id=DT-MVP-4029060&amp;view=aspnetcore-6.0#lifetime-and-registration-options" target="_new" style="font-weight:bold;" rel="noopener">The section [Lifetime and registration options] of Microsoft official document [Dependency Injection in ASP.NET Core]</a> introduces how to validate &#8216;AddTransient&#8217;, &#8216;AddScoped&#8217;, and &#8216;AddSingleton&#8217; method with an operation ID attached to the service instance.<br />
+The &#8216;AddTransient&#8217; method adds a unique instance per session, the &#8216;AddScoped&#8217; method adds a per-request instance, and the &#8216;AddSingleton&#8217; method adds an application-unique service instance to the application host.<br />
+In this time, the &#8216;MainWindow&#8217; service uses an instance unique to the application, but the data context and configuration service described later have a strong dependency on MainWindow, so use AddTransient when serving multiple users.</p>
+</div>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Customize startup flow</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The flow up to MainWindow display can be customized by defining App.xaml and App.xaml.cs.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">In App.xaml, remove the &#8216;StartupUri&#8217; attribute and specify the method name that operates at startup to the &#8216;Startup&#8217; attriute. In this example, it is &#8216;Application_Startup&#8217;, so the &#8216;Application_Startup&#8217; method create in the &#8216;App.xaml.cs&#8217; file later.  The &#8216;Application_Exit&#8217; method as the application exit method at the time of termination also create in the &#8216;App.xaml.cs&#8217; file.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Next, in order to display the &#8216;MainWindow&#8217; screen in the &#8216;Application_Startup&#8217; method of App.xaml.cs, register the &#8216;MainWindow&#8217; class as the host service in advance.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The &#8216;MainWindow&#8217; class registered as a service in the host can be obtained as one of the services of host that are holded in the &#8216;_host&#8217; variable of the App class global scope in App.xaml.cs.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The &#8220;GetRequiredService&#8221; method returns InvalidOperationException (if there is no service) or ObjectDisposedException (if the service has been destroyed), unlike &#8220;GetService&#8221; which returns null in an exception, so support flow can set in subsequent processing. Used when such operations are expected. At that time, it is the scope of the service that must be considered that described above (refer to [Application lyfecycle]).</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">In the &#8216;Application_Startup&#8217; method, the MainWindow screen is displayed by the &#8220;Show&#8221; method of the service that is obtained from the &#8216;GetRequiredService&#8217; method of the &#8216;_host&#8217; variable.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">App.xaml.cs
+        private async void Application_Startup(object sender, StartupEventArgs e)
+        {
+            await _host.StartAsync();
+            _host.Services.GetRequiredService<mainwindow>().Show();
+        }
+
+        private async void Application_Exit(object sender, ExitEventArgs e)
+        {
+            await _host.StopAsync(TimeSpan.FromSeconds(5));
+            _host.Dispose();
+        }
+</mainwindow></pre>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Use settings values as the Options Pattern</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">To confirm startup flow, start Visual Studio Code in any folder and display the terminal with CTRL + @.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Create a project with &#8216;dotnet new wpf&#8217; command in the terminal.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">To install each extension of Microsoft.Extensions.Hosting, Microsoft.Extensions.Configuration and Microsoft.Extensions.DependencyInjection from Nuget, copy .NET CLI command below and paste it into the terminal.</p>
+<div style="margin: 0px 0px 0px 20px;display:table;width:80%;">
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;padding-right:10px;">Microsoft.Extensions.Hosting</div>
+<div style="display:table-cell;">https://www.nuget.org/packages/Microsoft.Extensions.Hosting/</div>
+</div>
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;">Microsoft.Extensions.Configuration</div>
+<div style="display:table-cell;">https://www.nuget.org/packages/Microsoft.Extensions.Configuration/</div>
+</div>
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;">Microsoft.Extensions.DependencyInjection</div>
+<div style="display:table-cell;">https://www.nuget.org/packages/Microsoft.Extensions.DependencyInjection/</div>
+</div>
+</div>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The setting values ​​can use in all of methods of MainWindow.xaml.cs, because the configuration service of the host is stored into the variable of the global scope of the MainWindow class at the constructor of the class in this sample. Although, for convenience of explanation, every statement is defined in the constructor.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Thus that it can be used later for clicks, mouseovers, select list selections, etc. if it needs.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">In this article, we want to complete everything in the constructor, so binding using INotifyPropertyChanged is performed, but before explaining the ViewModel, explains the structure of using service of the host first.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Set the data context in MainWindow.xaml. Here we are using a class named &#8216;MainWindowViewModel&#8217;. Since the data context specification on the xaml side is set to Window, the property is bound as it is. Application works without the attribute &#8220;UpdateSourceTrigger=PropertyChanged&#8221;. If the data context inherits from INotifyPropertyChanged, the PropertyChangedEventHandler&#8217;s delegate is executed by default.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">MainWindow.xaml
+&lt;Window x:Class="GenericHostWPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GenericHostWPF"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800"&gt;
+    &lt;Window.DataContext&gt;
+        &lt;local:MainWindowViewModel /&gt;
+    &lt;/Window.DataContext&gt;
+    &lt;Grid&gt;
+        &lt;TextBlock x:Name="Message" Margin="10,10,500,0" TextWrapping="Wrap" Text="{Binding Message, UpdateSourceTrigger=PropertyChanged}"
+            VerticalAlignment="Top"/&gt;
+        &lt;TextBox x:Name="MessageArea" HorizontalAlignment="Left" Height="312" Margin="12,100,12,12" TextWrapping="Wrap" Text="{Binding Log}"
+            VerticalAlignment="Top" Width="773" Background="Black" Foreground="White"/&gt;
+    &lt;/Grid&gt;
+&lt;/Window&gt;
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Store this in the global scope variable &#8216;datacontext&#8217; of the class in the constructor of MainWindow.xaml.cs and put the setting value into the property of this view model.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">For the setting value, bind the Japanese section of the &#8216;config&#8217; argument obtained in the constructor to the global scope variable &#8216;applicationContext&#8217; so that it can be used in other methods.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The &#8216;applicationContext&#8217; variable provides layered properties using the property &#8216;Brand&#8217; or the &#8216;Title&#8217; property of each &#8216;Page&#8217; object and so on.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">MainWindow.xaml.cs
+    public partial class MainWindow : Window
+    {
+        private MainWindowViewModel dataContext = new ();
+        private ApplicationContext applicationContext = new();
+        private IConfiguration configRoot;
+        public MainWindow(IConfiguration config)
+        {
+            configRoot = config;
+            InitializeComponent();
+            config.GetSection(ApplicationContext.English).Bind(applicationContext);
+            dataContext = (MainWindowViewModel)this.DataContext;
+            dataContext.Message = applicationContext.Brand;
+            dataContext.Log = applicationContext.Pages.First().Title;
+        }
+    }
+</pre>
+<div style="background-color:#cccccc;border:1px solid #00000; padding: 10px 10px 0px 10px;margin-top:20px;">
+<div style="margin:-20px 0px 0px 5px;text-indent:1em;font-weight:bold;background-color:#444;border:1px solid #ccc;color:#fff;">ⓘ INotification in a ViewModel</div>
+<div style="display:inline-block;width:50%;vertical-align:middle;"><img decoding="async" src="/wp-content/uploads/2022/08/viewmodel.png" alt="" style="width:450px;margin-top:10px;"></div>
+<div style="display:inline-block;width:40%;mergin-left:10px;">On the ViewModel side, extend INotifyPropertyChanged to declare a delegate for PropertyChangedEventHandler and define the delegate&#8217;s methods. Since the &#8216;CallerMemberName&#8217; attribute is used in the method, the &#8216;System.Runtime.CompilerServices&#8217; namespace is used.<br />
+Each property stores a value in a private variable and takes it out. If the value is the same, do nothing and call the delegate&#8217;s method if there is a change.</div>
+</div>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2022/08/18/net-core-options-pattern/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Encapsulation of information affects an app flexibility &#8211; ASP.NET Core Options Pattern</title>
+		<link>https://blog.processtune.com/2022/07/23/encapsulation-of-information-affects-an-app-flexibility-asp-net-core-options-pattern/</link>
+					<comments>https://blog.processtune.com/2022/07/23/encapsulation-of-information-affects-an-app-flexibility-asp-net-core-options-pattern/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Sat, 23 Jul 2022 02:47:41 +0000</pubDate>
+				<category><![CDATA[ASP.NET Core]]></category>
+		<category><![CDATA[C#]]></category>
+		<category><![CDATA[Service]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Visual Studio Code]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=6478</guid>
+
+					<description><![CDATA[Previous article [ASP.NET Core Options Pattern] describes overview of ASP.NET Core Options Pattern that enables information encapsulation and separation of business logic interest. This feature makes that an application extends some features without affecting existing features. This article using previous sample code to describe a process of extending feature with ASP.NET Core Options Pattern. Please [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin:0px 0px 0px 0px;color:#000044;font-size:0.9rem;font-family:" segoe="" ui";"="">Previous article [<a href="https://blog.processtune.com/?p=6364" target="_new" style="font-weight:bold;" rel="noopener">ASP.NET Core Options Pattern</a>] describes overview of <a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/options?WT.mc_id=DT-MVP-4029060&amp;view=aspnetcore-6.0" target="_new" style="font-weight:bold;" rel="noopener">ASP.NET Core Options Pattern</a> that enables information encapsulation and separation of business logic interest. This feature makes that an application extends some features without affecting existing features.<br />
+This article using previous sample code to describe a process of extending feature with <a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/options?WT.mc_id=DT-MVP-4029060&amp;view=aspnetcore-6.0" target="_new" style="font-weight:bold;" rel="noopener">ASP.NET Core Options Pattern</a>.<br />
+Please select the link [<a href="https://github.com/TetsuroTakao/GlobalizationUseSettings" target="_new" style="font-weight:bold;" rel="noopener">Sample project of previous article</a>] below to download it to refer to code of this article.</p>
+<p style="margin:10px 0px 0px 5px;text-indent:1em;text-align:right;font-weight:bold;">&gt;&gt;<a href="https://github.com/TetsuroTakao/GlobalizationUseSettings" target="_new" style="font-weight:bold;" rel="noopener">Sample project of previous article</a></p>
+<p style="margin:10px 0px 0px 5px;text-indent:1em;text-align:right;font-weight:bold;">&gt;&gt;<a href="https://github.com/TetsuroTakao/GlobalizationUseSettings3" target="_new" style="font-weight:bold;" rel="noopener">Sample project of this article</a></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">•&nbsp;Preparation of this article</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">In previous article, did not describe steps of implementation, but describe overview of process of development. So, this article describes extending application using the Options Pattern with steps of implementation.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The sample of implementation uses the &#8216;appsettings.json&#8217; file as a settings that includes two sections of languages the &#8216;English&#8217; section and the &#8216;Japanese&#8217; section create screens of an application. This article describes that adding an item of the sections of settings does not affect to another section of the settings.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">As concretely, a navigation menu of sample application is created from the settings. Even if adding menu item of the navigation menu in the English screen does not affect to the Japanese screen.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">As the screen that navigate from the &#8216;Index&#8217; screen, this sample includes the &#8216;Search&#8217; screen made from the &#8216;Search.cshtml&#8217; file and the &#8216;Search.cshtml.cs&#8217; file of the &#8216;Pages&#8217; folder.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Implementation steps are <span style="font-weight:bold;">1.</span> Create .NET &#8216;webapp&#8217; project, <span style="font-weight:bold;">2.</span> Prepare settings JSON, <span style="font-weight:bold;">3.</span> Prepare a class that has same structure as settings JSON to use the Options Pattern, <span style="font-weight:bold;">4.</span> Add configuration service to the host using <a href="https://docs.microsoft.com/en-us/dotnet/core/extensions/generic-host?WT.mc_id=DT-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">the Generic Host feature of .NET</a>, the service has same structure as settings JSON, because the Options Pattern creates a service that uses the class that made at step [3] as <a href="https://docs.microsoft.com/en-us/dotnet/core/extensions/dependency-injection?WT.mc_id=DT-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">DI (Dependency Injection)</a>, <span style="font-weight:bold;">5.</span> Use the settings values through the service at each controller (or non-MVC Razor pages).</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">•&nbsp;Create .NET ‘webapp’ project - Step 1
+&gt;Start Visual Studio Code ([code .] at any directory to create the project in Windows terminal)
+&gt;Open the terminal window in Visual Studio Code (Press [CTRL + @] in terminal pain)
+&gt;Create new 'webapp' project(Put [dotnet new webapp] in terminal pain)
+•&nbsp;Prepare settings JSON - Step 2
+&gt;Copy from the Sample project, or type below in appsettings.json of the project
+
+[%project root directory%\appsettings.json]
+{
+  "Japanese": {
+    "Brand": "管理画面",
+    "Pages": [
+      {
+        "ActionKey": "Index",
+        "Title": "ホーム"
+      },
+      {
+        "ActionKey": "Privacy",
+        "Title": "個人情報"
+      }
+    ]
+  },
+  "English": {
+    "Brand": "Management Console",
+    "Pages": [
+      {
+        "ActionKey": "Index",
+        "Title": "Home"
+      },
+      {
+        "ActionKey": "Privacy",
+        "Title": "Privacy"
+     }
+    ]
+  }
+}
+</pre>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">•&nbsp;A class that has same structure as settings JSON &#8211; Step 3</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The &#8216;appsettings.json&#8217; file has the &#8216;Japanese&#8217; section and the &#8216;English&#8217; section, the Options Pattern represents it as constant string. The &#8216;ApplicationContext&#8217; class below provides two objects that identifyed using name &#8216;English&#8217; and &#8216;Japanese&#8217;, each object has the &#8216;Brand&#8217; property, and the &#8216;Pages&#8217; property that is collection of the &#8216;Page&#8217; object which has the &#8216;ActionKey &#8216; property and the &#8216;Title&#8217; property.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">This procedure for specification is the Options Pattern specific that reduces same statement of the class to define same structure. Please compare the &#8216;appsettings.json&#8217; above and the &#8216;ApplicationContext&#8217; class below.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">[%project root directory%\Models\ApplicationContext.cs]
+public class ApplicationContext {
+    public const string Japanese = "Japanese";
+    public const string English = "English";
+    public string Brand{ get; set; } = String.Empty;
+    public List<page> Pages{ get; set; } = new List<page>();
+}
+
+public class Page {
+    public string ActionKey { get; set; } = String.Empty;
+    public string Title { get; set; } = String.Empty;
+}
+</page></page></pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The &#8216;ApplicationContext&#8217; class as the &#8216;ApplicationContext.cs&#8217; file create in the &#8216;Models&#8217; folder that create new at the project.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/08/ImplementationStep1.png" alt="" style="width:450px;"></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">•&nbsp;Add configuration service to the host &#8211; Step 4</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">In the &#8216;Program.cs&#8217; file of the project root, adds statement &#8216;builder.Services.Configure<applicationcontext>(builder.Configuration.GetSection(&#8220;Japanese&#8221;));&#8217; at before the statement &#8216;var app = builder.Build();&#8217;. This statement provides a service that is structed as the &#8216;ApplicationContext&#8217; type, includes settings value.</applicationcontext></p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">[%project root directory%\Program.cs]
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddRazorPages();
+// Add this code
+builder.Services.Configure<applicationcontext>(builder.Configuration);
+// Only this one code
+var app = builder.Build();
+if (!app.Environment.IsDevelopment())...
+...
+app.Run();
+</applicationcontext></pre>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">•&nbsp;Use the settings values at each controller (or non MVC razor pages) &#8211; Step 5</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Each method of a Controller if MVC, or OnGet method of the Razor pages if it&#8217;s not MVC could provides settings values to client UI.<br />
+Sample is non MVC Razor page, so move to Pages directory using [cd pages] command in the &#8216;terminal&#8217; pain and type [dotnet new pages -na %namespace%] to add a page in Pages folder of the project, make its page able to navigate from Index in follow step. Replace the part [%namespace%] to the namespace of development environment that can copy from the &#8216;Index.cshtml.cs&#8217;.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Modify a name of the model &#8216;PagesModel&#8217; to &#8216;SearchModel&#8217; in the &#8216;Pages.cshtml&#8217; file, and file name to &#8216;Search.cshtml&#8217;. And modify class name &#8216;PagesModel&#8217; to &#8216;SearchModel&#8217; in the &#8216;Pages.cshtml.cs&#8217; and file name to &#8216;Search.cshtml.cs'(refer to the figure below left).</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Next step is modifying &#8216;Index&#8217; screen, because of this web app starts from the &#8216;Index&#8217; screen.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Put configuration service into class-scoped variable at class constructor of the &#8216;Index.cshtml.cs&#8217;, to use in OnGet method. Put settings values to ViewData at OnGet method using class-scoped variable (refer to the figure below right).</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/08/ImplementationStep2.png" alt="" style="width:450px;"><img decoding="async" src="/wp-content/uploads/2022/08/ImplementationStep3.png" alt="" style="width:450px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The &#8216;GetSection&#8217; method of configuration service provides settings value of specific section (this sample is &#8216;English&#8217; section) to bind to class-scoped variable that structed as same with the &#8216;appsettings.json&#8217;. Then put settings values in ViewData using a type, in OnGet method. Thus, this coding style is very effectively.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;width:450px;display:inline-block;vertical-align:bottom;">[%project root directory%\Pages\Index.cshtml.cs]
+public SearchModel(ILogger<indexmodel> logger, IConfiguration configuration)
+{
+    Context = new ApplicationContext();
+    configuration.GetSection(ApplicationContext.English).Bind(Context);
+    // Use below code if you want show Japanese settings values.
+    // configuration.GetSection(ApplicationContext.Japanese).Bind(Context);
+}
+public void OnGet()
+{
+    ViewData["Brand"] = Context.Brand;
+    ViewData["Pages"] = Context.Pages;
+    var current = Context.Pages.Where(p =&gt; p.ActionKey == "Index")
+                    .FirstOrDefault();
+    if(current != null){
+        ViewData["Title"] = current.Title;
+    }
+}
+
+[%project root directory%\Pages\Index.cshtml]
+&lt;div class="text-center"&gt;
+    &lt;h4&gt;@ViewData["Brand"]!
+    &lt;div style="border:thin solid #00f;text-align:left;padding:5px;"&gt;&lt;/div&gt;
+&lt;/div&gt;
+</indexmodel></pre>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;display:inline-block;"><img decoding="async" src="/wp-content/uploads/2022/08/ImplementationStep4.png" alt="" style="width:450px;"></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">•&nbsp;Navigate from Index to Search</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Definition in the &#8216;Index.cshtml.cs&#8217; file is lost affect when navigate to the &#8216;Search&#8217; screen, thus definition like this has to set to global scope of application. For it, create new file &#8216;PageBase.cs&#8217; at the &#8216;Shared&#8217; folder of the &#8216;Pages&#8217; folder of project root, then copy all code of the &#8216;Index.cshtml.cs&#8217; file to it. After it, modify as below code. Let literal code &#8216;Index&#8217; that represents current screen as it is, only modify &#8216;IndexModel&#8217; to &#8216;PageBaseModel&#8217; here.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">[%project root directory%\Pages\Shared\PageBase.cs]
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+
+namespace GlobalizationUseSettings3.Pages
+{
+    // public class IndexModel:PageModel
+    public class PageBaseModel:PageModel
+    {
+        private readonly ILogger<pagebasemodel> _logger;
+        private readonly ApplicationContext Context;
+
+        // public IndexModel(ILogger&lt;IndexModel&gt; logger, IConfiguration configuration, string language)
+        public PageBaseModel(ILogger&lt;PageBaseModel&gt; logger, IConfiguration configuration)
+        {
+            _logger = logger;
+            Context = new ApplicationContext();
+            configuration.GetSection(language).Bind(Context);
+       }
+
+        public void OnGet()
+        {
+            ViewData["Brand"] = Context.Brand;
+            ViewData["Pages"] = Context.Pages;
+            var current = Context.Pages.Where(p =&gt; p.ActionKey == "Index").FirstOrDefault();
+            if(current != null){
+                ViewData["Title"] = current.Title;
+            }
+        }
+    }
+}
+</pagebasemodel></pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">In the &#8216;Index.cshtml.cs&#8217; file, modify the &#8216;IndexModel&#8217; class that is extend of the &#8216;PageModel&#8217; class to extend of the &#8216;PageBaseModel&#8217; class as below code. And let&#8217;s change the screen language to Japanese in this time.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;width:450px;display:inline-block;vertical-align:bottom;">[%project root directory%\Pages\Index.cshtml.cs]
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+
+namespace GlobalizationUseSettings3.Pages;
+
+// public class IndexModel : PageModel
+public class IndexModel : PageBaseModel
+{
+    // private readonly ILogger<indexmodel> _logger;
+    // private readonly ApplicationContext Context;
+
+    // public IndexModel(ILogger<indexmodel> logger, IConfiguration configuration)
+    public IndexModel(ILogger<indexmodel> logger, IConfiguration configuration)
+                : base(logger, configuration, ApplicationContext.Japanese)
+    {
+        // _logger = logger;
+        // Context = new ApplicationContext();
+        // configuration.GetSection(ApplicationContext.English).Bind(Context);
+    }
+
+    // public void OnGet()
+    // {
+    //     ViewData["Brand"] = Context.Brand;
+    //     ViewData["Pages"] = Context.Pages;
+    //     var current = Context.Pages.Where(p =&gt; p.ActionKey == "Index").FirstOrDefault();
+    //     if(current != null){
+    //         ViewData["Title"] = current.Title;
+    //     }
+    // }
+}
+</indexmodel></indexmodel></indexmodel></pre>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;display:inline-block;"><img decoding="async" src="/wp-content/uploads/2022/08/ImplementationStep5.png" alt="" style="width:450px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Next step is control of the current page title and adding navigation menu item for the &#8216;Search&#8217; screen.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">To obtain current screen, get the &#8216;HttpContext&#8217; object of HTTP request and get values of the &#8216;RouteData&#8217; object of the &#8216;HttpContext&#8217; object. This &#8216;RouteData&#8217; object includes URL address string as relatively of current screen. On the other hands, strings for title of screens set in the &#8216;appsettings.json&#8217; file is mapped to the &#8216;ApplicationContext&#8217; class. Thus the &#8216;Title&#8217; property of the &#8216;Page&#8217; object use for current screen is able to identify in the &#8216;Pages&#8217; collection of the &#8216;ApplicationContext&#8217; class if acquired URL address string match to the &#8216;ActionKey&#8217; property of the &#8216;Page&#8217; object. Delete &#8216;/&#8217; string to compare acquired URL address string with  the &#8216;ActionKey&#8217; property of the &#8216;Page&#8217; object use the &#8216;RegularExpression&#8217; object.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Modify the &#8216;OnGet()&#8217; method of the &#8216;PageBase.cs&#8217; file like as below code.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">[%project root directory%\Pages\Shared\PageBase.cs]
+using System.Text.RegularExpressions;
+...
+        public void OnGet()
+        {
+            ViewData["Brand"] = Context.Brand;
+            ViewData["Pages"] = Context.Pages;
+            // var current = Context.Pages.Where(p =&gt; p.ActionKey == "Index").FirstOrDefault();
+            // if(current != null){
+            //     ViewData["Title"] = current.Title;
+            // }
+            var p = Request.HttpContext.GetRouteData()!.Values["Page"]!.ToString();
+            var rx = new Regex(@"\w.*",RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            var m = rx.Matches(p!).FirstOrDefault()!.Value;
+            ViewData["Title"] = Context.Pages.Where(p =&gt; p.ActionKey == m).FirstOrDefault()!.Title;
+        }
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Last step of navigate to the &#8216;Search&#8217; scree is Modify the &#8216;_Layout.cshtml&#8217; file to create navigation menu item for &#8216;Search&#8217; screen.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Like as a title of current screen, This menu item is also created from the &#8216;Page&#8217; object defined in the &#8216;ApplicationContext&#8217; class. The &#8216;Page&#8217; class has the &#8216;ActionKey&#8217; property and the &#8216;Title&#8217; property, use this &#8216;ActionKey&#8217;, set at the &#8216;asp-page-handler&#8217; attribute of HTML anchor tag as the URI of the &#8216;Search&#8217; screen.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">&lt;a class="nav-link text-dark" asp-page="@item.ActionKey"&gt;@item.Title&lt;/a&gt;
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Settings values set to the &#8216;Pages&#8217; of ViewData in constructor of the &#8216;PageBase&#8217; class are collection of a pair the &#8216;ActionKey&#8217; property and the &#8216;Title&#8217; property. Thus, modify the &#8216;_Layout.cshtml&#8217; file as below code creates list items of HTML unordered list tag.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">&lt;ul class="navbar-nav flex-grow-1"&gt;
+    @* &lt;li class="nav-item"&gt;
+        &lt;a class="nav-link text-dark" asp-area="" asp-page="/Index"&gt;Home&lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li class="nav-item"&gt;
+        &lt;a class="nav-link text-dark" asp-area="" asp-page="/Privacy"&gt;Privacy&lt;/a&gt;
+    &lt;/li&gt; *@
+    @foreach (var item in pages!)
+    {
+        &lt;li class="nav-item"&gt;
+            @if(ViewData["Title"]!.ToString()==item.Title) {
+                &lt;span style="padding:.5rem;display:inline-block;"&gt;@item.Title&lt;/span&gt;
+            }
+            else{
+                &lt;a class="nav-link text-dark" asp-page="@item.ActionKey"&gt;@item.Title&lt;/a&gt;
+            }
+        &lt;/li&gt;
+    }
+&lt;/ul&gt;
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">In this mechanism, modifying the &#8216;appsettings.json&#8217; file changes navigate menu immediately. Add &#8216;Search&#8217; page settings only in the &#8216;English&#8217; section, it does not affect to the &#8216;Japanese&#8217; section.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;display:inline-block;"><img decoding="async" src="/wp-content/uploads/2022/08/ImplementationStep6.png" alt="" style="width:300px;"><img decoding="async" src="/wp-content/uploads/2022/08/ImplementationStep7.png" alt="" style="width:300px;"><img decoding="async" src="/wp-content/uploads/2022/08/ImplementationStep5.png" alt="" style="width:300px;"></p>
+<div style="background-color:#cccccc;border:1px solid #00000; padding: 10px 10px 0px 10px;margin-top:20px;">
+<div style="margin:-20px 0px 0px 5px;text-indent:1em;font-weight:bold;background-color:#444;border:1px solid #ccc;color:#fff;">ⓘ Recommended Reference</div>
+<p><a href="https://blog.processtune.com/?p=6428" target="_new" style="font-weight:bold;" rel="noopener">.NET Core Options pattern</a><br />
+<a href="https://blog.processtune.com/?p=6364" target="_new" style="font-weight:bold;" rel="noopener">ASP.NET Core Options Pattern</a></p>
+</div>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2022/07/23/encapsulation-of-information-affects-an-app-flexibility-asp-net-core-options-pattern/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>ASP.NET Core Options Pattern</title>
+		<link>https://blog.processtune.com/2022/06/28/asp-net-core-options-pattern/</link>
+					<comments>https://blog.processtune.com/2022/06/28/asp-net-core-options-pattern/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Tue, 28 Jun 2022 07:43:10 +0000</pubDate>
+				<category><![CDATA[.NET Core]]></category>
+		<category><![CDATA[ASP.NET Core]]></category>
+		<category><![CDATA[C#]]></category>
+		<category><![CDATA[Service]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Visual Studio Code]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=6364</guid>
+
+					<description><![CDATA[A typical web application separates setting from the App. In the ASP .NET Core web app allows encapsulation and separation of an interest of setting using the options pattern. It allows enables continuous integration while improving maintainability of an application. This article describes as an introduce of the ASP.NET Core Options Pattern using globalization sample. [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin:0px 0px 0px 0px;color:#000044;font-size:0.9rem;font-family:" segoe="" ui";"="">A typical web application separates setting from the App. In the ASP .NET Core web app allows encapsulation and separation of an interest of setting using the options pattern. It allows enables continuous integration while improving maintainability of an application.<br />
+This article describes as an introduce of the ASP.NET Core Options Pattern using globalization sample.<br />
+For globalization of ASP .NET Core samples using &#8216;.resx&#8217; files are <a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/localization?view=aspnetcore-6.0&amp;WT.mc_id=DT-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">ideal pattern</a>. These samples are created, edited, debugged, and continuously managed in Visual Studio, so users who aren&#8217;t using Visual Studio can use tools such as the online xml converter to get &#8216;.resx&#8217; files.<br />
+If your development environment for productions that support many languages, I recommend that you do so, but if you create an application that supports a few languages such as just only Japanese and English, or lightweight web application such as PoC, demo or sample code. These apps globalize only few words, so It is useful that globalization using the options pattern without adopting full-scale globalization using &#8216;.resx&#8217; files.</p>
+<p style="margin:10px 0px 0px 5px;text-indent:1em;text-align:right;font-weight:bold;">&gt;&gt;<a href="https://github.com/TetsuroTakao/GlobalizationUseSettings" target="_new" style="font-weight:bold;" rel="noopener">Code sample of this article</a></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Overview</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The way of separating ASP.NET settings from app hasn&#8217;t changed with the way of existing. Each method can use defined the setting value in the JSON file after registering the service on the host of the application.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">In the case of ASP.NET MVC, if you register the service of the setting value in the host created by CreateBuilder, you can store the service received by the constructor of the controller in the variable defined globally in the scope of the controller, so can use settings variable in POST or GET method. You can use that variable in the processing of the request.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">[Program.cs]
+builder.Services.Configure&lt;ApplicationContext&gt;(builder.Configuration);
+
+[Pages/Search.cshtml.cs]
+    public class SearchModel : PageModel
+    {
+        private readonly ApplicationContext Context;
+        public SearchModel(ILogger&lt;IndexModel&gt; logger, IConfiguration configuration)
+        {
+            Context = new ApplicationContext();
+            Context.Languages.Add(ApplicationContext.English);
+            configuration.GetSection(ApplicationContext.Japanese).Bind(Context);
+       }
+
+        public void OnGet()
+        {
+            ViewData["Message"] = Context.Languages.Count;
+...
+        }
+    }
+</pre>
+<div style="background-color:#cccccc;border:1px solid #00000; padding: 10px 10px 0px 10px;margin-top:20px;">
+<div style="margin:-20px 0px 0px 5px;text-indent:1em;font-weight:bold;background-color:#444;border:1px solid #ccc;color:#fff;">ⓘ As additional information</div>
+<p>At that time, if the setting values ​​are separated using the options pattern, maintainable encapsulation can be performed. You can encapsulate by below.<br />
+1. The settings for individual methods or controllers, respectively.<br />
+2. At the level of &#8220;system&#8221; and &#8220;business&#8221; information such as logs and IP whitelists.<br />
+3. Semantics of settings.<br />
+4. more &#8230;</p>
+</div>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Often In the Domain Driven Design, the same thing is called by deferent name depending on boundary context on the scene in which it is used. When you purchase some product, what is displayed as &#8220;payment&#8221; in the member&#8217;s app is displayed as &#8220;sales&#8221; in the sales management system. It is OK that use deferent letteral objects on each individual systems if it mapped deferent labels by an individual system of a legacy system. It is important that using deferent settings value to handle same object of stateful middleware on deferent service in a modern system.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Thus, it can be said that the value of the settings handled in each boundary context with several same attributes are different when design settings elements.</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Implementation</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">In this article, the reason of using an implementation example of globalization is for describing the example of &#8220;Continuous integration of applications that read different setting values ​​while having the same attributes&#8221; to express the features of the options pattern.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/06/StepsOfTakingConfiguration.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">In this article, the reason of using an implementation example of globalization is for describing the example of &#8220;Continuous integration of applications that read different setting values ​​while having the same attributes&#8221; to express the features of the options pattern.</p>
+<div style="margin: 20px 0px 0px 0px;display:table;">
+<div style="display:table-row;">
+<div style="display:table-cell;text-indent:1em;"><span style="font-size:2rem;font-family: 'Arial';">At first</span>, prepare Japanese and English sections in the appsettings.json, and it has brand name and the Pages segment. The segment has an action names as the ActionKey and a page titles as the Title.</div>
+<div style="display:table-cell;"><img decoding="async" src="/wp-content/uploads/2022/06/Appsettings.png" alt="" style="width:180px;vertical-align:top;mergin left:10px;"></div>
+</div>
+</div>
+<div style="margin: 20px 0px 0px 0px;display:table;">
+<div style="display:table-row;">
+<div style="display:table-cell;"><img decoding="async" src="/wp-content/uploads/2022/06/ApplicationContext.png" alt="" style="width:450px;vertical-align:top;margin-right:10px;"></div>
+<div style="display:table-cell;text-indent:1em;margin-left:10px;"><span style="font-size:2rem;font-family: 'Arial';">Next</span>, prepare a class with the same structure as the JSON file used for the configuration service registration for application builder.<br />
+Add the ApplicationContext.cs to the project, I recommend that adding the Models folder in the project at first, then input the ApplicationContext.cs into it.<br />
+One of the features of the ASP.NET options pattern is that defined const is name of the object and ignore it as structure of the object. Thus, this const can be used when get certain section of configuration service without hard coding &#8216;Japanese&#8217; or &#8216;English&#8217;.</div>
+</div>
+</div>
+<div style="margin: 20px 0px 0px 0px;display:table;">
+<div style="display:table-row;">
+<div style="display:table-cell;text-indent:1em;"><span style="font-size:2rem;font-family: 'Arial';">Then</span>, Register target section of the builder configuration as the configuration service with the type same as certain section of appsettings.json.</div>
+<div style="display:table-cell;"><img decoding="async" src="/wp-content/uploads/2022/06/RegisterService.png" alt="" style="width:450px;vertical-align:top;mergin left:10px;"></div>
+</div>
+</div>
+<div style="margin: 20px 0px 0px 0px;display:table;">
+<div style="display:table-row;">
+<div style="display:table-cell;"><img decoding="async" src="/wp-content/uploads/2022/06/UsingConfigurationService.png" alt="" style="width:450px;vertical-align:top;margin-right:10px;"></div>
+<div style="display:table-cell;text-indent:1em;"><span style="font-size:2rem;font-family: 'Arial';">Since</span> the setting value registered as configuration service can be received by the argument of the constructor, store it in a variable at the global level scope of the class. It can use in individual method of the class, respectively.</div>
+</div>
+</div>
+<div style="background-color:#cccccc;border:1px solid #00000; padding: 10px 10px 0px 10px;margin-top:20px;">
+<div style="margin:-20px 0px 0px 5px;text-indent:1em;font-weight:bold;background-color:#444;border:1px solid #ccc;color:#fff;">ⓘ As additional information</div>
+<p>I&#8217;m using the ViewData object because I needed to layer the objects when separating the options pattern. When using the options pattern as a mere encapsulation, the ViewBag object may be sufficient, as it is a set of parallel key / value combinations without grouped hierarchies.</p>
+</div>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2022/06/28/asp-net-core-options-pattern/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>ASP.NET Core gRPC &#038; gRPC communication tools</title>
+		<link>https://blog.processtune.com/2022/05/30/asp-net-core-grpc-grpc-communication-tools/</link>
+					<comments>https://blog.processtune.com/2022/05/30/asp-net-core-grpc-grpc-communication-tools/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Mon, 30 May 2022 09:28:02 +0000</pubDate>
+				<category><![CDATA[gRPC]]></category>
+		<category><![CDATA[未分類]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=6649</guid>
+
+					<description><![CDATA[Microsoft supports several development environments of the gRPC communication implementation, and provides many documents. I want to introduce Microsoft official document and describe mechanism of HTTP/3 protocol, relation between the gRPC and HTTP/3 and so on. Design of gRPC communication was described at previous article &#8216;Design of solution with gRPC communication&#8216;, please refer to it. [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin:0px 0px 0px 0px;color:#000044;font-size:0.9rem;font-family:" segoe="" ui";"="">Microsoft supports several development environments of the gRPC communication implementation, and provides many documents. I want to introduce <a href="https://learn.microsoft.com/en-us/aspnet/core/grpc/test-tools?view=aspnetcore-6.0&amp;WT.mc_id=AZ-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">Microsoft official document</a> and describe mechanism of HTTP/3 protocol, relation between the gRPC and HTTP/3 and so on. Design of gRPC communication was described at previous article &#8216;<a href="https://blog.processtune.com/?p=6651" target="_new" style="font-weight:bold;" rel="noopener">Design of solution with gRPC communication</a>&#8216;, please refer to it.<br />
+This article describes two-thirds steps of implementation of the gRPC service, at first, create the gRPC service with localhost, then query simple request use the <a href="https://github.com/fullstorydev/grpcurl/blob/master/README.md" target="_new" style="font-weight:bold;" rel="noopener">gRPCurl</a> tool. The last step is in the next article [<a href="https://blog.processtune.com/?p=6783" target="_new" style="font-weight:bold;" rel="noopener">Deploy the gRPC service to the Azure App Service</a>] that describes how to deploy the service to Azure Web App Service.<br />
+And mechanism of HTTP/3 protocol and relation between the gRPC and HTTP/3 is described in the article [<a href="https://blog.processtune.com/?p=6804" target="_new" style="font-weight:bold;" rel="noopener">HTTP3 and gRPC service in .NET framework</a>].</p>
+<p style="margin:10px 0px 0px 5px;text-indent:1em;text-align:right;font-weight:bold;">&gt;&gt;<a href="https://github.com/TetsuroTakao/gRPC2" target="_new" style="font-weight:bold;" rel="noopener">The gRPC service sample project, before deployment to Azure Web Service.</a></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">•&nbsp;Implementation of the gRPC service.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">This article refers to Microsoft official document &#8216;<a href="https://learn.microsoft.com/en-us/aspnet/core/tutorials/grpc/grpc-start?view=aspnetcore-6.0&amp;tabs=visual-studio?WT.mc_id=DT-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">Tutorial: Create a gRPC client and server in ASP.NET Core</a>&#8216;, so if lost a step of implementation of the gRPC service, please refer to it too. This article describe steps of the gRPC service with  ASP.NET Core, so the service implementation with one of architectures below.</p>
+<div style="margin: 0px 0px 0px 20px;display:table;">
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;padding-right:10px;">Kestrel</div>
+<div style="display:table-cell;">Cross-platform web server</div>
+</div>
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;">TestServer</div>
+<div style="display:table-cell;">In-memory web server for unit test mainly</div>
+</div>
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;">Internet Information Service</div>
+<div style="display:table-cell;">Standard web server of Windows, the constraints are .NET 5 and Windows 11 Build 22000 or Windows Server 2022 Build 20348 or later.</div>
+</div>
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;">HTTP.sys</div>
+<div style="display:table-cell;">The Windows web service for ASP.NET Core includes several extending features that differ from Kestrel; constraints are same as IIS above.</div>
+</div>
+</div>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">In the step 2, call it from the gRPCurl tool or the Postman, then after confirm runnable of the service, as last step, deploy to any of Azure Services below.</p>
+<div style="margin: 0px 0px 0px 20px;display:table;">
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;">Azure Kubernetes Service (AKS)</div>
+</div>
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;">Azure Container Apps</div>
+</div>
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;">Azure App Service (gRPC-Web)</div>
+</div>
+</div>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The gRPC service have to includes the gRPC reflection service for providing description of the gRPC service (works like as swagger). The gRPC client communicates with the gRPC reflection service for solving objects of the gRPC service before calls method of the service.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">If it needs only communication test, a gRPC service that does not implement the gRPC reflection service can also use the gRPC connection with loading the proto source file to the gRPCurl. Also, the Postman can use as gRPC client as same as the gRPCurl (useable the proto source file).</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">It is easy that the gRPC reflection service implementation, Open Visual Studio Code, use the &#8220;dotnet new&#8221; command at target folder and use the &#8220;dotnet add package&#8221; command for implementation of service on the generic host of ASP.NET Core web app.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2023/02/ImplementationProcess.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">1. Press the Ctrl key + @ key for open the terminal pain of Visual Studio Code. Then put the &#8220;dotnet new list&#8221; command to show all templates of dotnet sdk on development environment. The figure above shows .NET SDK 7.0 environment. There is the ASP.NET Core gRPC Service in the list.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">2. So, move to the target folder in the terminal pain, and put the &#8220;dotnet new grpc&#8221; command to generate project files at target folder.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">3. Install reflection server package use nuget dotnet command &#8220;dotnet add package Grpc.AspNetCore.Server.Reflection &#8211;version 2.51.0&#8221;.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">4. Next, open the Program.cs file from the EXPLORER pain, and put the code &#8220;builder.Services.AddGrpcReflection();&#8221; after the &#8220;var builder = WebApplication.CreateBuilder(args);&#8221; statement.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">5. After the &#8220;var app = builder.Build();&#8221; statement, add the &#8220;IWebHostEnvironment env = app.Environment;&#8221; code and the &#8220;if&#8221; section like code below.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">using gRPC2.Services;
+
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddGrpcReflection();
+// Additional configuration is required to successfully run gRPC on macOS.
+// For instructions on how to configure Kestrel and gRPC clients on macOS, visit https://go.microsoft.com/fwlink/?linkid=2099682
+
+// Add services to the container.
+builder.Services.AddGrpc();
+
+var app = builder.Build();
+IWebHostEnvironment env = app.Environment;
+if (env.IsDevelopment())
+{
+    app.MapGrpcReflectionService();
+}
+// Configure the HTTP request pipeline.
+app.MapGrpcService<greeterservice>();
+app.MapGet("/", () =&gt; "Communication with gRPC endpoints must be made through a gRPC client. To learn how to create a client, visit: https://go.microsoft.com/fwlink/?linkid=2086909");
+
+app.Run();
+</greeterservice></pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">6. Put the &#8220;dotnet run&#8221; command to run gRPC service at local environment, then the &#8220;Now listening on: http://localhost:5008&/#8221; statement displayed on the terminal pain. The HTTPS connection is able to use with the &#8220;dotnet dev-certs https&#8221; command in the terminal pane.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">At first, the Postman is easy to confirm the gRPC service connection than using the gRPCurl because the gRPCurl is command line application. So describes the Postman usage ahead, then the gRPCurl usage follows.</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">•&nbsp;Call the gRPC service use the gRPCurl and the Postman.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The &#8220;New&#8230;&#8221; menu item of the File menu item that displayed when press the hamburger icon of Postman has the gRPC connection feature, refer below figure.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2023/02/PostmanCreateNewgRPC.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">From the terminal pain of Visual Studio Code, copy the part of the URL (localhost:5008) excluded the protocol part that is listening, and paste at the server address textbox of the gRPC Request tub. Then press the [Try again] link of the last item [Use server reflection] of the method select list that is shown when the method textbox selects. After pressing the [Try again] link, the list is changed to be able to select the method (SayHello).</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2023/03/PostmanInvoke.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">This &#8220;SayHello&#8221; method defined at the GreeterService class of the GreeterService.cs file, thus the reflection service create the proto file at the greet.proto file of the Protos folder.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2023/03/FileStructure.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The <a href="https://github.com/fullstorydev/grpcurl/releases" target="_new" style="font-weight:bold;" rel="noopener">gRPCurl</a> is command line application for confirming the gRPC service communication. After install <a href="https://go.dev/doc/install" target="_new" style="font-weight:bold;" rel="noopener">Go language</a>, install the gRPCurl (download the “grpcurl_1.8.7_windows_x86_64.zip” file and unzip it) and run the Windows Command Prompt at the gRPCurl install folder.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2023/03/RungRPCurl.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">This figure is result of that acquire information of the gRPC service then call remote procedure.<br />
+The describe command responds &#8220;greet.Greeter is a service&#8221; (package name and service name), and &#8220;rpc SayHello &#8230;&#8221; (method name). The Method is able to call with format &#8220;grpcurl -plaintext -d %value(s)% %server address% %package name%.%service name%/%methodname%&#8221;.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Definition of argument(s) of the method of the service uses the &#8220;-d&#8221; command. Thus &#8220;grpcurl -plaintext -d %value(s)% localhost:5008 greet.Greeter/SayHello&#8221; warks well. Only in Windows development environment, argument(s) wrap with [&#8221; (double quate)] and JSON format: wrap key/value with [{} (Brace)] and wrap the key and the value each with [&#8221; (double quate)], [&#8221; (double quate)] in argument(s) needs escape.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">"grpcurl -plaintext -d "{\"name\": \"takao\"}" localhost:5008 greet.Greeter/SayHello"
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">If there is Go development environment, it is able to connect to gRPC service with browser. If not, go to the page &#8220;Download and install&#8221; of the Go website and install it. After install it, install gRPC UI use the command &#8220;go install github.com/fullstorydev/grpcui/cmd/grpcui@latest&#8221; (move to the Go installed path if it needs). It is installed at the GOPATH of the system environment variables that is shown from the System Properties dialog&#8217;s [Environment Variables&#8230;] button select. The dialog is shown when select the [Advanced system settings] link of the [Related links] of the [System About] window that is displayed by selection the context menu item [System] of Windows icon (right click).<br />
+Move to the gRPC UI installed path if it needs, type &#8220;grpcui -plaintext localhost:5008&#8221;, then the browser is opened and can test it.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2023/03/EnvironmentVariables.png" alt="" style="width:400px;"><img decoding="async" src="/wp-content/uploads/2023/03/grpcui.png" alt="" style="width:450px;margin-left:1rem;"></p>
+<div style="background-color:#cccccc;border:1px solid #00000; padding: 10px 10px 0px 10px;margin-top:20px;">
+<div style="margin:-20px 0px 0px 5px;text-indent:1em;font-weight:bold;background-color:#444;border:1px solid #ccc;color:#fff;">ⓘ Recomended reference</div>
+<p><a href="https://blog.processtune.com/?p=6649" target="_new" style="font-weight:bold;display:inline-block;margin-left:1rem;margin-top:1rem;" rel="noopener">→ ASP.NET Core gRPC &amp; gRPCurl tool</a><br />
+<a href="https://blog.processtune.com/?p=6783" target="_new" style="font-weight:bold;display:inline-block;margin-left:1rem;margin-top:1rem;" rel="noopener">→ Deploy the gRPC service to the Azure App Service</a><br />
+<a href="https://blog.processtune.com/?p=6804" target="_new" style="font-weight:bold;display:inline-block;margin-left:1rem;margin-top:1rem;margin-bottom:1rem;" rel="noopener">→ HTTP3 and gRPC service in .NET framework</a></p>
+</div>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2022/05/30/asp-net-core-grpc-grpc-communication-tools/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Design of solution with gRPC communication</title>
+		<link>https://blog.processtune.com/2022/04/30/design-of-solution-with-grpc-communication/</link>
+					<comments>https://blog.processtune.com/2022/04/30/design-of-solution-with-grpc-communication/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Sat, 30 Apr 2022 08:29:32 +0000</pubDate>
+				<category><![CDATA[ASP.NET Core]]></category>
+		<category><![CDATA[C#]]></category>
+		<category><![CDATA[gRPC]]></category>
+		<category><![CDATA[Service]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Technical Memo]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=6651</guid>
+
+					<description><![CDATA[The gRPC is one of the Remote Procedure Call (RPC), It was developed by Google. They needed a messaging protocol that can respond on the distributed computing environment in real-time when users operate the Data plane of the Google Cloud. And it was leveraged for maintaining of the Control plane of Google Cloud also, to [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin:0px 0px 0px 0px;color:#000044;font-size:0.9rem;font-family:" segoe="" ui";"=""><a href="https://github.com/grpc" target="_new" style="font-weight:bold;" rel="noopener">The gRPC</a> is one of the <a href="https://en.wikipedia.org/wiki/Remote_procedure_call" target="_new" style="font-weight:bold;" rel="noopener">Remote Procedure Call (RPC)</a>, It was developed by Google. They needed a messaging protocol that can respond on the distributed computing environment in real-time when users operate <a href="https://www.cloudflare.com/learning/network-layer/what-is-the-control-plane/" target="_new" style="font-weight:bold;" rel="noopener">the Data plane</a> of the Google Cloud. And it was leveraged for maintaining of the Control plane of Google Cloud also, to keep high quality cloud services.<br />
+The gRPC uses <a href="https://cloud.google.com/blog/products/gcp/grpc-a-true-internet-scale-rpc-framework-is-now-1-and-ready-for-production-deployments?hl=en" target="_new" style="font-weight:bold;" rel="noopener">the Stubby</a> they created: a framework of one of the RPC. Then the gRPC become to open source, and it has be the incubating project of <a href="https://www.cncf.io/" target="_new" style="font-weight:bold;" rel="noopener">CNCF</a> since 2017.<br />
+Microsoft supports many development environments for an application using the gRPC-Web and the gRPC-over-HTTP/2 (see Microsoft official document &#8216;<a href="https://docs.microsoft.com/ja-jp/aspnet/core/grpc/supported-platforms?view=aspnetcore-6.0&amp;WT.mc_id=DT-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">gRPC on .NET supported platforms</a>&#8216;).<br />
+This article describe mechanism of .NET application using the gRPC architecture and an application that uses the gRPC works as the Message Oriented Middleware.<br />
+The article &#8216;<a href="https://blog.processtune.com/?p=6649" target="_new" style="font-weight:bold;" rel="noopener">ASP.NET Core gRPC &amp; gRPCurl tool</a>&#8216; describes how to implement gRPC application service from Azure App Service.</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">•&nbsp;gRPC-dotnet</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The gRPC-dotnet is implementation of .NET that is to use the <a href="https://grpc.io/blog/grpc-stacks/" target="_new" style="font-weight:bold;" rel="noopener">gRPC Core Stack</a>. It&#8217;s structed with namespaces of <a href="https://www.nuget.org/packages/Grpc.AspNetCore" target="_new" style="font-weight:bold;" rel="noopener">Grpc.AspNetCore</a> and <a href="https://www.nuget.org/packages/Grpc.AspNetCore.Server.Reflection" target="_new" style="font-weight:bold;" rel="noopener">Grpc.AspNetCore.Server.Reflection</a>. For creation of these stub, namespaces <a href="https://www.nuget.org/packages/Grpc.Net.Client" target="_new" style="font-weight:bold;" rel="noopener">Grpc.Net.Client</a>, <a href="https://www.nuget.org/packages/Grpc.Tools/2.51.0" target="_new" style="font-weight:bold;" rel="noopener">Grpc.Tools</a>, and <a href="https://www.nuget.org/packages/Google.Protobuf" target="_new" style="font-weight:bold;" rel="noopener">Google.Protobuf</a> architecture are used.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The Grpc.AspNetCore namespace is the gRPC service itself, and the Grpc.AspNetCore.Server.Reflection namespace works for providing a description of the gRPC service to client apps just like the <a href="https://swagger.io/" target="_new" style="font-weight:bold;" rel="noopener">Swagger</a>.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">On the other hand, the Grpc.Tools namespace is auto generate a stub of client side that uses <a href="https://protobuf.dev/" target="_new" style="font-weight:bold;" rel="noopener">the Protobuf of the gRPC</a>. The Grpc.Tools namespace generates a stub with the Google.Protobuf architecture, The Google.Protobuf called from the Grpc.Tools namespace is pure C# implementation that does not use native component of the gRPC core stack.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">There was no HTTP/2 library of C# until gRPC-dotnet is developed, so gRPC apps of C# were developed with gRPC.Core that includes HTTP/2 library. The gRPC.Core namespace moved to the state of the Maintenance Only at May 2021, then at May 2022, it was in the state of the Deprecated (Please refer to the great article &#8216;<a href="https://grpc.io/blog/grpc-csharp-future/" target="_new" style="font-weight:bold;" rel="noopener">The future of gRPC in C# belongs to grpc-dotnet</a>&#8216;).</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2023/02/gRPC-dotnet.png" alt="" style="width:900px;"></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">•&nbsp;The gRPC is a protocol for the Message Oriented Middleware.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The gRPC extends the Remote Procedure Call (RPC). <a href="https://grpc.io/" target="_new" style="font-weight:bold;" rel="noopener">The official website</a> says, &#8216;A high performance, open-source universal RPC framework&#8217;.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The first description is an aspect of universal RPC framework, it can be used in multiple languages and can enforce service contracts on multiple first- and third-party services using HTTP/2. It means that the gRPC can generate clients and servers in multiple languages, generated code is able to run on each language environment (C++, Java, Go, Node, Ruby, Python and C# across Linux, Windows and Mac). The gRPC as a framework is universal because it supports also development on many environment. For instance, mobile apps development of iOS and Android is supported with Objective-C and Android Java libraries, it can execute single-line installation in most languages.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The RPC calls any functions on destination that are an object, in other words, service contracts have to describe the objects, so gRPC use the Protocol Buffers for run on universal environment. The Protocol Buffers are a language-neutral, platform-neutral extensible mechanism for serializing structured data (quote from <a href="https://protobuf.dev/" target="_new" style="font-weight:bold;" rel="noopener">the official website</a>). It can describe objects of services side and edge side both.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The second description is an aspect of high performance of the gRPC, availability of object description affects streaming or unary flow control from each side of service and edge. In the case of using the forward error correction (FEC) mechanism for error handling, it is better that an object error is supported at communication level same as a connection error instead of at an application level. An access control of authentication &amp; authorization typically uses JSON as a container of a security token, object description of the Protocol Buffers is useful for transfer of a security token too, also useful for serialization/deserialization. The RPC extends of the gRPC are also useful at other aspects such as distributed tracing, binding as synchronization/asynchronization, response of cancel/timeout, health checking, load balancing, logging and monitoring and tracing etc..</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The gRPC was developed for distributed computing. Distributed computing has the Message-Oriented Middleware, the Distributed Directory, the Service Discovery, the Stateful Middle Tier, the Stateless Actor Activator and so on. There are many types in the Message Oriented Middleware such as the Pub-Sub, the Message Queue, the Fan-out, the Request/Response, the Point to Point, the Remote Procedure Call and so forth. The Remote Procedure Call run on several type protocols like the HTTP, the HTTP/2, the TCP/IP, the Internet InterORB protocol. The gRPC is extends HTTP/2 with the Protocol Buffers. Thus, the gRPC has to be used in correct situation, in other words, what kind of a solution architecture, what part of the system or which direction of procedures call.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2023/02/gRPCInDistributedComputing.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The gRPC is like as the WCF or the DCOM that uses the Distributed Object in synchronize communication although, it can communicate asynchronously, and also can bidirectional communication between service and client because it transfer objects with the HTT/2 protocol.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The Distributed Object of unary RPC makes a stub of a service side object on a client side, then a client executes a client-side object. In other hand, the gRPC transfers a description of service side object, then a client side calls service side procedure.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2023/02/gRPCommunicationDirection.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">If you familiar with synchronize communication on the DCOM or the WCF architecture, aware consistency of a state of services on the gRPC communication. In the case of a unary RPC, a client-side application uses same object of service side as stub, thus typically the application care about consistency of only service side state although, in contrast a state of client side or service side is not guaranteed on the gRPC communication because the gRPC communication uses remotely individual object of service side or client side and usually communicate with asynchronously. Though the gRPC can communicate as synchronously for waiting remote procedure response like unary RPC, if use the Backend for Frontends pattern for design of cloud native solution, it needs design as distributed computing like Microservices. Please refer to the website of Sam Newman (&#8216;<a href="https://samnewman.io/patterns/architectural/bff/" target="_new" style="font-weight:bold;" rel="noopener">Pattern: Backends For Frontends</a>&#8216;), and Microsoft official document (&#8216;<a href="https://learn.microsoft.com/en-us/azure/architecture/patterns/backends-for-frontends?WT.mc_id=AZ-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">Backends for Frontends pattern: Microsoft learn</a>&#8216;).</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2023/02/BackendForFrontends.png" alt="" style="width:900px;"></p>
+<div style="background-color:#cccccc;border:1px solid #00000; padding: 10px 10px 0px 10px;margin-top:20px;">
+<div style="margin:-20px 0px 0px 5px;text-indent:1em;font-weight:bold;background-color:#444;border:1px solid #ccc;color:#fff;">ⓘ Recomended reference</div>
+<p><a href="https://blog.processtune.com/?p=6649" target="_new" style="font-weight:bold;display:inline-block;margin-left:1rem;margin-top:1rem;margin-bottom:1rem;" rel="noopener">→ASP.NET Core gRPC &amp; gRPCurl tool</a></p>
+</div>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2022/04/30/design-of-solution-with-grpc-communication/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

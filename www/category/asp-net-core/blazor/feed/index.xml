@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Blazor &#8211; Processtune Blog</title>
+	<atom:link href="https://blog.processtune.com/category/asp-net-core/blazor/feed/" rel="self" type="application/rss+xml" />
+	<link>https://blog.processtune.com/</link>
+	<description>Articles offered from Microsoft MVP</description>
+	<lastBuildDate>Tue, 28 Mar 2023 01:17:24 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.8.2</generator>
+
+<image>
+	<url>/wp-content/uploads/2023/03/cropped-Presentation-32x32.png</url>
+	<title>Blazor &#8211; Processtune Blog</title>
+	<link>https://blog.processtune.com/</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>Nginx run on Windows Subsystem for Linux 2</title>
+		<link>https://blog.processtune.com/2021/12/01/nginx-run-on-windows-subsystem-for-linux-2/</link>
+					<comments>https://blog.processtune.com/2021/12/01/nginx-run-on-windows-subsystem-for-linux-2/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Wed, 01 Dec 2021 06:32:36 +0000</pubDate>
+				<category><![CDATA[ASP.NET Core]]></category>
+		<category><![CDATA[Blazor]]></category>
+		<category><![CDATA[Docker]]></category>
+		<category><![CDATA[Microservice]]></category>
+		<category><![CDATA[Nginx]]></category>
+		<category><![CDATA[Reverce Proxy]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[vim]]></category>
+		<category><![CDATA[Visual Studio Code]]></category>
+		<category><![CDATA[WSL2]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=6177</guid>
+
+					<description><![CDATA[On design fase of a microservices, several experts of various knowledge designs stateful middleware, containerisation or entities implimentation of Domain-driven design and so on. As detail, define data flow from some usecases that structs user story when designing stateful middleware, because individual service of common microservices may map to a single usecase of the user [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin:0px 0px 0px 0px;color:#000044;font-size:0.9rem;font-family:" segoe="" ui";"="">On design fase of <a href="https://docs.microsoft.com/en-us/azure/architecture/guide/architecture-styles/microservices?WT.mc_id=DT-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">a microservices</a>, several experts of various knowledge designs <a href="https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-reliable-services-communication-aspnetcore?WT.mc_id=AZ-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">stateful middleware</a>, <a href="https://docs.microsoft.com/en-us/dotnet/architecture/microservices/container-docker-introduction/?WT.mc_id=DT-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">containerisation</a> or entities implimentation of <a href="https://docs.microsoft.com/en-us/dotnet/architecture/microservices/microservice-ddd-cqrs-patterns/ddd-oriented-microservice?WT.mc_id=DT-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">Domain-driven design</a> and so on.<br />
+As detail,  define data flow from some usecases that structs user story when designing stateful middleware, because individual service of common microservices may map to a single usecase of the user story and they have specific persistence layer. And they acquire a state from their specific persistence layer for marge with some states that keeped by other services, or save a state to their specific persistence layer until it will be used.<br />
+This article describes mechanism and creating processes of typically microservices, using reverse proxy that developed with <a href="https://www.nginx.com/" target="_new" style="font-weight:bold;" rel="noopener">Nginx</a> as the sample of microservices endpoint. This reverse proxy server is primitive prototype of <a href="https://docs.microsoft.com/en-us/dotnet/architecture/microservices/architect-microservice-container-applications/direct-client-to-microservice-communication-versus-the-api-gateway-pattern?WT.mc_id=DT-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">service mesh endpoint</a> of microservices. The sample is structed with reverse proxy service that create on here as service mesh endpoint, and SVG coloring service that created in before article as sample of individual service.</p>
+<p style="margin:10px 0px 0px 5px;text-indent:1em;text-align:right;font-weight:bold;">&gt;&gt;<a href="https://github.com/TetsuroTakao/QRCodeCreation" target="_new" style="font-weight:bold;" rel="noopener">Rust sample project to create QR Code, Base program of implantation to Azure Functions</a></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Objective</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Service mesh endpoint provides an entrance of service mesh, service mesh is structured with several individual service of microservices.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">One of reason why Service mesh design pattern was born is for assembling a bunch of sidecar feature of individual services (the endpoint have to provides service discovery, load balancing, encryption, observability, traceability, authentication and authorization, and the circuit breaker pattern).</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">This entrance is able to provide using also Azure Application Gateway although, it is able to create manually. Microsoft official document [<a href="https://docs.microsoft.com/en-us/dotnet/architecture/microservices/architect-microservice-container-applications/direct-client-to-microservice-communication-versus-the-api-gateway-pattern?WT.mc_id=DT-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">The API gateway pattern versus the Direct client-to-microservice communication</a>] describes to consider processes of development real enterprise solution. Its article describes creating only one gateway of enterprise microservices is not good for performance, user experience, maintenance or security and so on.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Before creation of vast of service mesh as microservices solution, creating service mesh endpoint manually once is useful for design skill of microservices.</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Download sample application.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Typically endpoint of service mesh is inner of cloud and communicate to load balancer of HTTP gateway. This pattern is for service mesh endpoints redundancy. Notice the sample of this article aims to expose directly single endpoint for development. In the word, it is sample of one mesh endpoint of several meshes. This endpont have to provide http host feature.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">This article only describes developing reverse proxy for development environment. Logging, service discovery, load balancing, encryption, observability, traceability, authentication &amp; authorization, and the circuit breaker pattern are ommitted in this article, because the sample of this article assumes to provide these features on control plane of a cloud.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/04/sampleoverview.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">This sample use the port number [8080] as outside port of development environment, and pass through to the port number [8081] for inside. This [<a href="https://github.com/TetsuroTakao/SVGIconColoring_en_2" target="_new" style="font-weight:bold;" rel="noopener">SVG icon coloring app</a>] application container in the figure has to accept request from the port number [8081] and has to response to the port number [8081]. The source of the application is on GitHub and can <a href="https://github.com/TetsuroTakao/SVGIconColoring_en_2" target="_new" style="font-weight:bold;" rel="noopener">download it</a> although, it is not containerise yet, thus containerise it from now. As details, read the article [<a href="https://docs.docker.com/samples/dotnetcore/" target="_new" style="font-weight:bold;" rel="noopener">Dockerize an ASP.NET Core application</a>].</p>
+<div style="background-color:#cccccc;border:1px solid #00000; padding: 10px 10px 0px 10px;margin-top:20px;">
+<div style="margin:-20px 0px 0px 5px;text-indent:1em;font-weight:bold;background-color:#444;border:1px solid #ccc;color:#fff;">ⓘ As additional information</div>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Each persistence layer of individual service may create using <a href="https://docs.microsoft.com/en-us/azure/architecture/guide/technology-choices/data-store-overview?WT.mc_id=DT-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">polyglot persistence</a> design pattern mixed several types of data store such as MongoDB or Azure Blob storage and so on that excludes file storage (for example, Azure Files, Azure NetApp Files). this design pattern represents usage of a data store types of purposes of the table below.</p>
+<div style="margin: 0px 0px 0px 20px;display:table;">
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;padding-right:10px;background-color:#ccc;padding:0.5rem;border:thin solid #444;">Assumed information type</div>
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;background-color:#ccc;padding:0.5rem;border:thin solid #444;border-left-width:0px;">Example</div>
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;background-color:#ccc;padding:0.5rem;border:thin solid #444;border-left-width:0px;">Store type</div>
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;background-color:#ccc;padding:0.5rem;border:thin solid #444;border-left-width:0px;">Implementations</div>
+</div>
+<div style="display:table-row;background-color:#fff;">
+<div style="display:table-cell;table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">Unstructured, Semistructured</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">Product catalog, Invoice, License</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;white-space: nowrap;background-color:#fff;">Document-oriented database</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">MongoDB, Azure Blob storage, Amazon DocumentDB</div>
+</div>
+<div style="display:table-row;background-color:#fff;">
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">Structured</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">Investor Relations, Customer master,<br />
+Merchantise master</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">Relational database</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">MySQL, Azure SQL database, Oracle databese</div>
+</div>
+<div style="display:table-row;background-color:#fff;">
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">Dynamic growing</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;white-space: nowrap;background-color:#fff;">Intarest graph<br />
+(Entertainment, Social network, E-commerce),<br />
+Cyber-security threats analysis</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;white-space: nowrap;background-color:#fff;">Graph structures data store</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">OrientDB, Azure Cosmos DB, Amazon Neptune</div>
+</div>
+<div style="display:table-row;background-color:#fff;">
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;white-space: nowrap;background-color:#fff;">Pair type<br />
+(includes shallow tier tree type)</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">Task list, Address list,<br />
+Recording (Transcript etc.) of meeting</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;">Key/Value data store</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">Apache Ignite, Azure Table Storage,<br />
+Google Cloud Datastore, AWS DynamoDB</div>
+</div>
+</div>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Only if some use case (in other words, the term [boundary context] in Domain-driven design) is mapped individual service and the case needs various data models can choose the <a href="https://docs.microsoft.com/en-us/azure/azure-sql/multi-model-features?WT.mc_id=DT-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">multi-model database</a> as persistence layer.</p>
+</div>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">To launch the sample project downloaded at the port number [8081], modify the value of the [applicationUri] property that is set at the [%project name%] ([SVGIconColoring_en] in this sample) settings of the [profiles] section of the [launchSettings.json] file, it is under the [Properties] folder of the Project root.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">The [Properties\launchSettings.json] file
+Define port value [8081] of the [profiles/SVGIconColoring_en/applicationUrl]
+
+{
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:48877/",
+      "sslPort": 44388
+    }
+  },
+  "profiles": {
+    "SVGIconColoring_en": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "inspectUri": "{wsProtocol}://{url.hostname}:{url.port}/_framework/debug/ws-proxy?browser={browserInspectUri}",
+      "applicationUrl": "https://localhost:7270;http://localhost:8081",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "inspectUri": "{wsProtocol}://{url.hostname}:{url.port}/_framework/debug/ws-proxy?browser={browserInspectUri}",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Though launch from Visual Studio Code in this article, it will be modify to use Azure Functions Core Tools later. This article describes containerization with docker with follow.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/03/LaunchSample.png" alt="" style="width:900px;"></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Preparation of development on Windows subsystem for Linux 2.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Reverse proxy is created with Nginx, Nginx is provided as <a href="https://hub.docker.com/_/nginx" target="_new" style="font-weight:bold;" rel="noopener">Docker official image</a> from Docker Hub. This image run on <a href="https://www.docker.com/get-started" target="_new" style="font-weight:bold;" rel="noopener">Docker Desktop for Windows</a> or <a href="https://hub.docker.com/search?offering=community&amp;operating_system=linux&amp;q=&amp;type=edition" target="_new" style="font-weight:bold;" rel="noopener">Docker Engine for Linux distributions</a>, Docker Desktop for Windows is not support ARM 64 Windows (Surface ProX), so only ARM 64 Windows use <a href="https://hub.docker.com/search?offering=community&amp;operating_system=linux&amp;q=&amp;type=edition" target="_new" style="font-weight:bold;" rel="noopener">Docker Engine for Linux distributions</a> with Windows Subsystem for Linux 2 (WSL2). Other user are able to use Docker Desktop, it operation is ommit in this article because it&#8217;s very easy.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">ARM 64 Windows user can use WSL2 after download and setting <a href="https://www.microsoft.com/en-id/p/ubuntu-20044-lts/9mttcl66cpxj?cid=msft_web_appsforwindows_chart#activetab=pivot:overviewtab" target="_new" style="font-weight:bold;" rel="noopener">Ubuntu</a> (choose any distribution, although this article describes procedure in case of Ubuntu) from Microsoft store.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Launch WSL2 from Windows terminal after setting.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/03/ubuntu.png" alt="" style="width:450px;"><img decoding="async" src="/wp-content/uploads/2022/03/WindowsTerminal.png" alt="" style="width:450px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">ARM 64 Windows user can use WSL2 after download and setting <a href="https://www.microsoft.com/en-id/p/ubuntu-20044-lts/9mttcl66cpxj?cid=msft_web_appsforwindows_chart#activetab=pivot:overviewtab" target="_new" style="font-weight:bold;" rel="noopener">Ubuntu</a> (choose any distribution, although this article describes procedure in case of Ubuntu) from Microsoft store.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">If use WSL2 first time, install tools to Ubuntu use Linux terminal.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">$ sudo apt install apt-transport-https ca-certificates curl gnupg lsb-release
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">These tools is capables feature in table below.</p>
+<div style="margin: 0px 0px 0px 20px;display:table;">
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;padding-right:10px;background-color:#ccc;padding:0.5rem;border:thin solid #444;">Tool</div>
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;background-color:#ccc;padding:0.5rem;border:thin solid #444;border-left-width:0px;">Feature</div>
+</div>
+<div style="display:table-row;background-color:#fff;">
+<div style="display:table-cell;table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">[https]</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">Establish HTTPS connection</div>
+</div>
+<div style="display:table-row;background-color:#fff;">
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">[ca-certificates]</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">Establish SSL connection</div>
+</div>
+<div style="display:table-row;background-color:#fff;">
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">[gnupgp]</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;white-space: nowrap;background-color:#fff;">encrypting and decrypting key enable and signeture</div>
+</div>
+<div style="display:table-row;background-color:#fff;">
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;white-space: nowrap;background-color:#fff;">[lsb-release]</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">Comform version information of Ubuntu</div>
+</div>
+<div style="display:table-row;background-color:#fff;">
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;white-space: nowrap;background-color:#fff;">[curl]</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">Execute HTTP communication as client</div>
+</div>
+</div>
+<p style="margin: 10px 0px 0px 0px;text-indent:1em;">If Docker CE (community edition) does not installed, acquire GNU Privacy Guard (GnuPG, GPG) key of Docker engine and deploy it.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+echo "deb [arch=arm64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] \
+https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list &gt; /dev/null
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Comform image enable install.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">$ sudo apt update
+$ sudo apt install docker-ce docker-ce-cli containerd.io
+$ apt-cache madison docker-ce
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Then install Docker engine.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">$ sudo apt install docker-ce=5:20.10.8~3-0~ubuntu-focal docker-ce-cli=5:20.10.8~3-0~ubuntu-focal containerd.io
+</pre>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Create reverse proxy.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Create reverse proxy with Nginx that is provided as the <a href="https://hub.docker.com/_/nginx" target="_new" style="font-weight:bold;" rel="noopener">Docker official image</a> from the Docker Hub. This image run on the <a href="https://www.docker.com/get-started" target="_new" style="font-weight:bold;" rel="noopener">Docker Desktop for Windows</a> or the <a href="https://hub.docker.com/search?offering=community&amp;operating_system=linux&amp;q=&amp;type=edition" target="_new" style="font-weight:bold;" rel="noopener">Docker Engine for Linux distributions</a>, the Docker Desktop for Windows is not support ARM 64 Windows (Surface Pro X), so only ARM 64 Windows users have to use the Docker Engine for Linux distributions with WSL2. Other users are able to use the Docker Desktop, its operation is ommit in this article because it’s very easy.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">In the case of using WSL2 to mount a Docker image, start a Docker service use the [sudo] super user mode.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">$ sudo service docker start
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">After enables a Docker service, pull a Nginx image from the Docker Hub, then launch the container of the image. There is needs that default port number [80] of Nginx is changed to the port number [8080] for listening http request for development environment. So install the vim editor using bash in the container, it&#8217;s important before it, update and upgrade the Advanced Package Tool (the [apt] command).</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">$ docker pull nginx
+$ docker run -dit -p 8080:8080 --init --name rproxy nginx
+$ docker exec -it rproxy /bin/bash
+# apt update &amp;&amp; upgrade -y
+# apt install vim
+# vim /etc/nginx/nginx.conf
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Modify to add the [server] settings to the [http] section of the [/etc/nginx/nginx.conf] file. the [server] settings defines the [listen] attribute, the [server_name] attribute and the [location] settings.</p>
+<p><script src="https://gist.github.com/TetsuroTakao/7297db447b45a4b32daf9ba834fb6f54.js"></script></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">After modify the [/etc/nginx/nginx.conf] file of the container, put the [exit] command to exit container. then put the [docker kill rproxy] command to terminate the container process of the reverse proxy on WSL2.</p>
+<div style="background-color:#cccccc;border:1px solid #00000; padding: 10px 10px 10px 10px;margin-top:20px;">
+<div style="margin:-20px 0px 0px 5px;text-indent:1em;font-weight:bold;background-color:#444;border:1px solid #ccc;color:#fff;">ⓘ As additional information</div>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Kill process when WSL2 stackes. Right click on the [Windows Start] icon to open the [Task Manager], then select the [Task Manager] and right click on the [Virtual Machine Worker Process] of the [Task Manager]. Then select the [End task] menu of the context menu.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align-last:justify;width:100%;"> <img decoding="async" src="/wp-content/uploads/2022/03/contextmenu.png" alt="" style="height:485px;"> <img decoding="async" src="/wp-content/uploads/2022/03/EndWSL2Task.png" alt="" style="width:450px;"> <img decoding="async" src="/wp-content/uploads/2022/03/EndWSL2TaskZoom.png" alt="" style="width:286px;vertical-align:top;margin-top:100px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">If you want to know details of process Information, you are able to get the [<a href="https://docs.microsoft.com/en-us/sysinternals/downloads/sysinternals-suite?WT.mc_id=DT-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">Sysinternals Suite</a>] from the <a href="https://www.microsoft.com/store/apps/9p7knl5rwt25" target="_new" style="font-weight:bold;" rel="noopener">Microsoft Store</a>.</p>
+</div>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">This reverse proxy is just only use on development environment, so it is able to ommit firewall settings. Several attributes such as the [ufw enable], [ufw allow] or  [ufw default deny] can set if it needs although, for example providing this container to developers of development team, for portability, it is not good that set firewall features.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">At last, confirm request to the port number [8080] is forwarding to the port number [8081].</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Launch the container of the reverse proxy image with the command below this time. If added the [&#8211;rm] option when the [docker run] command used, the [docker container rm rproxy] command below is not needs. The [&#8211;net host] option is used to access network of container host from container inside.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">$ docker container rm rproxy
+$ docker run -dit --init --name rproxy --net host nginx
+</pre>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Test action of reverse proxy.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The way of the article [<a href="https://docs.docker.com/samples/dotnetcore/" target="_new" style="font-weight:bold;" rel="noopener">Dockerize an ASP.NET Core application</a>] to containerise uses the Docker Desktop, so ARM x64 Windows user is not able to use the procedure. Though Microsoft official document [<a href="https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/docker/building-net-docker-images?view=aspnetcore-6.0&amp;WT.mc_id=DT-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">Docker images for ASP.NET Core</a>] uses the Docker Desktop also, but the article describes how to [Run in a Linux container], so in this article, choose the way that deploy Windows project into a Linux container. Users excepting Windows x64 ARM users build the sample using Microsoft official document to containerise. The follow description is for Windows x64 ARM users.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">At first, prepare a sample web app to confirm that HTTP request is transferred to the port a proxy server throws.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Open Ubuntu on the [Windows terminal] to pull Docker official image of the [<a href="https://hub.docker.com/_/microsoft-dotnet-sdk" target="_new" style="font-weight:bold;" rel="noopener">.NET SDK</a>].</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">$ docker pull mcr.microsoft.com/dotnet/sdk:6.0
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Launch the container using image of the [<a href="https://hub.docker.com/_/microsoft-dotnet-sdk" target="_new" style="font-weight:bold;" rel="noopener">.NET SDK</a>], then pull the [<a href="https://github.com/cli/cli/blob/trunk/docs/install_linux.md" target="_new" style="font-weight:bold;" rel="noopener">GitHub CLI</a>] into the container from github web site [<a href="https://github.com/cli/cli/blob/trunk/docs/install_linux.md" target="_new" style="font-weight:bold;" rel="noopener">GitHub CLI</a>]. The container of Docker official image of the [<a href="https://hub.docker.com/_/microsoft-dotnet-sdk" target="_new" style="font-weight:bold;" rel="noopener">.NET SDK</a>] launches with the host networking same as the container of reverse proxy, The sample project is defined as the port number [5078] for now.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">$ docker run -dit --rm --net host --init --name svgiconcoloring mcr.microsoft.com/dotnet/sdk:latest
+$ docker exec -it svgiconcoloring /bin/bash
+# curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
+# echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main"
+ | tee /etc/apt/sources.list.d/github-cli.list &gt; /dev/null
+# sudo apt update &amp;&amp; upgrade -y
+# sudo apt install gh
+# md /home/svgiconcoloring
+# cd /home/svgiconcoloring
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Authorise your git account using the [<a href="https://github.com/cli/cli/blob/trunk/docs/install_linux.md" target="_new" style="font-weight:bold;" rel="noopener">GitHub CLI</a>], then clone the sample project at your work folder (uses the [/home/svgiconcoloring] folder, in the case of the command above). Authorise steps includes authentication flow in your browser. A browser authentication flow is called with the process below.</p>
+<div style="margin: 0px 0px 10px 20px;display:table;">
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;padding-right:10px;background-color:#ccc;padding:0.5rem;border:thin solid #444;">Process</div>
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;background-color:#ccc;padding:0.5rem;border:thin solid #444;border-left-width:0px;">Selection</div>
+</div>
+<div style="display:table-row;background-color:#fff;">
+<div style="display:table-cell;table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">Distination of login</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">GitHub.com</div>
+</div>
+<div style="display:table-row;background-color:#fff;">
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">Protocol</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">HTTPS</div>
+</div>
+<div style="display:table-row;background-color:#fff;">
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">Get credentials</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;white-space: nowrap;background-color:#fff;">Yes</div>
+</div>
+<div style="display:table-row;background-color:#fff;">
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;white-space: nowrap;background-color:#fff;">Authenticate</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">Login with a web browser</div>
+</div>
+</div>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/03/authSteps.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Move to the sample project folder(uses the [cd SVGIconColoring_en_2] command, in the case of fegure below), and put [dotnet certs https] command in the [Windows terminal] to install development certification. Then put [dotnet run] command in the [Windows terminal] to run sample application.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/03/dotnetRun5078.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">After confirmation of running sample project, use vim as Nginx image above, modify the [Properties/launchSettings.json] file to change the port of sample application to [8081]. Yes, this sample web application is same as run on Windows above. This sample run on Alpine Linux now. The article [<a href="https://blog.processtune.com/?p=5925" target="_new" style="font-weight:bold;" rel="noopener">QR code create with Rust language runnable on Azure Functions</a>] describes how to create an application for runnable on Azure Functions use this mechanism.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/03/dotnetRun8081.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Confirm the container of reverse proxy and svg icon coloring app are running, then put [localhost:8080] into the address box of a browser, and the sample app is able to execute.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/03/dotnetRun8080.png" alt="" style="width:450px;"></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2021/12/01/nginx-run-on-windows-subsystem-for-linux-2/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>JavaScript colors SVG images that are acquired by Blazor WebAssembly</title>
+		<link>https://blog.processtune.com/2021/11/01/javascript-colors-svg-images-that-are-acquired-by-blazor-webassembly/</link>
+					<comments>https://blog.processtune.com/2021/11/01/javascript-colors-svg-images-that-are-acquired-by-blazor-webassembly/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Mon, 01 Nov 2021 08:21:12 +0000</pubDate>
+				<category><![CDATA[ASP.NET Core]]></category>
+		<category><![CDATA[Blazor]]></category>
+		<category><![CDATA[JavaScript]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Visual Studio Code]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=6189</guid>
+
+					<description><![CDATA[This article is continuous my previous article [Blazor WASM aquires SVG images that will be colored by JavaScript later]. Modify the sample project of previous article and add a feature that user can coloring SVG file select from a list. Interoperability of Blazor WASM and JavaScript is described in the previous article, so this article [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin: 0px 0px 0px 0px; color: #000044; font-size: 0.9rem;">This article is continuous my previous article [<a style="font-weight: bold;" href="https://blog.processtune.com/?p=6162" target="_new" rel="noopener">Blazor WASM aquires SVG images that will be colored by JavaScript later</a>]. Modify <a style="font-weight: bold;" href="https://github.com/TetsuroTakao/SVGIconColoring_en_1" target="_new" rel="noopener">the sample project of previous article</a> and add a feature that user can coloring SVG file select from a list.<br />
+<a style="font-weight: bold;" href="https://docs.microsoft.com/en-us/aspnet/core/blazor/javascript-interoperability/?view=aspnetcore-6.0?WT.mc_id=DT-MVP-4029060" target="_new" rel="noopener">Interoperability</a> of Blazor WASM and JavaScript is described in <a style="font-weight: bold;" href="https://blog.processtune.com/?p=6162" target="_new" rel="noopener">the previous article</a>, so this article only describes how to modify SVG file with JavaScript, although it&#8217;s important that Blazor WASM can reuse JavaScript ecosystem.<br />
+It is good that a feature that JavaScript creates not well will create using Blazor. And use JavaScript to control shadow DOM if it does not need send state to service, for exsample simulation or tempolary calculate that is before final decision of user.</p>
+<p style="margin: 10px 0px 0px 5px; text-indent: 1em; text-align: right; font-weight: bold;">&gt;&gt;<a style="font-weight: bold;" href="https://github.com/TetsuroTakao/QRCodeCreation" target="_new" rel="noopener">Sample project of the previous article</a></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Display user selected image</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">In <a style="font-weight: bold;" href="https://blog.processtune.com/?p=6162" target="_new" rel="noopener">the previous article</a>, Blazor creates HTML content in the [Pages/index.razor] file, this content lists SVG files that are acqired from <a style="font-weight: bold;" href="http://www.onlinewebfonts.com/icon" target="_new" rel="noopener">free icon web site</a>. And already are defined the [selectImg] JavaScript function in <a style="font-weight: bold;" href="https://blog.processtune.com/?p=6162" target="_new" rel="noopener">the previous article</a>. So create the [selectImg] JavaScript function and add to the [wwwroot/index.html] file. The feature clones selected SVG image and put into cloned image into a playgrounds for simulation that a user may color selected SVG image to prefered color. Then add several controls for coloring to the playgrounds same as clone of selected SVG image.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px;">[In the previous article, Blazor create HTML content in the [Pages/index.razor] file as below]
+        &lt;div style="display:inline-block;"&gt;
+            &lt;img id="@svg.URL" src='@svg.imgSrc' style="width:100px;" onclick="selectImg(this)"&gt;
+        &lt;/div&gt;
+
+[So, Add below code to the [Pages/Index.razor] file, and ...]
+&lt;div id="selectedImage" style="width:100%;text-align:center;border:4px dotted #0000ff;border-radius:10px; margin-top:2rem;"&gt;&lt;/div&gt;
+
+[this function add to the [wwwroot/index.html] file. So the function runs when the SVG file is clicked then it recieves IMG tag DOM object.]
+        function selectImg(img){
+            var placeholder = document.getElementById("selectedImage");
+            while(placeholder.children.length &gt; 0){
+                placeholder.removeChild(placeholder.firstChild);
+            }
+            var container = document.createElement("div");
+            container.style.display = "inline-block";
+            var ctl = document.createElement("div");
+            var paintbrush = 128396;
+            ctl.innerHTML = `&amp;#${paintbrush};`;
+            container.appendChild(ctl.cloneNode(true));
+            container.lastChild.style="color:#ff0000;font-size:5rem;cursor:pointer;";
+            container.lastChild.setAttribute('onclick','setColor(this);');
+            container.appendChild(ctl.cloneNode(true));
+            container.lastChild.style="color:#00ff00;font-size:5rem;cursor:pointer;";
+            container.lastChild.setAttribute('onclick','setColor(this);');
+            container.appendChild(ctl.cloneNode(true));
+            container.lastChild.style="color:#0000ff;font-size:5rem;cursor:pointer;";
+            container.lastChild.setAttribute('onclick','setColor(this);');
+            placeholder.appendChild(container);
+            placeholder.appendChild(img.cloneNode(true));
+            placeholder.lastChild.id="currentImg";
+            placeholder.lastChild.style="width:200px;vertical-align:top;margin-top:3rem;margin-left:3rem;";
+        }
+
+[describe]
+HTML div tag that has id attribute [selectedImage] is the place holder that is an operating place for coloring selected SVG file, so if something in it,
+remove to have nothing.
+Create a container that is a playgrounds for coloring selected SVG file. The container includes three coloring selectors and selected SVG image.
+The coloring selectors are using HTML symbol defined the Template literals, and are equipped onclick handler (describes later). The selected image needs
+id attribute for colorting because it is cloned. These elements are defined several styles because they are dynamic injected as shadow DOM.
+</pre>
+<p style="margin: 10px 0px 0px 5px; text-indent: 1em; text-align: right; font-weight: bold;">&gt;&gt;<a style="font-weight: bold;" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals" target="_new" rel="noopener">Template literals</a></p>
+<p style="display: inline-block; margin-bottom: 10px; text-align: center; width: 100%;"><img decoding="async" style="width: 900px;" src="/wp-content/uploads/2022/03/ContainerOfSelectedSVG.png" alt=""></p>
+<p style="display: inline-block; margin-bottom: 10px; text-align: center; width: 100%;"><img decoding="async" style="width: 900px;" src="/wp-content/uploads/2022/03/SVGImageSelectFeatureImplement.png" alt=""></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Change color of selected image by user operation</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">A user can select SVG images of the list, so change the cursol to a pointer.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px;">            &lt;img id="@svg.URL" src='@svg.imgSrc' style="width:100px;" onclick="selectImg(this)"&gt;
+to
+            &lt;img id="@svg.URL" src='@svg.imgSrc' style="width:100px;cursor:pointer;" onclick="selectImg(this)"&gt;
+</pre>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">The [setColor] JavaScript function accept argument coloring control (brush) as DOM object (the paintbrush). It is called when a user select any one of these paintbrushes.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">The style property of the control that accepted as an argument has a color property, so change the color of the clone of selected SVG image using it.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">On the other hand, the src attribute of the clone of selected SVG image has meta information and acctual SVG xml, thus to modify SVG xml of the clone of selected SVG image, remove meta information from value of the src attribute of selected SVG image.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">The [setColor] JavaScript function can find target DOM, because the clone of selected SVG image has the value [currentImg] of the [id] attribute that already defined when create it. Change SVG xml of the clone of selected SVG image to new color using <a style="font-weight: bold;" href="https://developer.mozilla.org/en-US/docs/Web/API/DOMParser" target="_new" rel="noopener">the DOMParser</a>. At last set the src attribute of the the clone of selected SVG image to new colored SVG xml with meta information.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px;">        function setColor(brush){
+            var dataType = "data:image/svg+xml;utf8,";
+            var imgXML = document.getElementById("currentImg").getAttribute("src").replace(dataType,"");
+            var dom_parser = new DOMParser();
+            var document_obj = dom_parser.parseFromString(imgXML, "text/xml");
+            document_obj.rootElement.getElementsByTagName("g")[0].setAttribute('style','fill:' + brush.style.color);
+            document.getElementById("currentImg").setAttribute("src",dataType + document_obj.rootElement.outerHTML);
+        }
+</pre>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">The following figures are scenes of selecting image then selecting brush.</p>
+<p style="display: inline-block; margin-bottom: 10px; text-align: center; width: 100%;"><img decoding="async" style="width: 900px;" src="/wp-content/uploads/2022/03/SVGImageColoringFeatureImplement.png" alt=""></p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">The following figures are scenes of selecting image then selecting brush.</p>
+<p style="margin: 10px 0px 0px 5px; text-indent: 1em; text-align: right; font-weight: bold;">&gt;&gt;<a style="font-weight: bold;" href="https://github.com/TetsuroTakao/SVGIconColoring_en_2" target="_new" rel="noopener">Sample project of this article</a></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2021/11/01/javascript-colors-svg-images-that-are-acquired-by-blazor-webassembly/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

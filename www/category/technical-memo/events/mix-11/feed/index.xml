@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Mix 11 &#8211; Processtune Blog</title>
+	<atom:link href="https://blog.processtune.com/category/technical-memo/events/mix-11/feed/" rel="self" type="application/rss+xml" />
+	<link>https://blog.processtune.com/</link>
+	<description>Articles offered from Microsoft MVP</description>
+	<lastBuildDate>Wed, 13 Apr 2011 21:14:40 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.8.2</generator>
+
+<image>
+	<url>/wp-content/uploads/2023/03/cropped-Presentation-32x32.png</url>
+	<title>Mix 11 &#8211; Processtune Blog</title>
+	<link>https://blog.processtune.com/</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>Mix 11の会場の雰囲気です</title>
+		<link>https://blog.processtune.com/2011/04/14/mix-11%e3%81%ae%e4%bc%9a%e5%a0%b4%e3%81%ae%e9%9b%b0%e5%9b%b2%e6%b0%97%e3%81%a7%e3%81%99/</link>
+					<comments>https://blog.processtune.com/2011/04/14/mix-11%e3%81%ae%e4%bc%9a%e5%a0%b4%e3%81%ae%e9%9b%b0%e5%9b%b2%e6%b0%97%e3%81%a7%e3%81%99/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Wed, 13 Apr 2011 21:14:40 +0000</pubDate>
+				<category><![CDATA[Mix 11]]></category>
+		<guid isPermaLink="false">http://www.processtune.com/blog/?p=142</guid>
+
+					<description><![CDATA[リンク： IE9 promotion http://www.microsoft.com/showcase/en/us/details/5594286e-a41c-4dbc-9f46-10ef242c8260 Windows Phone 7 AD AVI： Mix 11 Start Now AVI： It&#8217;s a great time to be a web developer]]></description>
+										<content:encoded><![CDATA[<p>リンク：<br />
+IE9 promotion<br />
+http://www.microsoft.com/showcase/en/us/details/5594286e-a41c-4dbc-9f46-10ef242c8260<br />
+Windows Phone 7 AD<br />
+<iframe title="Windows Phone Ad: We Love WP7" width="500" height="281" src="https://www.youtube.com/embed/VHkPiU9YAQk?feature=oembed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></p>
+<p>AVI：<br />
+<a href="http://processtuneblog.azurewebsites.net/wp-content/uploads/2011/04/Mix-11-Start-Now.avi">Mix 11 Start Now</a></p>
+<p>AVI：<br />
+<a href="http://processtuneblog.azurewebsites.net/wp-content/uploads/2011/04/Its-a-great-time-to-be-a-web-developer.avi">It&#8217;s a great time to be a web developer</a></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2011/04/14/mix-11%e3%81%ae%e4%bc%9a%e5%a0%b4%e3%81%ae%e9%9b%b0%e5%9b%b2%e6%b0%97%e3%81%a7%e3%81%99/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		<enclosure url="http://processtuneblog.azurewebsites.net/wp-content/uploads/2011/04/Mix-11-Start-Now.avi" length="11693684" type="video/avi" />
+<enclosure url="http://processtuneblog.azurewebsites.net/wp-content/uploads/2011/04/Its-a-great-time-to-be-a-web-developer.avi" length="15369516" type="video/avi" />
+<enclosure url="http://www.processtune.com/blog/wp-content/uploads/2011/04/Mix-11-Start-Now.avi" length="11693684" type="video/avi" />
+<enclosure url="http://www.processtune.com/blog/wp-content/uploads/2011/04/Its-a-great-time-to-be-a-web-developer.avi" length="15369516" type="video/avi" />
+
+			</item>
+		<item>
+		<title>Boot Campsに参加します</title>
+		<link>https://blog.processtune.com/2011/04/06/boot-camps%e3%81%ab%e5%8f%82%e5%8a%a0%e3%81%97%e3%81%be%e3%81%99/</link>
+					<comments>https://blog.processtune.com/2011/04/06/boot-camps%e3%81%ab%e5%8f%82%e5%8a%a0%e3%81%97%e3%81%be%e3%81%99/#comments</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Wed, 06 Apr 2011 01:46:17 +0000</pubDate>
+				<category><![CDATA[Mix 11]]></category>
+		<guid isPermaLink="false">http://www.processtune.com/blog/?p=102</guid>
+
+					<description><![CDATA[Mix 11のプレイベントであるBoot Campsでは、午前、午後に分けてスキルアップの機会があり、参加してくる予定です。後日詳細をご報告する予定です。]]></description>
+										<content:encoded><![CDATA[<p><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2011/04/Mix11Logo1.bmp" alt="" title="Mix11Logo" class="alignright size-full wp-image-66" />Mix 11のプレイベントであるBoot Campsでは、午前、午後に分けて以下のようなスキルアップの機会があります。<br />
+<a href="http://live.visitmix.com/BootCamps">http://live.visitmix.com/BootCamps</a></p>
+<p>午前<br />
+HTML5/CSS3 Boot Camp<br />
+Design, Content, Code: Start-to-finish<br />
+Silverlight Boot Camp<br />
+Cloud Boot Camp<br />
+午後<br />
+jQuery Boot Camp<br />
+HTML5 Canvas Mastery<br />
+Windows Phone 7 Boot Camp<br />
+Silverlight for SharePoint Boot Camp</p>
+<p>ここからひとつ選べというのは酷な話なんですが、午前「Silverlight Boot Camp」、午後「jQuery Boot Camp」を勉強してきます。</p>
+<p>後日、ブートキャンプ・レポートをご報告いたします！！</p>
+<p>セッションについても、現在スケジューリング中です。<br />
+同じ時間にかぶったセッションは、その24時間後にはビデオがポスとされるそうです。<br />
+英語は苦手ですが、そちらも報告したいと思います。</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2011/04/06/boot-camps%e3%81%ab%e5%8f%82%e5%8a%a0%e3%81%97%e3%81%be%e3%81%99/feed/</wfw:commentRss>
+			<slash:comments>2</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Mix 11</title>
+		<link>https://blog.processtune.com/2011/04/02/mix-11/</link>
+					<comments>https://blog.processtune.com/2011/04/02/mix-11/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Sat, 02 Apr 2011 11:19:11 +0000</pubDate>
+				<category><![CDATA[Mix 11]]></category>
+		<guid isPermaLink="false">http://www.processtune.com/blog/?p=19</guid>
+
+					<description><![CDATA[Mix 11 Mandalay Bay, Las Vegasに関する話題を提供します。]]></description>
+										<content:encoded><![CDATA[<p>Mix 11 Mandalay Bay, Las Vegasに関する話題を提供します。</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2011/04/02/mix-11/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Global Summit &#8211; Processtune Blog</title>
+	<atom:link href="https://blog.processtune.com/category/technical-memo/events/global-summit/feed/" rel="self" type="application/rss+xml" />
+	<link>https://blog.processtune.com/</link>
+	<description>Articles offered from Microsoft MVP</description>
+	<lastBuildDate>Fri, 01 Apr 2011 08:33:09 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.8.2</generator>
+
+<image>
+	<url>/wp-content/uploads/2023/03/cropped-Presentation-32x32.png</url>
+	<title>Global Summit &#8211; Processtune Blog</title>
+	<link>https://blog.processtune.com/</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>Global Summit　Movies</title>
+		<link>https://blog.processtune.com/2011/04/01/hello-world-2/</link>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Fri, 01 Apr 2011 08:33:09 +0000</pubDate>
+				<category><![CDATA[Global Summit]]></category>
+		<guid isPermaLink="false">http://www.processtune.com/blog/?p=1</guid>
+
+					<description><![CDATA[Global Summitのムービーです。携帯で撮ったから音とかあまりよくないです。<br />
+MVPのカメラを拾ったら、Hotel Calforniaのサビ、子供たちが知らない物は？など]]></description>
+										<content:encoded><![CDATA[<div class="mceTemp mceIEcenter">Global Summitの<a href="http://cid-a774a526db97bb6b.office.live.com/self.aspx/.Public/MVPsDigitalCameraInside.zip" target="_new" rel="noopener">ムービー</a>です。携帯で撮ったから音とかあまりよくないです。</div>
+<p>MVPのカメラを拾ったら：<a href="http://cid-a774a526db97bb6b.office.live.com/self.aspx/.Public/MVPsDigitalCameraInside.zip" target="_new" rel="noopener">AVI</a> / <object data="./media/MAV_00041.3g2" type="video/3gpp2" copyright="no" 
+standby="1"><param name="disposition" value="devmpzz" valuetype="data" /><param name="size" value="294912" valuetype="data" /><param name="title" value="MVPのカメラを拾ったら1" valuetype="data" /></object> <object data="http://www.processtune.com/media/MAV_00042.3g2" type="video/3gpp2" copyright="no" 
+standby="2"><param name="disposition" value="devmpzz" valuetype="data" /><param name="size" value="524288" valuetype="data" /><param name="title" value="MVPのカメラを拾ったら2" valuetype="data" /></object> <object data="http://www.processtune.com/media/MAV_00043.3g2" type="video/3gpp2" copyright="no" 
+standby="3"><param name="disposition" value="devmpzz" valuetype="data" /><param name="size" value="229376" valuetype="data" /><param name="title" value="MVPのカメラを拾ったら3" valuetype="data" /></object><br />
+Hotel Calforniaのサビ：<a href="http://cid-a774a526db97bb6b.office.live.com/self.aspx/.Public/HotelCalfornia.zip" target="_new" rel="noopener">AVI</a><br />
+子供たちが知らない物は？：<a href="http://cid-a774a526db97bb6b.office.live.com/self.aspx/.Public/PreKeyNotes2/PreKeyNotes2.exe" target="_new" rel="noopener">AVI</a>（分割してあります）</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+	</channel>
+</rss>

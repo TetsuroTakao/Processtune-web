@@ -1,0 +1,896 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Windows 8 App &#8211; Processtune Blog</title>
+	<atom:link href="https://blog.processtune.com/category/winui/universal-apps/windows-store-app/windows-8-app/feed/" rel="self" type="application/rss+xml" />
+	<link>https://blog.processtune.com/</link>
+	<description>Articles offered from Microsoft MVP</description>
+	<lastBuildDate>Sun, 10 May 2015 08:20:18 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.8.2</generator>
+
+<image>
+	<url>/wp-content/uploads/2023/03/cropped-Presentation-32x32.png</url>
+	<title>Windows 8 App &#8211; Processtune Blog</title>
+	<link>https://blog.processtune.com/</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>MVVM: Create some processings if these should execute before adding to a list items.</title>
+		<link>https://blog.processtune.com/2015/05/10/mvvm-create-some-processings-if-these-should-execute-before-adding-to-a-list-items/</link>
+					<comments>https://blog.processtune.com/2015/05/10/mvvm-create-some-processings-if-these-should-execute-before-adding-to-a-list-items/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Sun, 10 May 2015 08:20:18 +0000</pubDate>
+				<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Universal Apps]]></category>
+		<category><![CDATA[Windows 8 App]]></category>
+		<category><![CDATA[Windows 8.1 App]]></category>
+		<category><![CDATA[Windows Store App]]></category>
+		<category><![CDATA[未分類]]></category>
+		<guid isPermaLink="false">http://www.processtune.com/blog/?p=1661</guid>
+
+					<description><![CDATA[When you provide any list, it&#8217;s items would not enough for user, not always. Accordingly, a ComboBox control is provided for developers. However, I want to include some processings before adding to list items occasionally. So, I use a ListBox( or ListView) control and a TextBox contorol with a Button control. This article describes these [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin: 0px 0px 0px 0px;">
+When you provide any list, it&#8217;s items would not enough for user, not always. Accordingly, a ComboBox control is provided for developers. However, I want to include some processings before adding to list items occasionally. So, I use a ListBox( or ListView) control and a TextBox contorol with a Button control.<br />
+This article describes these synchronization.</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;text-align:right;"><a href="http://1drv.ms/1PyKwdk">Sample solution</a></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Create Visual Studio Solution of MVVM design pattern type</p>
+<p style="margin: 0px 0px 0px 5px; text-indent: 1em;">First, create visual studio solution from template of blank universal app (c#). And then, create class files in the shared project as a model( Artist model) and a view model( MainPage view model), a facade( Data access layer). See below.</p>
+<p style="display:inline">
+<img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2015/05/SolutionStructure.png" alt="" style="width:600px;"/></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Create XAML page</p>
+<p style="margin: 0px 0px 0px 5px; text-indent: 1em;">Next, create XAML codes of a ListView control and a TextBox control, a Button control.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">
+&lt;ListView x:Name="ArtistListView" Grid.Row="1" Grid.ColumnSpan="2"
+    Margin="100,10,100,0" BorderBrush="White" BorderThickness="1"
+    Header="Artist List" ItemsSource="{Binding ArtistListViewItemsSource}">
+    &lt;ListView.ItemTemplate&gt;
+        &lt;DataTemplate&gt;
+            &lt;StackPanel Orientation="Horizontal">
+                &lt;TextBlock Text="{Binding FirstName}"/&gt;
+                &lt;TextBlock Text="{Binding LastName}" Margin="10,0,0,0"/&gt;
+            &lt;/StackPanel&gt;
+        &lt;/DataTemplate&gt;
+    &lt;/ListView.ItemTemplate&gt;
+&lt;/ListView&gt;
+&lt;StackPanel Grid.Row="2" VerticalAlignment="Center" &gt;
+    &lt;TextBlock
+        Text="Separate by a space between firstname and lastname, if necessary."
+        HorizontalAlignment="Right"/&gt;
+    &lt;TextBox x:Name="AddContent" Text="{Binding AddContentText,Mode=TwoWay}"
+        Width="300" Height="50" HorizontalAlignment="Right"
+        PlaceholderText="Enter if it is not in the list."/&gt;
+&lt;/StackPanel&gt;
+&lt;Button x:Name="AddToListButton" Content="Add to the list" Margin="10,0,0,0"
+    Grid.Row="2" Grid.Column="1" Command="{Binding AddToListButtonCommand}" /&gt;
+</pre>
+<p style="display:inline">
+<img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2015/05/XAMLView.png" alt="" style="width:600px;"/></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Create View Model</p>
+<p style="margin: 0px 0px 0px 5px; text-indent: 1em;">A mechanism of those controls relaying each other is that a Command property of a Button control sets a Text property of a TextBox control to a ItemsSource property of a ListView. ICommand type property in this view model is extended by custom type that has &#8220;public Action ExecuteAction {get;set;}&#8221; property. This is a view model codes below.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">
+class addToListCommand : ICommand
+{
+    // extends this property
+    public Action ExecuteAction {get;set;}
+    public bool CanExecute(object parameter) { return true; }
+    public event EventHandler CanExecuteChanged;
+    public void Execute(object parameter) { ExecuteAction(); }
+}
+addToListCommand addToListButtonCommand { get; set; }
+// bind to a Command property of the Button
+public ICommand AddToListButtonCommand
+{
+    get
+    {
+        if (addToListButtonCommand == null)
+        {
+            addToListButtonCommand = new addToListCommand();
+            // This "AddContentText" is a property of the TextBox control.
+            addToListButtonCommand.ExecuteAction
+                = () => AddToArtistList(AddContentText);
+        }
+        return addToListButtonCommand;
+    }
+}
+</pre>
+<p style="margin: 0px 0px 0px 5px; text-indent: 1em;">The command executes &#8220;AddToArtistList(AddContentText);&#8221; setted from external code via the ExecuteAction property. &#8220;AddContentText&#8221; argument is a property binding to a Text property of the TextBox. And &#8220;AddToArtistList&#8221; method do the process that separates a string given to two or three  strings as first name or last name. The view model codes is below.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">
+public ObservableCollection&lt;ArtistModel&gt; ArtistListViewItemsSource
+    { get; private set; }
+public void AddToArtistList(string name)
+{
+    artistModel = new ArtistModel();
+    string[] names = name.Split(' ');
+    artistModel.FirstName = names[0];
+    if (names.Length > 1) artistModel.LastName = names[names.Length - 1];
+    if (!string.IsNullOrEmpty(artistModel.FirstName))
+    {
+        ArtistListViewItemsSource.Add(artistModel);
+        RaisePropertyChanged("ArtistListViewItemsSource");
+    }
+}
+</pre>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Windows 8.1 or later</p>
+<p style="margin: 0px 0px 0px 5px; text-indent: 1em;">An information inputted by user on button operation add to the list. It is easier to create on the platform as Windows 8.1 or later.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">
+&lt;Button x:Name="AddToListFromFlyoutButton"
+    Content="Enter if it is not in the list" HorizontalAlignment="Center"
+    Margin="0,50,0,0"&gt;
+    &lt;Button.Flyout&gt;
+        &lt;Flyout&gt;
+            &lt;StackPanel&gt;
+                &lt;StackPanel Orientation="Horizontal"&gt;
+                    &lt;TextBox Header="First Name"
+                        Text="{Binding FirstNameTextBoxText, Mode=TwoWay,
+                        UpdateSourceTrigger=PropertyChanged}" Width="100"/&gt;
+                    &lt;TextBox Header="Last Name"
+                        Text="{Binding LastNameTextBoxText, Mode=TwoWay,
+                        UpdateSourceTrigger=PropertyChanged}" Width="100"
+                        Margin="10,0,0,0"/&gt;
+                &lt;/StackPanel&gt;
+                &lt;Button x:Name="ListContentAddingButton"
+                    Content="{Binding ListContentAddingButtonContent}"
+                    HorizontalAlignment="Right" Margin="0,10,0,0"
+                    Click="ListContentAddingButtonContent_Click"
+                    IsEnabled="{Binding ListContentAddingButtonIsEnabled}"/&gt;
+            &lt;/StackPanel&gt;
+        &lt;/Flyout&gt;
+    &lt;/Button.Flyout&gt;
+&lt;/Button&gt;
+</pre>
+<p style="display:inline">
+<img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2015/05/XAMLView2.png" alt="" style="width:600px;"/></p>
+<p style="margin: 0px 0px 0px 5px; text-indent: 1em;">A name input area is able to divide first name and last name using a Flyout control. And a IsEnabled property or a Content property of a Button control is able to change per inputting a character to a TextBox control because a Binding.UpdateSourceTrigger property of it execute setter method of the property that change a IsEnabled property or a Content property of a Button control.</p>
+<p style="margin: 0px 0px 0px 5px; text-indent: 1em;">Consequently, create a process on a click event handler that closing a Flyout control and calling &#8220;AddToArtistList&#8221; method in the view model.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">
+private void ListContentAddingButtonContent_Click(object sender, RoutedEventArgs e)
+{
+    Flyout f = this.AddToListFromFlyoutButton.Flyout as Flyout;
+    if(f != null) f.Hide();
+    (DataContext as MainPageViewModel).AddToArtistList(null);
+}
+</pre>
+<p style="margin: 0px 0px 0px 5px; text-indent: 1em;">Modify &#8220;AddToArtistList&#8221; method in the view model to a code below.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">
+string firstNameTextBoxText { get; set; }
+public string FirstNameTextBoxText
+{
+    get
+    {
+        return firstNameTextBoxText;
+    }
+    set
+    {
+        firstNameTextBoxText = value;
+        RaisePropertyChanged("ListContentAddingButtonContent");
+        RaisePropertyChanged("ListContentAddingButtonIsEnabled");
+    }
+}
+string lastNameTextBoxText { get; set; }
+public string LastNameTextBoxText
+{
+    get
+    {
+        return lastNameTextBoxText;
+    }
+    set
+    {
+        lastNameTextBoxText = value;
+        RaisePropertyChanged("ListContentAddingButtonContent");
+    }
+}
+public string ListContentAddingButtonContent
+{
+    get
+    {
+        string result = "O K";
+        if (!string.IsNullOrEmpty(FirstNameTextBoxText))
+        {
+            result += ": " + FirstNameTextBoxText;
+            if (!string.IsNullOrEmpty(LastNameTextBoxText))
+                result += " " + LastNameTextBoxText;
+        }
+        return result;
+    }
+}
+public bool ListContentAddingButtonIsEnabled
+{
+    get { return (!string.IsNullOrEmpty(FirstNameTextBoxText)); }
+}
+
+public void AddToArtistList(string name)
+{
+    artistModel = new ArtistModel();
+    if (!string.IsNullOrEmpty(FirstNameTextBoxText))
+    {
+        artistModel.FirstName = FirstNameTextBoxText;
+        if (!string.IsNullOrEmpty(LastNameTextBoxText))
+            artistModel.LastName = LastNameTextBoxText;
+    }
+    if (!string.IsNullOrEmpty(artistModel.FirstName))
+    {
+        ArtistListViewItemsSource.Add(artistModel);
+        RaisePropertyChanged("ArtistListViewItemsSource");
+    }
+    //Serialize and save to local. Refer to sample code about Dal.
+    Dal.SetLocalArtistsData(ArtistListViewItemsSource);
+}
+</pre>
+<p style="display:inline">
+<img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2015/05/AppView.png" alt="" style="width:600px;"/></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2015/05/10/mvvm-create-some-processings-if-these-should-execute-before-adding-to-a-list-items/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Information architecture for Windows Store app</title>
+		<link>https://blog.processtune.com/2014/06/08/information-architecture-for-windows-store-app-2/</link>
+					<comments>https://blog.processtune.com/2014/06/08/information-architecture-for-windows-store-app-2/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Sat, 07 Jun 2014 20:57:30 +0000</pubDate>
+				<category><![CDATA[Windows 8 App]]></category>
+		<category><![CDATA[Windows Store App]]></category>
+		<guid isPermaLink="false">http://www.processtune.com/blog/?p=951</guid>
+
+					<description><![CDATA[There is should be considered that Windows Store app is used in touch devices and mobile device. In order to create Windows Store app considering a use case like this, it is necessary to spend a lot of time for the design of information. Because organizing of information affects to a user operations of Windows [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin:0px 0px 0px 5px;text-indent:1em;">There is should be considered that Windows Store app is used in touch devices and mobile device. In order to create Windows Store app considering a use case like this, it is necessary to spend a lot of time for the design of information. Because organizing of information affects to a user operations of Windows Store app compared to past applications.</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">In this article, the specific steps of the design of information is described.</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;text-align:right;"><a href="http://1drv.ms/PC62Ga">日本語資料</a></p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;text-align:right;"><a href="http://www.processtune.com/blog/?p=756">日本語記事</a></p>
+<p style="margin:10px 0px 0px 0px;Font-weight:bold;Font-size:14px;">A characteristic of Windows Store app</p>
+<p style="margin:0px 0px 0px 10px;">Used in touch devices</p>
+<p style="margin:0px 0px 0px 20px;">Do not be an application that has a deep hierarchical structure.</p>
+<p style="margin:0px 0px 0px 20px;">Should not provide information by many detail split area a screen.</p>
+<p style="margin:0px 0px 0px 10px;">Used in mobile devices</p>
+<p style="margin:0px 0px 0px 20px;">Require a mechanism of roaming data for offline.</p>
+<p style="margin:0px 0px 0px 20px;">It&#8217;s easy to handle if roaming-data is maintained as an object model.</p>
+<p style="margin:10px 0px 0px 0px;color:#0000FF;">It is necessary that information provided by the content is well organized.</p>
+<p style="margin:10px 0px 0px 0px;Font-weight:bold;Font-size:14px;">Information Architecture</p>
+<p style="margin:0px 0px 0px 0px;">*Classification</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">Richard Saul Wurman (1935.3.26 &#8211; ) , in his book &#8220;Information anxiety&#8221;, proposed concept of classification of information has become one of the design methods of information at the time of a contents providing.</p>
+<p style="margin:10px 0px 0px 10px;">Five classification of information (Information anxiety 1)</p>
+<p style="margin:0px 0px 0px 20px;">A lot of information can be classified by Location, Alphabet, Time, Category, Hierarchy (LATCH).</p>
+<p style="margin:0px 0px 0px 10px;">Information architecture of recent years (Information anxiety 2)</p>
+<p style="margin:0px 0px 0px 20px;">Information can be classified by Time, Alphabet, Category, Location, Continuous amount.</p>
+<p></p>
+<p style="margin:0px 0px 0px 0px;">*Reason why tagging and layering is not included in the information architecture.</p>
+<p style="margin:0px 0px 0px 10px;">A layering is able to instead of a tagging. In addition, both a tagging and a layering depends on user-driven changing to handle an information.</p>
+<p style="margin:0px 0px 0px 10px;">The classification like this depends on the place where the information is used. It means a layering can use to a unique classification, only if it is not changed frequently such as hierarchy of an organization. Also a tagging can use to a temporary classification, only if it is not aimed to shared with another user such as user tag.</p>
+<p style="margin:0px 0px 0px 10px;">Example : The minutes of the meeting saved to a file server (layering of the left in the figure below) is representable by tagging. The right of figure below.</p>
+<p style="display:inline"><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2014/06/FileDirectoryHierarchy.en_.png" alt="" style="width:300px;"/><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2014/06/TaggingImage.en_.png" alt="" style="width:300px;margn-left:50px;"/></p>
+<p style="margin:10px 0px 0px 0px;color:#0000FF;">Representation by tagging information can substitute the representation of information by hierarchy, but not vice versa.</p>
+<p style="margin:10px 0px 0px 0px;Font-weight:bold;Font-size:14px;">In order to know the location of the file by everyone.</p>
+<p style="margin:0px 0px 0px 0px;">*Tiering in same scope of the content.</p>
+<p style="margin:0px 0px 0px 5px;text-indent:10px;">If all tiers of a hierarchy is structured by one classification of the information architecture, anyone can reach purpose information easily (See figure below). A content should be navigated by same scope. If information classification is mixed in the hierarchy, a user must go to the tier below of the hierarchical structure to do the next operations. (Figure above left, In order to get to the minutes of the April 27 2011, a user can&#8217;t know that there is a folder called &#8220;Windows Phone app development projects&#8221; without opening the &#8220;NEC&#8221; folder.)</p>
+<p></p>
+<p style="margin:0px 0px 0px 0px;">*Navigate to the content using the menu or the like that leads in same scope.</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">There is the most appropriate classification for information when providing it. (Time series classification is the best in the case of breaking news. To classify a minutes is same also).</p>
+<p><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2014/06/Hierarchy.en_.png" alt="" style="width:500px;"/></p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">Classification of project or customer (gray area in figure above) is implements as menu items or tab items. An items of a menu or the like such as a tab is used for assist to navigate information by the other classification.</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">In the case of breaking news, &#8220;Domestic, Abroad&#8221; (Location) or &#8220;Political, Crime&#8221; (Category) is an aid to navigate by other classification. The items of a menu or a tab navigate to last scope of the content, (time series).</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">When offering the past news archive however, position or category is more important classification, compare to time series. Thus, time series is better to used as a menu or the like, and position or category is last scope of the content.</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">Like this, a scheme to information is different by an aims for use.</p>
+<p style="margin:10px 0px 0px 0px;color:#0000FF;">Therefore, navigation of information should be designed by which classification is main or aid.</p>
+<p style="margin:10px 0px 0px 0px;Font-weight:bold;Font-size:14px;">Anti-pattern of an object model</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">Information group that is consistent scope of the content (classification of information architecture is not crossed) can be provided to an application, as the information properties by an object model that is implemented in MVVM or MVC design pattern.</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">Consequence, an object model can be separated from a business logic that is a transfer of the object model. An object model as this type is domain model completely.</p>
+<p></p>
+<p style="margin:0px 0px 0px 0px;">*Disadvantage of providing an object model as tagging information or layering it.</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">An object model is a container in order to create a combination of data for a form of business from data for a form of regularized to be persisted. And it to be transferred among application tiers as a refer of a data model properties.</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">For example in case of providing songs data. Some songs is performed by many artists, and an artist performs many songs.</p>
+<p><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2014/06/DomainDesign.png" alt="" style="width:500px;"/></p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">If a scope of the content for an object model is not consistency, It leads to a reduction in development efficiency because a developers must understand a form of all of the models (shape of the information difficult to predict).</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">Because an object model is a fixed manner information characteristics, if the information would be changed frequently, as an object model should not be provided from an application.</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">A tagging or a layering is better to be able to determine freely when user handle the information. Or it should be able to extending function by a programmer. Therefore those classification is not suitable to object model.</p>
+<p></p>
+<p style="margin:0px 0px 0px 0px;">*An object model can not change without it&#8217;s new release.</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">Modification of the application is required in order to change the object model provided by an application.</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">In the case of Windows Store app that provides UX, application changes due to an object model changes can not follow an evolution of user experience.</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">As addition to viewpoint (inefficiency of the development) which described above, a tagging or a layering of information should be controled by end-user. It is one approach of keep an evolution of UX by an application that leave a portion of operate information by end-user.</p>
+<p style="margin:10px 0px 0px 0px;color:#0000FF;">To provide high information interactivity by object model rather than application logic.</p>
+<p style="margin:10px 0px 0px 0px;Font-weight:bold;Font-size:14px;">A pattern of designing object model</p>
+<p style="margin:0px 0px 0px 0px;">*A classification of temporary or unique.</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">A function that create shape of tag or hierarchy is able to provide.<br />
+Thereby an application becomes possible correspond to the evolution of an application that would born from a changes in the operation of the user.</p>
+<p style="margin:0px 0px 0px 10px;">As other side, temporary information or unique information can provide as an object model. </p>
+<p style="margin:0px 0px 0px 10px;">Example : Unique classification in the department management in the enterprise. And the temporary classification as a certain period music information.</p>
+<p style="display:inline"><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2014/06/TemporaryHierarchy.en_.png" alt="" style="width:300px;"/><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2014/06/UniqueryHierarchy.en_.png" alt="" style="width:300px;margn-left:50px;"/></p>
+<p></p>
+<p style="margin:0px 0px 0px 0px;">*The provision of business object for a particular</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">The case of classifying the departments information in the enterprise can be provided as a hierarchy object model fixedly. The reason is below.</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">1. Changes of the form of organizational structure is small.</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">2. Changes of the form is not frequently.</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">3. People who don&#8217;t know the form of organizational structure would not operate in-house systems.</p>
+<p></p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">In addition, for a particular purpose, such as to send the weekly featured song information for applications can be implemented as a unique object model in the form of temporary information.</p>
+<p style="margin:10px 0px 0px 0px;color:#0000FF;">Under conditions other than these particular usage, information classification should be able to freely set by the user.</p>
+<p style="margin:10px 0px 0px 0px;Font-weight:bold;Font-size:14px;">Design Considerations</p>
+<p style="margin:0px 0px 0px 0px;">*Preparing five properties for a classification of the information architecture</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">Fitting least one classification of information architecture to the properties of the object.</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">Example as music information.</p>
+<table>
+<tr>
+<td style="text-align:center;font-weight:bold;">Location</td>
+<td>Stored URL, Band formed at, Activity place</td>
+</tr>
+<tr>
+<td style="text-align:center;font-weight:bold;">Alphabet</td>
+<td>Initials, First letter of title in other language</td>
+</tr>
+<tr>
+<td style="text-align:center;font-weight:bold;">Time</td>
+<td>Release date, Data update</td>
+</tr>
+<tr>
+<td style="text-align:center;font-weight:bold;">Category</td>
+<td>Genre, Language, Region</td>
+</tr>
+<tr>
+<td style="text-align:center;font-weight:bold;">Continuous</td>
+<td>Number of sales, Number of broadcasts</td>
+</tr>
+<p style="margin:10px 0px 0px 0px;">Example as the place of birth information of the members of the artists, by inheriting the position model which is a classification of information architecture.</p>
+<p><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2014/04/ObjectModelDiagram.png" alt="" style="width:500px;"/></p>
+<p><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2014/04/LocationInformation.png" alt="" style="width:500px;"/></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2014/06/08/information-architecture-for-windows-store-app-2/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Using Office 365 authentication in Windows 8 store apps</title>
+		<link>https://blog.processtune.com/2014/04/09/using-office-365-authentication-in-windows-8-store-apps/</link>
+					<comments>https://blog.processtune.com/2014/04/09/using-office-365-authentication-in-windows-8-store-apps/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Wed, 09 Apr 2014 07:41:52 +0000</pubDate>
+				<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Windows 8 App]]></category>
+		<category><![CDATA[Windows Store App]]></category>
+		<category><![CDATA[未分類]]></category>
+		<guid isPermaLink="false">http://www.processtune.com/blog/?p=928</guid>
+
+					<description><![CDATA[Using Office 365 authentication in Windows 8 store apps Office 365 の認証を利用したストア・アプリケーション SharePointの認証の基礎から学びたい SharePoint 2013 の認証の学習ロードマップAuthentication in SharePoint 2013 Learning Roadmap SharePoint Online 2010 認証情報松崎 剛 Blog Office 365 SharePoint Online のプログラミングによる認証 (Authentication) 日本語資料 Sample code ※サンプルコードのdefault.jsのimgUrlに、あなたのOffice365の画像のURLを設定してください。 ※また、C#はWindows Runtime Componentとして使用することを想定しており、C#プロジェクト（SharePointAuth）のServiceUtilitiesフォルダ内のSpoAuthUtility.csのGetSPOAuthCookiesメソッドに実装してあります。サンプルコードを作成するにあたり参考にした記事について、同フォルダ内の「This architecture is made from Omar Venado blog」に詳細情報を記してありますので参照してください。 Windows 8 store appsの認証 Windows 8 store apps [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin:10px 0px 0px 0px;Font-weight:bold;Font-size:14px;">Using Office 365 authentication in Windows 8 store apps</p>
+<p style="margin:0px 0px 0px 0px;">Office 365 の認証を利用したストア・アプリケーション</p>
+<p style="margin:10px 0px 0px 0px;Font-weight:bold;Font-size:14px;">SharePointの認証の基礎から学びたい</p>
+<p style="margin:0px 0px 0px 10px;">SharePoint 2013 の認証の学習ロードマップ<a href="http://msdn.microsoft.com/ja-jp/windows/apps/dn169426(v=vs.94).aspx">Authentication in SharePoint 2013 Learning Roadmap</a></p>
+<p style="margin:0px 0px 0px 10px;">SharePoint Online 2010 認証情報<a href="http://msdn.microsoft.com/ja-jp/library/windows/apps/hh750311.aspx">松崎 剛 Blog Office 365 SharePoint Online のプログラミングによる認証 (Authentication)</a></p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;text-align:right;"><a href="http://1drv.ms/POjFlK">日本語資料</a></p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;text-align:right;"><a href="http://1drv.ms/1n2cO3c">Sample code</a></p>
+<p style="margin:0px 0px 0px 15px;text-indent:-1em;">※サンプルコードのdefault.jsのimgUrlに、あなたのOffice365の画像のURLを設定してください。</p>
+<p style="margin:0px 0px 0px 15px;text-indent:-1em;">※また、C#はWindows Runtime Componentとして使用することを想定しており、C#プロジェクト（SharePointAuth）のServiceUtilitiesフォルダ内のSpoAuthUtility.csのGetSPOAuthCookiesメソッドに実装してあります。サンプルコードを作成するにあたり参考にした記事について、同フォルダ内の「This architecture is made from Omar Venado blog」に詳細情報を記してありますので参照してください。</p>
+<p style="margin:10px 0px 0px 0px;Font-weight:bold;Font-size:14px;">Windows 8 store appsの認証</p>
+<p><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2014/04/AuthOfStoreApp.png" alt="" style="width:500px;"/></p>
+<p style="margin:0px 0px 0px 0px;Font-weight:bold;Font-size:14px;">Windows 8 store apps + Office 365</p>
+<p><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2014/04/WindowsStoreAppsAuthAgainstOffice365.png" alt="" style="width:500px;"/></p>
+<p style="margin:10px 0px 0px 0px;Font-weight:bold;Font-size:14px;">Office 365の認証に関する情報</p>
+<p><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2014/04/TransitionOfAuthAboutOffice365.png" alt="" style="width:500px;"/></p>
+<p style="margin:0px 0px 0px 0px;Font-weight:bold;Font-size:14px;text-align:center;">Store appsのOffice 365認証の手順</p>
+<p><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2014/04/Office365AuthSteps.png" alt="" style="width:500px;"/></p>
+<p style="margin:10px 0px 0px 0px;Font-weight:bold;Font-size:14px;">STSとの会話</p>
+<p><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2014/04/CommunicateWithSTS.png" alt="" style="width:500px;"/></p>
+<p style="margin:10px 0px 0px 0px;Font-weight:bold;Font-size:14px;">JavaScriptでSTSからトークンをもらうコーディング</p>
+<p style="margin:0px 0px 0px 0px;Font-weight:bold;Font-size:14px;text-align:center;">トークン取得のリクエスト発行とレスポンスからトークンを抜き出す</p>
+<p><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2014/04/JavaScriptAuthCode.png" alt="" style="width:500px;"/></p>
+<p style="margin:0px 0px 0px 0px;Font-weight:bold;Font-size:14px;text-align:center;">SAML (Security Assertion Markup Language)</p>
+<p><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2014/04/SAMLforMSAuth.png" alt="" style="width:500px;"/></p>
+<p style="margin:10px 0px 0px 0px;Font-weight:bold;Font-size:14px;">C#でSTSからトークンをもらうコーディング</p>
+<p style="margin:0px 0px 0px 0px;Font-weight:bold;Font-size:14px;text-align:center;">トークン取得のリクエスト発行とレスポンスからトークンを抜き出す</p>
+<p><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2014/04/CSharpAuthCode.png" alt="" style="width:500px;"/></p>
+<p style="margin:10px 0px 0px 0px;Font-weight:bold;Font-size:14px;">トークンを使ってOffice 365に承認してもらう</p>
+<p style="margin:0px 0px 0px 0px;Font-weight:bold;Font-size:14px;text-align:center;">トークンを送信し、FedAuthで承認結果を確認する。</p>
+<p style="margin:0px 0px 0px 0px;Font-weight:bold;Font-size:14px;text-align:center;">トークンを送信し、FedAuthを取得する</p>
+<p><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2014/04/GetFedAuthCSharpCode.png" alt="" style="width:500px;"/></p>
+<p style="margin:10px 0px 0px 0px;Font-weight:bold;Font-size:14px;">トークンを使ってOffice 365のコンテンツをリクエストする</p>
+<p style="margin:0px 0px 0px 0px;Font-weight:bold;Font-size:14px;text-align:center;">一度しか使わないトークンならば、コンテンツを直接要求することで承認後コンテンツにリダイレクトされるため、JavaScriptでコーディング可能</p>
+<p><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2014/04/JavaScriptGetToken.png" alt="" style="width:500px;"/><br />
+<img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2014/04/GetImageUseToken.png" alt="" style="width:500px;"/></p>
+<p style="margin:0px 0px 0px 15px;text-indent:-1em;">※トークンが通ったらimgタグのsrcにURL（SharePoint Onlineの画像など）を設定している。</p>
+<p style="margin:10px 0px 0px 0px;Font-weight:bold;Font-size:14px;">Windows Azure Mobile Service</p>
+<p><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2014/04/MeritOfWAMS.png" alt="" style="width:500px;"/></p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">C#ではさらにトークンを再利用して、複数のコンテンツを段階的に取得すること（前述のfedAuthを使用）やログアウト（rtFAを使用）ができるため、非同期の制御が複雑になります。</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">Windows Azure Mobile Serviceを使用すると、複数の処理を簡潔に組み立てることができます。</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">Windows Azure Mobile Serviceはサインイン画面も提供します。</p>
+<p><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2014/04/WAMSSimplifyAuthSteps.png" alt="" style="width:500px;"/></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2014/04/09/using-office-365-authentication-in-windows-8-store-apps/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>View the processing status of the Windows Runtime Component to Windows Store app</title>
+		<link>https://blog.processtune.com/2014/01/20/view-the-processing-status-of-the-windows-runtime-component-to-windows-store-app/</link>
+					<comments>https://blog.processtune.com/2014/01/20/view-the-processing-status-of-the-windows-runtime-component-to-windows-store-app/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Mon, 20 Jan 2014 13:53:58 +0000</pubDate>
+				<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Windows 8 App]]></category>
+		<category><![CDATA[Windows Store App]]></category>
+		<guid isPermaLink="false">http://www.processtune.com/blog/?p=881</guid>
+
+					<description><![CDATA[View the processing status of the Windows Runtime Component to Windows Store app A communication of the Store app with Windows Runtime Component Target Creating WRC requires Windows 8 or later and Visual Studio 2012 or later. Change Visual Studio debug configuration If you want to create WRC work with the Store app type is [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin:10px 0px 0px 0px;Font-weight:bold;Font-size:14px;">View the processing status of the Windows Runtime Component to Windows Store app</p>
+<p style="margin:0px 0px 0px 0px;">A communication of the Store app with Windows Runtime Component</p>
+<p style="margin:10px 0px 0px 0px;Font-weight:bold;Font-size:14px;">Target</p>
+<p style="margin:0px 0px 0px 10px;">Creating WRC requires Windows 8 or later and Visual Studio 2012 or later.</p>
+<p style="margin:0px 0px 0px 0px;Font-weight:bold;Font-size:14px;">Change Visual Studio debug configuration</p>
+<p style="margin:0px 0px 0px 10px;">If you want to create WRC work with the Store app type is JavaScript or C++.</p>
+<p style="margin:0px 0px 0px 15px;">Change the [Debugger Type] to the [Mixed(Managed and Native)]. It is in the [Debugging] under the [Configuration Property] of the [Project Property Pages]. To display the Dialog, right-click Store App project select the context menu item [Properties].</p>
+<p style="margin:0px 0px 0px 10px;">If the Store app type is C# or VB.</p>
+<p style="margin:0px 0px 0px 15px;">Right-click Store App project select the context menu item [Properties].</p>
+<p style="margin:0px 0px 0px 0px;Font-weight:bold;Font-size:14px;">More advanced reference</p>
+<p style="margin:0px 0px 0px 10px;"><a href="http://msdn.microsoft.com/en-us/windows/apps/dn169426(v=vs.94).aspx">Raising Events in Windows Runtime Components</a></p>
+<p style="margin:0px 0px 0px 10px;"><a href="http://msdn.microsoft.com/en-us/library/windows/apps/hh750311.aspx">Best practices for interoperability with Windows Runtime Components (Windows Store apps using C#/VB/C++ and XAML)</a></p>
+<p style="margin:0px 0px 0px 0px;Font-weight:bold;Font-size:14px;">Article</p>
+<p style="margin:0px 0px 0px 10px;">What is WRC. There is a restriction.</p>
+<p style="margin:0px 0px 0px 10px;">How to communicate WRC and the Store app.</p>
+<p style="margin:0px 0px 0px 10px;">The way use the roaming data is very simple.</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;text-align:right;"><a href="http://1drv.ms/PLJrXX">日本語資料</a></p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;text-align:right;"><a href="http://1drv.ms/PMaYIF">Presentation file of This article.</a></p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;text-align:right;"><a href="http://1drv.ms/PO2O2o">Sample code</a></p>
+<p style="margin:10px 0px 0px 0px;Font-weight:bold;Font-size:14px;">What is WRC. There is a restriction.</p>
+<p style="margin:0px 0px 0px 0px;Font-weight:bold;Font-size:14px;text-align:center;">WRC is produces a metadata file.</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">WRC and a store app communicates via Windows metadata that can understand certain data types such as the primitive data types for parameter types or return types. Therefore types of WRC can not change after compile. It means that WRC must be created with sealed class and public static properties.</p>
+<p><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2014/04/InteroperableWRCAndWinRT.png" alt="" style="width:500px;"/></p>
+<p style="margin:10px 0px 0px 0px;Font-weight:bold;Font-size:14px;">What is WRC. There is a restriction.</p>
+<p style="margin:0px 0px 0px 0px;Font-weight:bold;Font-size:14px;text-align:center;">WRC is effective when reuses business logic.</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">If reusable logical code is exist, it&#8217;s better that the code includes a property as represent the progress of own processing. The property should be defined as the primitive data type with static public property. Though, there is a little hard way that use the custom type property by late binding.</p>
+<p><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2014/04/WRCGiveUsefulEffectToBusinessLogicReusing.png" alt="" style="width:500px;"/></p>
+<p style="margin:10px 0px 0px 0px;Font-weight:bold;Font-size:14px;">How to communicate WRC and the Store app</p>
+<p style="margin:0px 0px 0px 0px;Font-weight:bold;Font-size:14px;text-align:center;">There is three ways</p>
+<p><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2014/04/ThreeWaysToCommunicateWRCAndStoreApp.png" alt="" style="width:500px;"/><br />
+<img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2014/04/ArrowRepresentsMoreTimeConsuming.png" alt="" style="width:500px;"/></p>
+<p style="margin:10px 0px 0px 0px;Font-weight:bold;Font-size:14px;">The way using the roaming data is very simple</p>
+<p style="margin:0px 0px 0px 0px;Font-weight:bold;Font-size:14px;text-align:center;">In WRC, write roaming data. And get opposite</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">WRC fires the Framework event to notify roaming data is changed, in case C# is like bellow.</p>
+<p><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2014/04/RoamingSettingsDataChanged.png" alt="" style="width:500px;"/></p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">In the store app, get the roaming data updated using the event listener. Follow is JavaScript sample.</p>
+<p><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2014/04/HookRoamingDataChanged.png" alt="" style="width:500px;"/></p>
+<p style="margin:10px 0px 0px 0px;Font-weight:bold;Font-size:14px;">Create HTML 5 Store app</p>
+<p><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2014/04/ModifyDefaultJs.png" alt="" style="width:500px;"/></p>
+<p style="margin:10px 0px 0px 0px;Font-weight:bold;Font-size:14px;">Put the Progress Bar Control on default.html</p>
+<p><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2014/04/AddProgressBarAtHTML.png" alt="" style="width:500px;"/></p>
+<p style="margin:10px 0px 0px 0px;Font-weight:bold;Font-size:14px;">Create a static method of shield class</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">Create new project using WRC project template of Visual Studio, then sealed class is created by default. Change the class name by changing the file name of the class, so create a public static methods inside.</p>
+<p><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2014/04/CreateWRC.png" alt="" style="width:500px;"/></p>
+<p style="margin:10px 0px 0px 0px;Font-weight:bold;Font-size:14px;">Call the method of WRC</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">Add reference of WRC (NotifyProgressFromWRC project) to the Store app (HTMLWRCRelation JavaScript project that is Startup project)<br />
+Create simple code for call the method of WRC.</p>
+<p style="display:inline"><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2014/04/AddReference.png" alt="" style="width:150px;"/><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2014/04/CallMethodOfWRC.png" alt="" style="width:400px;margin-left:50px;"/></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2014/01/20/view-the-processing-status-of-the-windows-runtime-component-to-windows-store-app/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>WPF app that display Excel file.</title>
+		<link>https://blog.processtune.com/2013/08/26/wpf-app-that-display-excel-file-2/</link>
+					<comments>https://blog.processtune.com/2013/08/26/wpf-app-that-display-excel-file-2/#comments</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Mon, 26 Aug 2013 03:41:06 +0000</pubDate>
+				<category><![CDATA[Office Business App]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Windows 8 App]]></category>
+		<guid isPermaLink="false">http://www.processtune.com/blog/?p=566</guid>
+
+					<description><![CDATA[I tryed to display the Microsoft Excel file in a WPF app. but, I was not able to find it out by web about to do that. So I tryed next step which the Excel file converted to XPS file display in the DocumemtViewer of a WPF app. That was run well as I expected, [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin:5px;text-indent:1em;">I tryed to display the Microsoft Excel file in a WPF app. but, I was not able to find it out by web about to do that. So I tryed next step which the Excel file converted to XPS file display in the DocumemtViewer of a WPF app. </p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">That was run well as I expected, so I report a detail as below.</p>
+<p style="margin:0px 0px 0px 15px;text-indent:-1em;padding-left:1em;">1. How to convert Excel file to XPS file (use PIA).</p>
+<p style="margin:0px 0px 0px 15px;text-indent:-1em;padding-left:1em;">2. How to display XPS file in WPF app (use a feature in Windows OS).</p>
+<p style="margin:5px;text-indent:1em;">This is the presentation file (Japanese ver. Microsoft PowerPoint file)<a href="http://t.co/KwMbkU96sI">http://t.co/KwMbkU96sI</a></p>
+<p style="margin:5px;text-indent:1em;">This is the Visual Studio 2012 sample solution file<a href="http://sdrv.ms/16fTtHr">http://sdrv.ms/16fTtHr</a></p>
+<p style="margin:20px 0px 0px 0px;font-size:14pt;font-weight:700;">1. How to convert Excel file to XPS file.</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">Primary Interop Assemblies(PIA) can controls Excel file finely, but PIA depends on version of the Office. So we must decide on target version or use another architecture as VSTO.</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">This time, use the Microsoft Office 2013 PIA, because of want to create Windows 8 desktop app. the Microsoft Office 2013 PIA is download from Office Developer Tools for Visual Studio 2012 page (<a href="http://www.microsoft.com/visualstudio/eng/office-dev-tools-for-visual-studio">http://www.microsoft.com/visualstudio/eng/office-dev-tools-for-visual-studio</a>).</p>
+<p style="margin:10px 0px 0px 0px;">figure. Office Developer Tools for Visual Studio 2012.</p>
+<p><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2013/04/OfficeDeveloperToolsForVisualStudio2012.png" alt=""/></p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">If you want to target the Microsoft Office 2010, use the 2013 PIA or download from below ( Office Developer Tools for Visual Studio 2012 includes dlls for 2010 and 2013 both ).</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;"><a href="http://www.microsoft.com/en-us/download/details.aspx?id=3508">http://www.microsoft.com/en-us/download/details.aspx?id=3508</a></p>
+<p style="margin:10px 0px 0px 0px;">figure. Microsoft Office 2010: Primary Interop Assemblies Redistributable.</p>
+<p><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2013/04/042613_0337_WPFappthatd1.png" alt=""/></p>
+<p><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2013/04/VSToolsPIA.png" alt=""/></p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">After download and installing that, create new WPF app solution from the Visual Studio file menu.</p>
+<p style="margin:10px 0px 0px 0px;">figure. VS 2012 image.</p>
+<p><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2013/04/042613_0337_WPFappthatd2.png" alt=""/><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2013/04/042613_0337_WPFappthatd3.png" alt=""/>
+</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">In order to enable drag and drop the Excel file to this app, open the project property window from right click at project name on the Solution Explorer. And put sample Excel file path of local PC into the Debug [Command line arguments] box.</p>
+<p style="margin:10px 0px 0px 0px;">figure. the Command line arguments box.</p>
+<p><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2013/04/AddComanndlineArgs.png" alt=""/></p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">Create start up event handler from the App.xaml. Defines the event to call the handler at the tag attribute place, it&#8217;s complementary when type &#8220;Startup = &#8220;.</p>
+<p style="margin:10px 0px 0px 0px;">figure. the Startup attribute in the Application tag</p>
+<p><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2013/04/AddNewHandler.png" alt=""/></p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">To catch an argument at the Startup event handler and open the sample Excel file. First, add reference the Excel name space from the [Assemblies] &#8211; [Extentions] of the Reference Manager how to show right click on the References folder of the Solution Explorer.</p>
+<p style="margin:10px 0px 0px 0px;">figue. Add Microsoft.Office.Interop.Excel.dll reference.</p>
+<p><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2013/04/AddReferencePIAFor15Dll.png" alt=""/></p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">Second, the Excel file open by Excel application object of PIA as below.</p>
+<div style="margin:0px 0px 10px 0px;">
+<table style="border-collapse:collapse; background: #d9d9d9" border="0">
+<tbody valign="top">
+<tr>
+<td vAlign="middle" style="border-top:solid 0.5pt; border-left:solid 0.5pt; border-bottom:solid 0.5pt; border-right:solid 0.5pt;">
+<p style="margin:0px 0px 0px 5px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:blue">var</span> excelApp = <span style="text-decoration:underline"><span style="color:blue">new</span> Microsoft.Office.Interop.Excel.<span style="color:#2b91af">Application</span></span>()<sup>*</sup></p>
+<p style="margin:0px 0px 0px 5px;font-family:Consolas; font-size:9pt;font-color:black;">excelApp.DisplayAlerts = <span style="color:blue">false</span>;</p>
+<p style="margin:0px 0px 0px 5px;font-family:Consolas; font-size:9pt;font-color:black;">excelApp.Visible = <span style="color:blue">false</span>;</p>
+<p style="margin:0px 0px 0px 5px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="text-decoration:underline">Microsoft.Office.Interop.Excel.<span style="color:#2b91af">Workbook </span></span>excelWorkbook = excelApp.Workbooks.Open(<span style="color:red">path</span>);</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p style="margin:0px 0px 0px 10px;text-indent:-3px;font-size:7pt;font-weight:500;">*Perfect name space is in order to distinguish Microsoft.Office.Interop.Excel.Application and System.Windows.Application.</p>
+<p style="margin:0px 0px 0px 10px;text-indent:-3px;font-size:7pt;font-weight:500;">*In the future, this app controls a contents of the Excel file by Open XML SDK, so perfect name space is in order to distinguish Microsoft.Office.Interop.Excel.Workbook and DocumentFormat.OpenXml.Spreadsheet.Workbook.</p>
+</div>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">&#8220;path&#8221; create from the argument of Application_Startup_1 event handler of App class defined in App.xaml.cs.</p>
+<div style="margin:0px 0px 10px 0px;">
+<table style="border-collapse:collapse; background: #d9d9d9" border="0">
+<tbody valign="top">
+<tr style="height: 126px">
+<td style="padding-left: 7px; padding-right: 7px; border-top:  solid 0.5pt; border-left:  solid 0.5pt; border-bottom:  solid 0.5pt; border-right:  solid 0.5pt">
+<p style="margin:0px 0px 0px 5px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:blue">public static string</span> ExcelPath { <span style="color:blue">get</span>; <span style="color:blue">set</span>; }
+</p>
+<p style="margin:0px 0px 0px 5px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:blue">private void</span> Application_Startup_1(<span style="color:blue">object</span> sender, <span style="color:#2b91af">StartupEventArgs </span>e)</p>
+<p style="margin:0px 0px 0px 5px;font-family:Consolas; font-size:9pt;font-color:black;">{</p>
+<p style="margin:0px 0px 0px 25px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:blue">foreach</span> (<span style="color:blue">string</span> arg <span style="color:blue">in</span> e.Args)</p>
+<p style="margin:0px 0px 0px 25px;font-family:Consolas; font-size:9pt;font-color:black;">{</p>
+<p style="margin:0px 0px 0px 45px;font-family:Consolas; font-size:9pt;font-color:black;">ExcelPath = arg;</p>
+<p style="margin:0px 0px 0px 25px;font-family:Consolas; font-size:9pt;font-color:black;">}</p>
+<p style="margin:5px;font-family:Consolas; font-size:9pt;font-color:black;">}</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">In MainWindow.xaml.cs, Static variable of App class &#8220;ExcelPath&#8221; input to variable &#8220;path&#8221; of class MainWindow. And add the Window Loaded event handler at MainWindow class constructor</p>
+<div style="margin:0px 0px 10px 0px;">
+<table style="border-collapse:collapse; background: #d9d9d9" border="0">
+<tbody valign="top">
+<tr style="height: 18px">
+<td vAlign="middle" style="padding-left: 7px; padding-right: 7px; border-top:  solid 0.5pt; border-left:  solid 0.5pt; border-bottom:  solid 0.5pt; border-right:  solid 0.5pt">
+<p style="margin:0px 0px 0px 5px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:blue">private string</span> path = <span style="color:#2b91af">App</span>.ExcelPath;<span style="color:green"> // add this line</span></p>
+<p style="margin:0px 0px 0px 5px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:blue">public </span>MainWindow()</p>
+<p style="margin:0px 0px 0px 5px;font-family:Consolas; font-size:9pt;font-color:black;">{</p>
+<p style="margin:0px 0px 0px 25px;font-family:Consolas; font-size:9pt;font-color:black;">InitializeComponent();</p>
+<p style="margin:0px 0px 0px 25px;font-family:Consolas; font-size:9pt;font-color:black;">Loaded += MainWindow_Loaded;<span style="color:green"> // add this line</span></p>
+<p style="margin:0px 0px 0px 5px;font-family:Consolas; font-size:9pt;font-color:black;">}</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">In MainWindow_Loaded event handler of MainWindow.xaml.cs, follow the code above, add code  that the XPS file export from the Excel file..</p>
+<div style="margin:0px 0px 10px 0px;">
+<table style="border-collapse:collapse; background: #d9d9d9" border="0">
+<tbody valign="top">
+<tr style="height: 33px">
+<td style="padding-left: 7px; padding-right: 7px; border-top:  solid 0.5pt; border-left:  solid 0.5pt; border-bottom:  solid 0.5pt; border-right:  solid 0.5pt">
+<p style="margin:0px 0px 0px 5px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:blue">void </span>MainWindow_Loaded(<span style="color:blue">object </span>sender, <span style="color:#2b91af">RoutedEventArgs </span>e)</p>
+<p style="margin:0px 0px 0px 5px;font-family:Consolas; font-size:9pt;font-color:black;">{</p>
+<p style="margin:0px 0px 0px 25px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:blue">var</span> excelApp = <span style="color:blue">new</span> Microsoft.Office.Interop.Excel.<span style="color:#2b91af">Application</span>();</p>
+<p style="margin:0px 0px 0px 25px;font-family:Consolas; font-size:9pt;font-color:black;">excelApp.DisplayAlerts = <span style="color:blue">false</span>;</p>
+<p style="margin:0px 0px 0px 25px;font-family:Consolas; font-size:9pt;font-color:black;">excelApp.Visible = <span style="color:blue">false</span>;</p>
+<p style="margin:0px 0px 0px 25px;font-family:Consolas; font-size:9pt;font-color:black;">Microsoft.Office.Interop.Excel.<span style="color:#2b91af">Workbook </span>excelWorkbook = excelApp.Workbooks.Open(path);</p>
+<p style="margin:0px 0px 0px 25px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:green">// add below</span></p>
+<p style="margin:0px 0px 0px 25px;font-family:Consolas; font-size:9pt;font-color:black;">ExportXPS(excelWorkbook);<span style="color:green"> // XPS Exporter is explained at next description</span></p>
+<p style="margin:0px 0px 0px 25px;font-family:Consolas; font-size:9pt;font-color:black;">excelWorkbook.Close(<span style="color:blue">false</span>, <span style="color:blue">null</span>, <span style="color:blue">null</span>);</p>
+<p style="margin:0px 0px 0px 25px;font-family:Consolas; font-size:9pt;font-color:black;">excelApp.Quit();</p>
+<p style="margin:0px 0px 0px 25px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:green">// release com object</span></p>
+<p style="margin:0px 0px 0px 25px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:#2b91af">Marshal</span>.ReleaseComObject(excelApp);</p>
+<p style="margin:0px 0px 0px 25px;font-family:Consolas; font-size:9pt;font-color:black;">excelApp = <span style="color:blue">null</span>;</p>
+<p style="margin:0px 0px 0px 5px;font-family:Consolas; font-size:9pt;font-color:black;">}</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">Save the XPS file from the Excel file.</p>
+<div style="margin:0px 0px 10px 0px;">
+<table style="border-collapse:collapse; background: #d9d9d9" border="0">
+<tbody valign="top">
+<tr style="height: 18px">
+<td style="padding-left: 7px; padding-right: 7px; border-top:  solid 0.5pt; border-left:  solid 0.5pt; border-bottom:  solid 0.5pt; border-right:  solid 0.5pt">
+<p style="margin:0px 0px 0px 5px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:blue">string</span> xpsFileName = <span style="color:#a31515">&#8220;&#8221;</span>;</p>
+<p style="margin:0px 0px 0px 5px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:blue">void </span>ExportXPS(Microsoft.Office.Interop.Excel.<span style="color:#2b91af">Workbook </span>excelWorkbook)</p>
+<p style="margin:0px 0px 0px 5px;font-family:Consolas; font-size:9pt;font-color:black;">{</p>
+<p style="margin:0px 0px 0px 25px;font-family:Consolas; font-size:9pt;font-color:black;">xpsFileName = (<span style="color:blue">new</span> <span style="color:#2b91af">DirectoryInfo</span>(path)).FullName;</p>
+<p style="margin:0px 0px 0px 25px;font-family:Consolas; font-size:9pt;font-color:black;">xpsFileName = xpsFileName.Replace(<span style="color:blue">new</span> <span style="color:#2b91af">FileInfo</span>(path).Extension, <span style="color:#a31515">&#8220;&#8221;</span>) + <span style="color:#a31515">&#8220;.xps&#8221;</span>;</p>
+<p style="margin:0px 0px 0px 25px;font-family:Consolas; font-size:9pt;font-color:black;">excelWorkbook.ExportAsFixedFormat(<span style="color:#2b91af">XlFixedFormatType</span>.xlTypeXPS,</p>
+<p style="margin:0px 0px 0px 65px;font-family:Consolas; font-size:9pt;font-color:black;">Filename: xpsFileName,</p>
+<p style="margin:0px 0px 0px 65px;font-family:Consolas; font-size:9pt;font-color:black;">OpenAfterPublish: <span style="color:blue">false</span>);</p>
+<p style="margin:0px 0px 0px 5px;font-family:Consolas; font-size:9pt;font-color:black;">}</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p style="margin:10px 0px 0px 0px;font-size:14pt;font-weight:700;">2. How to display XPS file in WPF app.</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">To read XPS file for display to the DocumentViewer, placement the DocumentViewer component from the Tool box to MainWindow.xaml. If set the Window height size to 768 and width size to 1024, the DocumentViewer is stretched to same size by default.</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">Drag the DocumentViewer component from the All WPF Controls of Toolbox and drop into the Grid area and set x:Name property to &#8220;DocumentViewer&#8221;. </p>
+<div style="margin:0px 0px 10px 0px;">
+<table style="border-collapse:collapse; background: #d9d9d9" border="0">
+<tbody valign="top">
+<tr style="height: 76px">
+<td style="padding-left: 7px; padding-right: 7px; border-top:  solid 0.5pt; border-left:  solid 0.5pt; border-bottom:  solid 0.5pt; border-right:  solid 0.5pt">
+<p style="margin:0px 0px 0px 5px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:blue">&lt;<span style="color:#a31515">Window </span><span style="color:red">x</span><span style="color:blue">:</span><span style="color:red">Class</span><span style="color:blue">=&#8221;ExcelViewer.MainWindow&#8221;</span></p>
+<p style="margin:0px 0px 0px 55px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:red">xmlns</span><span style="color:blue">=&#8221;http://schemas.microsoft.com/winfx/2006/xaml/presentation&#8221;</span></p>
+<p style="margin:0px 0px 0px 55px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:red">xmlns</span><span style="color:blue">:</span><span style="color:red">x</span><span style="color:blue">=&#8221;http://schemas.microsoft.com/winfx/2006/xaml&#8221;</span>
+</p>
+<p style="margin:0px 0px 0px 55px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:red">Title</span><span style="color:blue">=&#8221;MainWindow&#8221;</span> <span style="color:red">Height</span><span style="color:blue">=&#8221;768&#8243;</span> <span style="color:red">Width</span><span style="color:blue">=&#8221;1024&#8243;&gt;</span></p>
+<p style="margin:0px 0px 0px 25px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:blue">&lt;</span><span style="color:#a31515">Grid</span><span style="color:blue">&gt;</span></p>
+<p style="margin:0px 0px 0px 45px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:blue">&lt;</span><span style="color:#a31515">DocumentViewer </span><span style="color:red">x</span><span style="color:blue">:</span><span style="color:red">Name</span><span style="color:blue">=&#8221;DocumentWindow&#8221; /&gt;</span></p>
+<p style="margin:0px 0px 0px 25px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:blue">&lt;/<span style="color:#a31515">Grid<span style="color:blue">&gt;</span></p>
+<p style="margin:0px 0px 0px 5px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:blue">&lt;/<span style="color:#a31515">Window<span style="color:blue">&gt;</span></p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p style="margin:10px 0px 0px 0px;">figure. Stretch every direction to parent element is default property of the DocumentViewer.</p>
+<p><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2013/04/Documentviewer.png" alt=""/></p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">Read the XPS file that create from the Excel file and display into the DocumentViewer control &#8220;DocumentWindow&#8221; by feature of the Windows OS. Add reference the ReachFremework, several using and create handler &#8220;DisplayXPSFile&#8221; for that the GetFixedDocumentSequence method of the XpsDocument object provide the FixedDocumentSequence to the DocumentViewer.</p>
+<p style="margin:10px 0px 0px 0px;text-indent:1em;">figure. the ReachFramework for read XPS file.</p>
+<p><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2013/04/reachframework.png" alt=""/></p>
+<div style="margin:0px 0px 10px 0px;">
+<table style="border-collapse:collapse; background: #d9d9d9" border="0">
+<tbody valign="top">
+<tr style="height: 76px">
+<td style="padding-left: 7px; padding-right: 7px; border-top:  solid 0.5pt; border-left:  solid 0.5pt; border-bottom:  solid 0.5pt; border-right:  solid 0.5pt">
+<p style="margin:0px 0px 0px 5px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:blue">using</span> Microsoft.Office.Interop.Excel;</p>
+<p style="margin:0px 0px 0px 5px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:blue">using</span> System.IO;</p>
+<p style="margin:0px 0px 0px 5px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:blue">using</span> System.Runtime.InteropServices;</p>
+<p style="margin:0px 0px 0px 5px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:blue">using</span> System.Windows;</p>
+<p style="margin:0px 0px 0px 5px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:blue">using</span> System.Windows.Documents;</p>
+<p style="margin:0px 0px 0px 5px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:blue">using</span> System.Windows.Xps.Packaging;</p>
+<p style="margin:0px 0px 0px 5px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:blue">using</span> System.IO.Packaging;</p>
+<p></p>
+<p style="margin:0px 0px 0px 5px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:blue">namespace</span> ExcelViewer</p>
+<p style="margin:0px 0px 0px 5px;font-family:Consolas; font-size:9pt;font-color:black;">{</p>
+<p style="margin:0px 0px 0px 25px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:blue">public partial class</span> <span style="color:#2b91af">MainWindow</span> : System.Windows.<span style="color:#2b91af">Window</span></p>
+<p style="margin:0px 0px 0px 25px;font-family:Consolas; font-size:9pt;font-color:black;">{</p>
+<p style="margin:0px 0px 0px 45px;font-family:Consolas; font-size:9pt;font-color:black;">&#8230;</p>
+<p style="margin:0px 0px 0px 45px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:blue">void</span> MainWindow_Loaded(<span style="color:blue">object</span> sender, <span style="color:#2b91af">RoutedEventArgs</span> e)</p>
+<p style="margin:0px 0px 0px 45px;font-family:Consolas; font-size:9pt;font-color:black;">{</p>
+<p style="margin:0px 0px 0px 65px;font-family:Consolas; font-size:9pt;font-color:black;">&#8230;</p>
+<p style="margin:0px 0px 0px 65px;font-family:Consolas; font-size:9pt;font-color:black;">excelApp = <span style="color:blue">null</span>;</p>
+<p style="margin:0px 0px 0px 65px;font-family:Consolas; font-size:9pt;font-color:black;">DisplayXPSFile();</p>
+<p style="margin:0px 0px 0px 45px;font-family:Consolas; font-size:9pt;font-color:black;">}</p>
+<p style="margin:0px 0px 0px 45px;font-family:Consolas; font-size:9pt;font-color:black;">&#8230;</p>
+<p style="margin:0px 0px 0px 45px;font-family:Consolas; font-size:9pt;font-color:black;">void DisplayXPSFile()</p>
+<p style="margin:0px 0px 0px 45px;font-family:Consolas; font-size:9pt;font-color:black;">{</p>
+<p style="margin:0px 0px 0px 65px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:#2b91af">XpsDocument</span> xpsPackage = <span style="color:blue">new</span> XpsDocument(xpsFileName, <span style="color:#2b91af">FileAccess</span>.Read, <span style="color:#2b91af">CompressionOption</span>.NotCompressed);</p>
+<p style="margin:0px 0px 0px 65px;font-family:Consolas; font-size:9pt;font-color:black;"><span style="color:#2b91af">FixedDocumentSequence</span> fixedDocumentSequence = xpsPackage.GetFixedDocumentSequence();</p>
+<p style="margin:0px 0px 0px 65px;font-family:Consolas; font-size:9pt;font-color:black;">DocumentWindow.Document = fixedDocumentSequence;</p>
+<p style="margin:0px 0px 0px 45px;font-family:Consolas; font-size:9pt;font-color:black;">}</p>
+<p style="margin:0px 0px 0px 25px;font-family:Consolas; font-size:9pt;font-color:black;">}</p>
+<p style="margin:0px 0px 0px 5px;font-family:Consolas; font-size:9pt;font-color:black;">}</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p style="margin:10px 0px 0px 0px;text-indent:1em;">figure. Simple Excel file viewer created by WPF app.</p>
+<p><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2013/04/LaunchExcelViewer.png" alt=""/></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2013/08/26/wpf-app-that-display-excel-file-2/feed/</wfw:commentRss>
+			<slash:comments>2</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Resource of Store App for globalization</title>
+		<link>https://blog.processtune.com/2013/07/08/resource-of-store-app-for-globalization/</link>
+					<comments>https://blog.processtune.com/2013/07/08/resource-of-store-app-for-globalization/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Mon, 08 Jul 2013 04:06:07 +0000</pubDate>
+				<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Windows 8 App]]></category>
+		<category><![CDATA[Windows Store App]]></category>
+		<guid isPermaLink="false">http://www.processtune.com/blog/?p=865</guid>
+
+					<description><![CDATA[Store app のリソースとグローバリゼーション リソースを扱う仕組みは、XAML AppもHTML 5 Appも同じく、リソース～リソースマネージャ～CLRオブジェクト（またはDOM）の操作によって行うので、グローバリゼーションを考慮した作りにしておくと有用です。 一方、業務ロジックに依存した視覚制御は、コードビハインドでなく、View ModelやControllerといった業務ロジック制御部分にて行うことでひとつの処理でソースコードを行き来することなく可読性、保守性の良いプログラムを作成できます。 そのため、バインド + 通知によって視覚を変更することで、グローバリゼーションに対応したリソースの転送フローを設計することができます。 詳細な解説を行っておりますので、リンク先の資料を参照してください。 日本語資料]]></description>
+										<content:encoded><![CDATA[<p style="margin:10px 0px 0px 0px;Font-weight:bold;Font-size:14px;">Store app のリソースとグローバリゼーション</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">リソースを扱う仕組みは、XAML AppもHTML 5 Appも同じく、リソース～リソースマネージャ～CLRオブジェクト（またはDOM）の操作によって行うので、グローバリゼーションを考慮した作りにしておくと有用です。</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">一方、業務ロジックに依存した視覚制御は、コードビハインドでなく、View ModelやControllerといった業務ロジック制御部分にて行うことでひとつの処理でソースコードを行き来することなく可読性、保守性の良いプログラムを作成できます。</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">そのため、バインド + 通知によって視覚を変更することで、グローバリゼーションに対応したリソースの転送フローを設計することができます。</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">詳細な解説を行っておりますので、リンク先の資料を参照してください。</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;text-align:right;"><a href="http://1drv.ms/1mX9x59">日本語資料</a></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2013/07/08/resource-of-store-app-for-globalization/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Windows Azure Mobile Service authentication</title>
+		<link>https://blog.processtune.com/2013/07/01/windows-azure-mobile-service-authentication/</link>
+					<comments>https://blog.processtune.com/2013/07/01/windows-azure-mobile-service-authentication/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Mon, 01 Jul 2013 05:13:49 +0000</pubDate>
+				<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Windows 8 App]]></category>
+		<category><![CDATA[Windows Store App]]></category>
+		<guid isPermaLink="false">http://www.processtune.com/blog/?p=848</guid>
+
+					<description><![CDATA[Windows Azure Mobile Serviceは、シングルサインオン機能や通知機能などを提供するサービスです。この記事では、Windows Azure Mobile Serviceのシングルサインオンについて、概念と実装を解説しています。 日本語資料 参照 Channel 9 : Building Connected Windows Store Apps with Windows Azure Mobile Services 資料（MSTC Technical Communities純正　英語） ソリューション ファイル（後述のようにApp.xaml.csを編集する） この記事の後に参照して理解を深めてください ソリューションファイルの編集 ■サンプルファイル （追記：Visual Studio 2013 新機能）サンプルファイルを開いた状態でソリューションエクスプローラーのプロジェクトを右クリックし、接続サービスの追加を行いサービスマネージャーでWindows Azure Mobile Servicesを選択すると下記の箇所が上書きされます。 ダウンロード、解凍後ソリューションファイルのプロパティでブロックを解除する Visual Studio 2012以前の場合：App.xaml.csファイルを開き、以下の2行をWindows Azure Mobile Serviceの値に変更する Windows Azure Mobile Serviceの設定については本記事冒頭のリンクを参照してください Azureの値を確認する Twitter とAzureの連携 ソリューションファイルのF5実行 F5を実行し、右上のアイコンをクリックして自分のtwitterアカウントでログインする Windows Azure [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin:0px 0px 0px 5px;text-indent:1em;">Windows Azure Mobile Serviceは、シングルサインオン機能や通知機能などを提供するサービスです。この記事では、Windows Azure Mobile Serviceのシングルサインオンについて、概念と実装を解説しています。</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;text-align:right;"><a href="http://1drv.ms/1kRsNjW">日本語資料</a></p>
+<p style="margin:10px 0px 0px 0px;Font-weight:bold;Font-size:14px;">参照</p>
+<p style="margin:0px 0px 0px 0px;"><a href="http://channel9.msdn.com/Events/TechEd/NewZealand/TechEd-New-Zealand-2012/APP209">Channel 9 : Building Connected Windows Store Apps with Windows Azure Mobile Services</a></p>
+<p style="margin:0px 0px 0px 0px;"><a href="http://sdrv.ms/14XMBh8">資料（MSTC Technical Communities純正　英語）</a></p>
+<p style="margin:0px 0px 0px 0px;"><a href="http://1drv.ms/1ekuCRG">ソリューション ファイル（後述のようにApp.xaml.csを編集する）</a></p>
+<p style="margin:10px 0px 0px 0px;color:#0000FF;">この記事の後に参照して理解を深めてください</p>
+<p style="margin:10px 0px 0px 0px;Font-weight:bold;Font-size:14px;">ソリューションファイルの編集</p>
+<p style="margin:0px 0px 0px 0px;">■サンプルファイル</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">（追記：Visual Studio 2013 新機能）サンプルファイルを開いた状態でソリューションエクスプローラーのプロジェクトを右クリックし、接続サービスの追加を行いサービスマネージャーでWindows Azure Mobile Servicesを選択すると下記の箇所が上書きされます。</p>
+<p style="margin:10px 0px 0px 0px;">ダウンロード、解凍後ソリューションファイルのプロパティでブロックを解除する</p>
+<p style="margin:0px 0px 0px 10px;">Visual Studio 2012以前の場合：App.xaml.csファイルを開き、以下の2行をWindows Azure Mobile Serviceの値に変更する</p>
+<p><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2014/04/WindowsAzureMobileServiceAppXAMLCsEdit.png" alt="" style="width:500px;"/></p>
+<p style="margin:10px 0px 0px 0px;color:#0000FF;">Windows Azure Mobile Serviceの設定については本記事冒頭のリンクを参照してください</p>
+<p style="margin:10px 0px 0px 0px;Font-weight:bold;Font-size:14px;">Azureの値を確認する</p>
+<p><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2014/04/WindowsAzureMobileServiceSettings.png" alt="" style="width:500px;"/></p>
+<p style="margin:10px 0px 0px 0px;Font-weight:bold;Font-size:14px;">Twitter とAzureの連携</p>
+<p><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2014/04/ConnectsTwitterAndAzure.png" alt="" style="width:500px;"/></p>
+<p style="margin:10px 0px 0px 0px;Font-weight:bold;Font-size:14px;">ソリューションファイルのF5実行</p>
+<p style="margin:0px 0px 0px 0px">F5を実行し、右上のアイコンをクリックして自分のtwitterアカウントでログインする</p>
+<p><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2014/04/F5ExecuteToSSOAgainstTwitter.png" alt="" style="width:500px;"/></p>
+<p style="margin:10px 0px 0px 0px;Font-weight:bold;Font-size:14px;">Windows Azure Mobile Service auth</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">端末対応として、iPhone、Windows Phone、Android用のものがAzureサイトからダウンロードできます（本書4ページ）。また、SSO（Single Sign On）に使用するIDプロバイダーとして、Twitter、Facebook、Google、Microsoft accountを利用することができます。</p>
+<p><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2014/04/WindowsAzureMobileServiceAuth.png" alt="" style="width:500px;"/></p>
+<p style="margin:10px 0px 0px 0px;Font-weight:bold;Font-size:14px;">サインインの作成</p>
+<p><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2014/04/SignInFunctionToWindowsAzureMobileService.png" alt="" style="width:500px;"/></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2013/07/01/windows-azure-mobile-service-authentication/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Windows Store アプリのための情報アーキテクチャ</title>
+		<link>https://blog.processtune.com/2013/06/07/information-architecture-for-windows-store-app/</link>
+					<comments>https://blog.processtune.com/2013/06/07/information-architecture-for-windows-store-app/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Fri, 07 Jun 2013 02:47:28 +0000</pubDate>
+				<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Windows 8 App]]></category>
+		<category><![CDATA[Windows Store App]]></category>
+		<guid isPermaLink="false">http://www.processtune.com/blog/?p=756</guid>
+
+					<description><![CDATA[Windows Storeアプリはタッチデバイス、モバイルデバイスでの使用を意識する必要があります。そのようなWindows Storeアプリの特性を考慮したコンテンツ提供を行うためには、これまでのアプリケーションに比べ、情報設計がアプリケーションの操作性に大きく影響することを意識する必要があります。この記事では、情報設計の具体的な手順を解説しています。 日本語資料 Article in English Windows Storeアプリの特徴 タッチデバイス 深い階層構造を持つアプリケーションであってはいけない 細かい画面分割による大量の情報提供をすべきでない モバイルデバイス ローミングデータはオブジェクトモデルとして整備されていると扱いやすい コンテンツが提供する情報は、適切に整理されている必要がある。 インフォメーションアーキテクチャ ■理解の巨匠 リチャード・ソール・ワーマン（1935.3.26～）が提唱した情報の分類に関する概念が基になっており、コンテンツ提供時の情報の設計手法の一つ。 ・情報の分類は5つ（Information anxiety 1） 時系列、アルファベット、カテゴリー、位置、階層によって多くの情報は分類できる。（LATCH） ・近年の情報アーキテクチャ（Information anxiety 2） 時系列、アルファベット、カテゴリー、位置、連続量により情報を分類する。 ・階層化やタグ付けが情報アーキテクチャに含まれないわけ 階層化はタグ付けで代替えでき、階層化とタグ付けは、情報を扱うユーザーによって変化する。また、情報が利用される場所においてもその構成が変化するため、一時的な分類や一意的な分類に有用。 例：会議の議事録をファイルサーバーに保存（下図の左の階層化）→下図の右のタグ付けで表現可。 情報のタグ付けによる表現は、階層による情報の表現を代替えできるが、その逆はできない。 誰もがファイルの場所をわかるようにするために ■コンテンツ・スコープが変わらない階層化 情報アーキテクチャの情報分類に則った分類のひとつで構成される階層構造では、誰もが簡単に情報に到達できる（下図）。これをコンテンツ・スコープといい、これが混在する階層構造（上図左）では、下の階層に行ってから初めて次の操作がわかる（2013年4月27日の議事録にたどり着くためには、NECフォルダを開かないとWindows Phone app開発案件というフォルダがあることがわからない）。 ■コンテンツ・スコープが変わらないところまでメニュー等でナビゲートする 情報を見せるときには、それぞれに最も重要な分類がある（ニュース速報の場合は時系列等）ため、他の分類についてはメニュー等で補助する。ニュース速報の場合は補助として「国内／海外」（位置）や「政治／犯罪」（カテゴリー）などが考えられる。しかしながら、過去ニュース・アーカイブのような場合は、時系列を補助とし、カテゴリーや位置を重要な分類とする見せ方が考えられる。 情報を提供する目的によって分類の優先度が変わる オブジェクトモデルのアンチ・パターン コンテンツ・スコープに一貫性のある（情報アーキテクチャの分類を横断しない）情報群は、オブジェクト・モデルで情報特性としてアプリケーションに提供することが可能。MVVM、MVCにおけるモデルとして、オブジェクトとオブジェクトモデルの転送による業務ロジックの実装に分離できる。 ■階層化やタグ付けをオブジェクトモデルで提供することのデメリット オブジェクトモデルは、正規化モデル（DBなどに永続化される情報の形）からビジネス・ロジックを実現するために転送するデータの組み合わせの形であり、コンテンツ・スコープの一貫性がないモデルは、開発者がモデルをすべて理解する必要があるため開発効率が悪い。そのため、情報を扱うユーザーが自由に決められる階層化やタグ付けといった分類に関しては、オブジェクトモデルとして、情報特性をアプリケーションから固定的に提供すべきでない。 ■オブジェクトモデルは変化できない アプリケーションで提供するオブジェクトモデルを変更するためにはアプリケーションの改変が必要になり、UXを提供するWindows Store Appの場合、ユーザーの操作の変化やアプリケーションの進化にオブジェクトモデルは追従できない。そのため上記の開発視点としての非効率性に加え、エンドユーザーの情報操作の自由度のためにも階層化、タグ付けに関してオブジェクト・モデルで提供することはない。 ユーザーが情報を操作する際の自由度を提供するのはオブジェクト・モデルではなく、アプリケーション・ロジック オブジェクトモデルのパターン ■一意的な分類と一時的な分類 階層化やタグ付けはオブジェクトモデルでなく機能として提供すべきで、それによってユーザーの操作の変化やアプリケーションの進化に対応することが可能になる。 例：楽曲情報の分類における一時的な分類と企業内の部署管理における一意的な分類 ■特定の業務に対するオブジェクトの提供 企業で部署を分類する場合は、情報の形の変化（部署の改変など）が少なく、異動や入退社が頻繁でなければ固定的な階層をオブジェクト・モデルとして提供することが可能（会社の組織構成はその会社の社員であれば知っておくべき情報であり、社外の人がその情報を操作する必要がない社内システムなどでは一意的なオブジェクト・モデルとして実装可能）。また、毎週注目曲を発信するような特定の目的にしか使わないアプリケーションの場合、一時的な情報の形をオブジェクト・モデルとして実装することが可能。 これら特定の条件下以外では、一時的な分類や一意的な分類はオブジェクトモデルとして実装を行うのではなく、アプリケーション機能として、ユーザーが自由に設定できるようにしておく。 限られた状況下でのみ、一時的または一意的なオブジェクト・モデルを提供できる [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin:0px 0px 0px 5px;text-indent:1em;">Windows Storeアプリはタッチデバイス、モバイルデバイスでの使用を意識する必要があります。そのようなWindows Storeアプリの特性を考慮したコンテンツ提供を行うためには、これまでのアプリケーションに比べ、情報設計がアプリケーションの操作性に大きく影響することを意識する必要があります。この記事では、情報設計の具体的な手順を解説しています。</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;text-align:right;"><a href="http://1drv.ms/PC62Ga">日本語資料</a></p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;text-align:right;"><a href="http://www.processtune.com/blog/?p=951">Article in English</a></p>
+<p style="margin:10px 0px 0px 0px;Font-weight:bold;Font-size:14px;">Windows Storeアプリの特徴</p>
+<p style="margin:0px 0px 0px 0px;">タッチデバイス</p>
+<p style="margin:0px 0px 0px 10px;">深い階層構造を持つアプリケーションであってはいけない</p>
+<p style="margin:0px 0px 0px 10px;">細かい画面分割による大量の情報提供をすべきでない</p>
+<p style="margin:0px 0px 0px 0px;">モバイルデバイス</p>
+<p style="margin:0px 0px 0px 10px;">ローミングデータはオブジェクトモデルとして整備されていると扱いやすい</p>
+<p style="margin:10px 0px 0px 0px;color:#0000FF;">コンテンツが提供する情報は、適切に整理されている必要がある。</p>
+<p style="margin:10px 0px 0px 0px;Font-weight:bold;Font-size:14px;">インフォメーションアーキテクチャ</p>
+<p style="margin:0px 0px 0px 0px;">■理解の巨匠</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">リチャード・ソール・ワーマン（1935.3.26～）が提唱した情報の分類に関する概念が基になっており、コンテンツ提供時の情報の設計手法の一つ。</p>
+<p style="margin:10px 0px 0px 0px;">・情報の分類は5つ（Information anxiety 1）</p>
+<p style="margin:0px 0px 0px 10px;">時系列、アルファベット、カテゴリー、位置、階層によって多くの情報は分類できる。（LATCH）</p>
+<p style="margin:0px 0px 0px 0px;">・近年の情報アーキテクチャ（Information anxiety 2）</p>
+<p style="margin:0px 0px 0px 10px;">時系列、アルファベット、カテゴリー、位置、連続量により情報を分類する。</p>
+<p style="margin:0px 0px 0px 0px;">・階層化やタグ付けが情報アーキテクチャに含まれないわけ</p>
+<p style="margin:0px 0px 0px 10px;">階層化はタグ付けで代替えでき、階層化とタグ付けは、情報を扱うユーザーによって変化する。また、情報が利用される場所においてもその構成が変化するため、一時的な分類や一意的な分類に有用。</p>
+<p style="margin:0px 0px 0px 10px;">例：会議の議事録をファイルサーバーに保存（下図の左の階層化）→下図の右のタグ付けで表現可。</p>
+<p style="display:inline"><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2014/04/FileDirectoryHierarchy.png" alt="" style="width:300px;"/><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2014/04/TagImage.png" alt="" style="width:300px;margn-left:50px;"/></p>
+<p style="margin:10px 0px 0px 0px;color:#0000FF;">情報のタグ付けによる表現は、階層による情報の表現を代替えできるが、その逆はできない。</p>
+<p style="margin:10px 0px 0px 0px;Font-weight:bold;Font-size:14px;">誰もがファイルの場所をわかるようにするために</p>
+<p style="margin:0px 0px 0px 0px;">■コンテンツ・スコープが変わらない階層化</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">情報アーキテクチャの情報分類に則った分類のひとつで構成される階層構造では、誰もが簡単に情報に到達できる（下図）。これをコンテンツ・スコープといい、これが混在する階層構造（上図左）では、下の階層に行ってから初めて次の操作がわかる（2013年4月27日の議事録にたどり着くためには、NECフォルダを開かないとWindows Phone app開発案件というフォルダがあることがわからない）。</p>
+<p><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2014/04/Hierarchy.png" alt="" style="width:500px;"/></p>
+<p style="margin:0px 0px 0px 0px;">■コンテンツ・スコープが変わらないところまでメニュー等でナビゲートする
+</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">情報を見せるときには、それぞれに最も重要な分類がある（ニュース速報の場合は時系列等）ため、他の分類についてはメニュー等で補助する。ニュース速報の場合は補助として「国内／海外」（位置）や「政治／犯罪」（カテゴリー）などが考えられる。しかしながら、過去ニュース・アーカイブのような場合は、時系列を補助とし、カテゴリーや位置を重要な分類とする見せ方が考えられる。</p>
+<p style="margin:10px 0px 0px 0px;color:#0000FF;">情報を提供する目的によって分類の優先度が変わる</p>
+<p style="margin:10px 0px 0px 0px;Font-weight:bold;Font-size:14px;">オブジェクトモデルのアンチ・パターン</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">コンテンツ・スコープに一貫性のある（情報アーキテクチャの分類を横断しない）情報群は、オブジェクト・モデルで情報特性としてアプリケーションに提供することが可能。MVVM、MVCにおけるモデルとして、オブジェクトとオブジェクトモデルの転送による業務ロジックの実装に分離できる。</p>
+<p style="margin:0px 0px 0px 0px;">■階層化やタグ付けをオブジェクトモデルで提供することのデメリット</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">オブジェクトモデルは、正規化モデル（DBなどに永続化される情報の形）からビジネス・ロジックを実現するために転送するデータの組み合わせの形であり、コンテンツ・スコープの一貫性がないモデルは、開発者がモデルをすべて理解する必要があるため開発効率が悪い。そのため、情報を扱うユーザーが自由に決められる階層化やタグ付けといった分類に関しては、オブジェクトモデルとして、情報特性をアプリケーションから固定的に提供すべきでない。</p>
+<p style="margin:0px 0px 0px 0px;">■オブジェクトモデルは変化できない</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">アプリケーションで提供するオブジェクトモデルを変更するためにはアプリケーションの改変が必要になり、UXを提供するWindows Store Appの場合、ユーザーの操作の変化やアプリケーションの進化にオブジェクトモデルは追従できない。そのため上記の開発視点としての非効率性に加え、エンドユーザーの情報操作の自由度のためにも階層化、タグ付けに関してオブジェクト・モデルで提供することはない。</p>
+<p style="margin:10px 0px 0px 0px;color:#0000FF;">ユーザーが情報を操作する際の自由度を提供するのはオブジェクト・モデルではなく、アプリケーション・ロジック</p>
+<p style="margin:10px 0px 0px 0px;Font-weight:bold;Font-size:14px;">オブジェクトモデルのパターン</p>
+<p style="margin:0px 0px 0px 0px;">■一意的な分類と一時的な分類</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">階層化やタグ付けはオブジェクトモデルでなく機能として提供すべきで、それによってユーザーの操作の変化やアプリケーションの進化に対応することが可能になる。</p>
+<p style="margin:0px 0px 0px 10px;">例：楽曲情報の分類における一時的な分類と企業内の部署管理における一意的な分類</p>
+<p style="display:inline"><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2014/04/TemporaryHierarchy.png" alt="" style="width:300px;"/><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2014/04/UniqueryHierarchy.png" alt="" style="width:300px;margn-left:50px;"/></p>
+<p style="margin:0px 0px 0px 0px;">■特定の業務に対するオブジェクトの提供</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">企業で部署を分類する場合は、情報の形の変化（部署の改変など）が少なく、異動や入退社が頻繁でなければ固定的な階層をオブジェクト・モデルとして提供することが可能（会社の組織構成はその会社の社員であれば知っておくべき情報であり、社外の人がその情報を操作する必要がない社内システムなどでは一意的なオブジェクト・モデルとして実装可能）。また、毎週注目曲を発信するような特定の目的にしか使わないアプリケーションの場合、一時的な情報の形をオブジェクト・モデルとして実装することが可能。</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">これら特定の条件下以外では、一時的な分類や一意的な分類はオブジェクトモデルとして実装を行うのではなく、アプリケーション機能として、ユーザーが自由に設定できるようにしておく。</p>
+<p style="margin:10px 0px 0px 0px;color:#0000FF;">限られた状況下でのみ、一時的または一意的なオブジェクト・モデルを提供できる</p>
+<p style="margin:10px 0px 0px 0px;Font-weight:bold;Font-size:14px;">設計時の注意事項</p>
+<p style="margin:0px 0px 0px 0px;">■情報アーキテクチャの分類のプロパティを用意する</p>
+<p style="margin:0px 0px 0px 5px;text-indent:1em;">情報アーキテクチャの分類にアプリケーションの業務ロジックを最低1つ当てはめる。</p>
+<table>
+<tr>
+<td style="text-align:center;font-weight:bold;">位置</td>
+<td>Store（置き場所）、アーティスト出身地、活動中心地</td>
+</tr>
+<tr>
+<td style="text-align:center;font-weight:bold;">アルファベット</td>
+<td>アルファベット、五十音、多言語対応</td>
+</tr>
+<tr>
+<td style="text-align:center;font-weight:bold;">時系列</td>
+<td>発表日、発売日、データ更新時</td>
+</tr>
+<tr>
+<td style="text-align:center;font-weight:bold;">カテゴリー</td>
+<td>音楽ジャンル、言語</td>
+</tr>
+<tr>
+<td style="text-align:center;font-weight:bold;">連続量</td>
+<td>発表曲数、売上枚数、放送回数</td>
+</tr>
+<p style="margin:10px 0px 0px 0px;">情報アーキテクチャの分類である位置モデルを継承してアーティストのメンバーの出生地情報をオブジェクト化した例</p>
+<p><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2014/04/ObjectModelDiagram.png" alt="" style="width:500px;"/></p>
+<p><img decoding="async" src="http://processtuneblog.azurewebsites.net/wp-content/uploads/2014/04/LocationInformation.png" alt="" style="width:500px;"/></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2013/06/07/information-architecture-for-windows-store-app/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Windows 8 animation architecture</title>
+		<link>https://blog.processtune.com/2013/05/11/windows-8-animation-architecture/</link>
+					<comments>https://blog.processtune.com/2013/05/11/windows-8-animation-architecture/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Sat, 11 May 2013 03:34:32 +0000</pubDate>
+				<category><![CDATA[ComCamp]]></category>
+		<category><![CDATA[Windows 8 App]]></category>
+		<category><![CDATA[Windows Store App]]></category>
+		<guid isPermaLink="false">http://www.processtune.com/blog/?p=745</guid>
+
+					<description><![CDATA[Presentation document for Community Open Day 2013 http://sdrv.ms/13LYYJ7 Microsoft Virtual Academy]]></description>
+										<content:encoded><![CDATA[<p>Presentation document for</p>
+<p>Community Open Day 2013</p>
+<p><a href="http://sdrv.ms/13LYYJ7">http://sdrv.ms/13LYYJ7</a></p>
+<p><a href ="http://technet.microsoft.com/ja-jp/jj149699.aspx?mtag=MVP4029060">Microsoft Virtual Academy</a></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2013/05/11/windows-8-animation-architecture/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>

@@ -1,0 +1,1749 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Visual Studio &#8211; Processtune Blog</title>
+	<atom:link href="https://blog.processtune.com/category/visual-studio/feed/" rel="self" type="application/rss+xml" />
+	<link>https://blog.processtune.com/</link>
+	<description>Articles offered from Microsoft MVP</description>
+	<lastBuildDate>Tue, 28 Mar 2023 02:29:03 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.8.2</generator>
+
+<image>
+	<url>/wp-content/uploads/2023/03/cropped-Presentation-32x32.png</url>
+	<title>Visual Studio &#8211; Processtune Blog</title>
+	<link>https://blog.processtune.com/</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+	<item>
+		<title>.NET Core Options pattern</title>
+		<link>https://blog.processtune.com/2022/08/18/net-core-options-pattern/</link>
+					<comments>https://blog.processtune.com/2022/08/18/net-core-options-pattern/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Thu, 18 Aug 2022 10:44:28 +0000</pubDate>
+				<category><![CDATA[.NET Core]]></category>
+		<category><![CDATA[ASP.NET Core]]></category>
+		<category><![CDATA[C#]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Visual Studio Code]]></category>
+		<category><![CDATA[WPF App]]></category>
+		<category><![CDATA[未分類]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=6428</guid>
+
+					<description><![CDATA[The Options Pattern can build a hierarchical settings values structure. In the previous article [ASP .NET Core Options Pattern], a settings values of The .NET Generic Host that created by the host builder were registered to the host as a service as it is, and were used in the UI layer although, the Options Pattern [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin:0px 0px 0px 0px;color:#000044;font-size:0.9rem;font-family:" segoe="" ui";"="">The Options Pattern can build a hierarchical settings values structure. In the previous article [<a href="https://blog.processtune.com/?p=6364" target="_new" style="font-weight:bold;" rel="noopener">ASP .NET Core Options Pattern</a>], a settings values of The .NET Generic Host that created by the host builder were registered to the host as a service as it is, and were used in the UI layer although, the Options Pattern in .NET Core must be applied the Options Pattern as the configuration service before registered to the host.<br />
+In the WPF application, customizing startup flow at the App.xaml.cs can apply the Options pattern to the service before the MainWindow showed.</p>
+<p style="margin:10px 0px 0px 5px;text-indent:1em;text-align:right;font-weight:bold;">&gt;&gt;<a href="https://github.com/TetsuroTakao/GenericHostWPF" target="_new" style="font-weight:bold;" rel="noopener">.NET Core WPF application that uses the Options Pattern as configuration service registered in The .NET Generic Host.</a></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Development steps for .NET Core Options Pattern</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">[Step 1] The .NET Generic Host built with the host builder can be used for both web applications and desktop native applications, so settings values as configuration service that applies the Options Pattern is able to use on each screen with using the Generic Host that define in the constructor of the App class.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/08/developmentSteps.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">[Step 2] On each screen, the configuration service that the Options Pattern is applied is able to use in the constructor of the screen. This mechanism is the same as when passing the settings values as configuration service that is applied the Options Pattern to the constructor of the controller in the ASP.NET Core Options Pattern, so this article means also recap of the ASP.NET Core Options Pattern.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The App class has to service the configuration service with the Options Pattern applied before calling the MainWindow class, so stop calling the MainWindow.xaml in the App.xaml and call MainWindow after building the configuration service in the App.xaml.cs will do so.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">[Step 3] Define a startup method name to the Startup attribute in App.xaml, and create the Startup method in App.xaml.cs, then show the MainWindow screen in the Startup method. The MainWindow screen is registered as a service when the host is constructed, and the MainWindow service is displayed in the Startup method.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">This article explains this flow.</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・ASP.NET Core Options Pattern recap</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">In the case of Program.cs of ASP.NET Core, the settings values of the JSON file is able to specify as configurations of the host. So it can register to the Generic Host as the configuration service directly. In the case of WPF, this creation of host builder to read JSON file part is a little troublesome.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/08/asp.netCoreOptionsPatternRecap.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">First, for the JSON that was automatically loaded by the Generic Host in ASP.NET Core must be loaded explicitly, since files other than JSON can also be handled, please refer to the official document [<a href="https://docs.microsoft.com/en-us/dotnet/core/extensions/configuration-providers?WT.mc_id=DT-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">Configuration providers in .NET</a>] also.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Another thing is that the application startup flow is customized and insert the service registration process before show the MainWindow. Let&#8217;s go into a little more detail.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The Generic Host in ASP.NET Core was defined in Program.cs, on the other hand, in the case of the WFP application is defined in App.xaml.cs.<br />
+There are two steps to registering the Generic Host configuration as a service.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Use the &#8216;Microsoft.Extensions.Hosting&#8217; namespace, loading a JSON file into the Generic Host configuration using the &#8216;ConfigureAppConfiguration&#8217; method of the Generic Host is the one, and another, registering  the Generic Host configuration as a service using &#8216;ConfigureServices&#8217; method of the Generic Host.<br />
+As for the flow of processing, use the &#8216;Microsoft.Extensions.Hosting&#8217; namespace, clear the source of the configuration of the host obtained by the &#8216;ConfigureAppConfiguration&#8217; method of the Generic Host, and load the appsettings.json file.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">the &#8216;optional&#8217; argument is a flag for appsettings.json reading, and if &#8216;true&#8217; is specified, it will work even if there is no file.<br />
+the &#8216;reloadOnChange&#8217; argument is &#8216;true&#8217; and reloads appsettings.json when it changes.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The configuration constructed in this way can be obtained with the &#8216;Configuration&#8217; property of the &#8216;context&#8217; argument in the ConfigureServices&#8217; method of the host, so register it as a configuration service to the &#8216;services&#8217; argument that was also obtained.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Use the &#8216;Microsoft.Extensions.DependencyInjection&#8217; namespace, the Options Pattern is able to use while the type specification of the &#8216;Configure&#8217; method of the service of the host that can be received by the &#8216;ConfigureServices&#8217; method of the host. This mechanism is the &#8216;IOptions&#8217; interface of the &#8216;TOptions&#8217; type of the configuration service provides Dependency Injection feature to insert customised type into the configuration service. In the time, specifying the type of the ApplicationContext class that has the same structure as the JSON file.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">App.xaml.cs
+    public partial class App : Application
+    {
+        private IHost _host;
+        public App()
+        {
+            _host = Host.CreateDefaultBuilder()
+                .ConfigureAppConfiguration((hostingContext, configuration) =&gt;
+                {
+                    configuration.Sources.Clear();
+                    IHostEnvironment env = hostingContext.HostingEnvironment;
+                    configuration
+                        .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                        .AddJsonFile($"appsettings.{env.EnvironmentName}.json", true, true);
+                })
+                .ConfigureServices((context, services) =&gt;
+                {
+                    services.Configure&lt;ApplicationContext&gt;(context.Configuration);
+                    services.AddSingleton&lt;MainWindow&gt;();
+                    // services.AddTransient&lt;MainWindow&gt;();
+                })
+                .Build();
+        }
+</pre>
+<div style="background-color:#cccccc;border:1px solid #00000; padding: 10px 10px 0px 10px;margin-top:20px;">
+<div style="margin:-20px 0px 0px 5px;text-indent:1em;font-weight:bold;background-color:#444;border:1px solid #ccc;color:#fff;">ⓘ Application lyfecycle</div>
+<p>The &#8216;AddSingleton&#8217; method of services of the Generic Host and the &#8216;AddTransient&#8217; method( commented) controls lyfecycle of the service.<br />
+<a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection?WT.mc_id=DT-MVP-4029060&amp;view=aspnetcore-6.0#lifetime-and-registration-options" target="_new" style="font-weight:bold;" rel="noopener">The section [Lifetime and registration options] of Microsoft official document [Dependency Injection in ASP.NET Core]</a> introduces how to validate &#8216;AddTransient&#8217;, &#8216;AddScoped&#8217;, and &#8216;AddSingleton&#8217; method with an operation ID attached to the service instance.<br />
+The &#8216;AddTransient&#8217; method adds a unique instance per session, the &#8216;AddScoped&#8217; method adds a per-request instance, and the &#8216;AddSingleton&#8217; method adds an application-unique service instance to the application host.<br />
+In this time, the &#8216;MainWindow&#8217; service uses an instance unique to the application, but the data context and configuration service described later have a strong dependency on MainWindow, so use AddTransient when serving multiple users.</p>
+</div>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Customize startup flow</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The flow up to MainWindow display can be customized by defining App.xaml and App.xaml.cs.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">In App.xaml, remove the &#8216;StartupUri&#8217; attribute and specify the method name that operates at startup to the &#8216;Startup&#8217; attriute. In this example, it is &#8216;Application_Startup&#8217;, so the &#8216;Application_Startup&#8217; method create in the &#8216;App.xaml.cs&#8217; file later.  The &#8216;Application_Exit&#8217; method as the application exit method at the time of termination also create in the &#8216;App.xaml.cs&#8217; file.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Next, in order to display the &#8216;MainWindow&#8217; screen in the &#8216;Application_Startup&#8217; method of App.xaml.cs, register the &#8216;MainWindow&#8217; class as the host service in advance.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The &#8216;MainWindow&#8217; class registered as a service in the host can be obtained as one of the services of host that are holded in the &#8216;_host&#8217; variable of the App class global scope in App.xaml.cs.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The &#8220;GetRequiredService&#8221; method returns InvalidOperationException (if there is no service) or ObjectDisposedException (if the service has been destroyed), unlike &#8220;GetService&#8221; which returns null in an exception, so support flow can set in subsequent processing. Used when such operations are expected. At that time, it is the scope of the service that must be considered that described above (refer to [Application lyfecycle]).</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">In the &#8216;Application_Startup&#8217; method, the MainWindow screen is displayed by the &#8220;Show&#8221; method of the service that is obtained from the &#8216;GetRequiredService&#8217; method of the &#8216;_host&#8217; variable.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">App.xaml.cs
+        private async void Application_Startup(object sender, StartupEventArgs e)
+        {
+            await _host.StartAsync();
+            _host.Services.GetRequiredService<mainwindow>().Show();
+        }
+
+        private async void Application_Exit(object sender, ExitEventArgs e)
+        {
+            await _host.StopAsync(TimeSpan.FromSeconds(5));
+            _host.Dispose();
+        }
+</mainwindow></pre>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Use settings values as the Options Pattern</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">To confirm startup flow, start Visual Studio Code in any folder and display the terminal with CTRL + @.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Create a project with &#8216;dotnet new wpf&#8217; command in the terminal.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">To install each extension of Microsoft.Extensions.Hosting, Microsoft.Extensions.Configuration and Microsoft.Extensions.DependencyInjection from Nuget, copy .NET CLI command below and paste it into the terminal.</p>
+<div style="margin: 0px 0px 0px 20px;display:table;width:80%;">
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;padding-right:10px;">Microsoft.Extensions.Hosting</div>
+<div style="display:table-cell;">https://www.nuget.org/packages/Microsoft.Extensions.Hosting/</div>
+</div>
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;">Microsoft.Extensions.Configuration</div>
+<div style="display:table-cell;">https://www.nuget.org/packages/Microsoft.Extensions.Configuration/</div>
+</div>
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;">Microsoft.Extensions.DependencyInjection</div>
+<div style="display:table-cell;">https://www.nuget.org/packages/Microsoft.Extensions.DependencyInjection/</div>
+</div>
+</div>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The setting values ​​can use in all of methods of MainWindow.xaml.cs, because the configuration service of the host is stored into the variable of the global scope of the MainWindow class at the constructor of the class in this sample. Although, for convenience of explanation, every statement is defined in the constructor.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Thus that it can be used later for clicks, mouseovers, select list selections, etc. if it needs.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">In this article, we want to complete everything in the constructor, so binding using INotifyPropertyChanged is performed, but before explaining the ViewModel, explains the structure of using service of the host first.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Set the data context in MainWindow.xaml. Here we are using a class named &#8216;MainWindowViewModel&#8217;. Since the data context specification on the xaml side is set to Window, the property is bound as it is. Application works without the attribute &#8220;UpdateSourceTrigger=PropertyChanged&#8221;. If the data context inherits from INotifyPropertyChanged, the PropertyChangedEventHandler&#8217;s delegate is executed by default.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">MainWindow.xaml
+&lt;Window x:Class="GenericHostWPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GenericHostWPF"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800"&gt;
+    &lt;Window.DataContext&gt;
+        &lt;local:MainWindowViewModel /&gt;
+    &lt;/Window.DataContext&gt;
+    &lt;Grid&gt;
+        &lt;TextBlock x:Name="Message" Margin="10,10,500,0" TextWrapping="Wrap" Text="{Binding Message, UpdateSourceTrigger=PropertyChanged}"
+            VerticalAlignment="Top"/&gt;
+        &lt;TextBox x:Name="MessageArea" HorizontalAlignment="Left" Height="312" Margin="12,100,12,12" TextWrapping="Wrap" Text="{Binding Log}"
+            VerticalAlignment="Top" Width="773" Background="Black" Foreground="White"/&gt;
+    &lt;/Grid&gt;
+&lt;/Window&gt;
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Store this in the global scope variable &#8216;datacontext&#8217; of the class in the constructor of MainWindow.xaml.cs and put the setting value into the property of this view model.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">For the setting value, bind the Japanese section of the &#8216;config&#8217; argument obtained in the constructor to the global scope variable &#8216;applicationContext&#8217; so that it can be used in other methods.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The &#8216;applicationContext&#8217; variable provides layered properties using the property &#8216;Brand&#8217; or the &#8216;Title&#8217; property of each &#8216;Page&#8217; object and so on.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">MainWindow.xaml.cs
+    public partial class MainWindow : Window
+    {
+        private MainWindowViewModel dataContext = new ();
+        private ApplicationContext applicationContext = new();
+        private IConfiguration configRoot;
+        public MainWindow(IConfiguration config)
+        {
+            configRoot = config;
+            InitializeComponent();
+            config.GetSection(ApplicationContext.English).Bind(applicationContext);
+            dataContext = (MainWindowViewModel)this.DataContext;
+            dataContext.Message = applicationContext.Brand;
+            dataContext.Log = applicationContext.Pages.First().Title;
+        }
+    }
+</pre>
+<div style="background-color:#cccccc;border:1px solid #00000; padding: 10px 10px 0px 10px;margin-top:20px;">
+<div style="margin:-20px 0px 0px 5px;text-indent:1em;font-weight:bold;background-color:#444;border:1px solid #ccc;color:#fff;">ⓘ INotification in a ViewModel</div>
+<div style="display:inline-block;width:50%;vertical-align:middle;"><img decoding="async" src="/wp-content/uploads/2022/08/viewmodel.png" alt="" style="width:450px;margin-top:10px;"></div>
+<div style="display:inline-block;width:40%;mergin-left:10px;">On the ViewModel side, extend INotifyPropertyChanged to declare a delegate for PropertyChangedEventHandler and define the delegate&#8217;s methods. Since the &#8216;CallerMemberName&#8217; attribute is used in the method, the &#8216;System.Runtime.CompilerServices&#8217; namespace is used.<br />
+Each property stores a value in a private variable and takes it out. If the value is the same, do nothing and call the delegate&#8217;s method if there is a change.</div>
+</div>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2022/08/18/net-core-options-pattern/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Encapsulation of information affects an app flexibility &#8211; ASP.NET Core Options Pattern</title>
+		<link>https://blog.processtune.com/2022/07/23/encapsulation-of-information-affects-an-app-flexibility-asp-net-core-options-pattern/</link>
+					<comments>https://blog.processtune.com/2022/07/23/encapsulation-of-information-affects-an-app-flexibility-asp-net-core-options-pattern/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Sat, 23 Jul 2022 02:47:41 +0000</pubDate>
+				<category><![CDATA[ASP.NET Core]]></category>
+		<category><![CDATA[C#]]></category>
+		<category><![CDATA[Service]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Visual Studio Code]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=6478</guid>
+
+					<description><![CDATA[Previous article [ASP.NET Core Options Pattern] describes overview of ASP.NET Core Options Pattern that enables information encapsulation and separation of business logic interest. This feature makes that an application extends some features without affecting existing features. This article using previous sample code to describe a process of extending feature with ASP.NET Core Options Pattern. Please [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin:0px 0px 0px 0px;color:#000044;font-size:0.9rem;font-family:" segoe="" ui";"="">Previous article [<a href="https://blog.processtune.com/?p=6364" target="_new" style="font-weight:bold;" rel="noopener">ASP.NET Core Options Pattern</a>] describes overview of <a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/options?WT.mc_id=DT-MVP-4029060&amp;view=aspnetcore-6.0" target="_new" style="font-weight:bold;" rel="noopener">ASP.NET Core Options Pattern</a> that enables information encapsulation and separation of business logic interest. This feature makes that an application extends some features without affecting existing features.<br />
+This article using previous sample code to describe a process of extending feature with <a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/configuration/options?WT.mc_id=DT-MVP-4029060&amp;view=aspnetcore-6.0" target="_new" style="font-weight:bold;" rel="noopener">ASP.NET Core Options Pattern</a>.<br />
+Please select the link [<a href="https://github.com/TetsuroTakao/GlobalizationUseSettings" target="_new" style="font-weight:bold;" rel="noopener">Sample project of previous article</a>] below to download it to refer to code of this article.</p>
+<p style="margin:10px 0px 0px 5px;text-indent:1em;text-align:right;font-weight:bold;">&gt;&gt;<a href="https://github.com/TetsuroTakao/GlobalizationUseSettings" target="_new" style="font-weight:bold;" rel="noopener">Sample project of previous article</a></p>
+<p style="margin:10px 0px 0px 5px;text-indent:1em;text-align:right;font-weight:bold;">&gt;&gt;<a href="https://github.com/TetsuroTakao/GlobalizationUseSettings3" target="_new" style="font-weight:bold;" rel="noopener">Sample project of this article</a></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">•&nbsp;Preparation of this article</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">In previous article, did not describe steps of implementation, but describe overview of process of development. So, this article describes extending application using the Options Pattern with steps of implementation.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The sample of implementation uses the &#8216;appsettings.json&#8217; file as a settings that includes two sections of languages the &#8216;English&#8217; section and the &#8216;Japanese&#8217; section create screens of an application. This article describes that adding an item of the sections of settings does not affect to another section of the settings.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">As concretely, a navigation menu of sample application is created from the settings. Even if adding menu item of the navigation menu in the English screen does not affect to the Japanese screen.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">As the screen that navigate from the &#8216;Index&#8217; screen, this sample includes the &#8216;Search&#8217; screen made from the &#8216;Search.cshtml&#8217; file and the &#8216;Search.cshtml.cs&#8217; file of the &#8216;Pages&#8217; folder.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Implementation steps are <span style="font-weight:bold;">1.</span> Create .NET &#8216;webapp&#8217; project, <span style="font-weight:bold;">2.</span> Prepare settings JSON, <span style="font-weight:bold;">3.</span> Prepare a class that has same structure as settings JSON to use the Options Pattern, <span style="font-weight:bold;">4.</span> Add configuration service to the host using <a href="https://docs.microsoft.com/en-us/dotnet/core/extensions/generic-host?WT.mc_id=DT-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">the Generic Host feature of .NET</a>, the service has same structure as settings JSON, because the Options Pattern creates a service that uses the class that made at step [3] as <a href="https://docs.microsoft.com/en-us/dotnet/core/extensions/dependency-injection?WT.mc_id=DT-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">DI (Dependency Injection)</a>, <span style="font-weight:bold;">5.</span> Use the settings values through the service at each controller (or non-MVC Razor pages).</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">•&nbsp;Create .NET ‘webapp’ project - Step 1
+&gt;Start Visual Studio Code ([code .] at any directory to create the project in Windows terminal)
+&gt;Open the terminal window in Visual Studio Code (Press [CTRL + @] in terminal pain)
+&gt;Create new 'webapp' project(Put [dotnet new webapp] in terminal pain)
+•&nbsp;Prepare settings JSON - Step 2
+&gt;Copy from the Sample project, or type below in appsettings.json of the project
+
+[%project root directory%\appsettings.json]
+{
+  "Japanese": {
+    "Brand": "管理画面",
+    "Pages": [
+      {
+        "ActionKey": "Index",
+        "Title": "ホーム"
+      },
+      {
+        "ActionKey": "Privacy",
+        "Title": "個人情報"
+      }
+    ]
+  },
+  "English": {
+    "Brand": "Management Console",
+    "Pages": [
+      {
+        "ActionKey": "Index",
+        "Title": "Home"
+      },
+      {
+        "ActionKey": "Privacy",
+        "Title": "Privacy"
+     }
+    ]
+  }
+}
+</pre>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">•&nbsp;A class that has same structure as settings JSON &#8211; Step 3</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The &#8216;appsettings.json&#8217; file has the &#8216;Japanese&#8217; section and the &#8216;English&#8217; section, the Options Pattern represents it as constant string. The &#8216;ApplicationContext&#8217; class below provides two objects that identifyed using name &#8216;English&#8217; and &#8216;Japanese&#8217;, each object has the &#8216;Brand&#8217; property, and the &#8216;Pages&#8217; property that is collection of the &#8216;Page&#8217; object which has the &#8216;ActionKey &#8216; property and the &#8216;Title&#8217; property.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">This procedure for specification is the Options Pattern specific that reduces same statement of the class to define same structure. Please compare the &#8216;appsettings.json&#8217; above and the &#8216;ApplicationContext&#8217; class below.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">[%project root directory%\Models\ApplicationContext.cs]
+public class ApplicationContext {
+    public const string Japanese = "Japanese";
+    public const string English = "English";
+    public string Brand{ get; set; } = String.Empty;
+    public List<page> Pages{ get; set; } = new List<page>();
+}
+
+public class Page {
+    public string ActionKey { get; set; } = String.Empty;
+    public string Title { get; set; } = String.Empty;
+}
+</page></page></pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The &#8216;ApplicationContext&#8217; class as the &#8216;ApplicationContext.cs&#8217; file create in the &#8216;Models&#8217; folder that create new at the project.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/08/ImplementationStep1.png" alt="" style="width:450px;"></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">•&nbsp;Add configuration service to the host &#8211; Step 4</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">In the &#8216;Program.cs&#8217; file of the project root, adds statement &#8216;builder.Services.Configure<applicationcontext>(builder.Configuration.GetSection(&#8220;Japanese&#8221;));&#8217; at before the statement &#8216;var app = builder.Build();&#8217;. This statement provides a service that is structed as the &#8216;ApplicationContext&#8217; type, includes settings value.</applicationcontext></p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">[%project root directory%\Program.cs]
+var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddRazorPages();
+// Add this code
+builder.Services.Configure<applicationcontext>(builder.Configuration);
+// Only this one code
+var app = builder.Build();
+if (!app.Environment.IsDevelopment())...
+...
+app.Run();
+</applicationcontext></pre>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">•&nbsp;Use the settings values at each controller (or non MVC razor pages) &#8211; Step 5</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Each method of a Controller if MVC, or OnGet method of the Razor pages if it&#8217;s not MVC could provides settings values to client UI.<br />
+Sample is non MVC Razor page, so move to Pages directory using [cd pages] command in the &#8216;terminal&#8217; pain and type [dotnet new pages -na %namespace%] to add a page in Pages folder of the project, make its page able to navigate from Index in follow step. Replace the part [%namespace%] to the namespace of development environment that can copy from the &#8216;Index.cshtml.cs&#8217;.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Modify a name of the model &#8216;PagesModel&#8217; to &#8216;SearchModel&#8217; in the &#8216;Pages.cshtml&#8217; file, and file name to &#8216;Search.cshtml&#8217;. And modify class name &#8216;PagesModel&#8217; to &#8216;SearchModel&#8217; in the &#8216;Pages.cshtml.cs&#8217; and file name to &#8216;Search.cshtml.cs'(refer to the figure below left).</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Next step is modifying &#8216;Index&#8217; screen, because of this web app starts from the &#8216;Index&#8217; screen.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Put configuration service into class-scoped variable at class constructor of the &#8216;Index.cshtml.cs&#8217;, to use in OnGet method. Put settings values to ViewData at OnGet method using class-scoped variable (refer to the figure below right).</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/08/ImplementationStep2.png" alt="" style="width:450px;"><img decoding="async" src="/wp-content/uploads/2022/08/ImplementationStep3.png" alt="" style="width:450px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The &#8216;GetSection&#8217; method of configuration service provides settings value of specific section (this sample is &#8216;English&#8217; section) to bind to class-scoped variable that structed as same with the &#8216;appsettings.json&#8217;. Then put settings values in ViewData using a type, in OnGet method. Thus, this coding style is very effectively.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;width:450px;display:inline-block;vertical-align:bottom;">[%project root directory%\Pages\Index.cshtml.cs]
+public SearchModel(ILogger<indexmodel> logger, IConfiguration configuration)
+{
+    Context = new ApplicationContext();
+    configuration.GetSection(ApplicationContext.English).Bind(Context);
+    // Use below code if you want show Japanese settings values.
+    // configuration.GetSection(ApplicationContext.Japanese).Bind(Context);
+}
+public void OnGet()
+{
+    ViewData["Brand"] = Context.Brand;
+    ViewData["Pages"] = Context.Pages;
+    var current = Context.Pages.Where(p =&gt; p.ActionKey == "Index")
+                    .FirstOrDefault();
+    if(current != null){
+        ViewData["Title"] = current.Title;
+    }
+}
+
+[%project root directory%\Pages\Index.cshtml]
+&lt;div class="text-center"&gt;
+    &lt;h4&gt;@ViewData["Brand"]!
+    &lt;div style="border:thin solid #00f;text-align:left;padding:5px;"&gt;&lt;/div&gt;
+&lt;/div&gt;
+</indexmodel></pre>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;display:inline-block;"><img decoding="async" src="/wp-content/uploads/2022/08/ImplementationStep4.png" alt="" style="width:450px;"></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">•&nbsp;Navigate from Index to Search</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Definition in the &#8216;Index.cshtml.cs&#8217; file is lost affect when navigate to the &#8216;Search&#8217; screen, thus definition like this has to set to global scope of application. For it, create new file &#8216;PageBase.cs&#8217; at the &#8216;Shared&#8217; folder of the &#8216;Pages&#8217; folder of project root, then copy all code of the &#8216;Index.cshtml.cs&#8217; file to it. After it, modify as below code. Let literal code &#8216;Index&#8217; that represents current screen as it is, only modify &#8216;IndexModel&#8217; to &#8216;PageBaseModel&#8217; here.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">[%project root directory%\Pages\Shared\PageBase.cs]
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+
+namespace GlobalizationUseSettings3.Pages
+{
+    // public class IndexModel:PageModel
+    public class PageBaseModel:PageModel
+    {
+        private readonly ILogger<pagebasemodel> _logger;
+        private readonly ApplicationContext Context;
+
+        // public IndexModel(ILogger&lt;IndexModel&gt; logger, IConfiguration configuration, string language)
+        public PageBaseModel(ILogger&lt;PageBaseModel&gt; logger, IConfiguration configuration)
+        {
+            _logger = logger;
+            Context = new ApplicationContext();
+            configuration.GetSection(language).Bind(Context);
+       }
+
+        public void OnGet()
+        {
+            ViewData["Brand"] = Context.Brand;
+            ViewData["Pages"] = Context.Pages;
+            var current = Context.Pages.Where(p =&gt; p.ActionKey == "Index").FirstOrDefault();
+            if(current != null){
+                ViewData["Title"] = current.Title;
+            }
+        }
+    }
+}
+</pagebasemodel></pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">In the &#8216;Index.cshtml.cs&#8217; file, modify the &#8216;IndexModel&#8217; class that is extend of the &#8216;PageModel&#8217; class to extend of the &#8216;PageBaseModel&#8217; class as below code. And let&#8217;s change the screen language to Japanese in this time.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;width:450px;display:inline-block;vertical-align:bottom;">[%project root directory%\Pages\Index.cshtml.cs]
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+
+namespace GlobalizationUseSettings3.Pages;
+
+// public class IndexModel : PageModel
+public class IndexModel : PageBaseModel
+{
+    // private readonly ILogger<indexmodel> _logger;
+    // private readonly ApplicationContext Context;
+
+    // public IndexModel(ILogger<indexmodel> logger, IConfiguration configuration)
+    public IndexModel(ILogger<indexmodel> logger, IConfiguration configuration)
+                : base(logger, configuration, ApplicationContext.Japanese)
+    {
+        // _logger = logger;
+        // Context = new ApplicationContext();
+        // configuration.GetSection(ApplicationContext.English).Bind(Context);
+    }
+
+    // public void OnGet()
+    // {
+    //     ViewData["Brand"] = Context.Brand;
+    //     ViewData["Pages"] = Context.Pages;
+    //     var current = Context.Pages.Where(p =&gt; p.ActionKey == "Index").FirstOrDefault();
+    //     if(current != null){
+    //         ViewData["Title"] = current.Title;
+    //     }
+    // }
+}
+</indexmodel></indexmodel></indexmodel></pre>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;display:inline-block;"><img decoding="async" src="/wp-content/uploads/2022/08/ImplementationStep5.png" alt="" style="width:450px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Next step is control of the current page title and adding navigation menu item for the &#8216;Search&#8217; screen.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">To obtain current screen, get the &#8216;HttpContext&#8217; object of HTTP request and get values of the &#8216;RouteData&#8217; object of the &#8216;HttpContext&#8217; object. This &#8216;RouteData&#8217; object includes URL address string as relatively of current screen. On the other hands, strings for title of screens set in the &#8216;appsettings.json&#8217; file is mapped to the &#8216;ApplicationContext&#8217; class. Thus the &#8216;Title&#8217; property of the &#8216;Page&#8217; object use for current screen is able to identify in the &#8216;Pages&#8217; collection of the &#8216;ApplicationContext&#8217; class if acquired URL address string match to the &#8216;ActionKey&#8217; property of the &#8216;Page&#8217; object. Delete &#8216;/&#8217; string to compare acquired URL address string with  the &#8216;ActionKey&#8217; property of the &#8216;Page&#8217; object use the &#8216;RegularExpression&#8217; object.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Modify the &#8216;OnGet()&#8217; method of the &#8216;PageBase.cs&#8217; file like as below code.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">[%project root directory%\Pages\Shared\PageBase.cs]
+using System.Text.RegularExpressions;
+...
+        public void OnGet()
+        {
+            ViewData["Brand"] = Context.Brand;
+            ViewData["Pages"] = Context.Pages;
+            // var current = Context.Pages.Where(p =&gt; p.ActionKey == "Index").FirstOrDefault();
+            // if(current != null){
+            //     ViewData["Title"] = current.Title;
+            // }
+            var p = Request.HttpContext.GetRouteData()!.Values["Page"]!.ToString();
+            var rx = new Regex(@"\w.*",RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            var m = rx.Matches(p!).FirstOrDefault()!.Value;
+            ViewData["Title"] = Context.Pages.Where(p =&gt; p.ActionKey == m).FirstOrDefault()!.Title;
+        }
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Last step of navigate to the &#8216;Search&#8217; scree is Modify the &#8216;_Layout.cshtml&#8217; file to create navigation menu item for &#8216;Search&#8217; screen.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Like as a title of current screen, This menu item is also created from the &#8216;Page&#8217; object defined in the &#8216;ApplicationContext&#8217; class. The &#8216;Page&#8217; class has the &#8216;ActionKey&#8217; property and the &#8216;Title&#8217; property, use this &#8216;ActionKey&#8217;, set at the &#8216;asp-page-handler&#8217; attribute of HTML anchor tag as the URI of the &#8216;Search&#8217; screen.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">&lt;a class="nav-link text-dark" asp-page="@item.ActionKey"&gt;@item.Title&lt;/a&gt;
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Settings values set to the &#8216;Pages&#8217; of ViewData in constructor of the &#8216;PageBase&#8217; class are collection of a pair the &#8216;ActionKey&#8217; property and the &#8216;Title&#8217; property. Thus, modify the &#8216;_Layout.cshtml&#8217; file as below code creates list items of HTML unordered list tag.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">&lt;ul class="navbar-nav flex-grow-1"&gt;
+    @* &lt;li class="nav-item"&gt;
+        &lt;a class="nav-link text-dark" asp-area="" asp-page="/Index"&gt;Home&lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li class="nav-item"&gt;
+        &lt;a class="nav-link text-dark" asp-area="" asp-page="/Privacy"&gt;Privacy&lt;/a&gt;
+    &lt;/li&gt; *@
+    @foreach (var item in pages!)
+    {
+        &lt;li class="nav-item"&gt;
+            @if(ViewData["Title"]!.ToString()==item.Title) {
+                &lt;span style="padding:.5rem;display:inline-block;"&gt;@item.Title&lt;/span&gt;
+            }
+            else{
+                &lt;a class="nav-link text-dark" asp-page="@item.ActionKey"&gt;@item.Title&lt;/a&gt;
+            }
+        &lt;/li&gt;
+    }
+&lt;/ul&gt;
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">In this mechanism, modifying the &#8216;appsettings.json&#8217; file changes navigate menu immediately. Add &#8216;Search&#8217; page settings only in the &#8216;English&#8217; section, it does not affect to the &#8216;Japanese&#8217; section.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;display:inline-block;"><img decoding="async" src="/wp-content/uploads/2022/08/ImplementationStep6.png" alt="" style="width:300px;"><img decoding="async" src="/wp-content/uploads/2022/08/ImplementationStep7.png" alt="" style="width:300px;"><img decoding="async" src="/wp-content/uploads/2022/08/ImplementationStep5.png" alt="" style="width:300px;"></p>
+<div style="background-color:#cccccc;border:1px solid #00000; padding: 10px 10px 0px 10px;margin-top:20px;">
+<div style="margin:-20px 0px 0px 5px;text-indent:1em;font-weight:bold;background-color:#444;border:1px solid #ccc;color:#fff;">ⓘ Recommended Reference</div>
+<p><a href="https://blog.processtune.com/?p=6428" target="_new" style="font-weight:bold;" rel="noopener">.NET Core Options pattern</a><br />
+<a href="https://blog.processtune.com/?p=6364" target="_new" style="font-weight:bold;" rel="noopener">ASP.NET Core Options Pattern</a></p>
+</div>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2022/07/23/encapsulation-of-information-affects-an-app-flexibility-asp-net-core-options-pattern/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>ASP.NET Core Options Pattern</title>
+		<link>https://blog.processtune.com/2022/06/28/asp-net-core-options-pattern/</link>
+					<comments>https://blog.processtune.com/2022/06/28/asp-net-core-options-pattern/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Tue, 28 Jun 2022 07:43:10 +0000</pubDate>
+				<category><![CDATA[.NET Core]]></category>
+		<category><![CDATA[ASP.NET Core]]></category>
+		<category><![CDATA[C#]]></category>
+		<category><![CDATA[Service]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Visual Studio Code]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=6364</guid>
+
+					<description><![CDATA[A typical web application separates setting from the App. In the ASP .NET Core web app allows encapsulation and separation of an interest of setting using the options pattern. It allows enables continuous integration while improving maintainability of an application. This article describes as an introduce of the ASP.NET Core Options Pattern using globalization sample. [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin:0px 0px 0px 0px;color:#000044;font-size:0.9rem;font-family:" segoe="" ui";"="">A typical web application separates setting from the App. In the ASP .NET Core web app allows encapsulation and separation of an interest of setting using the options pattern. It allows enables continuous integration while improving maintainability of an application.<br />
+This article describes as an introduce of the ASP.NET Core Options Pattern using globalization sample.<br />
+For globalization of ASP .NET Core samples using &#8216;.resx&#8217; files are <a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/localization?view=aspnetcore-6.0&amp;WT.mc_id=DT-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">ideal pattern</a>. These samples are created, edited, debugged, and continuously managed in Visual Studio, so users who aren&#8217;t using Visual Studio can use tools such as the online xml converter to get &#8216;.resx&#8217; files.<br />
+If your development environment for productions that support many languages, I recommend that you do so, but if you create an application that supports a few languages such as just only Japanese and English, or lightweight web application such as PoC, demo or sample code. These apps globalize only few words, so It is useful that globalization using the options pattern without adopting full-scale globalization using &#8216;.resx&#8217; files.</p>
+<p style="margin:10px 0px 0px 5px;text-indent:1em;text-align:right;font-weight:bold;">&gt;&gt;<a href="https://github.com/TetsuroTakao/GlobalizationUseSettings" target="_new" style="font-weight:bold;" rel="noopener">Code sample of this article</a></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Overview</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The way of separating ASP.NET settings from app hasn&#8217;t changed with the way of existing. Each method can use defined the setting value in the JSON file after registering the service on the host of the application.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">In the case of ASP.NET MVC, if you register the service of the setting value in the host created by CreateBuilder, you can store the service received by the constructor of the controller in the variable defined globally in the scope of the controller, so can use settings variable in POST or GET method. You can use that variable in the processing of the request.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">[Program.cs]
+builder.Services.Configure&lt;ApplicationContext&gt;(builder.Configuration);
+
+[Pages/Search.cshtml.cs]
+    public class SearchModel : PageModel
+    {
+        private readonly ApplicationContext Context;
+        public SearchModel(ILogger&lt;IndexModel&gt; logger, IConfiguration configuration)
+        {
+            Context = new ApplicationContext();
+            Context.Languages.Add(ApplicationContext.English);
+            configuration.GetSection(ApplicationContext.Japanese).Bind(Context);
+       }
+
+        public void OnGet()
+        {
+            ViewData["Message"] = Context.Languages.Count;
+...
+        }
+    }
+</pre>
+<div style="background-color:#cccccc;border:1px solid #00000; padding: 10px 10px 0px 10px;margin-top:20px;">
+<div style="margin:-20px 0px 0px 5px;text-indent:1em;font-weight:bold;background-color:#444;border:1px solid #ccc;color:#fff;">ⓘ As additional information</div>
+<p>At that time, if the setting values ​​are separated using the options pattern, maintainable encapsulation can be performed. You can encapsulate by below.<br />
+1. The settings for individual methods or controllers, respectively.<br />
+2. At the level of &#8220;system&#8221; and &#8220;business&#8221; information such as logs and IP whitelists.<br />
+3. Semantics of settings.<br />
+4. more &#8230;</p>
+</div>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Often In the Domain Driven Design, the same thing is called by deferent name depending on boundary context on the scene in which it is used. When you purchase some product, what is displayed as &#8220;payment&#8221; in the member&#8217;s app is displayed as &#8220;sales&#8221; in the sales management system. It is OK that use deferent letteral objects on each individual systems if it mapped deferent labels by an individual system of a legacy system. It is important that using deferent settings value to handle same object of stateful middleware on deferent service in a modern system.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Thus, it can be said that the value of the settings handled in each boundary context with several same attributes are different when design settings elements.</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Implementation</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">In this article, the reason of using an implementation example of globalization is for describing the example of &#8220;Continuous integration of applications that read different setting values ​​while having the same attributes&#8221; to express the features of the options pattern.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/06/StepsOfTakingConfiguration.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">In this article, the reason of using an implementation example of globalization is for describing the example of &#8220;Continuous integration of applications that read different setting values ​​while having the same attributes&#8221; to express the features of the options pattern.</p>
+<div style="margin: 20px 0px 0px 0px;display:table;">
+<div style="display:table-row;">
+<div style="display:table-cell;text-indent:1em;"><span style="font-size:2rem;font-family: 'Arial';">At first</span>, prepare Japanese and English sections in the appsettings.json, and it has brand name and the Pages segment. The segment has an action names as the ActionKey and a page titles as the Title.</div>
+<div style="display:table-cell;"><img decoding="async" src="/wp-content/uploads/2022/06/Appsettings.png" alt="" style="width:180px;vertical-align:top;mergin left:10px;"></div>
+</div>
+</div>
+<div style="margin: 20px 0px 0px 0px;display:table;">
+<div style="display:table-row;">
+<div style="display:table-cell;"><img decoding="async" src="/wp-content/uploads/2022/06/ApplicationContext.png" alt="" style="width:450px;vertical-align:top;margin-right:10px;"></div>
+<div style="display:table-cell;text-indent:1em;margin-left:10px;"><span style="font-size:2rem;font-family: 'Arial';">Next</span>, prepare a class with the same structure as the JSON file used for the configuration service registration for application builder.<br />
+Add the ApplicationContext.cs to the project, I recommend that adding the Models folder in the project at first, then input the ApplicationContext.cs into it.<br />
+One of the features of the ASP.NET options pattern is that defined const is name of the object and ignore it as structure of the object. Thus, this const can be used when get certain section of configuration service without hard coding &#8216;Japanese&#8217; or &#8216;English&#8217;.</div>
+</div>
+</div>
+<div style="margin: 20px 0px 0px 0px;display:table;">
+<div style="display:table-row;">
+<div style="display:table-cell;text-indent:1em;"><span style="font-size:2rem;font-family: 'Arial';">Then</span>, Register target section of the builder configuration as the configuration service with the type same as certain section of appsettings.json.</div>
+<div style="display:table-cell;"><img decoding="async" src="/wp-content/uploads/2022/06/RegisterService.png" alt="" style="width:450px;vertical-align:top;mergin left:10px;"></div>
+</div>
+</div>
+<div style="margin: 20px 0px 0px 0px;display:table;">
+<div style="display:table-row;">
+<div style="display:table-cell;"><img decoding="async" src="/wp-content/uploads/2022/06/UsingConfigurationService.png" alt="" style="width:450px;vertical-align:top;margin-right:10px;"></div>
+<div style="display:table-cell;text-indent:1em;"><span style="font-size:2rem;font-family: 'Arial';">Since</span> the setting value registered as configuration service can be received by the argument of the constructor, store it in a variable at the global level scope of the class. It can use in individual method of the class, respectively.</div>
+</div>
+</div>
+<div style="background-color:#cccccc;border:1px solid #00000; padding: 10px 10px 0px 10px;margin-top:20px;">
+<div style="margin:-20px 0px 0px 5px;text-indent:1em;font-weight:bold;background-color:#444;border:1px solid #ccc;color:#fff;">ⓘ As additional information</div>
+<p>I&#8217;m using the ViewData object because I needed to layer the objects when separating the options pattern. When using the options pattern as a mere encapsulation, the ViewBag object may be sufficient, as it is a set of parallel key / value combinations without grouped hierarchies.</p>
+</div>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2022/06/28/asp-net-core-options-pattern/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Node + MongoDB container for Azure Functions</title>
+		<link>https://blog.processtune.com/2022/02/01/node-mongodb-container-for-azure-static-web-apps/</link>
+					<comments>https://blog.processtune.com/2022/02/01/node-mongodb-container-for-azure-static-web-apps/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Tue, 01 Feb 2022 11:33:12 +0000</pubDate>
+				<category><![CDATA[Alpine Linux]]></category>
+		<category><![CDATA[Azure Functions]]></category>
+		<category><![CDATA[Docker]]></category>
+		<category><![CDATA[Express]]></category>
+		<category><![CDATA[Microservice]]></category>
+		<category><![CDATA[MongoDB]]></category>
+		<category><![CDATA[Node]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Ubuntu]]></category>
+		<category><![CDATA[Visual Studio Code]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=6245</guid>
+
+					<description><![CDATA[The article [Nginx run on Windows Subsystem for Linux 2] described mechanism of reverse proxy for development environment. This sample server has not features of logging, service discovery, load balancing, encryption, observability, traceability, authentication &#38; authorization, and the circuit breaker pattern, if create service mesh endpoint that can provide these features, individual service delegates these [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin:0px 0px 0px 0px;color:#000044;font-size:0.9rem;font-family:" segoe="" ui";"="">The article [<a href="https://blog.processtune.com/?p=6177" target="_new" style="font-weight:bold;" rel="noopener">Nginx run on Windows Subsystem for Linux 2</a>] described mechanism of reverse proxy for development environment. This sample server has not features of logging, service discovery, load balancing, encryption, observability, traceability, authentication &amp; authorization, and the circuit breaker pattern, if create service mesh endpoint that can provide these features, individual service delegates these feature to the endpoint. This article describes mecanism of such service that only provides business logic.<br />
+Also the service this article discribes has persistence layer, its data storage type is deferent against other services provides. So this article helps you to get outline of <a href="https://docs.microsoft.com/en-us/azure/architecture/guide/technology-choices/data-store-overview?WT.mc_id=DT-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">polyglot persistence</a>.<br />
+The sample container of this article uses Node for application runtime, Express web app framework, and MongoDB as persistence layer.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/04/OverViewNode_mongoDBContainer.png" alt="" style="width:900px;"></p>
+<p style="margin:10px 0px 0px 5px;text-indent:1em;text-align:right;font-weight:bold;">&gt;&gt;<a href="https://github.com/TetsuroTakao/SVGFreeIconListingApp" target="_new" style="font-weight:bold;" rel="noopener">Sample project of this article that created with Node and Express</a></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・MongoDB Docker official image</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">First step of the sample project creation is same as the sample project of the article [<a href="https://blog.processtune.com/?p=6177" target="_new" style="font-weight:bold;" rel="noopener">Nginx run on Windows Subsystem for Linux 2</a>], download Docker official image then modify Alpine Linux, with some apps or liblary, framework and so on install to it.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">In this article, this sample container use MongoDB as persistence layer, so using MongoDB Docker official image. It is different procedure that using Nginx Docker official image as creation of HTTP listener and web contents response service. It are made from the Express libraly this time.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">It is easy way using the Docker Desktop than following steps that using the Windows Subsystem for Linux 2 to create a container, although reccomend using WSL 2 to create some container for understanding mechanism of inside of a container.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">If following prepare are not complete yet, refer the article [<a href="https://blog.processtune.com/?p=6177" target="_new" style="font-weight:bold;" rel="noopener">Nginx run on Windows Subsystem for Linux 2</a>] to prepare doing follow code such as making WSL 2 usable, set Ubuntu on WSL 2 or how to install Docker.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The command follows means that the port number [3000] is default port number of the Express framework, and the port number [27017] is default port number of the MongoDB. The directory path [/home/node] is application root (in the case of this example). The command [apt update &amp;&amp; apt upgrade -y] is make an installed package or app,  library and so on to be latest. Description of the Express framework is continues after figure.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">-- WSL 2
+$ docker pull mongo
+$ docker run -d -p 8082:3000 -p 27017:27017 --init --name svgfreeicondb mongo:latest
+$ docker exec -it svgfreeicondb /bin/bash
+--Into the container and install the curl, the Node, the Node Package Manager (npm)
+# apt install -y curl
+# curl -fsSL https://deb.nodesource.com/setup_17.x | bash
+# apt install -y nodejs
+# npm install -g npm
+# apt update &amp;&amp; upgrade -y
+# mkdir /home/node
+# chmod 777 /home/node
+# cd /home/node
+--Install the Express
+# apt update &amp;&amp; apt upgrade -y
+# npm init
+-- Type the [package name] or the [description] and so on after the [npm init] command here.
+# npm install –g express-generator
+# express
+# npm i --package-lock-only
+# npm audit fix --force
+# DEBUG=node:* npm start
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">For maintainance of node application, execute initialization of Node Package Manager using the command [npm init], so input [package name] or [description] and so on if it needs. And if use the [-g] option while install the Express framework, usable any directory path as application install target path. The command [express] is creation default web application to the current directory path. It is able to define web application type as arguments, it is described later. The command [npm i –package-lock-only] and [npm audit fix –force] is described at the article [].</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">To confirm running at web browser, use the command [DEBUG=node:* npm start] to run application.</p>
+<p style="display:inline-block;margin-bottom:0px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/04/RunExpress.png" alt="" style="width:900px;"></p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;"> * The image name [svgfreeicondb:v0.1] of the figure above means the image name [mongo:latest] of the command [docker run -d -p 8082:3000 -p 27017:27017
+   –init –name svgfreeicondb mongo:latest].
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Here is able to confirm the port number [8082] is transfer to the port number [3000] at web browser. In next step, confirm the port number [27017] exposes MongoDB default port. This port number is not exposed to outside of the service. The service of api communicates to the port number [27017] to aquire the state of this service self from persistence layer of specific this srevice.</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Access to the document of MongoDB</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">It is easy to development application that uses MongoDB with Visual Studio Code MongoDB Extention.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/04/MongoDBExtention.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">While browsing of contents provided from the port number [8082] is confirmed, Visual Studio Code MongoDB extention can connect to the MongoDB from the port number [27017].</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">There is showing MongoDB extention icon after install Visual Studio Code MongoDB extention form the Extentions. Select the MongoDB extention icon of the [Activity Bar] to launch Visual Studio Code MongoDB extention.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Type the address URL and port number after select Add MongoDB Connection, then MongoDB extention shows default databases of MongoDB Docker official image. The [Add Database&#8230;] icon is showed when mouse over the connected connection tree, same as it, the [Add Collection&#8230;] icon is showed when mouse over the database tree.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The MongoDB Playground is showed when select the [Add Collection&#8230;] icon to add new collection.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/04/MongoDBPlayground.png" alt="" style="width:900px;"></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Create persistence layer of the service using MongoDB Playground</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">This service are assuming to provide several icons that are aquired from free icons web site, there are two patterns use case that the case an identity calling this service already has specific icon because this service called before, and an identity does not have an icon. Return specific icon from data store (MongoDB) if it has icon, and return 10 icons acquire from free icons web site if it has not icon.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">So this service have to store only specific icon that is related an identity and the identity as key. The icon type is SVG image has properties, [Original URL], [SVG XML], [Releted Identity] and so on.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The icon for adding collection to the [local] of figure above is used to create the collection of the [local] database, the [Create New Playground] button of figure above is used to create the collection, the database or the connection settings, the MongoDB Playground is able to control all settings of MongoDB.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">A database schema may be saved as models of project for continuous integration. So about how to modify the Node-Express application of above on Windows, if use <a href="https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker" target="_new" style="font-weight:bold;" rel="noopener">Visual Studio Code Docker extension</a>, save mongodb file using Visual Studio Code on Windows. If not, the Node-Express application in the Docker container that was created from MongoDB Docker official image is able to download from GitHub as <a href="https://github.com/TetsuroTakao/SVGFreeIconListingApp" target="_new" style="font-weight:bold;" rel="noopener">sample project</a>. After it, save mongodb file to the project root.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">As additional way, this sample project was uploaded using <a href="https://cli.github.com/" target="_new" style="font-weight:bold;" rel="noopener">GitHub CLI</a> from inside of the container. The article [<a href="https://blog.processtune.com/?p=6177" target="_new" style="font-weight:bold;" rel="noopener">Nginx run on Windows Subsystem for Linux 2</a>] describes how to use <a href="https://cli.github.com/" target="_new" style="font-weight:bold;" rel="noopener">GitHub CLI</a>. Uploading the Node-Express application of above using <a href="https://cli.github.com/" target="_new" style="font-weight:bold;" rel="noopener">GitHub CLI</a> from inside of the container and sharing to GitHub for modifying on Windows side.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Using any ways, prepare of that the Node-Express application project is able to modify with Visual Studio Code on Windows. Create schema then save it at project root of the sample project.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/04/CreateNewPlayground.png" alt="" style="width:450px;"><img decoding="async" src="/wp-content/uploads/2022/04/DefineSchema.png" alt="" style="width:450px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Selection of the [Create New Playground] button creates sample database definition (figure left above). And defines database and collection same as follows figure (figure right above), then select the [MongoDB : Run All or Selection from Playground] button to create.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">const database = 'SVGFreeIconsDB';
+const collection = 'IDRelatedIcons';
+// The current database to use.
+use(database);
+// The prototype form to create a regular collection:
+db.createCollection(collection);
+// Query insert for creating default schema,
+// because a schema of document DB is dynamic type.
+db.collection.insertOne(
+    {
+        _id:0,
+        Releted_Identity:"0",
+        Original_URL:"0",
+        SVG_XML:"0",
+        Errors:[
+            {
+                Occurs:new Date("0000-00-00T00:00:00.000Z"),
+                Source:"sample",
+                Code:0,
+                Additional:"sample"
+            }
+        ]
+    }
+);
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Select [yes] button of showed dialog box after select the [MongoDB : Run All or Selection from Playground] button. Then confirm created schema with open the [SVGFreeIconsDB] tree.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/04/SavingDialogBox.png" alt="" style="width:450px;vertical-align:top;"><img decoding="async" src="/wp-content/uploads/2022/04/CreatedSchema.png" alt="" style="width:450px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Save the [SCGFreeIconsDB.mongodb] file at project root of the sample project.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/04/SaveDIalogMongoDBFile.png" alt="" style="width:450px;vertical-align:top;"><img decoding="async" src="/wp-content/uploads/2022/04/SaveMongoDBFile.png" alt="" style="width:450px;"></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Use persistence layer of the service</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">At first of modify application, confirm the Node-Express application project is runable on Windows. the Node-Express application project is defined as using the port number [80], or any port number if use the [port] argument. Type the [npm start] command on the Windows terminal, then launch the web browser and type [localhost] in the address box of the web browser.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/04/RunAsDefault.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Structure of routing is processed by order from above of the code that listened a request, so [/][/users][/freeIcons][/setIcon] are processed distinguishably then continues to the follows process if it does not prepared routing path for the request. This error creation function is provided by the Express framework, and this [404] error creation process that means [Not Found] has to set at first.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">So other calls of errors creation function has to set at a routing path for the request respectively. For transfer the processing to the function of error message creation at the bottom of the code, define return code for exit it at an error handling block of the routing path.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Detail of the error creation function provided by the Express framework is able to refer <a href="https://www.npmjs.com/package/http-errors" target="_new" style="font-weight:bold;" rel="noopener">the npm documentation</a> that is a base of the feature.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">So most important task is API caller send information of id and svg xml, then acquire a result as success or falt of saving svg to the data storage. It is better that the response has id information as an evidence for sent id, also it is better that the response has svg information as an evidence for sent svg.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">On the other hand, the request have to include id information, if does not include sent svg, it is OK save empty to the storage as specific svg for the id. If includes original url of svg, it is better that is able to save it to the storage. As result, exchange models are follows.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">If an error occured which a URL of the request is not define routing or an error occurs at individual routing path, the processing is transfered to the function of an error response creation at the bottom of the code. In the case of an error does not created by Express framework before this function is processing, create a response of an error contents with HTTP status [500] in this function.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/04/StructureOfRouting.png" alt="" style="width:450px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">For implementing of the routing path [/setIcon], design an exchange model with an API caller.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">There is simple model that in MongoDB, it has the [Releted_Identity], the [Original_URL] and the [SVG_XML] properties. API caller does not have interesting to the [Original_URL] property, this aspect is important for designing models. Addition, more one point is important for designing models, it is the [Releted_Identity] is not API caller side context but service side context. API caller side context is [Identity] or [ID], so API interface name has to be same as API caller side. This exchange is called [Object-Relational mapping for impedance mismatch]. A lot of a describes on web contents of [Object-Relational mapping for impedance mismatch] says propaties of models excess or deficiency although, follows are also important for designing models,<br />
+<span style="margin-left:10px;">*an interest at inside of the [Boundary Context] for attributes respectively of the [Subdomain].</span><br />
+<span style="margin-left:10px;">*an attribute meanings in the [Boundary Context].</span><br />
+<span style="margin-left:20px;">(above are names as Domain Driven Design, so assume other names of design pattern familiar).</span></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">So most important task is API caller send information of id and SVG XML, then acquire a result as success or falt of saving SVG XML to the data storage. It is better that the response has id information as an evidence for sent id, also it is better that the response has SVG information as an evidence for sent SVG XML.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">On the other hand, the request have to include id information, if does not include sent svg, it is OK save empty to the storage as specific svg for the id. If includes original url of svg, it is better that is able to save it to the storage. As result, exchange models are follows.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">// API caller set the [id] property and the [xml] property of POST body to acquire saved result (responseMessage).
+// Optional request the [url] property of POST body for original url of free icon website as memo.
+// Optional results (id: as an evidence for sent id, svg[n]: as an evidence for is sent SVG information). The SVG information is saved one so far.
+var result = {id: "", svg: [{url: "", xml: ""}], responseMessage: ""};
+// Object-Relational mapping to save SVG XML to the persistence layer.
+var updata = {Releted_Identity:req.body.id,Original_URL:req.body.svg[0].url,SVG_XML:req.body.svg[0].xml};
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Use the <a href="https://www.npmjs.com/package/body-parser" target="_new" style="font-weight:bold;" rel="noopener">body-parser middleware</a> to acquire the HTTP POST request body and use the <a href="https://www.npmjs.com/package/mongodb" target="_new" style="font-weight:bold;" rel="noopener">MongoDB NodeJS Driver</a> to access to MongoDB. The [var app = express();] statement creates an instance of the Express framework, then the [app.use(bodyParser.json());] statement sets a middleware for parse and serialize.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The instance of the Express framework is able to listen HTTP request, aim to create POST method service against a HTTP request this time, so at first, verify HTTP POST request body to store requested SVG XML as requested identity specific.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">var bodyParser = require("body-parser");
+var result = {id: "", svg: [{url: "", xml: ""}], responseMessage};
+var mongoClient = require('mongodb').MongoClient;
+var mongoDbUrl = "mongodb://localhost:27017/";
+var app = express();
+// view engine setup
+app.use(bodyParser.json());
+// APIs
+app.post('/setIcon',(req, res, next) =&gt; {
+  //Verify HTTP POST request
+  if(!req.body.id){
+    next(createError(400,"The [id] attribute of post request body is requirement"));
+    result.responseMessage += format("[BadRequest] : %s");
+    return;
+  }
+  var updata = {Releted_Identity:req.body.id,Original_URL:"",SVG_XML:""};
+  if(req.body.svg.length &gt; 0){
+    if(req.body.svg[0].xml){
+      updata.SVG_XML = req.body.svg[0].xml;
+    }
+    if(req.body.svg[0].url){
+      updata.Original_URL = req.body.svg[0].url;
+    }
+  }
+  //Save to MongoDB ...
+  res.writeHead(200,{'Content-Type' : 'text/plain'});
+  res.write(format('SetIcon service result : \n %s', JSON.stringify(result)));
+  res.end(format('SVG icon for %s saved', req.body.id));
+});
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Creating a feature of save to MongoDB, then create an error handlings. If already the identity specific SVG XML is existing, update data of MongoDB, or insert when there is not the identity specific SVG XML.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">  //Save to MongoDB
+  mongoClient.connect(mongoDbUrl, function(err, db) {
+    var dbo = db.db("SVGFreeIconsDB");
+    dbo.collection("IDRelatedIcons").find({ Releted_Identity: req.body.id }).toArray(function(err, result) {
+      if(result.length &gt; 0){
+        dbo.collection("IDRelatedIcons").updateOne({_id:result._id},{$set : updata}, function(err, res) {
+          result.responseMessage = "[Update MongoID]:" + res._id;
+        });
+      }
+      else {
+        dbo.collection("IDRelatedIcons").insertOne(updata, function(err, res) {
+          result.responseMessage = "[Insert MongoID]:" + res._id;
+        });
+      }
+      result.id = result[0]._id;
+    });
+    db.close();
+  });
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">An error handling will be set at the top of inside the connection function, the finding function, the update function and the insert function respectivery.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">if (err) {
+  next(createError(err.status));
+  err.message = "[Connection Error]: " + err.message;
+    or
+  err.message = "[Finding execution Error]: " + err.message;
+    or
+  err.message = "[Updating execution Error]: " + err.message;
+    or
+  err.message = "[Inserting execution Error]: " + err.message;
+  return;
+}
+</pre>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Deploy to Azure Functions</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Confirm excution of the routing path [/setIcon] after create it. Run container of the MongoDB and the Node-Express app same as description above and send HTTP POST request with body to the service using Visual Studio Code [Thunder Client] extension.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">For confirm error handling actually, select [POST] at the select list of HTTP request method and type [localhost/setIcon] into input box for address then type [{&#8220;svg&#8221;:[{&#8220;url&#8221;:&#8221;https://blog.processtune.com&/#8221;,&#8221;xml&#8221;:&#8221;sample xml&#8221;}]}] into input box for JSON body and select the [Send] button. Confirm the error contents of [400] that create at the code.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/04/ThunderClient.png" alt="" style="width:450px;"><img decoding="async" src="/wp-content/uploads/2022/04/Error400.png" alt="" style="width:450px;"></p>
+<p>Azure Functions provides Functions App feature that is able to host the Docker container and serverless program code of C# or Java, Python or several scripting and so on. And more, there are test feature, monitorring feature and so on. The execution control features etc. such as run/stop/refresh.</p>
+<p>https://blogsamplefunctions.azurewebsites.net/QRCodePOSTMethod?source=microsoft.com</p>
+<p>additional information</p>
+<div style="background-color:#cccccc;border:1px solid #00000; padding: 10px 10px 0px 10px;margin-top:20px;">
+<div style="margin:-20px 0px 0px 5px;text-indent:1em;font-weight:bold;background-color:#444;border:1px solid #ccc;color:#fff;">ⓘ As additional information (8th Feb. 2022)</div>
+<p><a href="https://docs.microsoft.com/ja-jp/azure/azure-functions/functions-bindings-register#extension-bundles?WT.mc_id=AZ-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">The &#8216;extensionBundle&#8217; values of [%Project root%\host.json] file</a> makes Azure Function project enable runable the project of other language that .NET runtime does not support.</p>
+</div>
+<p>table</p>
+<div style="margin: 0px 0px 0px 20px;display:table;">
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;padding-right:10px;">Work local directory</div>
+<div style="display:table-cell;">QRCodeGeneratorOnAzureFunctions(default : Opened folder from Visual Studio Code.)</div>
+</div>
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;">Language</div>
+<div style="display:table-cell;">Custom Handler(default : Last used, If first Azure Functions function creation, select it.)</div>
+</div>
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;">Project template</div>
+<div style="display:table-cell;">Http trigger(default : Last used, If first Azure Functions function creation, select it.)</div>
+</div>
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;">Function name</div>
+<div style="display:table-cell;">qrcode_generator(Rust project name has to be snake format, and Function name has to be same as project name if aim to be enable Http Method call.)</div>
+</div>
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;">Authorization</div>
+<div style="display:table-cell;">Anonymous(default : )</div>
+</div>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2022/02/01/node-mongodb-container-for-azure-static-web-apps/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Nginx run on Windows Subsystem for Linux 2</title>
+		<link>https://blog.processtune.com/2021/12/01/nginx-run-on-windows-subsystem-for-linux-2/</link>
+					<comments>https://blog.processtune.com/2021/12/01/nginx-run-on-windows-subsystem-for-linux-2/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Wed, 01 Dec 2021 06:32:36 +0000</pubDate>
+				<category><![CDATA[ASP.NET Core]]></category>
+		<category><![CDATA[Blazor]]></category>
+		<category><![CDATA[Docker]]></category>
+		<category><![CDATA[Microservice]]></category>
+		<category><![CDATA[Nginx]]></category>
+		<category><![CDATA[Reverce Proxy]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[vim]]></category>
+		<category><![CDATA[Visual Studio Code]]></category>
+		<category><![CDATA[WSL2]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=6177</guid>
+
+					<description><![CDATA[On design fase of a microservices, several experts of various knowledge designs stateful middleware, containerisation or entities implimentation of Domain-driven design and so on. As detail, define data flow from some usecases that structs user story when designing stateful middleware, because individual service of common microservices may map to a single usecase of the user [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin:0px 0px 0px 0px;color:#000044;font-size:0.9rem;font-family:" segoe="" ui";"="">On design fase of <a href="https://docs.microsoft.com/en-us/azure/architecture/guide/architecture-styles/microservices?WT.mc_id=DT-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">a microservices</a>, several experts of various knowledge designs <a href="https://docs.microsoft.com/en-us/azure/service-fabric/service-fabric-reliable-services-communication-aspnetcore?WT.mc_id=AZ-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">stateful middleware</a>, <a href="https://docs.microsoft.com/en-us/dotnet/architecture/microservices/container-docker-introduction/?WT.mc_id=DT-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">containerisation</a> or entities implimentation of <a href="https://docs.microsoft.com/en-us/dotnet/architecture/microservices/microservice-ddd-cqrs-patterns/ddd-oriented-microservice?WT.mc_id=DT-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">Domain-driven design</a> and so on.<br />
+As detail,  define data flow from some usecases that structs user story when designing stateful middleware, because individual service of common microservices may map to a single usecase of the user story and they have specific persistence layer. And they acquire a state from their specific persistence layer for marge with some states that keeped by other services, or save a state to their specific persistence layer until it will be used.<br />
+This article describes mechanism and creating processes of typically microservices, using reverse proxy that developed with <a href="https://www.nginx.com/" target="_new" style="font-weight:bold;" rel="noopener">Nginx</a> as the sample of microservices endpoint. This reverse proxy server is primitive prototype of <a href="https://docs.microsoft.com/en-us/dotnet/architecture/microservices/architect-microservice-container-applications/direct-client-to-microservice-communication-versus-the-api-gateway-pattern?WT.mc_id=DT-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">service mesh endpoint</a> of microservices. The sample is structed with reverse proxy service that create on here as service mesh endpoint, and SVG coloring service that created in before article as sample of individual service.</p>
+<p style="margin:10px 0px 0px 5px;text-indent:1em;text-align:right;font-weight:bold;">&gt;&gt;<a href="https://github.com/TetsuroTakao/QRCodeCreation" target="_new" style="font-weight:bold;" rel="noopener">Rust sample project to create QR Code, Base program of implantation to Azure Functions</a></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Objective</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Service mesh endpoint provides an entrance of service mesh, service mesh is structured with several individual service of microservices.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">One of reason why Service mesh design pattern was born is for assembling a bunch of sidecar feature of individual services (the endpoint have to provides service discovery, load balancing, encryption, observability, traceability, authentication and authorization, and the circuit breaker pattern).</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">This entrance is able to provide using also Azure Application Gateway although, it is able to create manually. Microsoft official document [<a href="https://docs.microsoft.com/en-us/dotnet/architecture/microservices/architect-microservice-container-applications/direct-client-to-microservice-communication-versus-the-api-gateway-pattern?WT.mc_id=DT-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">The API gateway pattern versus the Direct client-to-microservice communication</a>] describes to consider processes of development real enterprise solution. Its article describes creating only one gateway of enterprise microservices is not good for performance, user experience, maintenance or security and so on.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Before creation of vast of service mesh as microservices solution, creating service mesh endpoint manually once is useful for design skill of microservices.</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Download sample application.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Typically endpoint of service mesh is inner of cloud and communicate to load balancer of HTTP gateway. This pattern is for service mesh endpoints redundancy. Notice the sample of this article aims to expose directly single endpoint for development. In the word, it is sample of one mesh endpoint of several meshes. This endpont have to provide http host feature.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">This article only describes developing reverse proxy for development environment. Logging, service discovery, load balancing, encryption, observability, traceability, authentication &amp; authorization, and the circuit breaker pattern are ommitted in this article, because the sample of this article assumes to provide these features on control plane of a cloud.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/04/sampleoverview.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">This sample use the port number [8080] as outside port of development environment, and pass through to the port number [8081] for inside. This [<a href="https://github.com/TetsuroTakao/SVGIconColoring_en_2" target="_new" style="font-weight:bold;" rel="noopener">SVG icon coloring app</a>] application container in the figure has to accept request from the port number [8081] and has to response to the port number [8081]. The source of the application is on GitHub and can <a href="https://github.com/TetsuroTakao/SVGIconColoring_en_2" target="_new" style="font-weight:bold;" rel="noopener">download it</a> although, it is not containerise yet, thus containerise it from now. As details, read the article [<a href="https://docs.docker.com/samples/dotnetcore/" target="_new" style="font-weight:bold;" rel="noopener">Dockerize an ASP.NET Core application</a>].</p>
+<div style="background-color:#cccccc;border:1px solid #00000; padding: 10px 10px 0px 10px;margin-top:20px;">
+<div style="margin:-20px 0px 0px 5px;text-indent:1em;font-weight:bold;background-color:#444;border:1px solid #ccc;color:#fff;">ⓘ As additional information</div>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Each persistence layer of individual service may create using <a href="https://docs.microsoft.com/en-us/azure/architecture/guide/technology-choices/data-store-overview?WT.mc_id=DT-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">polyglot persistence</a> design pattern mixed several types of data store such as MongoDB or Azure Blob storage and so on that excludes file storage (for example, Azure Files, Azure NetApp Files). this design pattern represents usage of a data store types of purposes of the table below.</p>
+<div style="margin: 0px 0px 0px 20px;display:table;">
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;padding-right:10px;background-color:#ccc;padding:0.5rem;border:thin solid #444;">Assumed information type</div>
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;background-color:#ccc;padding:0.5rem;border:thin solid #444;border-left-width:0px;">Example</div>
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;background-color:#ccc;padding:0.5rem;border:thin solid #444;border-left-width:0px;">Store type</div>
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;background-color:#ccc;padding:0.5rem;border:thin solid #444;border-left-width:0px;">Implementations</div>
+</div>
+<div style="display:table-row;background-color:#fff;">
+<div style="display:table-cell;table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">Unstructured, Semistructured</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">Product catalog, Invoice, License</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;white-space: nowrap;background-color:#fff;">Document-oriented database</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">MongoDB, Azure Blob storage, Amazon DocumentDB</div>
+</div>
+<div style="display:table-row;background-color:#fff;">
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">Structured</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">Investor Relations, Customer master,<br />
+Merchantise master</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">Relational database</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">MySQL, Azure SQL database, Oracle databese</div>
+</div>
+<div style="display:table-row;background-color:#fff;">
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">Dynamic growing</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;white-space: nowrap;background-color:#fff;">Intarest graph<br />
+(Entertainment, Social network, E-commerce),<br />
+Cyber-security threats analysis</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;white-space: nowrap;background-color:#fff;">Graph structures data store</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">OrientDB, Azure Cosmos DB, Amazon Neptune</div>
+</div>
+<div style="display:table-row;background-color:#fff;">
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;white-space: nowrap;background-color:#fff;">Pair type<br />
+(includes shallow tier tree type)</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">Task list, Address list,<br />
+Recording (Transcript etc.) of meeting</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;">Key/Value data store</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">Apache Ignite, Azure Table Storage,<br />
+Google Cloud Datastore, AWS DynamoDB</div>
+</div>
+</div>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Only if some use case (in other words, the term [boundary context] in Domain-driven design) is mapped individual service and the case needs various data models can choose the <a href="https://docs.microsoft.com/en-us/azure/azure-sql/multi-model-features?WT.mc_id=DT-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">multi-model database</a> as persistence layer.</p>
+</div>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">To launch the sample project downloaded at the port number [8081], modify the value of the [applicationUri] property that is set at the [%project name%] ([SVGIconColoring_en] in this sample) settings of the [profiles] section of the [launchSettings.json] file, it is under the [Properties] folder of the Project root.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">The [Properties\launchSettings.json] file
+Define port value [8081] of the [profiles/SVGIconColoring_en/applicationUrl]
+
+{
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:48877/",
+      "sslPort": 44388
+    }
+  },
+  "profiles": {
+    "SVGIconColoring_en": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "inspectUri": "{wsProtocol}://{url.hostname}:{url.port}/_framework/debug/ws-proxy?browser={browserInspectUri}",
+      "applicationUrl": "https://localhost:7270;http://localhost:8081",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "inspectUri": "{wsProtocol}://{url.hostname}:{url.port}/_framework/debug/ws-proxy?browser={browserInspectUri}",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Though launch from Visual Studio Code in this article, it will be modify to use Azure Functions Core Tools later. This article describes containerization with docker with follow.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/03/LaunchSample.png" alt="" style="width:900px;"></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Preparation of development on Windows subsystem for Linux 2.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Reverse proxy is created with Nginx, Nginx is provided as <a href="https://hub.docker.com/_/nginx" target="_new" style="font-weight:bold;" rel="noopener">Docker official image</a> from Docker Hub. This image run on <a href="https://www.docker.com/get-started" target="_new" style="font-weight:bold;" rel="noopener">Docker Desktop for Windows</a> or <a href="https://hub.docker.com/search?offering=community&amp;operating_system=linux&amp;q=&amp;type=edition" target="_new" style="font-weight:bold;" rel="noopener">Docker Engine for Linux distributions</a>, Docker Desktop for Windows is not support ARM 64 Windows (Surface ProX), so only ARM 64 Windows use <a href="https://hub.docker.com/search?offering=community&amp;operating_system=linux&amp;q=&amp;type=edition" target="_new" style="font-weight:bold;" rel="noopener">Docker Engine for Linux distributions</a> with Windows Subsystem for Linux 2 (WSL2). Other user are able to use Docker Desktop, it operation is ommit in this article because it&#8217;s very easy.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">ARM 64 Windows user can use WSL2 after download and setting <a href="https://www.microsoft.com/en-id/p/ubuntu-20044-lts/9mttcl66cpxj?cid=msft_web_appsforwindows_chart#activetab=pivot:overviewtab" target="_new" style="font-weight:bold;" rel="noopener">Ubuntu</a> (choose any distribution, although this article describes procedure in case of Ubuntu) from Microsoft store.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Launch WSL2 from Windows terminal after setting.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/03/ubuntu.png" alt="" style="width:450px;"><img decoding="async" src="/wp-content/uploads/2022/03/WindowsTerminal.png" alt="" style="width:450px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">ARM 64 Windows user can use WSL2 after download and setting <a href="https://www.microsoft.com/en-id/p/ubuntu-20044-lts/9mttcl66cpxj?cid=msft_web_appsforwindows_chart#activetab=pivot:overviewtab" target="_new" style="font-weight:bold;" rel="noopener">Ubuntu</a> (choose any distribution, although this article describes procedure in case of Ubuntu) from Microsoft store.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">If use WSL2 first time, install tools to Ubuntu use Linux terminal.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">$ sudo apt install apt-transport-https ca-certificates curl gnupg lsb-release
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">These tools is capables feature in table below.</p>
+<div style="margin: 0px 0px 0px 20px;display:table;">
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;padding-right:10px;background-color:#ccc;padding:0.5rem;border:thin solid #444;">Tool</div>
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;background-color:#ccc;padding:0.5rem;border:thin solid #444;border-left-width:0px;">Feature</div>
+</div>
+<div style="display:table-row;background-color:#fff;">
+<div style="display:table-cell;table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">[https]</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">Establish HTTPS connection</div>
+</div>
+<div style="display:table-row;background-color:#fff;">
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">[ca-certificates]</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">Establish SSL connection</div>
+</div>
+<div style="display:table-row;background-color:#fff;">
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">[gnupgp]</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;white-space: nowrap;background-color:#fff;">encrypting and decrypting key enable and signeture</div>
+</div>
+<div style="display:table-row;background-color:#fff;">
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;white-space: nowrap;background-color:#fff;">[lsb-release]</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">Comform version information of Ubuntu</div>
+</div>
+<div style="display:table-row;background-color:#fff;">
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;white-space: nowrap;background-color:#fff;">[curl]</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">Execute HTTP communication as client</div>
+</div>
+</div>
+<p style="margin: 10px 0px 0px 0px;text-indent:1em;">If Docker CE (community edition) does not installed, acquire GNU Privacy Guard (GnuPG, GPG) key of Docker engine and deploy it.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+echo "deb [arch=arm64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] \
+https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list &gt; /dev/null
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Comform image enable install.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">$ sudo apt update
+$ sudo apt install docker-ce docker-ce-cli containerd.io
+$ apt-cache madison docker-ce
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Then install Docker engine.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">$ sudo apt install docker-ce=5:20.10.8~3-0~ubuntu-focal docker-ce-cli=5:20.10.8~3-0~ubuntu-focal containerd.io
+</pre>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Create reverse proxy.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Create reverse proxy with Nginx that is provided as the <a href="https://hub.docker.com/_/nginx" target="_new" style="font-weight:bold;" rel="noopener">Docker official image</a> from the Docker Hub. This image run on the <a href="https://www.docker.com/get-started" target="_new" style="font-weight:bold;" rel="noopener">Docker Desktop for Windows</a> or the <a href="https://hub.docker.com/search?offering=community&amp;operating_system=linux&amp;q=&amp;type=edition" target="_new" style="font-weight:bold;" rel="noopener">Docker Engine for Linux distributions</a>, the Docker Desktop for Windows is not support ARM 64 Windows (Surface Pro X), so only ARM 64 Windows users have to use the Docker Engine for Linux distributions with WSL2. Other users are able to use the Docker Desktop, its operation is ommit in this article because it’s very easy.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">In the case of using WSL2 to mount a Docker image, start a Docker service use the [sudo] super user mode.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">$ sudo service docker start
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">After enables a Docker service, pull a Nginx image from the Docker Hub, then launch the container of the image. There is needs that default port number [80] of Nginx is changed to the port number [8080] for listening http request for development environment. So install the vim editor using bash in the container, it&#8217;s important before it, update and upgrade the Advanced Package Tool (the [apt] command).</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">$ docker pull nginx
+$ docker run -dit -p 8080:8080 --init --name rproxy nginx
+$ docker exec -it rproxy /bin/bash
+# apt update &amp;&amp; upgrade -y
+# apt install vim
+# vim /etc/nginx/nginx.conf
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Modify to add the [server] settings to the [http] section of the [/etc/nginx/nginx.conf] file. the [server] settings defines the [listen] attribute, the [server_name] attribute and the [location] settings.</p>
+<p><script src="https://gist.github.com/TetsuroTakao/7297db447b45a4b32daf9ba834fb6f54.js"></script></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">After modify the [/etc/nginx/nginx.conf] file of the container, put the [exit] command to exit container. then put the [docker kill rproxy] command to terminate the container process of the reverse proxy on WSL2.</p>
+<div style="background-color:#cccccc;border:1px solid #00000; padding: 10px 10px 10px 10px;margin-top:20px;">
+<div style="margin:-20px 0px 0px 5px;text-indent:1em;font-weight:bold;background-color:#444;border:1px solid #ccc;color:#fff;">ⓘ As additional information</div>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Kill process when WSL2 stackes. Right click on the [Windows Start] icon to open the [Task Manager], then select the [Task Manager] and right click on the [Virtual Machine Worker Process] of the [Task Manager]. Then select the [End task] menu of the context menu.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align-last:justify;width:100%;"> <img decoding="async" src="/wp-content/uploads/2022/03/contextmenu.png" alt="" style="height:485px;"> <img decoding="async" src="/wp-content/uploads/2022/03/EndWSL2Task.png" alt="" style="width:450px;"> <img decoding="async" src="/wp-content/uploads/2022/03/EndWSL2TaskZoom.png" alt="" style="width:286px;vertical-align:top;margin-top:100px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">If you want to know details of process Information, you are able to get the [<a href="https://docs.microsoft.com/en-us/sysinternals/downloads/sysinternals-suite?WT.mc_id=DT-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">Sysinternals Suite</a>] from the <a href="https://www.microsoft.com/store/apps/9p7knl5rwt25" target="_new" style="font-weight:bold;" rel="noopener">Microsoft Store</a>.</p>
+</div>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">This reverse proxy is just only use on development environment, so it is able to ommit firewall settings. Several attributes such as the [ufw enable], [ufw allow] or  [ufw default deny] can set if it needs although, for example providing this container to developers of development team, for portability, it is not good that set firewall features.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">At last, confirm request to the port number [8080] is forwarding to the port number [8081].</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Launch the container of the reverse proxy image with the command below this time. If added the [&#8211;rm] option when the [docker run] command used, the [docker container rm rproxy] command below is not needs. The [&#8211;net host] option is used to access network of container host from container inside.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">$ docker container rm rproxy
+$ docker run -dit --init --name rproxy --net host nginx
+</pre>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Test action of reverse proxy.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The way of the article [<a href="https://docs.docker.com/samples/dotnetcore/" target="_new" style="font-weight:bold;" rel="noopener">Dockerize an ASP.NET Core application</a>] to containerise uses the Docker Desktop, so ARM x64 Windows user is not able to use the procedure. Though Microsoft official document [<a href="https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/docker/building-net-docker-images?view=aspnetcore-6.0&amp;WT.mc_id=DT-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">Docker images for ASP.NET Core</a>] uses the Docker Desktop also, but the article describes how to [Run in a Linux container], so in this article, choose the way that deploy Windows project into a Linux container. Users excepting Windows x64 ARM users build the sample using Microsoft official document to containerise. The follow description is for Windows x64 ARM users.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">At first, prepare a sample web app to confirm that HTTP request is transferred to the port a proxy server throws.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Open Ubuntu on the [Windows terminal] to pull Docker official image of the [<a href="https://hub.docker.com/_/microsoft-dotnet-sdk" target="_new" style="font-weight:bold;" rel="noopener">.NET SDK</a>].</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">$ docker pull mcr.microsoft.com/dotnet/sdk:6.0
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Launch the container using image of the [<a href="https://hub.docker.com/_/microsoft-dotnet-sdk" target="_new" style="font-weight:bold;" rel="noopener">.NET SDK</a>], then pull the [<a href="https://github.com/cli/cli/blob/trunk/docs/install_linux.md" target="_new" style="font-weight:bold;" rel="noopener">GitHub CLI</a>] into the container from github web site [<a href="https://github.com/cli/cli/blob/trunk/docs/install_linux.md" target="_new" style="font-weight:bold;" rel="noopener">GitHub CLI</a>]. The container of Docker official image of the [<a href="https://hub.docker.com/_/microsoft-dotnet-sdk" target="_new" style="font-weight:bold;" rel="noopener">.NET SDK</a>] launches with the host networking same as the container of reverse proxy, The sample project is defined as the port number [5078] for now.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">$ docker run -dit --rm --net host --init --name svgiconcoloring mcr.microsoft.com/dotnet/sdk:latest
+$ docker exec -it svgiconcoloring /bin/bash
+# curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
+# echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main"
+ | tee /etc/apt/sources.list.d/github-cli.list &gt; /dev/null
+# sudo apt update &amp;&amp; upgrade -y
+# sudo apt install gh
+# md /home/svgiconcoloring
+# cd /home/svgiconcoloring
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Authorise your git account using the [<a href="https://github.com/cli/cli/blob/trunk/docs/install_linux.md" target="_new" style="font-weight:bold;" rel="noopener">GitHub CLI</a>], then clone the sample project at your work folder (uses the [/home/svgiconcoloring] folder, in the case of the command above). Authorise steps includes authentication flow in your browser. A browser authentication flow is called with the process below.</p>
+<div style="margin: 0px 0px 10px 20px;display:table;">
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;padding-right:10px;background-color:#ccc;padding:0.5rem;border:thin solid #444;">Process</div>
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;background-color:#ccc;padding:0.5rem;border:thin solid #444;border-left-width:0px;">Selection</div>
+</div>
+<div style="display:table-row;background-color:#fff;">
+<div style="display:table-cell;table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">Distination of login</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">GitHub.com</div>
+</div>
+<div style="display:table-row;background-color:#fff;">
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">Protocol</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">HTTPS</div>
+</div>
+<div style="display:table-row;background-color:#fff;">
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">Get credentials</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;white-space: nowrap;background-color:#fff;">Yes</div>
+</div>
+<div style="display:table-row;background-color:#fff;">
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;white-space: nowrap;background-color:#fff;">Authenticate</div>
+<div style="display:table-cell;border:thin solid #ccc;padding:0.2rem;background-color:#fff;">Login with a web browser</div>
+</div>
+</div>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/03/authSteps.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Move to the sample project folder(uses the [cd SVGIconColoring_en_2] command, in the case of fegure below), and put [dotnet certs https] command in the [Windows terminal] to install development certification. Then put [dotnet run] command in the [Windows terminal] to run sample application.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/03/dotnetRun5078.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">After confirmation of running sample project, use vim as Nginx image above, modify the [Properties/launchSettings.json] file to change the port of sample application to [8081]. Yes, this sample web application is same as run on Windows above. This sample run on Alpine Linux now. The article [<a href="https://blog.processtune.com/?p=5925" target="_new" style="font-weight:bold;" rel="noopener">QR code create with Rust language runnable on Azure Functions</a>] describes how to create an application for runnable on Azure Functions use this mechanism.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/03/dotnetRun8081.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Confirm the container of reverse proxy and svg icon coloring app are running, then put [localhost:8080] into the address box of a browser, and the sample app is able to execute.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/03/dotnetRun8080.png" alt="" style="width:450px;"></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2021/12/01/nginx-run-on-windows-subsystem-for-linux-2/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>JavaScript colors SVG images that are acquired by Blazor WebAssembly</title>
+		<link>https://blog.processtune.com/2021/11/01/javascript-colors-svg-images-that-are-acquired-by-blazor-webassembly/</link>
+					<comments>https://blog.processtune.com/2021/11/01/javascript-colors-svg-images-that-are-acquired-by-blazor-webassembly/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Mon, 01 Nov 2021 08:21:12 +0000</pubDate>
+				<category><![CDATA[ASP.NET Core]]></category>
+		<category><![CDATA[Blazor]]></category>
+		<category><![CDATA[JavaScript]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Visual Studio Code]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=6189</guid>
+
+					<description><![CDATA[This article is continuous my previous article [Blazor WASM aquires SVG images that will be colored by JavaScript later]. Modify the sample project of previous article and add a feature that user can coloring SVG file select from a list. Interoperability of Blazor WASM and JavaScript is described in the previous article, so this article [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin: 0px 0px 0px 0px; color: #000044; font-size: 0.9rem;">This article is continuous my previous article [<a style="font-weight: bold;" href="https://blog.processtune.com/?p=6162" target="_new" rel="noopener">Blazor WASM aquires SVG images that will be colored by JavaScript later</a>]. Modify <a style="font-weight: bold;" href="https://github.com/TetsuroTakao/SVGIconColoring_en_1" target="_new" rel="noopener">the sample project of previous article</a> and add a feature that user can coloring SVG file select from a list.<br />
+<a style="font-weight: bold;" href="https://docs.microsoft.com/en-us/aspnet/core/blazor/javascript-interoperability/?view=aspnetcore-6.0?WT.mc_id=DT-MVP-4029060" target="_new" rel="noopener">Interoperability</a> of Blazor WASM and JavaScript is described in <a style="font-weight: bold;" href="https://blog.processtune.com/?p=6162" target="_new" rel="noopener">the previous article</a>, so this article only describes how to modify SVG file with JavaScript, although it&#8217;s important that Blazor WASM can reuse JavaScript ecosystem.<br />
+It is good that a feature that JavaScript creates not well will create using Blazor. And use JavaScript to control shadow DOM if it does not need send state to service, for exsample simulation or tempolary calculate that is before final decision of user.</p>
+<p style="margin: 10px 0px 0px 5px; text-indent: 1em; text-align: right; font-weight: bold;">&gt;&gt;<a style="font-weight: bold;" href="https://github.com/TetsuroTakao/QRCodeCreation" target="_new" rel="noopener">Sample project of the previous article</a></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Display user selected image</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">In <a style="font-weight: bold;" href="https://blog.processtune.com/?p=6162" target="_new" rel="noopener">the previous article</a>, Blazor creates HTML content in the [Pages/index.razor] file, this content lists SVG files that are acqired from <a style="font-weight: bold;" href="http://www.onlinewebfonts.com/icon" target="_new" rel="noopener">free icon web site</a>. And already are defined the [selectImg] JavaScript function in <a style="font-weight: bold;" href="https://blog.processtune.com/?p=6162" target="_new" rel="noopener">the previous article</a>. So create the [selectImg] JavaScript function and add to the [wwwroot/index.html] file. The feature clones selected SVG image and put into cloned image into a playgrounds for simulation that a user may color selected SVG image to prefered color. Then add several controls for coloring to the playgrounds same as clone of selected SVG image.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px;">[In the previous article, Blazor create HTML content in the [Pages/index.razor] file as below]
+        &lt;div style="display:inline-block;"&gt;
+            &lt;img id="@svg.URL" src='@svg.imgSrc' style="width:100px;" onclick="selectImg(this)"&gt;
+        &lt;/div&gt;
+
+[So, Add below code to the [Pages/Index.razor] file, and ...]
+&lt;div id="selectedImage" style="width:100%;text-align:center;border:4px dotted #0000ff;border-radius:10px; margin-top:2rem;"&gt;&lt;/div&gt;
+
+[this function add to the [wwwroot/index.html] file. So the function runs when the SVG file is clicked then it recieves IMG tag DOM object.]
+        function selectImg(img){
+            var placeholder = document.getElementById("selectedImage");
+            while(placeholder.children.length &gt; 0){
+                placeholder.removeChild(placeholder.firstChild);
+            }
+            var container = document.createElement("div");
+            container.style.display = "inline-block";
+            var ctl = document.createElement("div");
+            var paintbrush = 128396;
+            ctl.innerHTML = `&amp;#${paintbrush};`;
+            container.appendChild(ctl.cloneNode(true));
+            container.lastChild.style="color:#ff0000;font-size:5rem;cursor:pointer;";
+            container.lastChild.setAttribute('onclick','setColor(this);');
+            container.appendChild(ctl.cloneNode(true));
+            container.lastChild.style="color:#00ff00;font-size:5rem;cursor:pointer;";
+            container.lastChild.setAttribute('onclick','setColor(this);');
+            container.appendChild(ctl.cloneNode(true));
+            container.lastChild.style="color:#0000ff;font-size:5rem;cursor:pointer;";
+            container.lastChild.setAttribute('onclick','setColor(this);');
+            placeholder.appendChild(container);
+            placeholder.appendChild(img.cloneNode(true));
+            placeholder.lastChild.id="currentImg";
+            placeholder.lastChild.style="width:200px;vertical-align:top;margin-top:3rem;margin-left:3rem;";
+        }
+
+[describe]
+HTML div tag that has id attribute [selectedImage] is the place holder that is an operating place for coloring selected SVG file, so if something in it,
+remove to have nothing.
+Create a container that is a playgrounds for coloring selected SVG file. The container includes three coloring selectors and selected SVG image.
+The coloring selectors are using HTML symbol defined the Template literals, and are equipped onclick handler (describes later). The selected image needs
+id attribute for colorting because it is cloned. These elements are defined several styles because they are dynamic injected as shadow DOM.
+</pre>
+<p style="margin: 10px 0px 0px 5px; text-indent: 1em; text-align: right; font-weight: bold;">&gt;&gt;<a style="font-weight: bold;" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals" target="_new" rel="noopener">Template literals</a></p>
+<p style="display: inline-block; margin-bottom: 10px; text-align: center; width: 100%;"><img decoding="async" style="width: 900px;" src="/wp-content/uploads/2022/03/ContainerOfSelectedSVG.png" alt=""></p>
+<p style="display: inline-block; margin-bottom: 10px; text-align: center; width: 100%;"><img decoding="async" style="width: 900px;" src="/wp-content/uploads/2022/03/SVGImageSelectFeatureImplement.png" alt=""></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Change color of selected image by user operation</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">A user can select SVG images of the list, so change the cursol to a pointer.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px;">            &lt;img id="@svg.URL" src='@svg.imgSrc' style="width:100px;" onclick="selectImg(this)"&gt;
+to
+            &lt;img id="@svg.URL" src='@svg.imgSrc' style="width:100px;cursor:pointer;" onclick="selectImg(this)"&gt;
+</pre>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">The [setColor] JavaScript function accept argument coloring control (brush) as DOM object (the paintbrush). It is called when a user select any one of these paintbrushes.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">The style property of the control that accepted as an argument has a color property, so change the color of the clone of selected SVG image using it.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">On the other hand, the src attribute of the clone of selected SVG image has meta information and acctual SVG xml, thus to modify SVG xml of the clone of selected SVG image, remove meta information from value of the src attribute of selected SVG image.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">The [setColor] JavaScript function can find target DOM, because the clone of selected SVG image has the value [currentImg] of the [id] attribute that already defined when create it. Change SVG xml of the clone of selected SVG image to new color using <a style="font-weight: bold;" href="https://developer.mozilla.org/en-US/docs/Web/API/DOMParser" target="_new" rel="noopener">the DOMParser</a>. At last set the src attribute of the the clone of selected SVG image to new colored SVG xml with meta information.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px;">        function setColor(brush){
+            var dataType = "data:image/svg+xml;utf8,";
+            var imgXML = document.getElementById("currentImg").getAttribute("src").replace(dataType,"");
+            var dom_parser = new DOMParser();
+            var document_obj = dom_parser.parseFromString(imgXML, "text/xml");
+            document_obj.rootElement.getElementsByTagName("g")[0].setAttribute('style','fill:' + brush.style.color);
+            document.getElementById("currentImg").setAttribute("src",dataType + document_obj.rootElement.outerHTML);
+        }
+</pre>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">The following figures are scenes of selecting image then selecting brush.</p>
+<p style="display: inline-block; margin-bottom: 10px; text-align: center; width: 100%;"><img decoding="async" style="width: 900px;" src="/wp-content/uploads/2022/03/SVGImageColoringFeatureImplement.png" alt=""></p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">The following figures are scenes of selecting image then selecting brush.</p>
+<p style="margin: 10px 0px 0px 5px; text-indent: 1em; text-align: right; font-weight: bold;">&gt;&gt;<a style="font-weight: bold;" href="https://github.com/TetsuroTakao/SVGIconColoring_en_2" target="_new" rel="noopener">Sample project of this article</a></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2021/11/01/javascript-colors-svg-images-that-are-acquired-by-blazor-webassembly/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Blazor WASM aquires SVG images that will be colored by JavaScript later</title>
+		<link>https://blog.processtune.com/2021/10/01/blazor-wasm-aquires-svg-images-that-will-be-colored-by-javascript-later/</link>
+					<comments>https://blog.processtune.com/2021/10/01/blazor-wasm-aquires-svg-images-that-will-be-colored-by-javascript-later/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Fri, 01 Oct 2021 09:33:03 +0000</pubDate>
+				<category><![CDATA[.NET Core]]></category>
+		<category><![CDATA[ASP.NET Core]]></category>
+		<category><![CDATA[JavaScript]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Visual Studio]]></category>
+		<category><![CDATA[Visual Studio Code]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=6162</guid>
+
+					<description><![CDATA[Blazor WebAssembly provides JavaScript glue code for WebAssembly that is common web architecture. Blazor aims to provide almost of all features of .NET Core to modern web browser, So JavaScript glue code of Blazor webassembly can interoperate with JavaScript ecosystem that is used in exsisting usage. This article describes the Blazor provides WebAssembly and Blazor [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin: 0px 0px 0px 0px; color: #000044; font-size: 0.9rem;">Blazor WebAssembly provides JavaScript glue code for WebAssembly that is <a style="font-weight: bold;" href="https://caniuse.com/wasm" target="_new" rel="noopener">common web architecture</a>.<br />
+Blazor aims to provide almost of all features of .NET Core to modern web browser, So JavaScript glue code of Blazor webassembly can interoperate with JavaScript ecosystem that is used in exsisting usage.<br />
+This article describes the Blazor provides WebAssembly and Blazor WebAssembly calls JavaScript method, it is sample as leverage <a style="font-weight: bold;" href="https://docs.microsoft.com/en-us/aspnet/core/blazor/?view=aspnetcore-6.0?WT.mc_id=DT-MVP-4029060" target="_new" rel="noopener">the Razor syntax template</a> writing that provides high productivity, and reusing JavaScript ecosystem. As addition, the Blazor webassembly acquires some icons from external web app by browser of local.<br />
+In next article [<a style="font-weight: bold;" href="https://blog.processtune.com/?p=6189" target="_new" rel="noopener">JavaScript colors SVG images that are acquired by Blazor WebAssembly</a>], these icons rendered by the Razor template then JavaScript colors them.</p>
+<p style="margin: 10px 0px 0px 5px; text-indent: 1em; text-align: right; font-weight: bold;">&gt;&gt;<a style="font-weight: bold;" href="https://github.com/TetsuroTakao/SVGIconColoring_en_1" target="_new" rel="noopener">Blazor webassembly sample project of this article</a></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Create Blazor Webassembly project</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">.NET framework provides many templates variety for creation of apps, there are several kind of web apps, native apps and so on. it is also provided for Blazor WebAssembly and it has host type and stand alone type (as default).</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">The [dotnet new &#8211;list] command shows all of templates and the [dotnet new blazorwasm -h] shows parameters of Blazor WebAssembly. So put the command [dotnet new blazorwasm] create base files of Blazor WebAssembly project that is not hosted by Blazor server. Blazor server provides progressive web apps feature.</p>
+<p style="display: inline-block; margin-bottom: 10px; text-align: center; width: 100%;"><img decoding="async" style="width: 900px;" src="/wp-content/uploads/2022/03/dotnetNewList.png" alt="" /></p>
+<p style="display: inline-block; margin-bottom: 10px; text-align: center; width: 100%;"><img decoding="async" style="width: 900px;" src="/wp-content/uploads/2022/03/dotnetnewblazorwasmhost.png" alt="" /></p>
+<p style="display: inline-block; margin-bottom: 10px; text-align: center; width: 100%;"><img decoding="async" style="width: 900px;" src="/wp-content/uploads/2022/03/dotnetnewblazorwasm.png" alt="" /></p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">The directory of created project includes many files. There is the [Program.cs] file as application entrypoint, and the [App.razor] file as routing deefinition.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">HTTP request is tranfer from the [App.razor] file to the [Shared\MainLayout.razor] file then the [Shared\MainLayout.razor] makes output that combines the [Shared\NavMenu.razor] file with requested ([/] : as root) page of the [Pages] folder.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">The page files of the [Pages] folder has <a style="font-weight: bold;" href="https://docs.microsoft.com/en-us/aspnet/core/blazor/components/prerendering-and-integration?view=aspnetcore-6.0&amp;pivots=server#use-routable-components-in-a-razor-pages-app?WT.mc_id=DT-MVP-4029060" target="_new" rel="noopener">the [@page] directive</a>. It is routing mechanizm of Razor syntax.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px;">@page "/"
+
+&lt;PageTitle&gt;Index&lt;/PageTitle&gt;
+
+&lt;h1&gt;Hello, world!&lt;/h1&gt;
+
+Welcome to your new app.
+
+&lt;SurveyPrompt Title="How is Blazor working for you?" /&gt;
+</pre>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">At first as one fifths, put command [dotnet run] in the [Integrated terminal] (put the [ctrl] key + the [@] key for show the [Integrated terminal] : to confirm shortcut key on your keybord type, show shortcut key list using the [ctrl] key + the [k] key + the [s] key) . When the result output after compile, put the [ctrl] key + click the link (http://localhost:5078/ for below figure) to launch browser with display index page content.</p>
+<p style="display: inline-block; margin-bottom: 10px; text-align: center; width: 100%;"><img decoding="async" style="width: 450px;" src="/wp-content/uploads/2022/03/dotnetrun.png" alt="" /><img decoding="async" style="width: 450px;" src="/wp-content/uploads/2022/03/helloworld.png" alt="" /></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Acquiring SVG images from external web</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">As next : two fifths step, create temporaly contents as whole structure at the [Index.razor] file. Create some content in case of that some value is null ([&lt;p&gt;&lt;em&gt;Loading&#8230;&lt;/em&gt;&lt;/p&gt;] for below figure), and create some content when some value is not null.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">Prepare the [SVGIcon] object for SVG image. Use the [MarkupString] type to a property that is used for output string for HTML. The [image] tag of HTML has the [src] attribute that is able to accept inline SVG.</p>
+<p style="display: inline-block; margin-bottom: 10px; text-align: center; width: 100%;"><img decoding="async" style="width: 450px;" src="/wp-content/uploads/2022/03/structuresource.png" alt="" /><img decoding="async" style="width: 450px;" src="/wp-content/uploads/2022/03/structureview.png" alt="" /></p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">Three fifths step, acquire one svg file from external web site [Icon Fonts], and display it. Modify only in the [@code] statements.</p>
+<p style="display: inline-block; margin-bottom: 10px; text-align: center; width: 100%;"><img decoding="async" style="width: 450px;" src="/wp-content/uploads/2022/03/OneSVGSource.png" alt="" /><img decoding="async" style="width: 450px;" src="/wp-content/uploads/2022/03/OneSVGView.png" alt="" /></p>
+<div style="background-color: #cccccc; border: 1px solid #00000; padding: 10px 10px 0px 10px; margin-top: 20px;">
+<div style="margin: -20px 0px 0px 5px; text-indent: 1em; font-weight: bold; background-color: #444; border: 1px solid #ccc; color: #fff;"><img src="https://s.w.org/images/core/emoji/16.0.1/72x72/269c.png" alt="⚜" class="wp-smiley" style="height: 1em; max-height: 1em;" /> Code</div>
+<p><span style="font-weight: bold;">for HTML</span> (same as temporaly contents as whole structure above)</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px;">&lt;h1&gt;List of the [Icon Fonts]&lt;/h1&gt;
+&lt;div&gt;Icon made from &lt;a href="http://www.onlinewebfonts.com/icon"  target="new"&gt;Icon Fonts&lt;/a&gt; is licensed by CC BY 3.0&lt;/div&gt;
+@if (SVGs.URL == null)
+{
+    &lt;p&gt;&lt;em&gt;Loading...&lt;/em&gt;&lt;/p&gt;
+}
+else
+{
+    &lt;div style="display:inline-block;"&gt;
+        &lt;img id="@SVGs.URL" src='@SVGs.imgSrc' style="width:100px;" onclick="selectImg(this)"&gt;
+    &lt;/div&gt;
+}
+</pre>
+<p><span style="font-weight: bold;">for Code</span></p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px;">    private SVGIcon SVGs = new SVGIcon();
+    protected override async Task OnInitializedAsync()
+    {
+        HttpClient httpClient = new HttpClient();
+        Uri requestURL = new Uri("http://cdn.onlinewebfonts.com/svg/download_155117.svg");
+        var res = await httpClient.GetStringAsync(requestURL);
+        if (string.IsNullOrEmpty(res))
+        {
+            @* some code *@
+        }
+        else
+        {
+            var xml = new System.Xml.XmlDocument();
+            xml.LoadXml(res);
+            var content = "";
+            if(xml.LastChild != null){
+                content = xml.LastChild.OuterXml;
+            }
+            SVGs = new SVGIcon()
+            {
+                URL="http://cdn.onlinewebfonts.com/svg/download_155117.svg",
+                XML= new MarkupString(content)
+            };
+        }
+    }
+</pre>
+<p>[describe]<br />
+Use the [<span style="font-weight: bold;">OnInitializedAsync</span>] task to run code when HTML on loading.</p>
+</div>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">The step of four fifths, modify the [OnInitializedAsync] that is task to run code when HTML on loading. Change feature that acquires one SVG file to acquire ten SVG files as sampling. So change the [SVGs] variable from single object to the List objects.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px;">    private SVGIcon SVGs = new SVGIcon();
+
+    to
+
+    private List SVGs = new List();
+</pre>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">Since change the [SVGs] variable to the List objects, HTML part also change to render List objects.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px;">@if (SVGs.URL == null)
+{
+    &lt;p&gt;&lt;em&gt;Loading...&lt;/em&gt;&lt;/p&gt;
+}
+else
+{
+    &lt;div style="display:inline-block;"&gt;
+        &lt;img id="@SVGs.URL" src='@SVGs.imgSrc' style="width:100px;" onclick="selectImg(this)"&gt;
+    &lt;/div&gt;
+}
+
+    to
+
+@if (SVGs.FirstOrDefault() == null)
+{
+    &lt;p&gt;&lt;em&gt;Loading...&lt;/em&gt;&lt;/p&gt;
+}
+else
+{
+    @foreach (var svg in SVGs)
+    {
+        &lt;div style="display:inline-block;"&gt;
+            &lt;img id="@svg.URL" src='@svg.imgSrc' style="width:100px;" onclick="selectImg(this)"&gt;
+        &lt;/div&gt;
+    }
+}
+
+[describe]
+The [SVGs.FirstOrDefault()] statement is return null when the [SVGs] variable items count is zero, on otherhand the [SVGs.First()] statement
+return the [InvalidOperationException] type exception.
+If create exception handler that corresponds all exceptions, it is better use this [System.Linq.Enumerable.First Method].
+</pre>
+<p style="margin: 10px 0px 0px 5px; text-indent: 1em; text-align: right; font-weight: bold;">&gt;&gt;<a style="font-weight: bold;" href="https://docs.microsoft.com/en-us/dotnet/api/system.linq.enumerable.first?view=net-6.0?WT.mc_id=DT-MVP-4029060" target="_new" rel="noopener">System.Linq.Enumerable.First Method</a></p>
+<p style="display: inline-block; margin-bottom: 10px; text-align: center; width: 100%;"><img decoding="async" style="width: 450px;" src="/wp-content/uploads/2022/03/ListingSVGsCode.png" alt="" /><img decoding="async" style="width: 450px;" src="/wp-content/uploads/2022/03/ListingSVGsView.png" alt="" /></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Call JavaScript from Blazor WebAssembly</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">Five fifths step is modifing the [wwwroot/index.html] file because JavaScript has to define in HTML file. However, this contents is vavigated by the [Shared/MainLayout.razor] file and includes the [Pages/Index.razor] component. So add the [SignIn] part on the [Shared/MainLayout.razor] file as simple procedures of calling JavaScript from Blazor. The Blazor method [SignIn()] is called use injected razor syntax of HTML [A] tag (&lt;a href=&#8221;#&#8221; @onclick=&#8221;SignIn&#8221;&gt;@SignedText&lt;/a&gt;), then the Blazor method [SignIn()] calls the JavaSript method [SetSignInText] as implimentation of the [<a style="font-weight: bold;" href="https://docs.microsoft.com/en-us/dotnet/api/microsoft.jsinterop.ijsruntime?view=aspnetcore-6.0?WT.mc_id=DT-MVP-4029060" target="_new" rel="noopener">IJSRuntime</a>] Interface.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">The below code is whole of the [Shared/MainLayout.razor] file.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px;">@inherits LayoutComponentBase
+@inject IJSRuntime JS
+
+&lt;div class="page"&gt;
+    &lt;div class="sidebar"&gt;
+        &lt;NavMenu /&gt;
+    &lt;/div&gt;
+
+    &lt;main&gt;
+        &lt;div class="top-row px-4"&gt;
+            &lt;a href="#" @onclick="SignIn"&gt;@SignedText&lt;/a&gt;
+            &lt;span&gt;　| &lt;/span&gt;
+            &lt;a href="https://docs.microsoft.com/aspnet/" target="_blank"&gt;About&lt;/a&gt;
+        &lt;/div&gt;
+
+        &lt;article class="content px-4"&gt;
+            @Body
+        &lt;/article&gt;
+    &lt;/main&gt;
+&lt;/div&gt;
+
+@code{
+    public MarkupString SignedText { get; set; } = (MarkupString)"&lt;span style='color:#ff0000'&gt;SignIn&lt;/span&gt;";
+    public async Task SignIn()
+    {
+        SignedText = new (await JS.InvokeAsync("SetSignInText"));
+    }
+}
+
+[describe]
+It's important that define the [@inject IJSRuntime JS] statement at head part of the [Shared/MainLayout.razor] file.
+As addition, implementation of the [IJSRuntime] interface is asyncronise, so the task define as async and await calling the [SetSignInText] JavaScript
+method. The [IJSRuntime] interface has also the [InvokeVoidAsync] method, thus if JavaSctipt returns some value, use the [InvokeAsync] method.
+These methods create an instance of ValueTask value type that is able to convert to Task reference type. So it is good that await a method returns value
+type, then construct new the MarkupString using it.
+</pre>
+<div style="background-color: #cccccc; border: 1px solid #00000; padding: 10px 10px 0px 10px; margin-top: 20px;">
+<div style="margin: -20px 0px 0px 5px; text-indent: 1em; font-weight: bold; background-color: #444; border: 1px solid #ccc; color: #fff;">ⓘ As additional information</div>
+<p>If the <a style="font-weight: bold;" href="https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.valuetask-1?view=net-6.0?WT.mc_id=DT-MVP-4029060" target="_new" rel="noopener">ValueTask</a> value type is awaited, the instanse of Task reference type is executed, it is onetime. This mechanism effects to decleasing number of instance allocating times.<br />
+A reference type needs explicit instancing, and await end of instancing, furthermore, await end of processing that throw value of the processing to Blazor object. Long time and external processting of reference type task as await ansyncronously needs instancing a struct that has multiple fields.</p>
+</div>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">The [SetSignInText] JavaScript has to defines as HTML, so it is good which on the [Shared/MainLayout.razor] file or on the [wwwroot/index.html] file (excludes the [Pages/Index.razor] file). If the reason is that it is share function for all pages, so define on the [Shared/MainLayout.razor] file. Or the reason is that want to bunch JavaScript functions at head of HTML file, define on the [Pages/Index.razor] file.</p>
+<p style="margin: 0px 0px 0px 0px; text-indent: 1em;">In this article, JavaScript functions are defined on the [wwwroot/index.html] file.</p>
+<pre style="background-color: #cccccc; color: #444; border: 1px solid #00000; padding: 10px;">    &lt;script&gt;
+        window.SetSignInText = () =&gt;{
+            var res = prompt("Please put login name.");
+            if(res == null){
+                res="&lt;span style='color:#ff0000'&gt;SignIn&lt;/span&gt;";
+            }
+            return res;
+        }
+    &lt;/script&gt;
+
+[describe]
+Though this code sample is dummy code of JavaScript that it does not login really, it is able to confirm that Blazor calls JavaScript method real.
+And can confirm that Blazor can await JavaScript method and acquire string that JavaScript object take and transfer.
+</pre>
+<p style="display: inline-block; margin-bottom: 10px; text-align: center; width: 100%;"><img decoding="async" style="width: 450px;" src="/wp-content/uploads/2022/03/SigninCode.png" alt="" /><img decoding="async" style="width: 450px;" src="/wp-content/uploads/2022/03/SigninView.png" alt="" /></p>
+<div style="background-color: #cccccc; border: 1px solid #00000; padding: 10px 10px 0px 10px; margin-top: 20px;">
+<div style="margin: -20px 0px 0px 5px; text-indent: 1em; font-weight: bold; background-color: #444; border: 1px solid #ccc; color: #fff;">ⓘ As additional information</div>
+<p>If want to save the project until so far of this article to GitHub temporarily, create gitignore file use .NET template, and initialise git repository use the [Integrated terminal] of Visual Studio Code.<br />
+Put [dotnet new gitignore] command in the [Integrated terminal] to create gitignore file, and Put [git init] command to initialise git repository.</p>
+<p style="display: inline-block; margin-bottom: 10px; text-align: center; width: 100%;"><img decoding="async" style="width: 450px;" src="/wp-content/uploads/2022/03/dotnetgitignore.png" alt="" /></p>
+</div>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2021/10/01/blazor-wasm-aquires-svg-images-that-will-be-colored-by-javascript-later/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Rust QR code generator App of Azure Functions</title>
+		<link>https://blog.processtune.com/2021/09/01/rust-qr-code-generator-app-of-azure-functions/</link>
+					<comments>https://blog.processtune.com/2021/09/01/rust-qr-code-generator-app-of-azure-functions/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Wed, 01 Sep 2021 08:34:51 +0000</pubDate>
+				<category><![CDATA[Azure Functions]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Visual Studio Code]]></category>
+		<category><![CDATA[未分類]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=6134</guid>
+
+					<description><![CDATA[In the article [QR code create with Rust language runnable on Azure Functions], created Rust app uses warp library to listen HTTP GET request as web server. In this article, describes steps to add feature to listen POST request and to generate QR code and respond it. Addition, upload it and test it on Azure [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin:0px 0px 0px 0px;color:#000044;font-size:0.9rem;font-family:" segoe="" ui";"="">In the article [<a href="https://blog.processtune.com/?p=5925" target="_new" style="font-weight:bold;" rel="noopener">QR code create with Rust language runnable on Azure Functions</a>], created Rust app uses warp library to listen HTTP GET request as web server.<br />
+In this article, describes steps to add feature to listen POST request and to generate QR code and respond it. Addition, upload it and test it on Azure Functions.</p>
+<p style="margin:10px 0px 0px 5px;text-indent:1em;text-align:right;font-weight:bold;">&gt;&gt;<a href="https://github.com/TetsuroTakao/QRCodeGenerator" target="_new" style="font-weight:bold;" rel="noopener">Sample project as base of this article</a>.</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Add feature of listen POST method</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Download <a href="https://github.com/TetsuroTakao/QRCodeGenerator" target="_new" style="font-weight:bold;" rel="noopener">Sample project as base of this article</a>, and create function use Visual Studio Code Azure Functions extension.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">This article describes example as that the sample are downloaded to the [QRCodePOSTMethod] folder on local PC.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Until show figure below, create local project like as the article [<a href="https://blog.processtune.com/?p=5925" target="_new" style="font-weight:bold;" rel="noopener">QR code create with Rust language runnable on Azure Functions</a>] using the sample.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/03/POSTMethodSample1.png" alt="" style="width:900px;border:thin solid #ccc;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">At first, define name of the Functions app using Azure Functions extension. This example name is [QRCodePOSTMethod].</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Though who read the article [<a href="https://blog.processtune.com/?p=5925" target="_new" style="font-weight:bold;" rel="noopener">QR code create with Rust language runnable on Azure Functions</a>] can use same name used in its article, in this article, it is not good for my development environment that the Rust local project of GitHub is changed for this article. So changed a name using Azure Functions extension.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Next, it&#8217;s flow of steps that add HTTP post method feature to main.rs, then the feature inject to the route definition. HTTP post method feature is code below, is similar as HTTP get method feature.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">    let post_source = warp::post()
+    .and(warp::body::json())
+    .map(|bodyjson: HashMap&lt;String, String&gt;| {
+            Response::builder()
+            .header("content-type", "text/html")
+            .status(StatusCode::OK)
+            .body(format!("QR Code source [{}]", bodyjson.get("source").unwrap()))
+    });
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Create a header and a body with status of the response using the warp response builder. While create the status, use the warp status object. So define using it at top of the [main.rs] file ([use warp::{http::{Response, StatusCode}, Filter};]).</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">As last step, define routing. In case of the warp routing object, define the processing when HTTP get method is listened, then if the request is HTTP post method, executes the processing for it. The routing like it, needs allowing HTTP get method and HTTP post method.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/03/AzureFunctionsCors.png" alt="" style="width:450px;border:thin solid #ccc;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">In addition, Azure Functions does not allow <a href="https://html.spec.whatwg.org/multipage/urls-and-fetching.html#cors-settings-attributes" target="_new" style="font-weight:bold;" rel="noopener">CORS (Cross-Origin Resource Sharing)</a> as default, although it can change to allow. Evenif <a href="https://docs.microsoft.com/en-us/azure/logic-apps/logic-apps-azure-functions?tabs=consumption#find-functions-that-have-openapi-descriptions?WT.mc_id=AZ-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">Azure Functions allow it</a> aiming to accept request from JavaScript or other <a href="https://en.wikipedia.org/wiki/Cross-origin_resource_sharing" target="_new" style="font-weight:bold;" rel="noopener">cross-origin</a>, it not work well since the warp routing definition that does not allow as default. For that reason, create allowing of CORS using warp CORS object, as expand features in the future. The code below is definition of routing that flows from get request to post request, along with allowing them (CORS, creating header and acceptance of HTTP get/post method request).</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">    let cors = warp::cors()
+        .allow_any_origin()
+        .allow_headers(vec!["User-Agent", "Sec-Fetch-Mode", "Referer", "Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"])
+        .allow_methods(vec!["POST", "GET"]);
+    let routes = warp::get().and(get_source)
+        .or(warp::post().and(post_source)).with(cors);
+    warp::serve(routes).run((Ipv4Addr::UNSPECIFIED, port)).await
+</pre>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Build and Confirming</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">For confirming HTTP post method call result, build Rust project, copy created assembly to project root and Azure Functions Core Tools starting.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/03/HttpPostRequestBuild.png" alt="" style="width:450px;border:thin solid #ccc;"><img decoding="async" src="/wp-content/uploads/2022/03/HttpGetRequestInBrowser.png" alt="" style="width:450px;border:thin solid #ccc;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Confirming for HTTP get method request without query string in browser is selection of the link of output starting result. In case of confirming for HTTP get method request with query string, input query string manually at the URL inputbox.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Use Visual Studio Code extension named [Thunder Client] to confirming for HTTP get method request.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/03/HttpPostRequestThunder.png" alt="" style="width:450px;border:thin solid #ccc;"></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Upload to Azure Functions and Test</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Like as the article [How to compile Rust assembly runnable on Linux for deployment to Azure Functions], it&#8217;s super easy to do it.</p>
+<div style="background-color:#cccccc;border:1px solid #00000; padding: 10px 10px 0px 10px;margin-top:20px;">
+<div style="margin:-20px 0px 0px 5px;text-indent:1em;font-weight:bold;background-color:#444;border:1px solid #ccc;color:#fff;">» Basic step is below.</div>
+<ol>
+<li>Delete %projecr name%.exe that used for debugging on local environment.</li>
+<p>In the [Integrated terminal] &gt;rm qrcode_generator.exe</p>
+<li>Build the project for x86_64-unknown-linux-musl platform that Azure Functions provided.</li>
+<p>In the [Integrated terminal] &gt;cargo build &#8211;release &#8211;target=x86_64-unknown-linux-musl</p>
+<li>Copy builded the assembly from bild destination to project root.</li>
+<p>In the [Integrated terminal] &gt;cp target\x86_64-unknown-linux-musl\release\qrcode_generator .</p>
+<li>Modify value [qrcode_generator.exe] of the [defaultExecutablePath] property to [qrcode_generator] on the [host.json] file.</li>
+<p>{&#8230;, &#8220;customHandler&#8221;: { &#8220;description&#8221;: { &#8220;defaultExecutablePath&#8221;: &#8220;qrcode_generator.exe&#8221;, &#8230;}, &#8230;}}</p>
+<li>Upload the assembly to Azure Functions using Azure Functions extention of Visual Studio Code.</li>
+<p style="border:thin solid #444;">
+<span style="font-weight:bold;margin-left:1rem;">the [Integrated terminal] output&#8230;</span><br />
+14:40:22 BlogSampleFunctions: Starting deployment&#8230;<br />
+14:40:23 BlogSampleFunctions: Creating zip package&#8230;<br />
+14:40:23 BlogSampleFunctions: Uploading zip package to storage container&#8230;<br />
+14:40:24 BlogSampleFunctions: Zip package size: 2.13 MB<br />
+14:40:26 BlogSampleFunctions: Deployment successful.<br />
+14:40:36 BlogSampleFunctions: Syncing triggers&#8230;<br />
+14:40:38 BlogSampleFunctions: Querying triggers&#8230;<br />
+14:40:40 BlogSampleFunctions: HTTP Trigger Urls:<br />
+<span style="margin-left:1rem;">QRCodePOSTMethod: https://blogsamplefunctions.azurewebsites.net/qrcodepostmethod</span></p>
+<li>Test Functions app at Azure portal.</li>
+<p><img decoding="async" src="/wp-content/uploads/2022/03/AzureFunctionsPOSTTest.png" alt="" style="width:450px;border:thin solid #ccc;"></ol>
+</div>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Add QR Code generating feature</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">There is the link to the Rust program as base code at the article [<a href="https://blog.processtune.com/?p=5925" target="_new" style="font-weight:bold;" rel="noopener">QR code create with Rust language runnable on Azure Functions</a>].</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><a href="https://blog.processtune.com/?p=5925" target="_new" style="font-weight:bold;" rel="noopener"><img decoding="async" src="/wp-content/uploads/2022/03/ArticleOfLinkToRustQRCode.png" alt="" style="width:450px;border:thin solid #ccc;"></a><a href="https://github.com/TetsuroTakao/QRCodeCreation" target="_new" style="font-weight:bold;" rel="noopener"><img decoding="async" src="/wp-content/uploads/2022/03/RustQRCodeAsBase.png" alt="" style="width:450px;border:thin solid #ccc;"></a></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The code has very simple (is two row code) function that generate QR code using a library of Rust ecosystem. The function argues string as source of QR code and return svg string (XML format). The XML is able to display on browser.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">pub fn create_qrcode_svg(_url: &amp;str) -&gt; String{
+    let code:QrCode = QrCode::new(_url).unwrap();
+    code.render::&lt;svg::Color&gt;().build()
+}
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">For now, the code is not need function. So as temporary, inject the code above inject into the HTTP post listener feature of main procedure.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">    let post_source = warp::post()
+        .and(warp::body::json())
+        .map(|bodyjson: HashMap&lt;String, String&gt;| {
+            let _url = bodyjson.get("source").unwrap();
+            let code:QrCode = QrCode::new(_url).unwrap();
+            let qrcode = code.render::&lt;svg::Color&gt;().build();
+            Response::builder()
+                .header("content-type", "image/svg+xml")
+                .status(StatusCode::OK)
+                .body(qrcode)
+    });
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Injected two lines in the map process needs the [_url] varieble, so use the [bodyjson.get(&#8220;source&#8221;).unwrap()] statement of existing post listener feature. And render directly the result (strings of the [SVG] XML) of the [code.render::<svg::color>().build()] statement to the body. The warp filter generates XML content, so the [content-type] header value is [image/svg+xml]. Below figure is the result of the Thunder Client.</svg::color></p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/03/HttpPostQRRequestResult.png" alt="" style="width:450px;border:thin solid #ccc;"></p>
+<div style="background-color:#cccccc;border:1px solid #00000; padding: 10px 10px 0px 10px;margin-top:20px;">
+<div style="margin:-20px 0px 0px 5px;text-indent:1em;font-weight:bold;background-color:#444;border:1px solid #ccc;color:#fff;">ⓘ Additional information.</div>
+<p>If aim to response as HTML (does not response as API or RPC),  does not use the [Response::builder] object, but also can use the [warp::reply::html] object for create filter feature more easly.<br />
+Reply the body content to the request with the status code and the [content-type] header. For example in case of modifing the HTTP get listener feature, filter is returned as below.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">            let url:&amp;str = match p.get("source") {
+                Some(q)=&gt; q,
+                None =&gt; "https://blog.processtune.com/"
+            };
+            let code:QrCode = QrCode::new(url).unwrap();
+            let qr = code.render::&lt;svg::Color&gt;().build();
+            let content = format!("{}&lt;br /&gt;&lt;span&gt;QR Code source [{}]&lt;/span&gt;", qr, &amp;url);
+            let reply = warp::reply::html(content);
+            let reply = warp::reply::with_status(reply, StatusCode::OK);
+            let reply = warp::reply::with_header(reply, "content-type", "text/html");
+            reply
+</pre>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/03/HttpGetQRRequestResult.png" alt="" style="width:900px;border:thin solid #ccc;"></p>
+<p style="margin:10px 0px 0px 5px;text-indent:1em;text-align:right;font-weight:bold;">&gt;&gt;<a href="https://github.com/TetsuroTakao/QRCodePOSTMethod" target="_new" style="font-weight:bold;" rel="noopener">Complete project of this article</a>.</p>
+</div>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2021/09/01/rust-qr-code-generator-app-of-azure-functions/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>How to compile Rust assembly runnable on Linux for deployment to Azure Functions</title>
+		<link>https://blog.processtune.com/2021/08/01/how-to-compile-rust-assembly-runnable-on-linux-for-deployment-to-azure-functions/</link>
+					<comments>https://blog.processtune.com/2021/08/01/how-to-compile-rust-assembly-runnable-on-linux-for-deployment-to-azure-functions/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Sun, 01 Aug 2021 03:53:59 +0000</pubDate>
+				<category><![CDATA[Azure Functions]]></category>
+		<category><![CDATA[Rust]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Visual Studio]]></category>
+		<category><![CDATA[Visual Studio Code]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=5958</guid>
+
+					<description><![CDATA[Azure Functions is one of great services of serverless computing. It is useful for microservices solution, event-driven messaging middleware and so on. Its functions run on Linux, use C standard library named &#8216;musl'(see musl libc) for system call of Linux. A runnable Rust assembly of Azure Functions is create use &#8216;cargo build&#8217; command that compiles [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin:0px 0px 0px 0px;color:#000044;font-size:0.9rem;font-family:" segoe="" ui";"="">Azure Functions is one of great services of serverless computing. It is useful for microservices solution, event-driven messaging middleware and so on. Its functions run on Linux, use C standard library named &#8216;musl'(see <a href="https://musl.libc.org/" target="_new" style="font-weight:bold;" rel="noopener">musl libc</a>) for system call of Linux.<br />
+A runnable Rust assembly of Azure Functions is create use &#8216;cargo build&#8217; command that compiles source code to assembly, compile process is structed with front-end compiler and back-end compiler.<br />
+At first, front-end compiler generates intermidiate language from source code written on Windows, then back-end compiler use its intermidiate language to make runnable assemblyies that capable system call on Linux. This process is helped by toolchain management tool &#8216;rustup&#8217;.<br />
+There is little bit complexity to struct these development enviromment, so this article describes it step by step.<br />
+In the article [Rust QR code generator App of Azure Functions] describes how to modify the simple of this article (simple rust project) to QR code generator.</p>
+<p style="margin:0px 0px 0px 0px;color:#000044;font-size:0.9rem;font-family:" segoe="" ui";"="">Added at 17th Dec. 2021 :<br />
+Please read Microsoft Official document [<a href="https://docs.microsoft.com/en-us/azure/azure-functions/create-first-function-vs-code-other?tabs=rust%2Cwindows?WT.mc_id=AZ-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">Quickstart: Create a Go or Rust function in Azure using Visual Studio Code</a>].</p>
+<p style="margin:10px 0px 0px 5px;text-indent:1em;text-align:right;font-weight:bold;">&gt;&gt;<a href="https://github.com/TetsuroTakao/QRCodeGenerator" target="_new" style="font-weight:bold;" rel="noopener">Rust sample project to create QR Code, Base program to deploy to Azure Functions</a> (created by <a href="https://blog.processtune.com/?p=5925" target="_new" style="font-weight:bold;" rel="noopener">previous article</a>.)</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Step 1. Rust install and rustup settings comformation</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Install Rust (see <a href="https://www.rust-lang.org/tools/install" target="_new" style="font-weight:bold;" rel="noopener">Install Rust</a>), then comfirm rustup toolchain conditions, it shown if put [rustup show] command in integrated terminal of Visual Studio Code (or Windows terminal).</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Runtime environment of Azure Functions is [x86_64-unknown-linux-musl], so if it needs, use [rustup target add stable-x86_64-unknown-linux-musl] command to install and use [cargo build] command to build it. Below figure is sample of [rustup show] result.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">Default host: x86_64-pc-windows-msvc
+rustup home:  %User root%\.rustup
+
+installed toolchains
+--------------------
+
+stable-x86_64-pc-windows-msvc (default)
+stable-x86_64-unknown-linux-gnu
+stable-x86_64-unknown-linux-musl
+
+installed targets for active toolchain
+--------------------------------------
+
+wasm32-unknown-unknown
+x86_64-pc-windows-msvc
+x86_64-unknown-linux-musl
+
+active toolchain
+----------------
+
+stable-x86_64-pc-windows-msvc (default)
+rustc 1.56.1 (59eed8a2a 2021-11-01)
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">This sample environment has installed [x86_64-unknown-linux-musl] target, and [stable-x86_64-pc-windows-msvc] toolchain is target default (default of Rust install on Windows). This sample development environment is Windows and use native ABI (Application Binary Interface) named MSVC (see <a href="https://rust-lang.github.io/rustup/installation/windows.html" target="_new" style="font-weight:bold;" rel="noopener">the article</a> for Windows Rust developers). So developers who use Visual Studio (includes Visual Studio Code) for development have to do nothing. If not, use <a href="https://visualstudio.microsoft.com/visual-cpp-build-tools/?WT.mc_id=AZ-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">Microsoft C++ Build Tools</a> to compile Linux assembly easily.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The musl is C standerd compiler of MIT license, it will be linked as statical, so should modify the [.cargo/config] file. The [.cargo/config] file is at [%User root%\.cargo\config] as global settings on Windows. However you don&#8217;t always want to generate Linux assembly use MSVC ABI, so I recommend that its file create at Rust project root folder.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Toolchain uses rust-lld linker when compile for Musl libraly.</p>
+<div style="background-color:#cccccc;border:1px solid #00000; padding: 10px 10px 0px 10px;margin-top:20px;">
+<div style="margin:-20px 0px 0px 5px;text-indent:1em;font-weight:bold;background-color:#444;border:1px solid #ccc;color:#fff;">ⓘ As additional information</div>
+<p>The cargo.exe reads [.cargo/config] file to compile source code use the rust-lld.exe, and the cargo.exe expect the file is written as TOML file format. The [\] string in TOML format is special string, so [.cargo/config] file should be written path strings as escaped file path use [&#8221;&#8217;] strings. Addition, cargo.exe needs full path infromation of its linker for compile.<br />
+<span style="font-weight:bold;">In case of without Microsoft C++ Build Tools, Visual Studio and Visual Studio Code</span><br />
+[target.x86_64-unknown-linux-musl]<br />
+linker = &#8221;&#8217;%User root%\.rustup\toolchains\stable-x86_64-pc-windows-msvc\lib\rustlib\x86_64-pc-windows-msvc\bin\rust-lld.exe&#8221;&#8217;<br />
+<span style="font-weight:bold;">In case of using Microsoft C++ Build Tools, Visual Studio or Visual Studio Code</span><br />
+[target.x86_64-unknown-linux-musl]<br />
+linker = &#8220;rust-lld&#8221;</p>
+</div>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">It&#8217;s easy to set path of a linker using MSVC.</p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Step 2. Deployment</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">At first, download <a href="https://github.com/TetsuroTakao/QRCodeGenerator" target="_new" style="font-weight:bold;" rel="noopener">Rust sample project</a> created by <a href="https://blog.processtune.com/?p=5925" target="_new" style="font-weight:bold;" rel="noopener">previous article</a> and modify it to runnable on Linux. previous article. For it, create [.cargo/config] in the project and set rust-lld to the linker like above, then type [cargo build &#8211;release &#8211;target=x86_64-unknown-linux-musl] on the [Integrated terminal]. Addition, modify [.funcignore] file to prevent upload files of target folder.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/03/CargoBuildLinuxAssembly.png" alt="" style="width:450px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Next, the [%Project root%\target\x86_64-unknown-linux-musl\release\qrcode_generator] file is not uploaded, because Azure Functions Extension uploads a file at project root. Now the [qrcode_generator.exe] is at project root folder, it is execute file for local debug on Windows, so delete it and copy [%Project root%\target\x86_64-unknown-linux-musl\release\qrcode_generator] file to the project root.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Azure Functions extension recognizes only one executable file which [%project name%.exe] file or [%project name%] file. So delete [%project name%.exe] file when upload the executable file to Azure Functions, and copy [%project name%] file to %project root%.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">For local debug on Windows, there is [qrcode_generator.exe] value in the [host.json] file to the project root. So modify value of the [defaultExecutablePath] property to [qrcode_generator] at the [description] property of the [customHandler] property for using on Azure Functions (Left figure).</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">After these preparation of uploading to Azure Functions, Select the [Deploy to Functions App&#8230;] icon of the [Azure] extension. (Right figure).</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/03/PreperanceToAzureFunctions.png" alt="" style="width:450px;"><img decoding="async" src="/wp-content/uploads/2022/03/DeployToFunctionsApp.png" alt="" style="width:450px;"></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Step 3. Test on Azure Functions</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">The [Command palette] shows after select the [Deploy to Functions App&#8230;] icon of the [Azure] extension. And already created a Functions app when create local project using the [Azure] extension, so select the name of the Functions app from list. Then proceed confirmation dialog, if the process ended, show conformation of completing, so select the [View output] button to confirm the [OUTPUT] console (Left figure).</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/03/FunctionsAppUpload.png" alt="" style="width:450px;"><img decoding="async" src="/wp-content/uploads/2022/03/AzureFunctionsConsole1.png" alt="" style="width:450px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Open Azure Functions on the [Azure portal] for the test (Right figure).</p>
+<p style="margin: 0px 0px 0px 10px;padding:1em;background-color:#cccccc;">
+<span style="font-weight:bold;">Steps of the test (figure below)</span><br />
+The display change when the [Functions] section selected, then select target function name (1. [QRCodeGenerationOnAzureFunctions] on the figure)<br />
+Select the [Code + Test] section in displayed target function (2.)<br />
+Select the [Test/Run] tab when navigated display to [Code + Test] (3.)<br />
+Select the [GET] item of the [HTTP method] list on the [Input] tab area of [Code + Test], because uploaded Function app has only get method of warp (4.)<br />
+Add parameter use the [Name] textbox and the [Value] textbox (6.) showed when select the [Add parameter] link (5.)<br />
+At last, select the [Run] button for the test.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/03/AzureFunctionsConsoleSteps.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">A status of the test process on console showed out, then the display is changed to the [Output] tab area of [Code + Test] in automate. So confirm result of the test is that the [HTTP response code] is [200 OK] and the [HTML response content] is outputted.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/03/AzureFunctionsConsoleResult.png" alt="" style="width:450px;"></p>
+<p style="margin:10px 0px 0px 5px;text-indent:1em;text-align:right;font-weight:bold;">&gt;&gt;<a href="https://github.com/TetsuroTakao/QRCodeGeneratorOnAzureFunctions" target="_new" style="font-weight:bold;" rel="noopener">Sample project</a> (this article created)</p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2021/08/01/how-to-compile-rust-assembly-runnable-on-linux-for-deployment-to-azure-functions/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>QR code create with Rust language runnable on Azure Functions</title>
+		<link>https://blog.processtune.com/2021/07/01/qr-code-create-with-rust-language-runable-on-azure-functions/</link>
+					<comments>https://blog.processtune.com/2021/07/01/qr-code-create-with-rust-language-runable-on-azure-functions/#respond</comments>
+		
+		<dc:creator><![CDATA[tetsuro.takao]]></dc:creator>
+		<pubDate>Thu, 01 Jul 2021 05:01:01 +0000</pubDate>
+				<category><![CDATA[Azure Functions]]></category>
+		<category><![CDATA[Microsoft Azure]]></category>
+		<category><![CDATA[Rust]]></category>
+		<category><![CDATA[SlideShow]]></category>
+		<category><![CDATA[Visual Studio]]></category>
+		<category><![CDATA[Visual Studio Code]]></category>
+		<guid isPermaLink="false">https://blog.processtune.com/?p=5925</guid>
+
+					<description><![CDATA[Azure Functions is functions runtime that is able to launch a function created by multiple language, as serverless on cloud (see Microsoft Docs [Supported languages in Azure Functions]). What it is serverless means less code, less maintainance of infrastructure, thus developers are able to focus on code for only business process, managers can save on [&#8230;]]]></description>
+										<content:encoded><![CDATA[<p style="margin:0px 0px 0px 0px;color:#000044;font-size:0.9rem;font-family:" segoe="" ui";"="">Azure Functions is functions runtime that is able to launch a function created by multiple language, as serverless on cloud (see Microsoft Docs [<a href="https://docs.microsoft.com/en-us/azure/azure-functions/supported-languages?WT.mc_id=AZ-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">Supported languages in Azure Functions</a>]). What it is serverless means less code, less maintainance of infrastructure, thus developers are able to focus on code for only business process, managers can save on costs as result. Furthermore, when procuring members of some project as using microservices architecture, managers can orchestrate several teams of various language programmers.<br />
+In this article, create <a href="https://github.com/TetsuroTakao/QRCodeGenerator" target="_new" style="font-weight:bold;" rel="noopener">simple rust program that can run on local environment</a> for that will deploy to Azure Functions later.<br />
+In the article [<a href="https://blog.processtune.com/?p=5958" target="_new" style="font-weight:bold;" rel="noopener">How to compile Rust assembly runnable on Linux for deployment to Azure Functions</a>] describes creation of assembly to deploy Azure Functions.<br />
+In the article [<a href="https://blog.processtune.com/?p=5958" target="_new" style="font-weight:bold;" rel="noopener">Rust QR code generator App of Azure Functions</a>] describes how to modify the simple of this article (simple rust project) to QR code generator.</p>
+<p style="margin:0px 0px 0px 0px;color:#000044;font-size:0.9rem;font-family:" segoe="" ui";"="">Added at 9th Feb. 2022 :<br />
+Please read Microsoft Docs [<a href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local?tabs=v4%2Cwindows%2Ccsharp%2Cportal%2Cbash?WT.mc_id=AZ-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">Work with Azure Functions Core Tools</a>] and install it, you can execute command [func start] on console (or tarminal of Visual Studio code, Windows and so on.) when restart PC.</p>
+<p style="margin:10px 0px 0px 5px;text-indent:1em;text-align:right;font-weight:bold;">&gt;&gt;<a href="https://github.com/TetsuroTakao/QRCodeCreation" target="_new" style="font-weight:bold;" rel="noopener">Sample project of Rust language to create QR Code</a></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Azure Functions Visual Studio Code Extensions</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">This article uses Visual Studio Code and it&#8217;s extensions and Rust (see <a href="https://www.rust-lang.org/tools/install" target="_new" style="font-weight:bold;" rel="noopener">Install Rust</a>).</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">For debugging on local development environment and upload to Azure Functions, it needs Azure Functions Core Tools. This tool installed along with other tools of Azure if install Azure Tools Extension (left figure), or if aim to just install Azure Functions extension, install individual(right figure).</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/02/AzureToolsExtension.png" alt="" style="width:450px;vertical-align:middle;"><img decoding="async" src="/wp-content/uploads/2022/02/VSCodeExtensions.png" alt="" style="width:450px;"></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Create local Rust project for Azure Functions</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">It is super easy to create Rust project that run on Windows using Visual Studio Code extension of Azure Functions.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">At first, open work folder in Visual Studio Code. Work folder is able to create using the [Open Folder] dialog box. Select the [Open folder&#8230;] of the [File] menu, then right click on any directory and select the [New] then select the [Folder] (Left figure).</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">While open work folder, create Rust project using extension of Azure Functions. Select the [Create New Project&#8230;] icon of the [FUNCTIONS] area of the [Azure] extension. (Right figure)</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/02/OpenFolderDialog.png" alt="" style="width:450px;"><img decoding="async" src="/wp-content/uploads/2022/02/CreateAzureFunctionsProject.png" alt="" style="width:450px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">[Command Palette] is shown when select [Create New Project&#8230;] icon. there are several steps to create new project, exclude step of &#8216;Function name&#8217; (This setting is used for URL of Functions) and step of &#8216;Folder of the project&#8217;, put values of table below. These values are for sample project.</p>
+<div style="margin: 0px 0px 0px 20px;display:table;">
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;padding-right:10px;">Folder of the project</div>
+<div style="display:table-cell;">QRCodeGeneratorOnAzureFunctions(default : Opened folder from Visual Studio Code. This setting make URL of Azure Functions to figure below)<br />
+<img decoding="async" src="/wp-content/uploads/2022/02/AzurePortalFunctionsFunction.png" alt="" style="width:450px;"></div>
+</div>
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;">Language</div>
+<div style="display:table-cell;">Custom Handler(default : Last used, If first Azure Functions function creation, select this.)</div>
+</div>
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;">Project template</div>
+<div style="display:table-cell;">Http trigger(default : Last used, If first Azure Functions function creation, select this.)</div>
+</div>
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;">Function name</div>
+<div style="display:table-cell;">BlogSampleFunctions(This setting create URL :  https://<span style="font-weight:bold;">blogsamplefunctions</span>.azurewebsites.net/api/QRCodeGeneratorOnAzureFunctions)</div>
+</div>
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;">Authorization</div>
+<div style="display:table-cell;">Anonymous(default : no authentication)</div>
+</div>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/02/FunctionsNewSteps.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Return to the [File Explorer], and type [Ctrl] + [Shift] + [`] key for open the [Integrated terminal] (use [Ctrl] + [K] + [S] for comfirming conbination of keys for your keybord type). Then type [ cargo init &#8211;name qrcode_generator ] on the [Integrated terminal] to create Rust project package (this name value is not relate a name of Azure Functions). After package creation, type [ cargo run ] to run project. It is OK that it shows [ Hello, world! ] in the [Integrated terminal].</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">This Rust project package name [qrcode_generator] is same name as Rust assembly file name (and the [exe] extension), so the [cargo run] command create assembly file at [%project root%\target\debug\qrcode_generator.exe] and launch the file. And this value is defined at the [name] value of [package] definition in the [Cargo.toml] file.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">[ cargo init ] comand generates rust project files such as the [src/main.rs] file and the [Cargo.toml] file and so on, the [src/main.rs] file is startup file, so [ cargo run ] command executes [ println!(“Hello, world!”) ] statement of the [src/main.rs] file (see figure below).</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/02/InitialHelloworld.png" alt="" style="width:450px;"></p>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Create web server</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Create sample projest with modifying [src/main.rs] file that the [ cargo init ] comand generated.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">TCP listener is standard function of Rust, although HTTP lisner have to process asyncronous task flow. asyncronous feature is provided with async_std or tokio and so on.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">This article select tokio and warp as sample because there is popular and there are a lot of code samples on web. warp is web server framework.</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Since warp is for creation of web server, it can listen HTTP request from Azure Functions as HTTP listener. If the setting of Azure Functions environment (host.json at root of project, figure below) to enable forwarding HTTP request, Azure Functions accepts Http request and throw it to the function of Azure Functions that served by warp.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">--host.json file (part of the file)
+...
+  "customHandler": {
+    "description": {
+      "defaultExecutablePath": "qrcode_generator.exe",
+      "workingDirectory": "",
+      "arguments": []
+    },
+    //here is the setting (All figure of host.json is shown later)
+    "enableForwardingHttpRequest": true
+  }
+}
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">At first, modify the [Cargo.toml] file as below to use these eco-systems. And define to use them at main.rs of the [src] folder.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">--Cargo.toml file
+[dependencies]
+warp = "0.3"
+tokio = { version = "1", features = ["rt", "macros", "rt-multi-thread"] }
+
+--src/main.rs file
+use std::env;
+use std::collections::HashMap;
+use std::net::Ipv4Addr;
+use warp::{http::Response, Filter};
+
+fn main() {
+    println!("Hello, world!");
+}
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">These defines are used as table below.</p>
+<div style="margin: 0px 0px 0px 20px;display:table;">
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;">std::env</div>
+<div style="display:table-cell;">Acquire port number that Azure Functions provided.</div>
+</div>
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;">std::collections::HashMap</div>
+<div style="display:table-cell;">Acquire query string of HTTP request.</div>
+</div>
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;">std::net::Ipv4Addr</div>
+<div style="display:table-cell;">Acquire IPv4 address of HTTP request.</div>
+</div>
+<div style="display:table-row;">
+<div style="display:table-cell;font-weight:bold;white-space: nowrap;">warp::{http::Response, Filter}</div>
+<div style="display:table-cell;">Create HTTP response, and serve function that defines process of create response.</div>
+</div>
+</div>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Next, acquire port number of incomming stream (distination port number of the stream Azure Functions forwards) using definitioned term (FUNCTIONS_CUSTOMHANDLER_PORT).</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">fn main() {
+    let port: u16 = match env::var("FUNCTIONS_CUSTOMHANDLER_PORT") {
+        Ok(val) =&gt; val.parse().expect("Custom Handler port is not a number!"),
+        Err(_) =&gt; 3000,
+    };
+    ...
+}
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Continues, creating respond in case when HTTP GET message listened. Sample code for POST message is described in the article [<a href="https://blog.processtune.com/?p=5958" target="_new" style="font-weight:bold;" rel="noopener">How to compile Rust assembly runnable on Linux for deployment to Azure Functions</a>].</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">async fn main() {
+    ...
+    let get_source
+        = warp::path!("api" / "QRCodeGeneratorOnAzureFunctions")
+        .and(warp::query::<hashmap<string, string="">&gt;())
+        .map(|q:HashMap<string,string>|
+            match q.get("source") {
+                Some(s) =&gt; Response::builder().body(format!("QR Code source [{}]",s)),
+                None =&gt; Response::builder().body(String::from("Source does not requested"))
+            });
+    ...
+}
+</string,string></hashmap<string,></pre>
+<div style="background-color:#cccccc;border:1px solid #00000; padding: 10px 10px 10px 10px;margin-top:20px;margin-bottom:20px;">
+<div style="margin:-20px 0px 0px 5px;text-indent:1em;font-weight:bold;background-color:#444;border:1px solid #ccc;color:#fff;">ⓘ As additional information</div>
+<p style="margin-top:0.2rem;margin-bottom: 0;">
+Azure Functions provides global URL as format below (as default).</p>
+<div style="border:thin solid #444;padding:1rem 1rem 1rem 1rem;">
+https://<span style="font-weight:bold;">%Function name%</span>.azurewebsites.net/api/<span style="font-weight:bold;">%Folder name of project root%</span></div>
+<p style="margin-top:0.2rem;margin-bottom: 0;">
+So listening HTTP request use [ warp::path!(&#8220;api&#8221; / &#8220;QRCodeGeneratorOnAzureFunctions&#8221;) ] statement. If want to omit path [api], modify host.json as below.</p>
+<div style="border:thin solid #444;padding:1rem 1rem 1rem 1rem;">
+&#8211;host.json file (root parameter [extensions], All figure of host.json is shown later)<br />
+&#8220;extensions&#8221;: {&#8220;http&#8221;: {&#8220;routePrefix&#8221;: &#8220;&#8221;}}</div>
+</div>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">At last, create listening part of HTTP GET message. Below is all code of the [src/main.rs] file.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">use std::env;
+use std::collections::HashMap;
+use std::net::Ipv4Addr;
+use warp::{http::{Response}, Filter};
+
+#[tokio::main]
+async fn main() {
+    let port: u16 = match env::var("FUNCTIONS_CUSTOMHANDLER_PORT") {
+        Ok(val) =&gt; val.parse().expect("Custom Handler port is not a number!"),
+        Err(_) =&gt; 3000,
+    };
+    let get_source
+        = warp::path!("QRCodeGeneratorOnAzureFunctions")
+        .and(warp::query::<hashmap<string, string="">&gt;())
+        .map(|q:HashMap<string,string>|
+            match q.get("source") {
+                Some(s) =&gt; Response::builder().body(format!("QR Code source [{}]",s)),
+                None =&gt; Response::builder().body(String::from("Source does not requested"))
+            });
+    let routes = warp::get().and(get_source);
+    warp::serve(routes).run((Ipv4Addr::UNSPECIFIED, port)).await
+}
+</string,string></hashmap<string,></pre>
+<p style="margin: 10px 0px 0px 0px; font-weight: bold; font-size: 14px;">・Run on local</p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Azure Functions Core Tools has web hosting feature, so build Rust project at first, then define builded assembly path to this tool. Build path is [target/relese] folder that are created when type [cargo build &#8211;release] command in the [Integrated terminal]. This tool use execute file at project root folder to host client or upload to Azure Functions. So copy the file from build path to project root.</p>
+<pre style="background-color:#cccccc;border:1px solid #00000; padding: 10px;">cp .\target\release\qrcode_generator.exe
+</pre>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">This tool hosts the Rust assembly file use [defaultExecutablePath] value in [host.json], the value is defined at description property of customHandler property in the file.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/02/hostJson.png" alt="" style="width:900px;"></p>
+<div style="background-color:#cccccc;border:1px solid #00000; padding: 10px 10px 0px 10px;margin-top:20px;">
+<div style="margin:-20px 0px 0px 5px;text-indent:1em;font-weight:bold;background-color:#444;border:1px solid #ccc;color:#fff;">ⓘ As additional information (8th Feb. 2022)</div>
+<p><a href="https://docs.microsoft.com/en-us/azure/azure-functions/functions-bindings-register#extension-bundles?WT.mc_id=AZ-MVP-4029060" target="_new" style="font-weight:bold;" rel="noopener">The &#8216;extensionBundle&#8217; values of [%Project root%\host.json] file</a> makes Azure Function project enable runable the project of other language that .NET runtime does not support.</p>
+</div>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Type [ func start ] command in the [Integrated terminal] after put value [qrcode_generator.exe] in the [description] property of the[customHandler] property in this file.</p>
+<p style="display:inline-block;margin-bottom:10px;text-align:center;width:100%;"><img decoding="async" src="/wp-content/uploads/2022/02/HttpGetRequest.png" alt="" style="width:900px;"></p>
+<p style="margin: 0px 0px 0px 0px;text-indent:1em;">Termination is type [Ctrl] + [C] key at terminal.</p>
+<p style="margin:10px 0px 0px 5px;text-indent:1em;text-align:right;font-weight:bold;">Next &gt;&gt;<a href="https://blog.processtune.com/?p=5958" target="_new" style="font-weight:bold;" rel="noopener">How to compile Rust assembly runnable on Linux for deployment to Azure Functions</a></p>
+]]></content:encoded>
+					
+					<wfw:commentRss>https://blog.processtune.com/2021/07/01/qr-code-create-with-rust-language-runable-on-azure-functions/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>
