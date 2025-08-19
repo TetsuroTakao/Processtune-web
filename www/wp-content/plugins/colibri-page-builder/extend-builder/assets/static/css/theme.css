@@ -2903,7 +2903,7 @@ pre {
   min-height: 20px; }
 
 .h-blog-meta .metadata-item {
-  display: inline-block; }
+  display: inline-block;font-size: 14px}
   .h-blog-meta .metadata-item .h-svg-icon {
     line-height: inherit;
     vertical-align: middle; }

@@ -1,1 +1,1 @@
-## <a href='./www/index.html'>Technical Blog (Processtune blog)</a>
+## <a href='./www/index.html' target="_blank">Technical Blog (Processtune blog)</a>
