@@ -3835,8 +3835,7 @@ hr {
   .colibri-post-content pre {
     margin-bottom: 1rem; }
 
-.h-blog-title a {
-  text-decoration: none; }
+.h-blog-title a {text-decoration: none; }
 
 .comment-respond .comment-form-comment label {
   display: block; }
