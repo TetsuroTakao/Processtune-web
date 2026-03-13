@@ -1,0 +1,77 @@
+﻿{
+  "categoryGroups": [
+  {
+    "group": "Microsoft Azure",
+    "categories": [
+      {"title":"Azure Active Directory","link": "microsoft-azure-active-directory"},
+      {"title":"Azure Functions","link": "microsoft-azure-azure-functions"},
+      {"title":"Cognitive Service","link": "microsoft-azure-cognitive-service"},
+      {"title":"gRPC","link": "microsoft-azure-grpc"},
+      {"title":"Microsoft Azure","link": "microsoft-azure"},
+      {"title":"Static web Apps","link": "microsoft-azure-static-web-apps"}]},
+  {
+    "group":"Windows UI",
+    "categories":[
+      {"title":".NET Core","link": "winui-net-core"},
+      {"title":"Universal Apps","link": "winui-universal-apps"},
+      {"title":"Windows 10 App","link": "winui-universal-apps-windows-store-app-windows-10-app"},
+      {"title":"Windows 8 App","link": "winui-universal-apps-windows-store-app-windows-8-app"},
+      {"title":"Windows 8.1 App","link": "winui-universal-apps-windows-store-app-windows-8-1-app"},
+      {"title":"Windows Phone App","link": "winui-universal-apps-windows-store-app-windows-phone-app"},
+      {"title":"Windows Store App","link": "winui-universal-apps-windows-store-app"},
+      {"title":"WinUI","link": "winui"},
+      {"title":"WPF App","link": "winui-wpf-app"}]},
+  {
+    "group":"WSL",
+    "categories":[
+      {"title":"Ubuntu","link": "wsl2-ubuntu"},
+      {"title":"vim","link": "wsl2-vim"},
+      {"title":"WSL2","link": "wsl2"},
+      {"title":"Docker","link": "wsl2-docker"},
+      {"title":"Express","link": "wsl2-node-express"},
+      {"title":"Alpine Linux","link": "wsl2-docker-alpine-linux"},
+      {"title":"Nginx","link": "wsl2-nginx"},
+      {"title":"Node","link": "wsl2-node"},
+      {"title":"Reverce Proxy","link": "wsl2-nginx-reverce-proxy"}]},
+  {
+    "group":"AI",
+    "categories":[
+      {"title":"AI","link": "ai"}]},
+  {
+    "group":"ASP.NET Core",
+    "categories":[
+      {"title":"ASP.NET Core","link": "asp-net-core"},
+      {"title":"Blazor","link": "asp-net-core-blazor"},
+      {"title":"JavaScript","link": "asp-net-core-javascript"},
+      {"title":"Service","link": "asp-net-core-service"}]},
+  {
+    "group":"Visual Studio",
+    "categories":[
+      {"title": "Visual Studio","link":"visual-studio"},
+      {"title":"Visual Studio Code","link": "visual-studio-visual-studio-code"},
+      {"title":"C#","link": "visual-studio-c"},
+      {"title":"Rust","link": "visual-studio-rust"},
+      {"title":"Microservice","link": "visual-studio-microservice"},
+      {"title":"MongoDB","link": "visual-studio-mongodb"},
+      {"title":"Silverlight","link": "visual-studio-silverlight"}]},
+  {
+    "group":"Office App",
+    "categories":[
+      {"title":"Office App","link":"office-app"},
+      {"title":"Office Business App","link": "office-app-office-business-app"},
+      {"title":"Office Web App","link": "office-app-office-web-app"},
+      {"title":"ReactJS.NET","link": "office-app-reactjs-net"},
+      {"title":"Adaptive Cards","link": "office-app-adaptive-cards"},
+      {"title": "Microsoft Graph","link": "office-app-microsoft-graph"}]},
+  {
+    "group":"Technical Memo",
+    "categories":[
+      {"title":"Active Directory","link": "technical-memo-active-directory"},
+      {"title":"Browser","link": "technical-memo-browser"},
+      {"title":"CSS","link": "technical-memo-css"},
+      {"title":"HTML","link": "technical-memo-html"},
+      {"title":"kiosk mode","link": "technical-memo-kiosk-mode"},
+      {"title":"Markdown","link": "technical-memo-markdown"},
+      {"title":"Technical Memo","link": "technical-memo"}]}
+  ]
+}
